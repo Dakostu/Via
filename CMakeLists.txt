@@ -26,16 +26,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 
-set(TS_FILES )#Wegweiser_en_US.ts)
+set(TS_FILES test_translate.ts)
 
 if(ANDROID)
   add_library(Wegweiser SHARED
     main.cpp
     mainwindow.cpp
     mainwindow.h
-    mainwindow.ui
-    menubutler.cpp
-    menubutler.h
+    mainwindow.ui    
     ${TS_FILES}
   )
 else()
@@ -44,8 +42,6 @@ else()
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
-    menubutler.cpp
-    menubutler.h
     ${TS_FILES}
   )
 endif()

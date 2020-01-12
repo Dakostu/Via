@@ -16,3 +16,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
+void MainWindow::initializeMenus()
+{
+    this->menuBar()->addMenu(tr("&Edit"));
+}
