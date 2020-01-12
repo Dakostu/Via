@@ -539,7 +539,7 @@
            <x>0</x>
            <y>0</y>
            <width>346</width>
-           <height>521</height>
+           <height>532</height>
           </rect>
          </property>
          <widget class="QLabel" name="picture">
@@ -572,19 +572,8 @@
     </rect>
    </property>
    <property name="defaultUp">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
-  </widget>
-  <widget class="QToolBar" name="toolBar">
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>

@@ -6,6 +6,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    this->menuBar()->addMenu(tr("&File"));
+    this->menuBar()->addMenu(tr("&Edit"));
 }
 
 MainWindow::~MainWindow()
