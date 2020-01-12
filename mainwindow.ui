@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -22,7 +22,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_20">
     <item>
-     <layout class="QGridLayout" name="gridLayout_2">
+     <layout class="QGridLayout" name="userInputLayout">
       <item row="0" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout">
         <property name="spacing">
@@ -178,21 +178,21 @@
        </layout>
       </item>
       <item row="1" column="0">
-       <widget class="QGroupBox" name="groupBox_3">
+       <widget class="QGroupBox" name="settingsBox">
         <property name="title">
          <string>Settings</string>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
-          <widget class="QGroupBox" name="groupBox_4">
+          <widget class="QGroupBox" name="routeBox">
            <property name="title">
             <string>Route</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <layout class="QHBoxLayout" name="routeNameLayout">
               <item>
-               <widget class="QLabel" name="label_2">
+               <widget class="QLabel" name="routeNameLabel">
                 <property name="text">
                  <string>Name</string>
                 </property>
@@ -202,7 +202,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit">
+               <widget class="QLineEdit" name="routeNameLineEdit">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -214,16 +214,16 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_9">
+             <layout class="QHBoxLayout" name="routeLabelLayout">
               <item>
-               <widget class="QLabel" name="label_5">
+               <widget class="QLabel" name="routeLabelLabel">
                 <property name="text">
                  <string>Label</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit_2">
+               <widget class="QLineEdit" name="routeLineEdit">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -235,16 +235,16 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <layout class="QHBoxLayout" name="routeColorLayout">
               <item>
-               <widget class="QLabel" name="label_3">
+               <widget class="QLabel" name="routeColorLabel">
                 <property name="text">
                  <string>Color</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_10">
+               <widget class="QPushButton" name="routeColorButton">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -265,16 +265,16 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_8">
+             <layout class="QHBoxLayout" name="routeStyleLayout">
               <item>
-               <widget class="QLabel" name="label_4">
+               <widget class="QLabel" name="routeStyleLabel">
                 <property name="text">
                  <string>Style</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox">
+               <widget class="QComboBox" name="routeStyleComboBox">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -302,16 +302,16 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_10">
+             <layout class="QHBoxLayout" name="routeNodeOrderLayout">
               <item>
-               <widget class="QLabel" name="label_6">
+               <widget class="QLabel" name="routeNodeOrderLabel">
                 <property name="text">
                  <string>Show Node Order</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="checkBox">
+               <widget class="QCheckBox" name="routeNodeOrderCheckBox">
                 <property name="maximumSize">
                  <size>
                   <width>15</width>
@@ -326,16 +326,16 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_19">
+             <layout class="QHBoxLayout" name="routeDirectionLayout">
               <item>
-               <widget class="QLabel" name="label_15">
+               <widget class="QLabel" name="routeDirectionLabel">
                 <property name="text">
                  <string>Show Direction</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="checkBox_4">
+               <widget class="QCheckBox" name="routeDirectionCheckBox">
                 <property name="maximumSize">
                  <size>
                   <width>15</width>
@@ -353,15 +353,15 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_5">
+          <widget class="QGroupBox" name="nodeBox">
            <property name="title">
             <string>Current Node</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_7">
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_11">
+             <layout class="QHBoxLayout" name="nodeNameLayout">
               <item>
-               <widget class="QLabel" name="label_7">
+               <widget class="QLabel" name="nodeNameLabel">
                 <property name="text">
                  <string>Name</string>
                 </property>
@@ -371,7 +371,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit_3">
+               <widget class="QLineEdit" name="nodeNameLineEdit">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -383,16 +383,16 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_12">
+             <layout class="QHBoxLayout" name="nodeLabelLayout">
               <item>
-               <widget class="QLabel" name="label_8">
+               <widget class="QLabel" name="nodeLabelLabel">
                 <property name="text">
                  <string>Label</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit_4">
+               <widget class="QLineEdit" name="nodeLabelLineEdit">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -404,16 +404,16 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_15">
+             <layout class="QHBoxLayout" name="nodeColorLayout">
               <item>
-               <widget class="QLabel" name="label_11">
+               <widget class="QLabel" name="nodeColorLabel">
                 <property name="text">
                  <string>Color</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_16">
+               <widget class="QPushButton" name="nodeColorButton">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -434,16 +434,16 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_16">
+             <layout class="QHBoxLayout" name="nodeStyleLayout">
               <item>
-               <widget class="QLabel" name="label_12">
+               <widget class="QLabel" name="nodeStyleLabel">
                 <property name="text">
                  <string>Style</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox_2">
+               <widget class="QComboBox" name="nodeStyleComboBox">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -471,16 +471,16 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_18">
+             <layout class="QHBoxLayout" name="nodeShowOrderLayout">
               <item>
-               <widget class="QLabel" name="label_14">
+               <widget class="QLabel" name="nodeShowOrderLabel">
                 <property name="text">
                  <string>Show Node Order</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="checkBox_3">
+               <widget class="QCheckBox" name="nodeShowOrderCheckBox">
                 <property name="maximumSize">
                  <size>
                   <width>15</width>
@@ -495,16 +495,16 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_17">
+             <layout class="QHBoxLayout" name="nodeInvisibleLayout">
               <item>
-               <widget class="QLabel" name="label_13">
+               <widget class="QLabel" name="nodeInvisibleLabel">
                 <property name="text">
                  <string>Invisible</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="checkBox_2">
+               <widget class="QCheckBox" name="nodeInvisibleCheckBox">
                 <property name="maximumSize">
                  <size>
                   <width>15</width>
@@ -527,13 +527,13 @@
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="pictureLayout">
       <item>
-       <widget class="QScrollArea" name="scrollArea">
+       <widget class="QScrollArea" name="pictureScrollArea">
         <property name="widgetResizable">
          <bool>true</bool>
         </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents">
+        <widget class="QWidget" name="pictureScrollAreaContent">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -542,7 +542,7 @@
            <height>521</height>
           </rect>
          </property>
-         <widget class="QLabel" name="label">
+         <widget class="QLabel" name="picture">
           <property name="geometry">
            <rect>
             <x>150</x>
@@ -570,6 +570,9 @@
      <width>794</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="defaultUp">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QToolBar" name="toolBar">
