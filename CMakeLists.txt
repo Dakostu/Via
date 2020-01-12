@@ -34,6 +34,8 @@ if(ANDROID)
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    menubutler.cpp
+    menubutler.h
     ${TS_FILES}
   )
 else()
@@ -42,6 +44,8 @@ else()
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    menubutler.cpp
+    menubutler.h
     ${TS_FILES}
   )
 endif()
