@@ -1,9 +1,16 @@
 #ifndef ROUTENODE_H
 #define ROUTENODE_H
 
+#include "viewcustomizable.h"
+#include <QObject>
 
-class RouteNode
+class RouteNode : public ViewCustomizable
 {
+    qint64 x;
+    qint64 y;
+
+    bool hasDifferentStyle;
+    bool invisible;
 public:
     RouteNode();
 };

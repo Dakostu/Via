@@ -1,5 +1,4 @@
 #include "localizable.h"
-#include "useraction.h"
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include <QGuiApplication>

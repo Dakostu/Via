@@ -1,14 +1,16 @@
 #ifndef PROJECT_H
 #define PROJECT_H
 
+#include "route.h"
 #include <QString>
+
 
 class Project
 {
-
     QString fileName;
-    bool hasbeenModified;
-    // vector of routes
+    QByteArray imageData;
+    bool hasbeenModified;    
+    QVector<Route> routes;
 
 public:
     Project();
