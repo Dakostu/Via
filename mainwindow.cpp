@@ -1,6 +1,9 @@
 #include "localizable.h"
+#include "useraction.h"
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include <QGuiApplication>
+#include <QScreen>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -9,6 +12,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     initializeMenus();
+
+    ui->picture->setBackgroundRole(QPalette::Base);
+
+    ui->pictureScrollArea->setBackgroundRole(QPalette::Dark);
+    //ui->pictureScrollArea->setVisible(false);
+    //setCentralWidget(ui->pictureScrollArea);
+
+    resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
+
 }
 
 MainWindow::~MainWindow()
@@ -35,8 +47,6 @@ void MainWindow::initializeMenus() {
     menus[1]->addAction(Localizable::getUIString("CUT"));
     menus[1]->addAction(Localizable::getUIString("COPY"));
     menus[1]->addAction(Localizable::getUIString("PASTE"));
-
-
 
     for (const auto &menu : menus) {
         this->menuBar()->addMenu(menu.get());

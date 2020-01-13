@@ -46,6 +46,18 @@ set(TS_FILES test_translate.ts)
     mainwindow.ui
     localizable.cpp
     localizable.h
+    mainwindowcontroller.cpp
+    mainwindowcontroller.h
+    mainwindowdatamodel.cpp
+    mainwindowdatamodel.h
+    project.cpp
+    project.h
+    viewcustomizable.cpp
+    viewcustomizable.h
+    route.cpp
+    route.h
+    routenode.cpp
+    routenode.h
     ${TS_FILES}
   )
 #endif()

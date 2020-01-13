@@ -24,7 +24,7 @@
     <item>
      <layout class="QGridLayout" name="userInputLayout">
       <item row="0" column="0">
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QHBoxLayout" name="routesLayout">
         <property name="spacing">
          <number>6</number>
         </property>
@@ -32,7 +32,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QGroupBox" name="groupBox">
+         <widget class="QGroupBox" name="routeBox">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -56,12 +56,12 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <widget class="QListView" name="listView"/>
+            <widget class="QListView" name="routeBoxRouteList"/>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <layout class="QHBoxLayout" name="routeBoxButtonLayout">
              <item>
-              <widget class="QPushButton" name="pushButton">
+              <widget class="QPushButton" name="routeBoxButtonPushAdd">
                <property name="text">
                 <string>Push-Add</string>
                </property>
@@ -74,28 +74,28 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_2">
+              <widget class="QPushButton" name="routeBoxButtonAddNode">
                <property name="text">
                 <string>Add @ selected</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_3">
+              <widget class="QPushButton" name="routeBoxButtonDeleteNode">
                <property name="text">
                 <string>Delete</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_11">
+              <widget class="QPushButton" name="routeBoxButtonUp">
                <property name="text">
                 <string>Up</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_12">
+              <widget class="QPushButton" name="routeBoxButtonDown">
                <property name="text">
                 <string>Down</string>
                </property>
@@ -107,7 +107,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QGroupBox" name="groupBox_2">
+         <widget class="QGroupBox" name="nodeBox">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -125,12 +125,12 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
-            <widget class="QListView" name="listView_3"/>
+            <widget class="QListView" name="nodeBoxNodeList"/>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <layout class="QHBoxLayout" name="nodeBoxButtonLayout">
              <item>
-              <widget class="QPushButton" name="pushButton_7">
+              <widget class="QPushButton" name="nodeBoxButtonPushAdd">
                <property name="text">
                 <string>Push-Add</string>
                </property>
@@ -143,28 +143,28 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_8">
+              <widget class="QPushButton" name="nodeBoxButtonAddNode">
                <property name="text">
                 <string>Add @ selected</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_9">
+              <widget class="QPushButton" name="nodeBoxButtonDeleteNode">
                <property name="text">
                 <string>Delete</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_13">
+              <widget class="QPushButton" name="nodeBoxButtonUp">
                <property name="text">
                 <string>Up</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_14">
+              <widget class="QPushButton" name="nodeBoxButtonDown">
                <property name="text">
                 <string>Down</string>
                </property>
@@ -184,7 +184,7 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
-          <widget class="QGroupBox" name="routeBox">
+          <widget class="QGroupBox" name="currentRouteBox">
            <property name="title">
             <string>Route</string>
            </property>
@@ -353,7 +353,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="nodeBox">
+          <widget class="QGroupBox" name="currentNodeBox">
            <property name="title">
             <string>Current Node</string>
            </property>
@@ -551,8 +551,17 @@
             <height>18</height>
            </rect>
           </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text">
            <string>TextLabel</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
           </property>
          </widget>
         </widget>
