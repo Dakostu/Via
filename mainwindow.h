@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <vector>
+#include <memory>
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -18,6 +20,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    std::vector<std::unique_ptr<QAction>> actions;
+    std::vector<std::unique_ptr<QMenu>> menus;
 
     void initializeMenus();
 };

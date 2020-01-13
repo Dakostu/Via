@@ -7,13 +7,19 @@ QString Localizable::getUIString(MapKey key) {
         {"YES", tr("&Yes")},
         {"NO", tr("&No")},
         {"FILE", tr("&File")},
-        {"OPEN", tr("Open...")},
-        {"SAVE", tr("Save")},
-        {"SAVE_AS", tr("Save As...")},
+        {"OPEN", tr("New Project")},
+        {"OPEN", tr("Open Project...")},
+        {"SAVE", tr("Save Project")},
+        {"SAVE_AS", tr("Save Project As...")},
+        {"PRINT", tr("Print Current Project...")},
+        {"EXPORT", tr("Export Current Project...")},
         {"QUIT", tr("Quit")},
         {"EDIT", tr("&Edit")},
         {"UNDO", tr("Undo")},
         {"REDO", tr("Redo")},
+        {"CUT", tr("Cut")},
+        {"COPY", tr("Copy")},
+        {"PASTE", tr("Paste")},
     };
 
     QString result;
