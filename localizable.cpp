@@ -1,20 +1,19 @@
 #include "localizable.h"
 
 
-#define LOCALIZED(key, string) {key, QObject::tr(string)}
 QString Localizable::getUIString(MapKey key) {
 
     static const StringMap map = {
-        LOCALIZED("YES", "&Yes"),
-        LOCALIZED("NO", "&No"),
-        LOCALIZED("FILE", "&File"),
-        LOCALIZED("OPEN", "Open..."),
-        LOCALIZED("SAVE", "Save"),
-        LOCALIZED("SAVE_AS", "Save As..."),
-        LOCALIZED("QUIT", "Quit"),
-        LOCALIZED("EDIT", "&Edit"),
-        LOCALIZED("UNDO", "Undo"),
-        LOCALIZED("REDO", "Redo"),
+        {"YES", tr("&Yes")},
+        {"NO", tr("&No")},
+        {"FILE", tr("&File")},
+        {"OPEN", tr("Open...")},
+        {"SAVE", tr("Save")},
+        {"SAVE_AS", tr("Save As...")},
+        {"QUIT", tr("Quit")},
+        {"EDIT", tr("&Edit")},
+        {"UNDO", tr("Undo")},
+        {"REDO", tr("Redo")},
     };
 
     QString result;
