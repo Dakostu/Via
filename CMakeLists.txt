@@ -28,23 +28,27 @@ find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 
 set(TS_FILES test_translate.ts)
 
-if(ANDROID)
-  add_library(Wegweiser SHARED
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui    
-    ${TS_FILES}
-  )
-else()
+#if(ANDROID)
+#  add_library(Wegweiser SHARED
+#   main.cpp
+#    mainwindow.cpp
+#    mainwindow.h
+#    mainwindow.ui
+#    localizablestrings.cpp
+#    localizablestrings.h
+#    ${TS_FILES}
+#  )
+#else()
   add_executable(Wegweiser
     main.cpp
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    localizable.cpp
+    localizable.h
     ${TS_FILES}
   )
-endif()
+#endif()
 
 target_link_libraries(Wegweiser PRIVATE Qt5::Widgets)
 

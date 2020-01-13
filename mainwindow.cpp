@@ -1,3 +1,4 @@
+#include "localizable.h"
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
@@ -7,8 +8,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    this->menuBar()->addMenu(tr("&File"));
-    this->menuBar()->addMenu(tr("&Edit"));
+    this->menuBar()->addMenu(Localizable::getUIString("FILE"));
+    this->menuBar()->addMenu(Localizable::getUIString("EDIT"));
 }
 
 MainWindow::~MainWindow()
@@ -16,8 +17,3 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-void MainWindow::initializeMenus()
-{
-    this->menuBar()->addMenu(tr("&Edit"));
-}
