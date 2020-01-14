@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     initializeMenus();
+    initializeShapeSelections();
 
     ui->picture->setBackgroundRole(QPalette::Base);
 
@@ -57,12 +58,16 @@ void MainWindow::initializeMenus() {
     for (const auto &menu : menus) {
         this->menuBar()->addMenu(menu.get());
     }
-
 }
 
-void MainWindow::mouseMoveEvent(QMouseEvent *event) {
-    auto eventPos = event->globalPos();
-    auto bla = new NodeShapeTriangleDown(eventPos.x(),eventPos.y(),QBrush(Qt::red),QPen(Qt::black), "1");
-    this->currentScene->addItem(bla);
-    this->currentScene->addItem(bla->getText());
+void MainWindow::initializeShapeSelections() {
+    QStringList availableStyles({Localizable::getUIString("SQUARE"),
+                                 Localizable::getUIString("TRIANGLE_UP"),
+                                 Localizable::getUIString("TRIANGLE_DOWN"),
+                                 Localizable::getUIString("DIAMOND"),
+                                 Localizable::getUIString("HEXAGON"),
+                                });
+    ui->nodeStyleComboBox->addItems(availableStyles);
+    ui->routeStyleComboBox->addItems(availableStyles);
 }
+

@@ -28,8 +28,7 @@ private:
     std::vector<std::unique_ptr<QMenu>> menus;
 
     void initializeMenus();
-
-    void mouseMoveEvent(QMouseEvent* event) override;
+    void initializeShapeSelections();
 
 };
 #endif // MAINWINDOW_H

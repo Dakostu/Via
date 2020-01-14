@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>794</width>
+    <width>986</width>
     <height>600</height>
    </rect>
   </property>
@@ -287,16 +287,6 @@
                   <height>0</height>
                  </size>
                 </property>
-                <item>
-                 <property name="text">
-                  <string>Style1</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Style2</string>
-                 </property>
-                </item>
                </widget>
               </item>
              </layout>
@@ -456,16 +446,6 @@
                   <height>0</height>
                  </size>
                 </property>
-                <item>
-                 <property name="text">
-                  <string>Style1</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Style2</string>
-                 </property>
-                </item>
                </widget>
               </item>
              </layout>
@@ -538,7 +518,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>346</width>
+           <width>477</width>
            <height>532</height>
           </rect>
          </property>
@@ -566,7 +546,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>794</width>
+     <width>986</width>
      <height>23</height>
     </rect>
    </property>

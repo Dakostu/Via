@@ -20,6 +20,11 @@ QString Localizable::getUIString(MapKey key) {
         {"CUT", tr("Cut")},
         {"COPY", tr("Copy")},
         {"PASTE", tr("Paste")},
+        {"TRIANGLE_UP", tr("Triangle (Up)")},
+        {"TRIANGLE_DOWN", tr("Triangle (Down)")},
+        {"DIAMOND", tr("Diamond")},
+        {"SQUARE", tr("Square")},
+        {"HEXAGON", tr("Hexagon")},
     };
 
     QString result;
