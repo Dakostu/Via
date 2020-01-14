@@ -58,6 +58,9 @@ set(TS_FILES test_translate.ts)
     route.h
     routenode.cpp
     routenode.h
+    serializable.h
+    mapview.cpp
+    mapview.h
     ${TS_FILES}
   )
 #endif()

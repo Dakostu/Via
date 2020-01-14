@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include <QMainWindow>
+#include <QGraphicsScene>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,9 +22,12 @@ public:
 private:
     Ui::MainWindow *ui;
 
+    std::unique_ptr<QGraphicsScene> currentScene;
+
     std::vector<std::unique_ptr<QAction>> actions;
     std::vector<std::unique_ptr<QMenu>> menus;
 
     void initializeMenus();
+
 };
 #endif // MAINWINDOW_H

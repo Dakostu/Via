@@ -3,17 +3,22 @@
 
 #include <QObject>
 #include <QUndoStack>
+#include <QtPrintSupport/QPrinter>
 
 class MainWindowController : public QObject
 {
     Q_OBJECT
 
     QUndoStack undoCommandStack;
-    QWidget *ui;
+
+#ifndef QT_NO_PRINTER
+    //QPrinter printer;
+#endif
+
 
 public:
 
-    MainWindowController(QWidget *parent);
+    MainWindowController();
 };
 
 #endif // MAINWINDOWCONTROLLER_H

@@ -3,10 +3,13 @@
 #include "./ui_mainwindow.h"
 #include <QGuiApplication>
 #include <QScreen>
+#include <QGraphicsView>
+#include <QWheelEvent>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    , ui(new Ui::MainWindow),
+      currentScene(std::make_unique<QGraphicsScene>())
 {
     ui->setupUi(this);
 
@@ -14,9 +17,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->picture->setBackgroundRole(QPalette::Base);
 
-    ui->pictureScrollArea->setBackgroundRole(QPalette::Dark);
-    //ui->pictureScrollArea->setVisible(false);
-    //setCentralWidget(ui->pictureScrollArea);
+    QPixmap m("/home/dk/Documents/Code/C++/QT/Wegweiser/test/gtavc_vice_city_map_hq.jpg");
+    currentScene->addPixmap(m);
+    ui->picture->setScene(currentScene.get());
+    ui->picture->setDragMode(QGraphicsView::ScrollHandDrag);
 
     resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
 

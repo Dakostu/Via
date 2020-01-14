@@ -3,12 +3,13 @@
 
 #include "route.h"
 #include <QString>
-
+#include <QImage>
 
 class Project
-{
+{    
     QString fileName;
     QByteArray imageData;
+    QImage image;
     bool hasbeenModified;    
     QVector<Route> routes;
 
