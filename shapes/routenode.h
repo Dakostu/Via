@@ -1,7 +1,7 @@
 #ifndef ROUTENODE_H
 #define ROUTENODE_H
 
-#include "viewcustomizable.h"
+#include "../interfaces/viewcustomizable.h"
 #include <QObject>
 
 class RouteNode : public ViewCustomizable

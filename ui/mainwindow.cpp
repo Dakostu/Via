@@ -1,10 +1,12 @@
-#include "localizable.h"
+#include "../interfaces/localizable.h"
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include <QGuiApplication>
 #include <QScreen>
 #include <QGraphicsView>
 #include <QWheelEvent>
+#include <QPen>
+#include <QBrush>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -20,10 +22,6 @@ MainWindow::MainWindow(QWidget *parent)
     QPixmap m("/home/dk/Documents/Code/C++/QT/Wegweiser/test/gtavc_vice_city_map_hq.jpg");
     currentScene->addPixmap(m);
     ui->picture->setScene(currentScene.get());
-    ui->picture->setDragMode(QGraphicsView::ScrollHandDrag);
-
-    resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
-
 }
 
 MainWindow::~MainWindow()

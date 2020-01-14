@@ -1,7 +1,7 @@
 #ifndef PROJECT_H
 #define PROJECT_H
 
-#include "route.h"
+#include "../shapes/route.h"
 #include <QString>
 #include <QImage>
 

@@ -2,7 +2,7 @@
 #define ROUTE_H
 
 #include "routenode.h"
-#include "viewcustomizable.h"
+#include "../interfaces/viewcustomizable.h"
 #include <QList>
 
 class Route : public ViewCustomizable

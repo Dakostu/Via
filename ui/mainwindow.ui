@@ -580,7 +580,7 @@
   <customwidget>
    <class>MapView</class>
    <extends>QGraphicsView</extends>
-   <header>mapview.h</header>
+   <header>ui/mapview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

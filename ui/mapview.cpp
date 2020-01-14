@@ -3,14 +3,13 @@
 #include <QApplication>
 #include <QDebug>
 #include <QDesktopWidget>
-#include <QGuiApplication>
 #include <QStyleOptionGraphicsItem>
 #include <QWheelEvent>
-#include <QThread>
 
 MapView::MapView(QWidget* parent) : QGraphicsView(parent) {
     currentDetailLevel = QStyleOptionGraphicsItem::levelOfDetailFromTransform(transform());
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+    setDragMode(QGraphicsView::ScrollHandDrag);
 }
 
 

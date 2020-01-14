@@ -11,59 +11,46 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# QtCreator supports the following variables for Android, which are identical to qmake Android variables.
-# Check http://doc.qt.io/qt-5/deployment-android.html for more information.
-# They need to be set before the find_package(Qt5 ...) call.
-
-#if(ANDROID)
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-#    if (ANDROID_ABI STREQUAL "armeabi-v7a")
-#        set(ANDROID_EXTRA_LIBS
-#            ${CMAKE_CURRENT_SOURCE_DIR}/path/to/libcrypto.so
-#            ${CMAKE_CURRENT_SOURCE_DIR}/path/to/libssl.so)
-#    endif()
-#endif()
-
 find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 
-set(TS_FILES test_translate.ts)
+set(TS_FILES test/test_translate.ts)
 
-#if(ANDROID)
-#  add_library(Wegweiser SHARED
-#   main.cpp
-#    mainwindow.cpp
-#    mainwindow.h
-#    mainwindow.ui
-#    localizablestrings.cpp
-#    localizablestrings.h
-#    ${TS_FILES}
-#  )
-#else()
+file(GLOB controller_src
+        "controller/*.h"
+        "controller/*.cpp"
+        )
+
+file(GLOB interface_src
+        "interfaces/*.h"
+        "interfaces/*.cpp"
+        )
+
+file(GLOB model_src
+        "model/*.h"
+        "model/*.cpp"
+        )
+
+file(GLOB shapes_src
+        "shapes/*.h"
+        "shapes/*.cpp"
+        )
+
+file(GLOB ui_src
+        "ui/*.h"
+        "ui/*.cpp"
+        "ui/*.ui"        
+        )
+
+
   add_executable(Wegweiser
     main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
-    localizable.cpp
-    localizable.h
-    mainwindowcontroller.cpp
-    mainwindowcontroller.h
-    mainwindowdatamodel.cpp
-    mainwindowdatamodel.h
-    project.cpp
-    project.h
-    viewcustomizable.cpp
-    viewcustomizable.h
-    route.cpp
-    route.h
-    routenode.cpp
-    routenode.h
-    serializable.h
-    mapview.cpp
-    mapview.h
+    ${controller_src}
+    ${interface_src}
+    ${model_src}
+    ${shapes_src}
+    ${ui_src}
     ${TS_FILES}
   )
-#endif()
 
 target_link_libraries(Wegweiser PRIVATE Qt5::Widgets)
 
