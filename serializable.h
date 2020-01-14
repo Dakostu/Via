@@ -1,13 +1,17 @@
 #ifndef SERIALIZABLE_H
 #define SERIALIZABLE_H
 
-#include <QObject>
+#include <QJsonObject>
 
 class Serializable
 {
-    Q_OBJECT
-public:
+protected:
     Serializable();
+    virtual ~Serializable();
+public:
+    virtual void fromJSON(const QJsonObject &object) = 0;
+    virtual QJsonObject toJSON() = 0;
+
 };
 
 #endif // SERIALIZABLE_H
