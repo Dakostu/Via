@@ -29,5 +29,7 @@ private:
 
     void initializeMenus();
 
+    void mouseMoveEvent(QMouseEvent* event) override;
+
 };
 #endif // MAINWINDOW_H

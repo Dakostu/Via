@@ -9,6 +9,7 @@
 #include <QBrush>
 #include <QGraphicsRectItem>
 
+#include "../shapes/nodeshapetriangledown.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -24,9 +25,6 @@ MainWindow::MainWindow(QWidget *parent)
     QPixmap m("/home/dk/Documents/Code/C++/QT/Wegweiser/test/gtavc_vice_city_map_hq.jpg");
     currentScene->addPixmap(m);
     ui->picture->setScene(currentScene.get());
-
-    auto test = new QGraphicsRectItem(QRect(0,0,50,50));
-    currentScene->addItem(test);
 
 
 }
@@ -60,4 +58,11 @@ void MainWindow::initializeMenus() {
         this->menuBar()->addMenu(menu.get());
     }
 
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *event) {
+    auto eventPos = event->globalPos();
+    auto bla = new NodeShapeTriangleDown(eventPos.x(),eventPos.y(),QBrush(Qt::red),QPen(Qt::black), "1");
+    this->currentScene->addItem(bla);
+    this->currentScene->addItem(bla->getText());
 }

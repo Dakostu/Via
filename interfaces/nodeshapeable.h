@@ -10,19 +10,26 @@ class NodeShapeable : public QGraphicsPolygonItem
 {
 
 protected:
-    int size;
+    qreal size;
     QBrush fillColor;
     QPen lineColor;
     QGraphicsSimpleTextItem nodeText;
+    qreal midX;
+    qreal midY;
+
+    static constexpr qreal DEFAULT_LENGTH = 9.0;
+    static constexpr qreal DEFAULT_EXTRA_LENGTH = 1.0;
 
 public:
-    NodeShapeable(const QVector<QPointF> &points, QBrush brush, QPen pen, QGraphicsItem *scene, QString text);
+    NodeShapeable(qreal x, qreal y, QBrush brush, QPen pen, QString text);
 
-    int sizeMultiplier(int val);
-    int getSize();
-    void setSize(int newSize);
+    qreal sizeMultiplier(qreal val);
+    qreal getSize();
+    void setSize(qreal newSize);
+    QPointF getCenter();
+    QGraphicsSimpleTextItem* getText();
 
-    virtual QPointF getCenter() = 0;
+    virtual void drawShape() = 0;
 
 };
 

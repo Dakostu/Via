@@ -5,6 +5,7 @@
 #include <QDesktopWidget>
 #include <QStyleOptionGraphicsItem>
 #include <QWheelEvent>
+#include "../shapes/diamond.h"
 
 MapView::MapView(QWidget* parent) : QGraphicsView(parent) {
     currentDetailLevel = QStyleOptionGraphicsItem::levelOfDetailFromTransform(transform());
@@ -51,6 +52,12 @@ void MapView::mouseMoveEvent(QMouseEvent* event) {
 
         QCursor::setPos(eventPos);
     }
+
+    auto eventPos2 = mapToScene(event->localPos().x(), event->localPos().y());
+    auto bla = new Diamond(eventPos2.x(),eventPos2.y(),QBrush(Qt::red),QPen(Qt::black), "1");
+    this->scene()->addItem(bla);
+    this->scene()->addItem(bla->getText());
+
 
     QGraphicsView::mouseMoveEvent(event);
 }

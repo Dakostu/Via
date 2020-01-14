@@ -1,20 +1,32 @@
 #include "nodeshapeable.h"
 
-int NodeShapeable::sizeMultiplier(int val) {
+qreal NodeShapeable::sizeMultiplier(qreal val) {
     return val * size;
 }
 
-int NodeShapeable::getSize() {
+qreal NodeShapeable::getSize() {
     return size;
 }
 
-void NodeShapeable::setSize(int newSize) {
+void NodeShapeable::setSize(qreal newSize) {
     size = newSize;
 }
 
-NodeShapeable::NodeShapeable(const QVector<QPointF> &points, QBrush brush, QPen pen, QGraphicsItem *scene, QString text)
-    : QGraphicsPolygonItem(points, scene), nodeText(text)
+NodeShapeable::NodeShapeable(qreal x, qreal y, QBrush brush, QPen pen, QString text)
+    : QGraphicsPolygonItem({}, nullptr), midX(x), midY(y)
 {
     this->setPen(pen);
     this->setBrush(brush);
+    this->nodeText.setText(text);
+    this->nodeText.setBrush(pen.brush());
+    this->nodeText.setPos(x,y);
+}
+
+QPointF NodeShapeable::getCenter() {
+    return {midX, midY};
+}
+
+
+QGraphicsSimpleTextItem* NodeShapeable::getText() {
+     return &nodeText;
 }
