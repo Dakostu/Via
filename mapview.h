@@ -13,7 +13,8 @@ public:
     MapView(QWidget *parent);
 
     void wheelEvent(QWheelEvent *event) override;
-    void dragMoveEvent(QDragMoveEvent *event) override;
+
+    void mouseMoveEvent(QMouseEvent* event) override;
 };
 
 #endif // MAPVIEW_H
