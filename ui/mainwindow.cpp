@@ -7,6 +7,8 @@
 #include <QWheelEvent>
 #include <QPen>
 #include <QBrush>
+#include <QGraphicsRectItem>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -22,6 +24,11 @@ MainWindow::MainWindow(QWidget *parent)
     QPixmap m("/home/dk/Documents/Code/C++/QT/Wegweiser/test/gtavc_vice_city_map_hq.jpg");
     currentScene->addPixmap(m);
     ui->picture->setScene(currentScene.get());
+
+    auto test = new QGraphicsRectItem(QRect(0,0,50,50));
+    currentScene->addItem(test);
+
+
 }
 
 MainWindow::~MainWindow()
