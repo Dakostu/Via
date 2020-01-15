@@ -10,7 +10,8 @@
 MapView::MapView(QWidget* parent) : QGraphicsView(parent) {
     currentDetailLevel = QStyleOptionGraphicsItem::levelOfDetailFromTransform(transform());
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-    setDragMode(QGraphicsView::ScrollHandDrag);
+    setDragMode(QGraphicsView::ScrollHandDrag);   
+
 }
 
 
@@ -32,7 +33,6 @@ void MapView::wheelEvent(QWheelEvent *event) {
     }
 }
 
-#include <QDateTime>
 
 void MapView::mouseMoveEvent(QMouseEvent* event) {
     const QRect screenRect = QApplication::desktop()->screenGeometry(this);
@@ -52,17 +52,7 @@ void MapView::mouseMoveEvent(QMouseEvent* event) {
         eventPos.setY(reEnterBoundaries(eventPos.y(), screenRect.top(), screenRect.bottom()));
 
         QCursor::setPos(eventPos);
-    }
-
-    auto eventPos2 = mapToScene(event->localPos().x(), event->localPos().y());
-    auto bla = new Octagon(eventPos2.x(),eventPos2.y(),QBrush(Qt::red),QPen(Qt::black), "1");
-
-    qsrand(QDateTime::currentMSecsSinceEpoch() / 1000);
-    qDebug() << qrand();
-    bla->setSize(qrand()%2 == 0 ? 1 : 25.9);
-    this->scene()->addItem(bla);
-    this->scene()->addItem(bla->getText());
-
+    }    
 
     QGraphicsView::mouseMoveEvent(event);
 }

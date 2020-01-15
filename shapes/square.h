@@ -6,7 +6,7 @@
 class Square : public NodeShapeable
 {
 public:
-    Square(qreal x, qreal y, QBrush brush, QPen pen, QString text);
+    Square(qreal x, qreal y, QBrush brush,  QString text);
 
     virtual void drawShape() override;
 };

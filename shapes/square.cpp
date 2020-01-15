@@ -1,7 +1,7 @@
 #include "square.h"
 
-Square::Square(qreal x, qreal y, QBrush brush, QPen pen, QString text)
-    : NodeShapeable(x, y, brush, pen, text)
+Square::Square(qreal x, qreal y, QBrush brush, QString text)
+    : NodeShapeable(x, y, brush, text)
 
 {
     this->drawShape();

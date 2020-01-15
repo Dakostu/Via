@@ -1,7 +1,7 @@
 #include "triangleup.h"
 
-TriangleUp::TriangleUp(qreal x, qreal y, QBrush brush, QPen pen, QString text)
-    : NodeShapeable(x, y, brush, pen, text)
+TriangleUp::TriangleUp(qreal x, qreal y, QBrush brush, QString text)
+    : NodeShapeable(x, y, brush, text)
 
 {
     this->drawShape();

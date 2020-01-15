@@ -9,7 +9,7 @@
 #include <QBrush>
 #include <QGraphicsRectItem>
 
-#include "../shapes/triangledown.h"
+#include "../shapes/octagon.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -26,6 +26,11 @@ MainWindow::MainWindow(QWidget *parent)
     QPixmap m("/home/dk/Documents/Code/C++/QT/Wegweiser/test/gtavc_vice_city_map_hq.jpg");
     currentScene->addPixmap(m);
     ui->picture->setScene(currentScene.get());
+
+    auto bla = new Octagon(500, 500, QBrush(Qt::red), "1");
+    currentScene->addItem(bla);
+    currentScene->addItem(bla->getNodeLabel());
+    currentScene->addItem(bla->getExtraTextLabel());
 
 
 }
