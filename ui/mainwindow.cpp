@@ -27,10 +27,16 @@ MainWindow::MainWindow(QWidget *parent)
     currentScene->addPixmap(m);
     ui->picture->setScene(currentScene.get());
 
-    auto bla = new Octagon(500, 500, QBrush(Qt::red), "1");
+    auto bla = new Octagon(500, 500, QBrush(Qt::blue), "1");
     currentScene->addItem(bla);
     currentScene->addItem(bla->getNodeLabel());
     currentScene->addItem(bla->getExtraTextLabel());
+
+    auto bla2 = new Octagon(600, 500, QBrush(Qt::red), "12");
+    currentScene->addItem(bla2);
+    currentScene->addItem(bla2->getNodeLabel());
+    currentScene->addItem(bla2->getExtraTextLabel());
+
 
 }
 

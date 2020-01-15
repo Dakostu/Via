@@ -1,6 +1,7 @@
 #include "nodeshapeable.h"
 #include <QFont>
 #include <QDebug>
+#include <QGraphicsSceneMouseEvent>
 
 qreal NodeShapeable::sizeMultiplier(qreal val) {
     return val * size;
@@ -25,26 +26,21 @@ NodeShapeable::NodeShapeable(qreal x, qreal y, QBrush brush, QString text)
 {
 
     setBrush(brush);
-    setDefaultPen();
 
     nodeLabel.setText(text);
-    nodeLabel.setBrush(this->pen().brush());
     auto nodeLabelMidX = midX - nodeLabel.boundingRect().width()/2;
     auto nodeLabelMidY = midY - nodeLabel.boundingRect().height()/2;
     nodeLabel.setPos(nodeLabelMidX, nodeLabelMidY);
 
-    qDebug() << brush.color().lightnessF();
-
     extraTextLabel.setText("Info");
     extraTextLabel.setBrush(this->brush());
-    auto extraTextPen = this->pen();
-    extraTextPen.setWidthF(size * 10);
-    extraTextLabel.setPen(extraTextPen);
     extraTextLabel.setPos(nodeLabelMidX + 20, nodeLabelMidY);
 
     this->setFlag(ItemIsFocusable);
     this->setFlag(ItemIsMovable);
     this->setAcceptHoverEvents(true);
+
+    setDefaultPenColor();
 }
 
 QPointF NodeShapeable::getCenter() {
@@ -60,17 +56,52 @@ QGraphicsSimpleTextItem* NodeShapeable::getExtraTextLabel() {
 }
 
 void NodeShapeable::hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) {
-    setPen(QPen(Qt::blue));
+
+    auto rgb = this->brush().color().rgb();
+    auto invertedRgb = QColor(~rgb);
+    setPenColor(invertedRgb);
+    QGraphicsPolygonItem::hoverEnterEvent(hoverEvent);
 }
 
 void NodeShapeable::hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) {
-    setDefaultPen();
+    setDefaultPenColor();
+    QGraphicsPolygonItem::hoverLeaveEvent(hoverEvent);
 }
 
-void NodeShapeable::setDefaultPen() {
+void NodeShapeable::setDefaultPenColor() {
     if (brush().color().lightnessF() < FILLCOLOR_LIGHTNESS_THRESHOLD) {
-        setPen(QPen(Qt::white));
+        setPenColor(Qt::white);
     } else {
-        setPen(QPen(Qt::black));
+        setPenColor(Qt::black);
     }
+}
+
+void NodeShapeable::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
+
+    QGraphicsPolygonItem::mouseMoveEvent(mouseEvent);
+    qDebug() << mouseEvent;
+    //midX = mapToScene(mouseEvent->scenePos()).x();
+    //midX = mapToScene(mouseEvent->scenePos()).y();
+
+    //auto nodeLabelMidX = midX - nodeLabel.boundingRect().width()/2;
+    //auto nodeLabelMidY = midY - nodeLabel.boundingRect().height()/2;
+//    nodeLabel.setPos(mouseEvent->scenePos().x(), mouseEvent->scenePos().y());
+    midX += this->pos().x();
+    midY += this->pos().y();
+    qDebug() << midX << midY;
+    qDebug() << this->pos();
+
+    //nodeLabel.setPos(midX + this->pos().x(), midY + this->pos().y());
+    //auto nodeLabelMidX = midX - nodeLabel.boundingRect().width()/2;
+    //auto nodeLabelMidY = midY - nodeLabel.boundingRect().height()/2;
+    //nodeLabel.setPos(nodeLabelMidX, nodeLabelMidY);
+    //extraTextLabel.setPos(nodeLabelMidX + 20, nodeLabelMidY);
+}
+
+void NodeShapeable::setPenColor(const QColor &color) {
+    setPen(QPen(color));
+    nodeLabel.setBrush(this->pen().brush());
+    auto extraTextPen = this->pen();
+    extraTextPen.setWidthF(size);
+    extraTextLabel.setPen(extraTextPen);
 }
