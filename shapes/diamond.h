@@ -5,6 +5,7 @@
 
 class Diamond : public NodeShapeable
 {
+    static constexpr qreal SIZE_QUOTIENT = 1.2;
 public:
     Diamond(qreal x, qreal y, QBrush brush, QPen pen, QString text);
 

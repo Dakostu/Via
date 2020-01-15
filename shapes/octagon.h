@@ -6,7 +6,7 @@
 class Octagon : public NodeShapeable
 {
 
-    static constexpr qreal SIZE_QUOTIENT = 2;
+    static constexpr qreal SIZE_QUOTIENT = 2.0;
 public:
     Octagon(qreal x, qreal y, QBrush brush, QPen pen, QString text);
 

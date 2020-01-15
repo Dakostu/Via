@@ -10,6 +10,7 @@ qreal NodeShapeable::getSize() {
 
 void NodeShapeable::setSize(qreal newSize) {
     size = newSize;
+    this->drawShape();
 }
 
 NodeShapeable::NodeShapeable(qreal x, qreal y, QBrush brush, QPen pen, QString text)
