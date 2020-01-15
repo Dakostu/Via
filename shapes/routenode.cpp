@@ -67,6 +67,10 @@ void RouteNode::setOpacity(qreal opacity) {
     extraTextLabel.setOpacity(opacity);
 }
 
+bool RouteNode::isInvisible() {
+    return opacity() < 0.000001;
+}
+
 RouteExtraTextLabel* RouteNode::getExtraText() {
     return &extraTextLabel;
 }

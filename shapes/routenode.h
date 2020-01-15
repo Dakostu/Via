@@ -31,6 +31,7 @@ public:
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
 
     virtual void setOpacity(qreal opacity);
+    bool isInvisible();
 
     RouteExtraTextLabel* getExtraText();
 
