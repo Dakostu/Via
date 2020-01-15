@@ -20,7 +20,7 @@ NodeShapeable::NodeShapeable(qreal x, qreal y, QBrush brush, QPen pen, QString t
     this->setBrush(brush);
     this->nodeText.setText(text);
     this->nodeText.setBrush(pen.brush());
-    this->nodeText.setPos(x,y);
+    this->nodeText.setPos(x - nodeText.boundingRect().width()/2,y - nodeText.boundingRect().height()/2);
 }
 
 QPointF NodeShapeable::getCenter() {

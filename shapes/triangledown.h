@@ -3,10 +3,10 @@
 
 #include "../interfaces/nodeshapeable.h"
 
-class NodeShapeTriangleUp : public NodeShapeable
+class TriangleDown : public NodeShapeable
 {
 public:
-    NodeShapeTriangleUp(qreal x, qreal y, QBrush brush, QPen pen, QString text);
+    TriangleDown(qreal x, qreal y, QBrush brush, QPen pen, QString text);
 
     virtual void drawShape() override;
 };

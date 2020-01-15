@@ -5,7 +5,7 @@
 #include <QDesktopWidget>
 #include <QStyleOptionGraphicsItem>
 #include <QWheelEvent>
-#include "../shapes/octagon.h"
+#include "../shapes/triangleup.h"
 
 MapView::MapView(QWidget* parent) : QGraphicsView(parent) {
     currentDetailLevel = QStyleOptionGraphicsItem::levelOfDetailFromTransform(transform());
@@ -55,7 +55,7 @@ void MapView::mouseMoveEvent(QMouseEvent* event) {
     }
 
     auto eventPos2 = mapToScene(event->localPos().x(), event->localPos().y());
-    auto bla = new Octagon(eventPos2.x(),eventPos2.y(),QBrush(Qt::red),QPen(Qt::black), "1");
+    auto bla = new TriangleUp(eventPos2.x(),eventPos2.y(),QBrush(Qt::red),QPen(Qt::black), "1");
 
     qsrand(QDateTime::currentMSecsSinceEpoch() / 1000);
     qDebug() << qrand();

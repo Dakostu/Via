@@ -9,7 +9,7 @@
 #include <QBrush>
 #include <QGraphicsRectItem>
 
-#include "../shapes/nodeshapetriangledown.h"
+#include "../shapes/triangledown.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
