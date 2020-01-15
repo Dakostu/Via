@@ -25,6 +25,7 @@ QString Localizable::getUIString(MapKey key) {
         {"DIAMOND", tr("Diamond")},
         {"SQUARE", tr("Square")},
         {"HEXAGON", tr("Hexagon")},
+        {"OCTAGON", tr("Octagon")},
     };
 
     QString result;
