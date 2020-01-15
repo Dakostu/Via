@@ -7,7 +7,7 @@ class Hexagon : public NodeShapeable
 {
     static constexpr qreal SIZE_QUOTIENT = 2.0;
 public:
-    Hexagon(qreal x, qreal y, QBrush brush,  QString text);
+    Hexagon(qreal x, qreal y, QBrush brush);
 
     virtual void drawShape() override;
 };

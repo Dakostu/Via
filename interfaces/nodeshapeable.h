@@ -1,44 +1,33 @@
 #ifndef NODESHAPEABLE_H
 #define NODESHAPEABLE_H
 
+
+#include "../interfaces/viewcustomizable.h"
 #include <QBrush>
 #include <QGraphicsPolygonItem>
 #include <QPen>
 #include <QGraphicsSimpleTextItem>
 
-class NodeShapeable : public QGraphicsPolygonItem
+class NodeShapeable : public QGraphicsPolygonItem, public ViewCustomizable
 {
 
 protected:
-    qreal size;
-    QGraphicsSimpleTextItem nodeLabel;
-    QGraphicsSimpleTextItem extraTextLabel;
-    qreal midX;
-    qreal midY;
-
     static constexpr qreal DEFAULT_LENGTH = 9.0;
-    static constexpr qreal DEFAULT_EXTRA_LENGTH = 1.0;
-    static constexpr qreal FILLCOLOR_LIGHTNESS_THRESHOLD = 0.3;
-
-    void setDefaultPenColor();
+    static constexpr qreal DEFAULT_EXTRA_LENGTH = 1.0;    
+    qreal originX;
+    qreal originY;
 
 public:
-    NodeShapeable(qreal x, qreal y, QBrush brush, QString text);
+    NodeShapeable(qreal x, qreal y, QBrush brush);
 
-    qreal sizeMultiplier(qreal val);
-    qreal getSize();
-    void setSize(qreal newSize);
     QPointF getCenter();
-    QGraphicsSimpleTextItem* getNodeLabel();
-    QGraphicsSimpleTextItem* getExtraTextLabel();
 
-    void setPenColor(const QColor &color);
+    virtual void setSize(qreal newSize) override;
+    virtual void setColors(const QColor &color) override;
+    virtual void setDefaultColors() override;
 
     virtual void drawShape() = 0;
 
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
-    void hoverEnterEvent(QGraphicsSceneHoverEvent * hoverEvent) override;
-    void hoverLeaveEvent(QGraphicsSceneHoverEvent * hoverEvent) override;
 
 };
 

@@ -1,14 +1,14 @@
 #ifndef ROUTE_H
 #define ROUTE_H
 
-#include "routenode.h"
+//#include "routenode.h"
 #include "../interfaces/viewcustomizable.h"
 #include <QList>
 
 class Route : public ViewCustomizable
 {
     bool showDirection;
-    QList<RouteNode> nodes;
+    //QList<RouteNode> nodes;
 public:
     Route();
 };

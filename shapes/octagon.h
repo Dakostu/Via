@@ -8,7 +8,7 @@ class Octagon : public NodeShapeable
 
     static constexpr qreal SIZE_QUOTIENT = 2.0;
 public:
-    Octagon(qreal x, qreal y, QBrush brush, QString text);
+    Octagon(qreal x, qreal y, QBrush brush);
 
     virtual void drawShape() override;
 };

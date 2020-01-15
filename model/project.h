@@ -11,7 +11,7 @@ class Project
     QByteArray imageData;
     QImage image;
     bool hasbeenModified;    
-    QVector<Route> routes;
+    //QVector<Route> routes;
 
 public:
     Project();

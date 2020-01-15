@@ -9,6 +9,7 @@
 #include <QBrush>
 #include <QGraphicsRectItem>
 
+#include "../shapes/routenode.h"
 #include "../shapes/octagon.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -27,17 +28,9 @@ MainWindow::MainWindow(QWidget *parent)
     currentScene->addPixmap(m);
     ui->picture->setScene(currentScene.get());
 
-    auto bla = new Octagon(500, 500, QBrush(Qt::blue), "1");
-    currentScene->addItem(bla);
-    currentScene->addItem(bla->getNodeLabel());
-    currentScene->addItem(bla->getExtraTextLabel());
-
-    auto bla2 = new Octagon(600, 500, QBrush(Qt::red), "12");
-    currentScene->addItem(bla2);
-    currentScene->addItem(bla2->getNodeLabel());
-    currentScene->addItem(bla2->getExtraTextLabel());
-
-
+    auto node = new RouteNode(new Octagon(500,500, QBrush(Qt::darkRed)), "1", "This is a text\nhey");
+    currentScene->addItem(node);
+    currentScene->addItem(node->getExtraText());
 }
 
 MainWindow::~MainWindow()
