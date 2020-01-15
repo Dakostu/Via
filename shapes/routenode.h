@@ -16,7 +16,7 @@ class RouteNode : public QGraphicsItemGroup, public ViewCustomizable
     RouteNodeLabel nodeLabel;
     RouteExtraTextLabel extraTextLabel;
 
-    void centerNodeLabelBox();
+    void centerNodeLabelBox();    
 
 
 public:
@@ -29,6 +29,8 @@ public:
 
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
+
+    virtual void setOpacity(qreal opacity);
 
     RouteExtraTextLabel* getExtraText();
 

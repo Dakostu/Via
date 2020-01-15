@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->picture->setScene(currentScene.get());
 
     auto node = new RouteNode(new Octagon(500,500, QBrush(Qt::darkRed)), "1", "This is a text\nhey");
+    node->setSize(22);
+    node->setOpacity(0.5);
     currentScene->addItem(node);
     currentScene->addItem(node->getExtraText());
 }

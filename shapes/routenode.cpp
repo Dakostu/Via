@@ -1,22 +1,23 @@
 #include "routenode.h"
 
 RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extraTextLabelText)
-    : node(newNode), nodeLabel(nodeLabelText), extraTextLabel(extraTextLabelText) {
+    : node(newNode), nodeLabel(nodeLabelText), extraTextLabel(extraTextLabelText, node.get()) {
 
     setDefaultColors();
 
-    setAcceptHoverEvents(true);
-    this->setFlag(ItemIsMovable);
+    acceptHoverEvents();
+    setFlag(ItemIsMovable);
 
+    nodeLabel.setColors(node->pen().brush().color());
+    extraTextLabel.setColors(node->pen().brush().color());
 
-    this->addToGroup(node.get());
-
-    nodeLabel.setBrush(node->pen().brush());
     centerNodeLabelBox();
-    this->addToGroup(&nodeLabel);
+
+    addToGroup(node.get());
+    addToGroup(&nodeLabel);
 
     auto center = node->boundingRect().center();
-    extraTextLabel.setPos(center.x() + 10 * size, center.y());
+    extraTextLabel.setPos(center.x() + (90 * size - 60), center.y() - extraTextLabel.boundingRect().height() / 2);
 }
 
 RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText) :
@@ -37,8 +38,8 @@ void RouteNode::setColors(const QColor &color) {
 
 void RouteNode::setDefaultColors() {
     node->setDefaultColors();
-    extraTextLabel.setDefaultColors();
     nodeLabel.setColors(node->pen().brush().color());
+    extraTextLabel.setColors(node->pen().brush().color());
 }
 
 void RouteNode::centerNodeLabelBox() {
@@ -58,6 +59,12 @@ void RouteNode::hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) {
 void RouteNode::hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) {
     setDefaultColors();
     QGraphicsItemGroup::hoverLeaveEvent(hoverEvent);
+}
+
+void RouteNode::setOpacity(qreal opacity) {
+    QGraphicsItem::setOpacity(opacity);
+    nodeLabel.setOpacity(opacity);
+    extraTextLabel.setOpacity(opacity);
 }
 
 RouteExtraTextLabel* RouteNode::getExtraText() {
