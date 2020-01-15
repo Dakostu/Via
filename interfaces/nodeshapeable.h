@@ -20,6 +20,8 @@ protected:
     static constexpr qreal DEFAULT_EXTRA_LENGTH = 1.0;
     static constexpr qreal FILLCOLOR_LIGHTNESS_THRESHOLD = 0.3;
 
+    void setDefaultPen();
+
 public:
     NodeShapeable(qreal x, qreal y, QBrush brush, QString text);
 
@@ -31,6 +33,9 @@ public:
     QGraphicsSimpleTextItem* getExtraTextLabel();
 
     virtual void drawShape() = 0;
+
+    void hoverEnterEvent(QGraphicsSceneHoverEvent * hoverEvent) override;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent * hoverEvent) override;
 
 };
 

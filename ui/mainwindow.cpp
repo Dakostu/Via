@@ -32,7 +32,6 @@ MainWindow::MainWindow(QWidget *parent)
     currentScene->addItem(bla->getNodeLabel());
     currentScene->addItem(bla->getExtraTextLabel());
 
-
 }
 
 MainWindow::~MainWindow()

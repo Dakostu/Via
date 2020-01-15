@@ -23,13 +23,9 @@ void NodeShapeable::setSize(qreal newSize) {
 NodeShapeable::NodeShapeable(qreal x, qreal y, QBrush brush, QString text)
     : QGraphicsPolygonItem({}, nullptr), midX(x), midY(y)
 {
-    if (brush.color().lightnessF() < FILLCOLOR_LIGHTNESS_THRESHOLD) {
-        setPen(QPen(Qt::white));
-    } else {
-        setPen(QPen(Qt::black));
-    }
 
     setBrush(brush);
+    setDefaultPen();
 
     nodeLabel.setText(text);
     nodeLabel.setBrush(this->pen().brush());
@@ -37,12 +33,18 @@ NodeShapeable::NodeShapeable(qreal x, qreal y, QBrush brush, QString text)
     auto nodeLabelMidY = midY - nodeLabel.boundingRect().height()/2;
     nodeLabel.setPos(nodeLabelMidX, nodeLabelMidY);
 
+    qDebug() << brush.color().lightnessF();
+
     extraTextLabel.setText("Info");
     extraTextLabel.setBrush(this->brush());
     auto extraTextPen = this->pen();
-    extraTextPen.setWidthF(0.3);
+    extraTextPen.setWidthF(size * 10);
     extraTextLabel.setPen(extraTextPen);
     extraTextLabel.setPos(nodeLabelMidX + 20, nodeLabelMidY);
+
+    this->setFlag(ItemIsFocusable);
+    this->setFlag(ItemIsMovable);
+    this->setAcceptHoverEvents(true);
 }
 
 QPointF NodeShapeable::getCenter() {
@@ -57,3 +59,18 @@ QGraphicsSimpleTextItem* NodeShapeable::getExtraTextLabel() {
      return &extraTextLabel;
 }
 
+void NodeShapeable::hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) {
+    setPen(QPen(Qt::blue));
+}
+
+void NodeShapeable::hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) {
+    setDefaultPen();
+}
+
+void NodeShapeable::setDefaultPen() {
+    if (brush().color().lightnessF() < FILLCOLOR_LIGHTNESS_THRESHOLD) {
+        setPen(QPen(Qt::white));
+    } else {
+        setPen(QPen(Qt::black));
+    }
+}
