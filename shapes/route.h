@@ -4,15 +4,28 @@
 //#include "routenode.h"
 #include "../interfaces/viewcustomizable.h"
 #include "routenode.h"
+#include "routeconnection.h"
 #include <QLinkedList>
+#include <QGraphicsScene>
+#include <list>
 
 class Route : public ViewCustomizable
 {
+protected:
     bool showDirection;
     QColor routeColor;
-    QLinkedList<RouteNode> nodes;
+    QGraphicsScene *currentScene;
+
+
+    std::list<RouteNode> nodes;
+    std::list<RouteConnection> connections;
 public:
-    Route();
+    virtual void setColors(const QColor &color) override;
+    virtual void setDefaultColors() override;
+
+    Route(const QColor &color, QGraphicsScene *scene);
+
+    virtual void addNode(qreal x, qreal y);
 };
 
 #endif // ROUTE_H

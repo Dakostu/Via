@@ -1,5 +1,5 @@
-#ifndef NODESHAPETRIANGLE_H
-#define NODESHAPETRIANGLE_H
+#ifndef DIAMOND_H
+#define DIAMOND_H
 
 #include "../interfaces/nodeshapeable.h"
 
@@ -12,4 +12,4 @@ public:
     virtual void drawShape() override;
 };
 
-#endif // NODESHAPETRIANGLE_H
+#endif // DIAMOND_H

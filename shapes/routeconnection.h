@@ -17,13 +17,15 @@ class RouteConnection : public QLineF, public ViewCustomizable
     //std::unique_ptr<NodeShapeable> midShape;
 
 public:
-    RouteConnection(RouteNode *fromNode, RouteNode *toNode, QColor color);
+    RouteConnection(RouteNode *fromNode, RouteNode *toNode, QColor &color);
 
     virtual void setColors(const QColor &color) override;
     virtual void setDefaultColors() override;
 
     virtual void setSize(qreal newSize) override;
     virtual QPen getPen();
+    virtual RouteNode* getFrom();
+    virtual RouteNode* getTo();
 
 };
 

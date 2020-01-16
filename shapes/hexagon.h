@@ -1,5 +1,5 @@
-#ifndef NODESHAPETRIANGLE_H
-#define NODESHAPETRIANGLE_H
+#ifndef HEXAGON_H
+#define HEXAGON_H
 
 #include "../interfaces/nodeshapeable.h"
 
@@ -12,4 +12,4 @@ public:
     virtual void drawShape() override;
 };
 
-#endif // NODESHAPETRIANGLE_H
+#endif // HEXAGON_H
