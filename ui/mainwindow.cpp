@@ -38,7 +38,6 @@ MainWindow::MainWindow(QWidget *parent)
     route.addNode(600,550);
     route.addNode(400,150);
 
-
 }
 
 MainWindow::~MainWindow()

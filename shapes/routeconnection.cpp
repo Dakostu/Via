@@ -1,16 +1,12 @@
 #include "routeconnection.h"
 #include "triangleup.h"
 
-RouteConnection::RouteConnection(RouteNode *fromNode, RouteNode *toNode, QColor &color)
-    : from(fromNode), to(toNode), defaultPen(color), currentPen(defaultPen)
+RouteConnection::RouteConnection(QPointF from, QPointF to, QColor color)
+    : defaultPen(color, getSize() + 2, Qt::SolidLine), currentPen(defaultPen),
+      cartesianLine(new QLineF(from, to))
 {
-    setSize(from->getSize());
-
-    auto fromCenter = from->boundingRect().center();
-    auto toCenter = to->boundingRect().center();
-
-    setPoints(fromCenter, toCenter);
-
+    this->setPen(currentPen);
+    this->setLine(*cartesianLine);
 }
 
 
@@ -31,10 +27,16 @@ QPen RouteConnection::getPen() {
     return currentPen;
 }
 
-RouteNode* RouteConnection::getFrom() {
-    return from;
+void RouteConnection::setNewPosition(QPointF p1, QPointF p2) {
+    cartesianLine->setP1(p1);
+    cartesianLine->setP2(p2);
+    this->setLine(*cartesianLine);
 }
 
-RouteNode* RouteConnection::getTo() {
-    return to;
+QPointF RouteConnection::p1() {
+    return cartesianLine->p1();
+}
+
+QPointF RouteConnection::p2() {
+    return cartesianLine->p2();
 }

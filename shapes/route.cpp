@@ -32,15 +32,16 @@ void Route::setDefaultColors() {
 
 void Route::addNode(qreal x, qreal y) {
 
-    auto lastNode = nodes.back();
+    auto previousNode = nodes.back();
     nodes.emplace_back(new RouteNode(new Hexagon(x,y, routeColor),
                        QString::number(nodes.size() + 1)));
 
-    if (nodes.size() > 1) {
-        connections.emplace_back(new RouteConnection(lastNode, nodes.back(), routeColor));
-        currentScene->addLine(*connections.back(), connections.back()->getPen());
+    if (previousNode) {
+        nodes.back()->connect(*previousNode);
+        for (const auto &connection : previousNode->getFromConnections()) {
+            currentScene->addItem(connection);
+        }
     }
-
     nodes.back()->setZValue(std::numeric_limits<qreal>::max());
     currentScene->addItem(nodes.back());
 }

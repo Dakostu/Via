@@ -5,6 +5,7 @@
 #include "../interfaces/viewcustomizable.h"
 #include "../ui/routenodelabel.h"
 #include "../ui/routeextratextlabel.h"
+#include "routeconnection.h"
 #include <QObject>
 #include <QGraphicsItemGroup>
 #include <memory>
@@ -12,10 +13,13 @@
 class RouteNode : public QGraphicsItemGroup, public ViewCustomizable
 {
 
+protected:
     std::unique_ptr<NodeShapeable> node;
     RouteNodeLabel nodeLabel;
     RouteExtraTextLabel extraTextLabel;
     bool styleDiffersFromRoute;
+    QVector<RouteConnection*> fromConnections;
+    QVector<RouteConnection*> toConnections;
 
     void centerNodeLabelBox();    
 
@@ -30,12 +34,15 @@ public:
 
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
+    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
 
     virtual void setOpacity(qreal opacity);
     virtual void setNodeLabelOpacity(qreal opacity);
     bool isInvisible();
 
+    QVector<RouteConnection*> getFromConnections();
     RouteExtraTextLabel* getExtraText();
+    void connect(RouteNode &from);
 
 };
 

@@ -1,4 +1,5 @@
 #include "routenode.h"
+#include <QGraphicsSceneMouseEvent>
 
 RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extraTextLabelText)
     : node(newNode), nodeLabel(nodeLabelText), extraTextLabel(extraTextLabelText, node.get()),
@@ -79,4 +80,29 @@ bool RouteNode::isInvisible() {
 
 RouteExtraTextLabel* RouteNode::getExtraText() {
     return &extraTextLabel;
+}
+
+void RouteNode::connect(RouteNode &from) {
+    auto color = node->brush().color();
+    auto connection = new RouteConnection(from.boundingRect().center(), this->boundingRect().center(), color);
+    this->fromConnections.append(connection);
+    from.toConnections.append(connection);
+}
+
+#include <QDebug>
+void RouteNode::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
+    auto thisPos = this->boundingRect().center() + this->pos();
+    for (auto &conn : fromConnections) {
+        auto fromNodePos = conn->p1();
+        conn->setNewPosition(fromNodePos, thisPos);
+    }
+    for (auto &conn : toConnections) {
+        auto toNodePos = conn->p2();
+        conn->setNewPosition(thisPos, toNodePos);
+    }
+    QGraphicsItemGroup::mouseMoveEvent(mouseEvent);
+}
+
+QVector<RouteConnection*> RouteNode::getFromConnections() {
+    return toConnections;
 }
