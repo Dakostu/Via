@@ -15,18 +15,12 @@ void Route::setColors(const QColor &color) {
     for (auto &currentNode : nodes) {
         currentNode->setColors(routeColor);
     }
-    for (auto &currentConn : connections) {
-        currentConn->setColors(routeColor);
-    }
 }
 
 void Route::setDefaultColors() {
 
     for (auto &currentNode : nodes) {
         currentNode->setDefaultColors();
-    }
-    for (auto &currentConn : connections) {
-        currentConn->setDefaultColors();
     }
 }
 
@@ -39,7 +33,7 @@ void Route::addNode(qreal x, qreal y) {
     if (previousNode) {
         nodes.back()->connect(*previousNode);
         for (const auto &connection : *previousNode->getToConnections()) {
-            currentScene->addItem(connection.get());
+            currentScene->addItem(connection);
         }
     }
     nodes.back()->setZValue(std::numeric_limits<qreal>::max());

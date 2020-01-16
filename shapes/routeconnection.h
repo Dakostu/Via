@@ -12,8 +12,6 @@ class RouteConnection : public QGraphicsLineItem, public ViewCustomizable
     QPen currentPen;
     std::unique_ptr<QLineF> cartesianLine;
 
-    //std::unique_ptr<NodeShapeable> midShape;
-
 public:
     RouteConnection(QPointF from, QPointF to, QColor color);
 

@@ -10,7 +10,7 @@
 #include <QGraphicsItemGroup>
 #include <memory>
 
-using ConnectionVector = std::vector<std::unique_ptr<RouteConnection>>;
+using ConnectionVector = std::vector<RouteConnection*>;
 
 class RouteNode : public QGraphicsItemGroup, public ViewCustomizable
 {
