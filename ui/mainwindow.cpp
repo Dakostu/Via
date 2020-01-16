@@ -11,6 +11,7 @@
 #include <QPainterPath>
 
 #include "../shapes/routenode.h"
+#include "../shapes/route.h"
 #include "../shapes/octagon.h"
 #include "../shapes/routeconnection.h"
 
@@ -31,19 +32,12 @@ MainWindow::MainWindow(QWidget *parent)
     currentScene->addPixmap(m);
     ui->picture->setScene(currentScene.get());
 
-    auto node = new RouteNode(new Octagon(500,500, Qt::darkRed), "1", "This is a text\nhey");
-    currentScene->addItem(node);
+    Route route(Qt::red, currentScene.get());
+    route.addNode(500,600);
+    route.addNode(500,700);
+    route.addNode(600,550);
+    route.addNode(400,150);
 
-    auto node2 = new RouteNode(new Octagon(550,500, Qt::darkRed), "2", "This is a text\nhey");
-    currentScene->addItem(node2);
-
-    RouteConnection conn(node, node2, Qt::darkRed);
-    currentScene->addLine(conn, conn.getPen());
-
-    auto node3 = new RouteNode(new Octagon(600,560, Qt::darkRed), "3", "This is a text\nhey");
-    currentScene->addItem(node3);
-    RouteConnection conn2(node2, node3, Qt::darkRed);
-    currentScene->addLine(conn2, conn2.getPen());
 
 }
 

@@ -1,7 +1,7 @@
 #include "routeconnection.h"
 #include "triangleup.h"
 
-RouteConnection::RouteConnection(RouteNode *fromNode, RouteNode *toNode, QColor color)
+RouteConnection::RouteConnection(RouteNode *fromNode, RouteNode *toNode, QColor &color)
     : from(fromNode), to(toNode), defaultPen(color), currentPen(defaultPen)
 {
     setSize(from->getSize());
@@ -29,4 +29,12 @@ void RouteConnection::setSize(qreal newSize) {
 
 QPen RouteConnection::getPen() {
     return currentPen;
+}
+
+RouteNode* RouteConnection::getFrom() {
+    return from;
+}
+
+RouteNode* RouteConnection::getTo() {
+    return to;
 }

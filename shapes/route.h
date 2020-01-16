@@ -16,9 +16,8 @@ protected:
     QColor routeColor;
     QGraphicsScene *currentScene;
 
-
-    std::list<RouteNode> nodes;
-    std::list<RouteConnection> connections;
+    std::list<RouteNode*> nodes;
+    std::list<RouteConnection*> connections;
 public:
     virtual void setColors(const QColor &color) override;
     virtual void setDefaultColors() override;
