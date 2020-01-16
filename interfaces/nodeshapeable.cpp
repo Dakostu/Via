@@ -9,10 +9,10 @@ void NodeShapeable::setSize(qreal newSize) {
     this->drawShape();
 }
 
-NodeShapeable::NodeShapeable(qreal x, qreal y, QBrush brush)
+NodeShapeable::NodeShapeable(qreal x, qreal y, const QColor &color)
     : QGraphicsPolygonItem({}, nullptr), originX(x), originY(y)
 {
-    this->setBrush(brush);
+    this->setBrush(QBrush(color));
 
     this->setFlag(ItemIsFocusable);
     this->setFlag(ItemIsMovable);

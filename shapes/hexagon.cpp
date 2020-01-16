@@ -1,7 +1,7 @@
 #include "hexagon.h"
 
-Hexagon::Hexagon(qreal x, qreal y, QBrush brush)
-    : NodeShapeable(x, y, brush)
+Hexagon::Hexagon(qreal x, qreal y, const QColor &color)
+    : NodeShapeable(x, y, color)
 
 {
     this->drawShape();

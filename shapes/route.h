@@ -3,12 +3,14 @@
 
 //#include "routenode.h"
 #include "../interfaces/viewcustomizable.h"
-#include <QList>
+#include "routenode.h"
+#include <QLinkedList>
 
 class Route : public ViewCustomizable
 {
     bool showDirection;
-    //QList<RouteNode> nodes;
+    QColor routeColor;
+    QLinkedList<RouteNode> nodes;
 public:
     Route();
 };

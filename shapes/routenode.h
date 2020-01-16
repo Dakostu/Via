@@ -15,6 +15,7 @@ class RouteNode : public QGraphicsItemGroup, public ViewCustomizable
     std::unique_ptr<NodeShapeable> node;
     RouteNodeLabel nodeLabel;
     RouteExtraTextLabel extraTextLabel;
+    bool styleDiffersFromRoute;
 
     void centerNodeLabelBox();    
 

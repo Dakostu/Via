@@ -1,7 +1,7 @@
 #include "diamond.h"
 
-Diamond::Diamond(qreal x, qreal y, QBrush brush)
-    : NodeShapeable(x, y, brush)
+Diamond::Diamond(qreal x, qreal y, const QColor &color)
+    : NodeShapeable(x, y, color)
 
 {
     this->drawShape();

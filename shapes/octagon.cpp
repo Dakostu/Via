@@ -1,7 +1,7 @@
 #include "octagon.h"
 
-Octagon::Octagon(qreal x, qreal y, QBrush brush)
-    : NodeShapeable(x, y, brush)
+Octagon::Octagon(qreal x, qreal y, const QColor &color)
+    : NodeShapeable(x, y, color)
 
 {
     this->drawShape();

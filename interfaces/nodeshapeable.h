@@ -18,7 +18,7 @@ protected:
     qreal originY;
 
 public:
-    NodeShapeable(qreal x, qreal y, QBrush brush);
+    NodeShapeable(qreal x, qreal y, const QColor &color);
 
     QPointF getCenter();
 

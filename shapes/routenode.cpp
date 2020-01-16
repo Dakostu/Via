@@ -1,7 +1,9 @@
 #include "routenode.h"
 
 RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extraTextLabelText)
-    : node(newNode), nodeLabel(nodeLabelText), extraTextLabel(extraTextLabelText, node.get()) {
+    : node(newNode), nodeLabel(nodeLabelText), extraTextLabel(extraTextLabelText, node.get()),
+    styleDiffersFromRoute(false)
+{
 
     setDefaultColors();
 

@@ -6,7 +6,7 @@
 class TriangleDown : public NodeShapeable
 {
 public:
-    TriangleDown(qreal x, qreal y, QBrush brush);
+    TriangleDown(qreal x, qreal y, const QColor &color);
 
     virtual void drawShape() override;
 };
