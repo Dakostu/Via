@@ -8,8 +8,9 @@
 
 class RouteConnection : public QGraphicsLineItem, public ViewCustomizable
 {
-    QPen defaultPen;
-    QPen currentPen;
+    const QPen defaultPen;
+    static constexpr qreal SIZE_FACTOR = 0.2;
+    static constexpr qreal SIZE_OFFSET = 3;
     std::unique_ptr<QLineF> cartesianLine;
 
 public:
@@ -19,7 +20,6 @@ public:
     virtual void setDefaultColors() override;
 
     virtual void setSize(qreal newSize) override;
-    virtual QPen getPen();
     virtual void setNewPosition(QPointF p1, QPointF p2);
     QPointF p1();
     QPointF p2();

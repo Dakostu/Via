@@ -27,22 +27,26 @@ RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText) :
     RouteNode(newNode, nodeLabelText, "") {}
 
 void RouteNode::setSize(qreal newSize) {
+    size = newSize;
     node->setSize(newSize);
     extraTextLabel.setSize(newSize);
     nodeLabel.setSize(newSize);
     centerNodeLabelBox();
+    std::for_each(toConnections.begin(), toConnections.end(), [&](auto &conn) { conn->setSize(newSize); });
 }
 
 void RouteNode::setColors(const QColor &color) {
     node->setColors(color);
     extraTextLabel.setColors(color);
     nodeLabel.setColors(color);
+    std::for_each(toConnections.begin(), toConnections.end(), [&](auto &conn) { conn->setColors(color); });
 }
 
 void RouteNode::setDefaultColors() {
     node->setDefaultColors();
     nodeLabel.setColors(node->pen().brush().color());
     extraTextLabel.setColors(node->pen().brush().color());
+    std::for_each(toConnections.begin(), toConnections.end(), [&](auto &conn) { conn->setDefaultColors(); });
 }
 
 void RouteNode::centerNodeLabelBox() {
@@ -85,11 +89,11 @@ RouteExtraTextLabel* RouteNode::getExtraText() {
 void RouteNode::connect(RouteNode &from) {
     auto color = node->brush().color();
     auto connection = new RouteConnection(from.boundingRect().center(), this->boundingRect().center(), color);
+    connection->setSize(size);
     this->fromConnections.emplace_back(connection);
     from.toConnections.emplace_back(connection);
 }
 
-#include <QDebug>
 void RouteNode::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     if (mouseEvent->buttons().testFlag(Qt::LeftButton)) {
         auto thisPos = this->boundingRect().center() + this->pos();

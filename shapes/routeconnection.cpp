@@ -2,29 +2,26 @@
 #include "triangleup.h"
 
 RouteConnection::RouteConnection(QPointF from, QPointF to, QColor color)
-    : defaultPen(color, getSize() + 2, Qt::SolidLine), currentPen(defaultPen),
+    : defaultPen(color),
       cartesianLine(new QLineF(from, to))
-{
-    this->setPen(currentPen);
+{    
+    this->setPen(QPen(color, sizeMultiplier(SIZE_FACTOR) + SIZE_OFFSET));
     this->setLine(*cartesianLine);
 }
 
 
 void RouteConnection::setColors(const QColor &color) {
-    currentPen.setColor(color);
+    this->pen().setColor(color);
 }
 
 void RouteConnection::setDefaultColors() {
-    currentPen.setColor(defaultPen.color());
+    this->pen().setColor(defaultPen.color());
 }
 
 void RouteConnection::setSize(qreal newSize) {
-    size = newSize + 2;
-    currentPen.setWidth(size);
-}
-
-QPen RouteConnection::getPen() {
-    return currentPen;
+    size = newSize;
+    size = sizeMultiplier(SIZE_FACTOR) + SIZE_OFFSET;
+    this->setPen(QPen(pen().color(), size));
 }
 
 void RouteConnection::setNewPosition(QPointF p1, QPointF p2) {

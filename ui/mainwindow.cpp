@@ -32,7 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
     currentScene->addPixmap(m);
     ui->picture->setScene(currentScene.get());
 
-    Route route(Qt::red, currentScene.get());
+    Route route(Qt::red, currentScene.get());    
+    //route.setSize(30);
     route.addNode(500,600);
     route.addNode(500,700);
     route.addNode(600,550);
