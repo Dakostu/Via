@@ -8,9 +8,11 @@
 #include <QPen>
 #include <QBrush>
 #include <QGraphicsRectItem>
+#include <QPainterPath>
 
 #include "../shapes/routenode.h"
 #include "../shapes/octagon.h"
+#include "../shapes/routeconnection.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -24,15 +26,25 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->picture->setBackgroundRole(QPalette::Base);
 
+
     QPixmap m("/home/dk/Documents/Code/C++/QT/Wegweiser/test/gtavc_vice_city_map_hq.jpg");
     currentScene->addPixmap(m);
     ui->picture->setScene(currentScene.get());
 
-    auto node = new RouteNode(new Octagon(500,500, QBrush(Qt::darkRed)), "1", "This is a text\nhey");
-    node->setSize(22);
-    node->setNodeLabelOpacity(0);
+    auto node = new RouteNode(new Octagon(500,500, Qt::darkRed), "1", "This is a text\nhey");
     currentScene->addItem(node);
-    currentScene->addItem(node->getExtraText());
+
+    auto node2 = new RouteNode(new Octagon(550,500, Qt::darkRed), "2", "This is a text\nhey");
+    currentScene->addItem(node2);
+
+    RouteConnection conn(node, node2, Qt::darkRed);
+    currentScene->addLine(conn, conn.getPen());
+
+    auto node3 = new RouteNode(new Octagon(600,560, Qt::darkRed), "3", "This is a text\nhey");
+    currentScene->addItem(node3);
+    RouteConnection conn2(node2, node3, Qt::darkRed);
+    currentScene->addLine(conn2, conn2.getPen());
+
 }
 
 MainWindow::~MainWindow()
