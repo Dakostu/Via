@@ -10,6 +10,8 @@
 #include <QGraphicsItemGroup>
 #include <memory>
 
+using ConnectionVector = std::vector<std::unique_ptr<RouteConnection>>;
+
 class RouteNode : public QGraphicsItemGroup, public ViewCustomizable
 {
 
@@ -18,8 +20,8 @@ protected:
     RouteNodeLabel nodeLabel;
     RouteExtraTextLabel extraTextLabel;
     bool styleDiffersFromRoute;
-    QVector<RouteConnection*> fromConnections;
-    QVector<RouteConnection*> toConnections;
+    ConnectionVector fromConnections;
+    ConnectionVector toConnections;
 
     void centerNodeLabelBox();    
 
@@ -40,7 +42,7 @@ public:
     virtual void setNodeLabelOpacity(qreal opacity);
     bool isInvisible();
 
-    QVector<RouteConnection*> getFromConnections();
+    ConnectionVector* getToConnections();
     RouteExtraTextLabel* getExtraText();
     void connect(RouteNode &from);
 

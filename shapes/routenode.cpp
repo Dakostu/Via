@@ -85,24 +85,26 @@ RouteExtraTextLabel* RouteNode::getExtraText() {
 void RouteNode::connect(RouteNode &from) {
     auto color = node->brush().color();
     auto connection = new RouteConnection(from.boundingRect().center(), this->boundingRect().center(), color);
-    this->fromConnections.append(connection);
-    from.toConnections.append(connection);
+    this->fromConnections.emplace_back(connection);
+    from.toConnections.emplace_back(connection);
 }
 
 #include <QDebug>
 void RouteNode::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
-    auto thisPos = this->boundingRect().center() + this->pos();
-    for (auto &conn : fromConnections) {
-        auto fromNodePos = conn->p1();
-        conn->setNewPosition(fromNodePos, thisPos);
-    }
-    for (auto &conn : toConnections) {
-        auto toNodePos = conn->p2();
-        conn->setNewPosition(thisPos, toNodePos);
+    if (mouseEvent->buttons().testFlag(Qt::LeftButton)) {
+        auto thisPos = this->boundingRect().center() + this->pos();
+        for (auto &conn : fromConnections) {
+            auto fromNodePos = conn->p1();
+            conn->setNewPosition(fromNodePos, thisPos);
+        }
+        for (auto &conn : toConnections) {
+            auto toNodePos = conn->p2();
+            conn->setNewPosition(thisPos, toNodePos);
+        }
     }
     QGraphicsItemGroup::mouseMoveEvent(mouseEvent);
 }
 
-QVector<RouteConnection*> RouteNode::getFromConnections() {
-    return toConnections;
+ConnectionVector* RouteNode::getToConnections() {
+    return &toConnections;
 }

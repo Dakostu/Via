@@ -35,9 +35,9 @@ void MapView::wheelEvent(QWheelEvent *event) {
 
 
 void MapView::mouseMoveEvent(QMouseEvent* event) {
-    const QRect screenRect = QApplication::desktop()->screenGeometry(this);
-    auto eventPos = event->globalPos();
     if (event->buttons().testFlag(Qt::LeftButton)) {
+        const QRect screenRect = QApplication::desktop()->screenGeometry(this);
+        auto eventPos = event->globalPos();
 
         auto reEnterBoundaries = [](auto boundaryValue, auto firstBoundary, auto secondBoundary) {
             if (boundaryValue <= firstBoundary + 4) {
