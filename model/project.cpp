@@ -8,6 +8,10 @@ Project::Project()
 
 }
 
+Project::Project(const QJsonObject &object) {
+    fromJSON(object);
+}
+
 void Project::fromJSON(const QJsonObject &object) {
 
     pixMapFromBytes(object["image"]);
@@ -15,9 +19,8 @@ void Project::fromJSON(const QJsonObject &object) {
 
     auto routesJSON = object["routes"].toArray();
 
-    for (const auto &routeJSON : routesJSON) {
-        RouteData currentRoute;
-        currentRoute.fromJSON(routeJSON.toObject());
+    for (const auto routeJSON : routesJSON) {
+        RouteData currentRoute(routeJSON.toObject());
         routes.append(currentRoute);
     }
 }

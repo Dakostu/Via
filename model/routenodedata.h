@@ -18,6 +18,8 @@ class RouteNodeData : public Serializable
 
 public:
     RouteNodeData();
+    RouteNodeData(const QJsonObject &object);
+
     virtual void fromJSON(const QJsonObject &object) override;
     virtual QJsonObject toJSON() const override;
 

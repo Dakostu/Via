@@ -6,6 +6,10 @@ RouteData::RouteData()
 
 }
 
+RouteData::RouteData(const QJsonObject &object) {
+    fromJSON(object);
+}
+
 void RouteData::fromJSON(const QJsonObject &object) {
     name = object["name"].toString();
     size = object["size"].toInt();
@@ -15,8 +19,7 @@ void RouteData::fromJSON(const QJsonObject &object) {
     auto nodesArray = object["nodes"].toArray();
 
     for (auto nodeJSON : nodesArray) {
-        RouteNodeData node;
-        node.fromJSON(nodeJSON.toObject());
+        RouteNodeData node(nodeJSON.toObject());
         if (!node.isStyleDifferentFromRoute()) {
             node.setColor(color);
         }

@@ -7,6 +7,10 @@ RouteNodeData::RouteNodeData()
 
 }
 
+RouteNodeData::RouteNodeData(const QJsonObject &object) {
+    fromJSON(object);
+}
+
 void RouteNodeData::fromJSON(const QJsonObject &object) {
     nodeName = object["nodeName"].toString();
     nodeLabel = object["nodeLabel"].toString();
