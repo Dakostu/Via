@@ -3,13 +3,15 @@
 
 #include "../interfaces/serializable.h"
 #include "routenodedata.h"
+#include <QLinkedList>
+
 class RouteData : public Serializable
 {
     QString name;
     int size;
     QColor color;
     bool showDirection;
-    QList<RouteNodeData> nodes;
+    QLinkedList<RouteNodeData> nodes;
 
 public:
     RouteData();

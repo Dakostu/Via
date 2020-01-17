@@ -13,6 +13,7 @@ void RouteData::fromJSON(const QJsonObject &object) {
     showDirection = object["showDirection"].toBool();
 
     auto nodesArray = object["nodes"].toArray();
+
     for (auto nodeJSON : nodesArray) {
         RouteNodeData node;
         node.fromJSON(nodeJSON.toObject());

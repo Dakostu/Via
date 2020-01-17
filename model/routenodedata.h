@@ -22,7 +22,7 @@ public:
     virtual QJsonObject toJSON() const override;
 
     bool isStyleDifferentFromRoute();
-    void setColor(QColor &color);
+    void setColor(QColor &newColor);
 };
 
 #endif // ROUTENODEDATA_H

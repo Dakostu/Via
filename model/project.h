@@ -1,20 +1,28 @@
 #ifndef PROJECT_H
 #define PROJECT_H
 
-#include "../shapes/route.h"
+#include "../interfaces/serializable.h"
+#include "routedata.h"
+#include <QPixmap>
+#include <QLatin1String>
 #include <QString>
-#include <QImage>
+#include <QVector>
 
-class Project
+class Project : public Serializable
 {    
     QString fileName;
-    QByteArray imageData;
-    QImage image;
+    QPixmap imagePixMap;
     bool hasbeenModified;    
-    //QVector<Route> routes;
+    QVector<RouteData> routes;
+
+    QLatin1String pixMapToBytes() const;
+    void pixMapFromBytes(const QJsonValue &bytes);
+
 
 public:
     Project();
+    virtual void fromJSON(const QJsonObject &object) override;
+    virtual QJsonObject toJSON() const override;
 };
 
 #endif // PROJECT_H
