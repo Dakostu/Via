@@ -22,7 +22,7 @@ void RouteNodeData::fromJSON(const QJsonObject &object) {
 
 }
 
-QJsonObject RouteNodeData::toJSON() {
+QJsonObject RouteNodeData::toJSON() const {
     QJsonObject routeNodeJSON;
 
     routeNodeJSON["nodeName"] = nodeName;
@@ -38,4 +38,13 @@ QJsonObject RouteNodeData::toJSON() {
     }
 
     return routeNodeJSON;
+}
+
+
+bool RouteNodeData::isStyleDifferentFromRoute() {
+    return differentStyleFromRoute;
+}
+
+void RouteNodeData::setColor(QColor &newColor) {
+    color = newColor;
 }

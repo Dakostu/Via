@@ -19,7 +19,10 @@ class RouteNodeData : public Serializable
 public:
     RouteNodeData();
     virtual void fromJSON(const QJsonObject &object) override;
-    virtual QJsonObject toJSON() override;
+    virtual QJsonObject toJSON() const override;
+
+    bool isStyleDifferentFromRoute();
+    void setColor(QColor &color);
 };
 
 #endif // ROUTENODEDATA_H

@@ -10,7 +10,7 @@ protected:
 
 public:
     virtual void fromJSON(const QJsonObject &object) = 0;
-    virtual QJsonObject toJSON() = 0;
+    virtual QJsonObject toJSON() const = 0;
 
 };
 
