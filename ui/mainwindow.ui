@@ -88,16 +88,22 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="routeBoxButtonUp">
+              <widget class="QToolButton" name="routeBoxButtonUp">
                <property name="text">
                 <string>Up</string>
+               </property>
+               <property name="arrowType">
+                <enum>Qt::UpArrow</enum>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="routeBoxButtonDown">
+              <widget class="QToolButton" name="routeBoxButtonDown">
                <property name="text">
                 <string>Down</string>
+               </property>
+               <property name="arrowType">
+                <enum>Qt::DownArrow</enum>
                </property>
               </widget>
              </item>
@@ -157,16 +163,22 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="nodeBoxButtonUp">
+              <widget class="QToolButton" name="nodeBoxButtonUp">
                <property name="text">
                 <string>Up</string>
+               </property>
+               <property name="arrowType">
+                <enum>Qt::UpArrow</enum>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="nodeBoxButtonDown">
+              <widget class="QToolButton" name="nodeBoxButtonDown">
                <property name="text">
                 <string>Down</string>
+               </property>
+               <property name="arrowType">
+                <enum>Qt::DownArrow</enum>
                </property>
               </widget>
              </item>
@@ -509,6 +521,84 @@
     <item>
      <layout class="QVBoxLayout" name="pictureLayout">
       <item>
+       <layout class="QHBoxLayout" name="quickButtonLayout">
+        <item>
+         <widget class="QToolButton" name="quickButtonNew">
+          <property name="text">
+           <string>New</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="quickButtonSave">
+          <property name="text">
+           <string>Save Current</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="quickButtonUndo">
+          <property name="text">
+           <string>Undo</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="quickButtonRedo">
+          <property name="text">
+           <string>Redo</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="quickButtonAutoAdd">
+          <property name="text">
+           <string>Auto-Add</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="quickButtonSelect">
+          <property name="text">
+           <string>Select</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="quickButtonMove">
+          <property name="text">
+           <string>Move</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="quickButtonSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
        <widget class="QScrollArea" name="pictureScrollArea">
         <property name="widgetResizable">
          <bool>true</bool>
@@ -518,8 +608,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>477</width>
-           <height>532</height>
+           <width>483</width>
+           <height>499</height>
           </rect>
          </property>
          <layout class="QFormLayout" name="formLayout">

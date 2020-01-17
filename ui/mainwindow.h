@@ -5,6 +5,7 @@
 #include <memory>
 #include <QMainWindow>
 #include <QGraphicsScene>
+#include <QToolButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
