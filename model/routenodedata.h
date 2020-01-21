@@ -37,6 +37,7 @@ public:
     void setNodeLabel(const QString &value);
     void setX(int value);
     void setY(int value);
+    void setPos(int newX, int newY);
     void setInvisible(bool value);
     void setSize(int value);
     void setDifferentStyleFromRoute(bool value);

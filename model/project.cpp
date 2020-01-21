@@ -3,12 +3,14 @@
 #include <QByteArray>
 #include <QJsonArray>
 
-Project::Project()
+Project::Project(const QString &newFileName, const QPixmap &map)
+    : fileName(newFileName), imagePixMap(map)
 {
 
 }
 
-Project::Project(const QJsonObject &object) {
+Project::Project(const QJsonObject &object)
+{
     fromJSON(object);
 }
 
@@ -23,6 +25,16 @@ void Project::fromJSON(const QJsonObject &object) {
         RouteData currentRoute(routeJSON.toObject());
         routes.append(currentRoute);
     }
+}
+
+bool Project::getHasbeenModified() const
+{
+    return hasbeenModified;
+}
+
+void Project::setHasbeenModified(bool value)
+{
+    hasbeenModified = value;
 }
 
 QLatin1String Project::pixMapToBytes() const {
@@ -53,3 +65,16 @@ QJsonObject Project::toJSON() const {
     return projectJSON;
 }
 
+void Project::addRoute(const RouteData &route) {
+    routes.append(route);
+}
+
+const RouteData& Project::operator[](int index) {
+    return routes.at(index);
+}
+
+bool Project::operator==(const Project &other) const {
+    return this->fileName == other.fileName
+            && this->pixMapToBytes() == other.pixMapToBytes()
+            && this->routes == other.routes;
+}

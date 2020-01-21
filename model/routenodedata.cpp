@@ -77,6 +77,10 @@ QColor RouteNodeData::getColor() const
     return color;
 }
 
+void RouteNodeData::setPos(int newX, int newY) {
+    x = newX;
+    y = newY;
+}
 
 RouteNodeData::RouteNodeData(const QJsonObject &object) {
     fromJSON(object);
