@@ -12,6 +12,7 @@ class RouteNodeData : public Serializable
     int x;
     int y;
     bool differentStyleFromRoute;
+    bool nameChanged;
     bool invisible;
     QColor color;
     int nodeSize;
@@ -23,7 +24,7 @@ public:
     virtual void fromJSON(const QJsonObject &object) override;
     virtual QJsonObject toJSON() const override;
 
-    bool isStyleDifferentFromRoute();
+    bool isStyleDifferentFromRoute() const;
     QString getNodeName() const;
     QString getNodeLabel() const;
     int getX() const;
@@ -31,6 +32,7 @@ public:
     int getSize() const;
     bool getInvisible() const;
     QColor getColor() const;
+    bool isNameChangedByUser() const;
 
     void setColor(QColor newColor);
     void setNodeName(const QString &value);
@@ -41,6 +43,7 @@ public:
     void setInvisible(bool value);
     void setSize(int value);
     void setDifferentStyleFromRoute(bool value);
+    void setNameChangedByUser(bool value);
 
     bool operator==(const RouteNodeData &other) const;
 };

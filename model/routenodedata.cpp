@@ -2,6 +2,23 @@
 #include <QRgb>
 #include <QJsonArray>
 
+
+bool RouteNodeData::isNameChangedByUser() const
+{
+    return nameChanged;
+}
+
+void RouteNodeData::setNameChangedByUser(bool value)
+{
+    nameChanged = value;
+}
+
+RouteNodeData::RouteNodeData()
+    : differentStyleFromRoute(false), nameChanged(false), invisible(false)
+{
+
+}
+
 int RouteNodeData::getY() const
 {
     return y;
@@ -15,11 +32,6 @@ void RouteNodeData::setY(int value)
 void RouteNodeData::setDifferentStyleFromRoute(bool value)
 {
     differentStyleFromRoute = value;
-}
-
-RouteNodeData::RouteNodeData()
-{
-
 }
 
 QString RouteNodeData::getNodeName() const
@@ -92,6 +104,7 @@ void RouteNodeData::fromJSON(const QJsonObject &object) {
     x = object["x"].toInt();
     y = object["y"].toInt();
     differentStyleFromRoute = object["differentStyleFromRoute"].toBool();
+    nameChanged = object["nameChanged"].toBool();
     invisible = object["invisible"].toBool();
 
     if (differentStyleFromRoute) {
@@ -109,6 +122,7 @@ QJsonObject RouteNodeData::toJSON() const {
     routeNodeJSON["x"] = x;
     routeNodeJSON["y"] = y;
     routeNodeJSON["differentStyleFromRoute"] = differentStyleFromRoute;
+    routeNodeJSON["nameChanged"] = nameChanged;
     routeNodeJSON["invisible"] = invisible;
 
     if (differentStyleFromRoute) {
@@ -120,7 +134,7 @@ QJsonObject RouteNodeData::toJSON() const {
 }
 
 
-bool RouteNodeData::isStyleDifferentFromRoute() {
+bool RouteNodeData::isStyleDifferentFromRoute() const {
     return differentStyleFromRoute;
 }
 
@@ -135,6 +149,7 @@ bool RouteNodeData::operator==(const RouteNodeData &other) const {
             && this->nodeLabel == other.nodeLabel
             && this->differentStyleFromRoute == other.differentStyleFromRoute
             && this->invisible == other.invisible
+            && this->nameChanged == other.nameChanged
             && this->color == other.color
             && this->nodeSize == other.nodeSize;
 }
