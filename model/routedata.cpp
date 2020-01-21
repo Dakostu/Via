@@ -1,6 +1,85 @@
 #include "routedata.h"
 #include <QJsonArray>
 
+RouteData::RouteData() : nodeSize(DEFAULT_SIZE), showDirection(DEFAULT_SHOW_DIR)
+{
+
+}
+
+RouteData::RouteData(const QJsonObject &object) : RouteData() {
+    fromJSON(object);
+}
+
+void RouteData::fromJSON(const QJsonObject &object) {
+    name = object["name"].toString();
+    nodeSize = object["nodeSize"].toInt();
+    color = QColor(object["color"][0].toInt(), object["color"][1].toInt(), object["color"][2].toInt());
+    showDirection = object["showDirection"].toBool();
+
+    auto nodesArray = object["nodes"].toArray();
+
+    for (auto nodeJSON : nodesArray) {
+        RouteNodeData node(nodeJSON.toObject());
+        if (!node.isStyleDifferentFromRoute()) {
+            node.setColor(this->color);
+            node.setSize(this->nodeSize);
+        }
+        addNode(node);
+    }
+
+}
+
+QJsonObject RouteData::toJSON() const {
+    QJsonObject routeJSON;
+
+    routeJSON["name"] = name;
+    routeJSON["nodeSize"] = nodeSize;
+    routeJSON["color"] = QJsonArray({color.red(), color.green(), color.blue()});
+    routeJSON["showDirection"] = showDirection;
+
+    QJsonArray nodesJSON;
+    for (const auto &node : nodes) {
+        nodesJSON << node.toJSON();
+    }
+
+    routeJSON["nodes"] = nodesJSON;
+
+    return routeJSON;
+}
+
+RouteNodeData RouteData::generateNewNode(int x, int y) {
+    RouteNodeData newNode;
+    newNode.setX(x);
+    newNode.setY(y);
+    newNode.setColor(this->color);
+    newNode.setNodeName(QString::number(nodes.size()));
+    newNode.setSize(this->nodeSize);
+    newNode.setInvisible(false);
+    newNode.setDifferentStyleFromRoute(false);
+    newNode.setNodeLabel("");
+    return newNode;
+}
+
+RouteNodeData& RouteData::getFirstNode() {
+    return nodes.front();
+}
+
+RouteNodeData& RouteData::getLastNode() {
+    return nodes.back();
+}
+
+void RouteData::addNode(int x, int y) {
+    nodes.emplace_back(generateNewNode(x,y));
+}
+
+void RouteData::addNode(int x, int y, size_t index) {
+    nodes.insert(iterateToPosition(index), generateNewNode(x,y));
+}
+
+void RouteData::addNode(const RouteNodeData &node) {
+    nodes.emplace_back(node);
+}
+
 QString RouteData::getName() const
 {
     return name;
@@ -13,15 +92,15 @@ void RouteData::setName(const QString &value)
 
 int RouteData::getSize() const
 {
-    return size;
+    return nodeSize;
 }
 
 void RouteData::setSize(int value)
 {
-    size = value;
+    nodeSize = value;
     for (auto &node : nodes) {
         if (!node.isStyleDifferentFromRoute()) {
-            node.setSize(size);
+            node.setSize(nodeSize);
         }
     }
 }
@@ -51,81 +130,7 @@ void RouteData::setShowDirection(bool value)
     showDirection = value;
 }
 
-RouteData::RouteData()
-{
-
-}
-
-RouteData::RouteData(const QJsonObject &object) {
-    fromJSON(object);
-}
-
-void RouteData::fromJSON(const QJsonObject &object) {
-    name = object["name"].toString();
-    size = object["size"].toInt();
-    color = QColor(object["color"][0].toInt(), object["color"][1].toInt(), object["color"][2].toInt());
-    showDirection = object["showDirection"].toBool();
-
-    auto nodesArray = object["nodes"].toArray();
-
-    for (auto nodeJSON : nodesArray) {
-        RouteNodeData node(nodeJSON.toObject());
-        if (!node.isStyleDifferentFromRoute()) {
-            node.setColor(color);
-        }
-        addNode(node);
-    }
-
-}
-
-QJsonObject RouteData::toJSON() const {
-    QJsonObject routeJSON;
-
-    routeJSON["name"] = name;
-    routeJSON["size"] = size;
-    routeJSON["color"] = QJsonArray({color.red(), color.green(), color.blue()});
-    routeJSON["showDirection"] = showDirection;
-
-    QJsonArray nodesJSON;
-    for (const auto &node : nodes) {
-        nodesJSON << node.toJSON();
-    }
-
-    routeJSON["nodes"] = nodesJSON;
-
-    return routeJSON;
-}
-
-RouteNodeData RouteData::generateNewNode(int x, int y) {
-    RouteNodeData newNode;
-    newNode.setX(x);
-    newNode.setY(y);
-    newNode.setColor(this->color);
-    newNode.setNodeName(QString::number(nodes.size()));
-    newNode.setSize(this->size);
-    newNode.setInvisible(false);
-    newNode.setDifferentStyleFromRoute(false);
-    newNode.setNodeLabel("");
-    return newNode;
-}
-
-RouteNodeData& RouteData::getFirstNode() {
-    return nodes.front();
-}
-
-RouteNodeData& RouteData::getLastNode() {
-    return nodes.back();
-}
-
-void RouteData::addNode(int x, int y) {
-    nodes.emplace_back(generateNewNode(x,y));
-}
-
-void RouteData::addNode(int x, int y, size_t index) {
-    nodes.insert(iterateToPosition(index), generateNewNode(x,y));
-}
-
-std::list<RouteNodeData>::iterator RouteData::iterateToPosition(size_t index) {
+RouteDataIterator RouteData::iterateToPosition(size_t index) {
     auto nodesSize = nodes.size();
 
     if (index >= nodesSize) {
@@ -155,6 +160,22 @@ std::list<RouteNodeData>::iterator RouteData::iterateToPosition(size_t index) {
     return currentIterator;
 }
 
+size_t RouteData::length() const {
+    return nodes.size();
+}
+
 RouteNodeData& RouteData::operator[](size_t index) {
     return *iterateToPosition(index);
+}
+
+bool RouteData::operator==(const RouteData &other) const {
+    if (this->length() != other.length()) {
+        return false;
+    }
+
+    return (this->name == other.name
+            && this->nodeSize == other.nodeSize
+            && this->color == other.color
+            && this->showDirection == other.showDirection
+            && this->nodes == other.nodes);
 }

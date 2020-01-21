@@ -14,7 +14,7 @@ class RouteNodeData : public Serializable
     bool differentStyleFromRoute;
     bool invisible;
     QColor color;
-    int size;
+    int nodeSize;
 
 public:
     RouteNodeData();
@@ -40,6 +40,8 @@ public:
     void setInvisible(bool value);
     void setSize(int value);
     void setDifferentStyleFromRoute(bool value);
+
+    bool operator==(const RouteNodeData &other) const;
 };
 
 #endif // ROUTENODEDATA_H

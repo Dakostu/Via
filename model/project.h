@@ -12,7 +12,7 @@ class Project : public Serializable
 {    
     QString fileName;
     QPixmap imagePixMap;
-    bool hasbeenModified;    
+    bool hasbeenModified;
     QVector<RouteData> routes;
 
     QLatin1String pixMapToBytes() const;

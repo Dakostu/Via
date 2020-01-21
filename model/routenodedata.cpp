@@ -64,12 +64,12 @@ void RouteNodeData::setInvisible(bool value)
 
 int RouteNodeData::getSize() const
 {
-    return size;
+    return nodeSize;
 }
 
 void RouteNodeData::setSize(int value)
 {
-    size = value;
+    nodeSize = value;
 }
 
 QColor RouteNodeData::getColor() const
@@ -92,7 +92,7 @@ void RouteNodeData::fromJSON(const QJsonObject &object) {
 
     if (differentStyleFromRoute) {
         color = QColor(object["color"][0].toInt(), object["color"][1].toInt(), object["color"][2].toInt());
-        size = object["size"].toInt();
+        nodeSize = object["nodeSize"].toInt();
     }
 
 }
@@ -109,7 +109,7 @@ QJsonObject RouteNodeData::toJSON() const {
 
     if (differentStyleFromRoute) {
         routeNodeJSON["color"] = QJsonArray({color.red(), color.green(), color.blue()});
-        routeNodeJSON["size"] = size;
+        routeNodeJSON["nodeSize"] = nodeSize;
     }
 
     return routeNodeJSON;
@@ -122,4 +122,15 @@ bool RouteNodeData::isStyleDifferentFromRoute() {
 
 void RouteNodeData::setColor(QColor newColor) {
     color = newColor;
+}
+
+bool RouteNodeData::operator==(const RouteNodeData &other) const {
+    return this->x == other.x
+            && this->y == other.y
+            && this->nodeName == other.nodeName
+            && this->nodeLabel == other.nodeLabel
+            && this->differentStyleFromRoute == other.differentStyleFromRoute
+            && this->invisible == other.invisible
+            && this->color == other.color
+            && this->nodeSize == other.nodeSize;
 }

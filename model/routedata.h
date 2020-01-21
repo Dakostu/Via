@@ -7,15 +7,19 @@
 #include <variant>
 
 
+using RouteDataIterator = std::list<RouteNodeData>::iterator;
 class RouteData : public Serializable
 {
+    static constexpr auto DEFAULT_SIZE = 1;
+    static constexpr bool DEFAULT_SHOW_DIR = false;
+
     QString name;
-    int size;
+    int nodeSize;
     QColor color;
     bool showDirection;
     std::list<RouteNodeData> nodes;
 
-    std::list<RouteNodeData>::iterator iterateToPosition(size_t index);
+    RouteDataIterator iterateToPosition(size_t index);
 
     RouteNodeData generateNewNode(int x, int y);
 
@@ -40,8 +44,12 @@ public:
 
     void addNode(int x, int y);
     void addNode(int x, int y, size_t index);
+    void addNode(const RouteNodeData &node);
 
+    size_t length() const;
     RouteNodeData& operator[](size_t index);
+
+    bool operator==(const RouteData &other) const;
 };
 
 #endif // ROUTEDATA_H

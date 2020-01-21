@@ -41,19 +41,35 @@ void JSONUnitTests::testRouteNodeDataSerialization() {
 
     RouteNodeData dataFromJSON(dataJSON);
 
-    QVERIFY(dataFromJSON.getX() == X);
-    QVERIFY(dataFromJSON.getY() == Y);
-    QVERIFY(dataFromJSON.getSize() == SIZE);
-    QVERIFY(dataFromJSON.getInvisible() == INVISIBLE);
-    QVERIFY(dataFromJSON.getNodeName() == NODE_NAME);
-    QVERIFY(dataFromJSON.getNodeLabel() == NODE_LABEL);
-    QVERIFY(dataFromJSON.getColor() == NODE_COLOR);
-    QVERIFY(dataFromJSON.isStyleDifferentFromRoute() == IS_DIFFERENT);
+    QVERIFY(dataFromJSON == data);
 }
 
 void JSONUnitTests::testRouteSerialization() {
     RouteData data;
+    const auto ROUTE_COLOR = QColor(Qt::blue);
+    data.setColor(ROUTE_COLOR);
+    data.setName("Check this");
+    data.setShowDirection(true);
 
+    data.addNode(600,200);
+    data.getLastNode().setInvisible(true);
+
+    data.addNode(200,400);
+    data.getLastNode().setNodeLabel("Enemies here");
+
+    data.addNode(500,-321);
+    data.getLastNode().setDifferentStyleFromRoute(true);
+    data.getLastNode().setSize(200);
+    data.getLastNode().setColor(Qt::red);
+    data.getLastNode().setNodeName("Very Important");
+
+    data.addNode(600,223);
+
+    auto dataJSON = data.toJSON();
+
+    RouteData dataFromJSON(dataJSON);
+
+    QVERIFY(dataFromJSON == data);
 }
 
 QTEST_MAIN(JSONUnitTests)
