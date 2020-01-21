@@ -1,6 +1,5 @@
 #include "routedata.h"
 #include <QJsonArray>
-#include <variant>
 
 QString RouteData::getName() const
 {
@@ -74,7 +73,7 @@ void RouteData::fromJSON(const QJsonObject &object) {
         if (!node.isStyleDifferentFromRoute()) {
             node.setColor(color);
         }
-        nodes.emplace_back(node);
+        addNode(node);
     }
 
 }
@@ -98,11 +97,24 @@ QJsonObject RouteData::toJSON() const {
 }
 
 
-void RouteData::addNode(const RouteNodeData node) {
+
+RouteNodeData& RouteData::getFirstNode() {
+    return nodes.front();
+}
+
+RouteNodeData& RouteData::getLastNode() {
+    return nodes.back();
+}
+
+void RouteData::addNode(const RouteNodeData &node) {
     nodes.emplace_back(node);
 }
 
-RouteNodeData& RouteData::operator[](size_t index) {
+void RouteData::addNode(const RouteNodeData &node, size_t index) {
+    nodes.insert(iterateToPosition(index), node);
+}
+
+std::list<RouteNodeData>::iterator RouteData::iterateToPosition(size_t index) {
     auto nodesSize = nodes.size();
 
     if (index >= nodesSize) {
@@ -110,37 +122,28 @@ RouteNodeData& RouteData::operator[](size_t index) {
     }
 
     if (index == 0) {
-        return nodes.front();
+        return nodes.begin();
     } else if (index == nodesSize - 1) {
-        return nodes.back();
+        return nodes.end();
     }
 
-    std::variant<std::list<RouteNodeData>::iterator, std::list<RouteNodeData>::reverse_iterator> begin;
-    std::variant<std::list<RouteNodeData>::iterator, std::list<RouteNodeData>::reverse_iterator> end;
-    std::function<void(size_t&)> moveIndex;
-    size_t currentIndex;
+    std::list<RouteNodeData>::iterator currentIterator;
+    int distance;
     auto indexIsInLeftHalf = index < nodesSize/2;
 
     if (indexIsInLeftHalf) {
-        begin = ++nodes.begin();
-        currentIndex = 1;
-        moveIndex = [](size_t& index) {++index;};
+        currentIterator = ++nodes.begin();
+        distance = index - 2;
     } else {
-        begin = ++nodes.rbegin();
-        currentIndex = nodesSize - 2;
-        moveIndex = [](size_t& index) {--index;};
+        currentIterator = --nodes.end();
+        --currentIterator;
+        distance = -nodesSize + index + 1;
     }
 
-    while (currentIndex != index) {
-        std::visit([](auto &&iterator){++iterator;}, begin);
-        moveIndex(currentIndex);
-    }
+    std::advance(currentIterator, distance);
+    return currentIterator;
+}
 
-    if (auto val = std::get_if<std::list<RouteNodeData>::iterator>(&begin)) {
-        return **val;
-    } else {
-        return *(std::get<std::list<RouteNodeData>::reverse_iterator>(begin));
-    }
-
-
+RouteNodeData& RouteData::operator[](size_t index) {
+    return *iterateToPosition(index);
 }

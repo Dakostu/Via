@@ -3,7 +3,9 @@
 
 #include "../interfaces/serializable.h"
 #include "routenodedata.h"
-#include <QLinkedList>
+#include <list>
+#include <variant>
+
 
 class RouteData : public Serializable
 {
@@ -12,6 +14,8 @@ class RouteData : public Serializable
     QColor color;
     bool showDirection;
     std::list<RouteNodeData> nodes;
+
+    std::list<RouteNodeData>::iterator iterateToPosition(size_t index);
 
 public:
     RouteData();
@@ -24,15 +28,18 @@ public:
     int getSize() const;
     QColor getColor() const;
     bool getShowDirection() const;
+    RouteNodeData& getFirstNode();
+    RouteNodeData& getLastNode();
 
     void setName(const QString &value);
     void setSize(int value);
     void setColor(const QColor &value);
     void setShowDirection(bool value);
 
-    void addNode(const RouteNodeData node&);
+    void addNode(const RouteNodeData &node);
+    void addNode(const RouteNodeData &node, size_t index);
 
-    RouteNodeData& operator[](size_t index)M;
+    RouteNodeData& operator[](size_t index);
 };
 
 #endif // ROUTEDATA_H
