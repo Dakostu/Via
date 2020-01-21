@@ -54,6 +54,7 @@ void JSONUnitTests::testRouteSerialization() {
     data.getLastNode().setSize(200);
     data.getLastNode().setColor(Qt::red);
     data.getLastNode().setNodeName("Very Important");
+    data.getLastNode().setNameChangedByUser(true);
 
     data.addNode(600,223);
 
@@ -89,6 +90,9 @@ void JSONUnitTests::testProjectSerialization() {
     secondRoute.getLastNode().setColor(Qt::black);
     secondRoute.getLastNode().setSize(332);
     secondRoute.getLastNode().setDifferentStyleFromRoute(true);
+
+    secondRoute.getFirstNode().setNameChangedByUser(true);
+    secondRoute.getFirstNode().setNodeName("Secret");
     proj.addRoute(secondRoute);
 
     auto dataJSON = proj.toJSON();
