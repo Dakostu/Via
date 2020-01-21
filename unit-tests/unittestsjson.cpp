@@ -2,6 +2,7 @@
 #include <QtTest/QtTest>
 
 #include "../model/routenodedata.h"
+#include "../model/routedata.h"
 
 class JSONUnitTests : public QObject
 {
@@ -10,6 +11,7 @@ class JSONUnitTests : public QObject
 
 private slots:
     void testRouteNodeDataSerialization();
+    void testRouteSerialization();
 
 };
 
@@ -47,6 +49,11 @@ void JSONUnitTests::testRouteNodeDataSerialization() {
     QVERIFY(dataFromJSON.getNodeLabel() == NODE_LABEL);
     QVERIFY(dataFromJSON.getColor() == NODE_COLOR);
     QVERIFY(dataFromJSON.isStyleDifferentFromRoute() == IS_DIFFERENT);
+}
+
+void JSONUnitTests::testRouteSerialization() {
+    RouteData data;
+
 }
 
 QTEST_MAIN(JSONUnitTests)

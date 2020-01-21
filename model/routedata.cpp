@@ -1,5 +1,6 @@
 #include "routedata.h"
 #include <QJsonArray>
+#include <variant>
 
 QString RouteData::getName() const
 {
@@ -51,11 +52,6 @@ void RouteData::setShowDirection(bool value)
     showDirection = value;
 }
 
-std::list<RouteNodeData> RouteData::getNodes() const
-{
-    return nodes;
-}
-
 RouteData::RouteData()
 {
 
@@ -99,4 +95,52 @@ QJsonObject RouteData::toJSON() const {
     routeJSON["nodes"] = nodesJSON;
 
     return routeJSON;
+}
+
+
+void RouteData::addNode(const RouteNodeData node) {
+    nodes.emplace_back(node);
+}
+
+RouteNodeData& RouteData::operator[](size_t index) {
+    auto nodesSize = nodes.size();
+
+    if (index >= nodesSize) {
+        throw std::out_of_range("route node index is larger than route size");
+    }
+
+    if (index == 0) {
+        return nodes.front();
+    } else if (index == nodesSize - 1) {
+        return nodes.back();
+    }
+
+    std::variant<std::list<RouteNodeData>::iterator, std::list<RouteNodeData>::reverse_iterator> begin;
+    std::variant<std::list<RouteNodeData>::iterator, std::list<RouteNodeData>::reverse_iterator> end;
+    std::function<void(size_t&)> moveIndex;
+    size_t currentIndex;
+    auto indexIsInLeftHalf = index < nodesSize/2;
+
+    if (indexIsInLeftHalf) {
+        begin = ++nodes.begin();
+        currentIndex = 1;
+        moveIndex = [](size_t& index) {++index;};
+    } else {
+        begin = ++nodes.rbegin();
+        currentIndex = nodesSize - 2;
+        moveIndex = [](size_t& index) {--index;};
+    }
+
+    while (currentIndex != index) {
+        std::visit([](auto &&iterator){++iterator;}, begin);
+        moveIndex(currentIndex);
+    }
+
+    if (auto val = std::get_if<std::list<RouteNodeData>::iterator>(&begin)) {
+        return **val;
+    } else {
+        return *(std::get<std::list<RouteNodeData>::reverse_iterator>(begin));
+    }
+
+
 }

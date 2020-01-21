@@ -24,12 +24,15 @@ public:
     int getSize() const;
     QColor getColor() const;
     bool getShowDirection() const;
-    std::list<RouteNodeData> getNodes() const;
 
     void setName(const QString &value);
     void setSize(int value);
     void setColor(const QColor &value);
     void setShowDirection(bool value);
+
+    void addNode(const RouteNodeData node&);
+
+    RouteNodeData& operator[](size_t index)M;
 };
 
 #endif // ROUTEDATA_H
