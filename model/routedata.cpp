@@ -52,7 +52,7 @@ RouteNodeData RouteData::generateNewNode(int x, int y) {
     newNode.setX(x);
     newNode.setY(y);
     newNode.setColor(this->color);
-    newNode.setNodeName(QString::number(nodes.size()));
+    newNode.setNodeName(QString::number(nodes.size() + 1));
     newNode.setSize(this->nodeSize);
     newNode.setInvisible(false);
     newNode.setDifferentStyleFromRoute(false);
@@ -140,7 +140,7 @@ RouteDataIterator RouteData::iterateToPosition(size_t index) {
     if (index == 0) {
         return nodes.begin();
     } else if (index == nodesSize - 1) {
-        return nodes.end();
+        return --nodes.end();
     }
 
     std::list<RouteNodeData>::iterator currentIterator;
@@ -149,11 +149,10 @@ RouteDataIterator RouteData::iterateToPosition(size_t index) {
 
     if (indexIsInLeftHalf) {
         currentIterator = ++nodes.begin();
-        distance = static_cast<int>(index - 2);
+        distance = static_cast<int>(index - 1);
     } else {
-        currentIterator = --nodes.end();
-        --currentIterator;
-        distance = static_cast<int>(-nodesSize + index + 1);
+        currentIterator = nodes.end();
+        distance = static_cast<int>(-nodesSize + index);
     }
 
     std::advance(currentIterator, distance);

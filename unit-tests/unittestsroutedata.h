@@ -8,8 +8,13 @@ class RouteDataUnitTests : public QObject {
 
     Q_OBJECT
 
+    void checkRouteInsertion(size_t size);
+
 private slots:
-    void indexOperationTest();
+    void indexOperationTestOddSize();
+    void indexOperationTestEvenSize();
+    void insertionTest();
+    void changingTest();
 };
 
 #endif // UNITTESTSROUTEDATA_H
