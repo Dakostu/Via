@@ -2,6 +2,21 @@
 #include <QRgb>
 #include <QJsonArray>
 
+int RouteNodeData::getY() const
+{
+    return y;
+}
+
+void RouteNodeData::setY(int value)
+{
+    y = value;
+}
+
+void RouteNodeData::setDifferentStyleFromRoute(bool value)
+{
+    differentStyleFromRoute = value;
+}
+
 RouteNodeData::RouteNodeData()
 {
 

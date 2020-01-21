@@ -27,6 +27,7 @@ public:
     QString getNodeName() const;
     QString getNodeLabel() const;
     int getX() const;
+    int getY() const;
     int getSize() const;
     bool getInvisible() const;
     QColor getColor() const;
@@ -35,8 +36,10 @@ public:
     void setNodeName(const QString &value);
     void setNodeLabel(const QString &value);
     void setX(int value);
+    void setY(int value);
     void setInvisible(bool value);
     void setSize(int value);
+    void setDifferentStyleFromRoute(bool value);
 };
 
 #endif // ROUTENODEDATA_H
