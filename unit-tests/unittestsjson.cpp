@@ -1,6 +1,9 @@
 #include <QObject>
 #include <QtTest/QtTest>
+#include <QPainter>
+#include <QPixmap>
 
+#include "../model/project.h"
 #include "../model/routenodedata.h"
 #include "../model/routedata.h"
 
@@ -12,7 +15,7 @@ class JSONUnitTests : public QObject
 private slots:
     void testRouteNodeDataSerialization();
     void testRouteSerialization();
-
+    void testProjectSerialization();
 };
 
 
@@ -70,6 +73,40 @@ void JSONUnitTests::testRouteSerialization() {
     RouteData dataFromJSON(dataJSON);
 
     QVERIFY(dataFromJSON == data);
+}
+
+void JSONUnitTests::testProjectSerialization() {
+    QPixmap picture(640,480);
+    QPainter painter(&picture);
+    painter.fillRect(0,0,640,480,QBrush(Qt::red));
+    painter.drawText(QPoint{300,350}, "Hello");
+    painter.save();
+
+    const QString PROJECT_NAME = "Project.json";
+    Project proj(PROJECT_NAME, picture);
+
+    RouteData firstRoute;
+    firstRoute.setColor(Qt::red);
+    firstRoute.addNode(2,51);
+    firstRoute.addNode(99,-69);
+    firstRoute.addNode(999,123);
+    proj.addRoute(firstRoute);
+
+    RouteData secondRoute;
+    secondRoute.setColor(Qt::blue);
+    secondRoute.addNode(99,24);
+    secondRoute.addNode(1425,2626);
+    secondRoute.addNode(99,11);
+    secondRoute.getLastNode().setColor(Qt::black);
+    secondRoute.getLastNode().setSize(332);
+    secondRoute.getLastNode().setDifferentStyleFromRoute(true);
+    proj.addRoute(secondRoute);
+
+    auto dataJSON = proj.toJSON();
+
+    Project dataFromJSON(proj.toJSON());
+
+    QVERIFY(dataFromJSON == proj);
 }
 
 QTEST_MAIN(JSONUnitTests)
