@@ -20,8 +20,8 @@ class RouteData : public Serializable
     std::list<RouteNodeData> nodes;
 
     RouteDataIterator iterateToPosition(size_t index);
-
     RouteNodeData generateNewNode(int x, int y);
+    void refreshNames(RouteDataIterator& it, size_t index);
 
 public:
     RouteData();

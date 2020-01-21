@@ -54,8 +54,6 @@ RouteNodeData RouteData::generateNewNode(int x, int y) {
     newNode.setColor(this->color);
     newNode.setNodeName(QString::number(nodes.size() + 1));
     newNode.setSize(this->nodeSize);
-    newNode.setInvisible(false);
-    newNode.setDifferentStyleFromRoute(false);
     newNode.setNodeLabel("");
     return newNode;
 }
@@ -73,7 +71,24 @@ void RouteData::addNode(int x, int y) {
 }
 
 void RouteData::addNode(int x, int y, size_t index) {
-    nodes.insert(iterateToPosition(index), generateNewNode(x,y));
+    auto iterator = iterateToPosition(index);
+    auto newNode = generateNewNode(x,y);
+
+    newNode.setNodeName(QString::number(index + 1));
+
+    nodes.insert(iterator, newNode);
+
+    refreshNames(iterator, index + 1);
+}
+
+void RouteData::refreshNames(RouteDataIterator& it, size_t index) {
+    for (; it != nodes.end(); ++it, ++index) {
+        auto &node = *it;
+        QString newNumber = QString::number(index + 1);
+        if (!node.isNameChangedByUser() && node.getNodeName() != newNumber) {
+            node.setNodeName(newNumber);
+        }
+    }
 }
 
 void RouteData::addNode(const RouteNodeData &node) {
