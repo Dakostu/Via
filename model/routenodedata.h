@@ -24,7 +24,19 @@ public:
     virtual QJsonObject toJSON() const override;
 
     bool isStyleDifferentFromRoute();
+    QString getNodeName() const;
+    QString getNodeLabel() const;
+    int getX() const;
+    int getSize() const;
+    bool getInvisible() const;
+    QColor getColor() const;
+
     void setColor(QColor &newColor);
+    void setNodeName(const QString &value);
+    void setNodeLabel(const QString &value);
+    void setX(int value);
+    void setInvisible(bool value);
+    void setSize(int value);
 };
 
 #endif // ROUTENODEDATA_H

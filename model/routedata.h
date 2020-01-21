@@ -19,6 +19,17 @@ public:
 
     virtual void fromJSON(const QJsonObject &object) override;
     virtual QJsonObject toJSON() const override;
+
+    QString getName() const;
+    int getSize() const;
+    QColor getColor() const;
+    bool getShowDirection() const;
+    std::list<RouteNodeData> getNodes() const;
+
+    void setName(const QString &value);
+    void setSize(int value);
+    void setColor(const QColor &value);
+    void setShowDirection(bool value);
 };
 
 #endif // ROUTEDATA_H

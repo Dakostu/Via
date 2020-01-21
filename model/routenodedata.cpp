@@ -7,6 +7,62 @@ RouteNodeData::RouteNodeData()
 
 }
 
+QString RouteNodeData::getNodeName() const
+{
+    return nodeName;
+}
+
+void RouteNodeData::setNodeName(const QString &value)
+{
+    nodeName = value;
+}
+
+QString RouteNodeData::getNodeLabel() const
+{
+    return nodeLabel;
+}
+
+void RouteNodeData::setNodeLabel(const QString &value)
+{
+    nodeLabel = value;
+}
+
+int RouteNodeData::getX() const
+{
+    return x;
+}
+
+void RouteNodeData::setX(int value)
+{
+    x = value;
+}
+
+bool RouteNodeData::getInvisible() const
+{
+    return invisible;
+}
+
+void RouteNodeData::setInvisible(bool value)
+{
+    invisible = value;
+}
+
+int RouteNodeData::getSize() const
+{
+    return size;
+}
+
+void RouteNodeData::setSize(int value)
+{
+    size = value;
+}
+
+QColor RouteNodeData::getColor() const
+{
+    return color;
+}
+
+
 RouteNodeData::RouteNodeData(const QJsonObject &object) {
     fromJSON(object);
 }

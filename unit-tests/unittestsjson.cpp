@@ -1,6 +1,8 @@
 #include <QObject>
 #include <QtTest/QtTest>
 
+#include "../model/routenodedata.h"
+
 class JSONUnitTests : public QObject
 {
     Q_OBJECT
@@ -13,7 +15,8 @@ private slots:
 
 
 void JSONUnitTests::testRouteNodeData() {
-    QVERIFY(false);
+    RouteNodeData data;
+
 }
 
 QTEST_MAIN(JSONUnitTests)
