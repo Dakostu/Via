@@ -23,7 +23,7 @@ void RouteData::fromJSON(const QJsonObject &object) {
         if (!node.isStyleDifferentFromRoute()) {
             node.setColor(color);
         }
-        nodes.append(node);
+        nodes.emplace_back(node);
     }
 
 }

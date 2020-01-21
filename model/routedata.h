@@ -11,7 +11,7 @@ class RouteData : public Serializable
     int size;
     QColor color;
     bool showDirection;
-    QLinkedList<RouteNodeData> nodes;
+    std::list<RouteNodeData> nodes;
 
 public:
     RouteData();
