@@ -96,7 +96,18 @@ QJsonObject RouteData::toJSON() const {
     return routeJSON;
 }
 
-
+RouteNodeData RouteData::generateNewNode(int x, int y) {
+    RouteNodeData newNode;
+    newNode.setX(x);
+    newNode.setY(y);
+    newNode.setColor(this->color);
+    newNode.setNodeName(QString::number(nodes.size()));
+    newNode.setSize(this->size);
+    newNode.setInvisible(false);
+    newNode.setDifferentStyleFromRoute(false);
+    newNode.setNodeLabel("");
+    return newNode;
+}
 
 RouteNodeData& RouteData::getFirstNode() {
     return nodes.front();
@@ -106,12 +117,12 @@ RouteNodeData& RouteData::getLastNode() {
     return nodes.back();
 }
 
-void RouteData::addNode(const RouteNodeData &node) {
-    nodes.emplace_back(node);
+void RouteData::addNode(int x, int y) {
+    nodes.emplace_back(generateNewNode(x,y));
 }
 
-void RouteData::addNode(const RouteNodeData &node, size_t index) {
-    nodes.insert(iterateToPosition(index), node);
+void RouteData::addNode(int x, int y, size_t index) {
+    nodes.insert(iterateToPosition(index), generateNewNode(x,y));
 }
 
 std::list<RouteNodeData>::iterator RouteData::iterateToPosition(size_t index) {
@@ -133,11 +144,11 @@ std::list<RouteNodeData>::iterator RouteData::iterateToPosition(size_t index) {
 
     if (indexIsInLeftHalf) {
         currentIterator = ++nodes.begin();
-        distance = index - 2;
+        distance = static_cast<int>(index - 2);
     } else {
         currentIterator = --nodes.end();
         --currentIterator;
-        distance = -nodesSize + index + 1;
+        distance = static_cast<int>(-nodesSize + index + 1);
     }
 
     std::advance(currentIterator, distance);

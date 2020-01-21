@@ -120,6 +120,6 @@ bool RouteNodeData::isStyleDifferentFromRoute() {
     return differentStyleFromRoute;
 }
 
-void RouteNodeData::setColor(QColor &newColor) {
+void RouteNodeData::setColor(QColor newColor) {
     color = newColor;
 }

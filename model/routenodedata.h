@@ -32,7 +32,7 @@ public:
     bool getInvisible() const;
     QColor getColor() const;
 
-    void setColor(QColor &newColor);
+    void setColor(QColor newColor);
     void setNodeName(const QString &value);
     void setNodeLabel(const QString &value);
     void setX(int value);

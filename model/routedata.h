@@ -17,6 +17,8 @@ class RouteData : public Serializable
 
     std::list<RouteNodeData>::iterator iterateToPosition(size_t index);
 
+    RouteNodeData generateNewNode(int x, int y);
+
 public:
     RouteData();
     RouteData(const QJsonObject &object);
@@ -36,8 +38,8 @@ public:
     void setColor(const QColor &value);
     void setShowDirection(bool value);
 
-    void addNode(const RouteNodeData &node);
-    void addNode(const RouteNodeData &node, size_t index);
+    void addNode(int x, int y);
+    void addNode(int x, int y, size_t index);
 
     RouteNodeData& operator[](size_t index);
 };
