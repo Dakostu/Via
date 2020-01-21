@@ -1,22 +1,11 @@
-#include <QObject>
 #include <QtTest/QtTest>
 #include <QPainter>
 #include <QPixmap>
 
+#include "unittestsjson.h"
 #include "../model/project.h"
 #include "../model/routenodedata.h"
 #include "../model/routedata.h"
-
-class JSONUnitTests : public QObject
-{
-    Q_OBJECT
-
-
-private slots:
-    void testRouteNodeDataSerialization();
-    void testRouteSerialization();
-    void testProjectSerialization();
-};
 
 
 void JSONUnitTests::testRouteNodeDataSerialization() {
@@ -44,7 +33,7 @@ void JSONUnitTests::testRouteNodeDataSerialization() {
 
     RouteNodeData dataFromJSON(dataJSON);
 
-    QVERIFY(dataFromJSON == data);
+    QCOMPARE(dataFromJSON, data);
 }
 
 void JSONUnitTests::testRouteSerialization() {
@@ -72,7 +61,7 @@ void JSONUnitTests::testRouteSerialization() {
 
     RouteData dataFromJSON(dataJSON);
 
-    QVERIFY(dataFromJSON == data);
+    QCOMPARE(dataFromJSON, data);
 }
 
 void JSONUnitTests::testProjectSerialization() {
@@ -106,8 +95,7 @@ void JSONUnitTests::testProjectSerialization() {
 
     Project dataFromJSON(proj.toJSON());
 
-    QVERIFY(dataFromJSON == proj);
+    QCOMPARE(dataFromJSON, proj);
 }
 
-QTEST_MAIN(JSONUnitTests)
 #include "unittestsjson.moc"

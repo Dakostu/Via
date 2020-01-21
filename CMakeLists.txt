@@ -27,6 +27,7 @@ file(GLOB ui_src
         )
 
     file(GLOB unit_test_src
+        "unit-tests/*.h"
         "unit-tests/*.cpp")
 
 
@@ -79,7 +80,7 @@ add_executable(UnitTests
     ${ALL_FILES}
 )
 
-add_test(UnitTests JSONUnitTests)
+#add_test(UnitTests JSONUnitTests)
 
 target_link_libraries(UnitTests ${LINK_LIBS} Qt5::Test)
 
