@@ -17,7 +17,6 @@ private slots:
     void insertionTest();
     void removalTest();
     void removalTestWithCustomNode();
-    void changingTest();
 };
 
 #endif // UNITTESTSROUTEDATA_H

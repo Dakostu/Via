@@ -131,11 +131,6 @@ void RouteDataUnitTests::removalTestWithCustomNode() {
     checkNode(2);
     route.eraseNode(6);
     checkNode(2);
-
-}
-
-void RouteDataUnitTests::changingTest() {
-    QVERIFY(false);
 }
 
 
