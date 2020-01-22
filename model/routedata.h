@@ -8,6 +8,7 @@
 
 
 using RouteDataIterator = std::list<RouteNodeData>::iterator;
+
 class RouteData : public Serializable
 {
     static constexpr auto DEFAULT_SIZE = 1;
@@ -45,6 +46,7 @@ public:
     void addNode(int x, int y);
     void addNode(int x, int y, size_t index);
     void addNode(const RouteNodeData &node);
+    void eraseNode(size_t index);
 
     size_t length() const;
     RouteNodeData& operator[](size_t index);

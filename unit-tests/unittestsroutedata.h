@@ -16,6 +16,7 @@ private slots:
     void indexOperationTestEvenSize();
     void insertionTest();
     void removalTest();
+    void removalTestWithCustomNode();
     void changingTest();
 };
 

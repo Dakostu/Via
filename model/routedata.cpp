@@ -82,6 +82,10 @@ void RouteData::addNode(int x, int y, size_t index) {
 }
 
 void RouteData::refreshNames(RouteDataIterator& it, size_t index) {
+    if (it == nodes.end()) {
+        return;
+    }
+
     for (; it != nodes.end(); ++it, ++index) {
         auto &node = *it;
         QString newNumber = QString::number(index + 1);
@@ -93,6 +97,14 @@ void RouteData::refreshNames(RouteDataIterator& it, size_t index) {
 
 void RouteData::addNode(const RouteNodeData &node) {
     nodes.emplace_back(node);
+}
+
+void RouteData::eraseNode(size_t index) {
+    auto iterator = iterateToPosition(index);
+
+    iterator = nodes.erase(iterator);
+
+    refreshNames(iterator, index);
 }
 
 QString RouteData::getName() const

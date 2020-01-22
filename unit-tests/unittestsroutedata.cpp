@@ -86,7 +86,52 @@ void RouteDataUnitTests::insertionTest() {
 }
 
 void RouteDataUnitTests::removalTest() {
-    QVERIFY(false);
+    auto route = generateRoute(10);
+
+    auto compareRoute = [&route](){
+        for (size_t i = 0; i < route.length(); ++i) {
+            QCOMPARE(route[i].getNodeName(), QString::number(i + 1));
+        }
+    };
+
+    route.eraseNode(0);
+    compareRoute();
+    route.eraseNode(3);
+    compareRoute();
+    route.eraseNode(6);
+    compareRoute();
+    route.eraseNode(6);
+    compareRoute();
+}
+
+void RouteDataUnitTests::removalTestWithCustomNode() {
+    auto route = generateRoute(10);
+    const auto SIZE = 200;
+    const QString NAME("Nami");
+
+    route[4].setSize(SIZE);
+    route[4].setDifferentStyleFromRoute(true);
+    route[4].setNameChangedByUser(true);
+    route[4].setNodeName(NAME);
+    route[4].setInvisible(true);
+
+    auto checkNode = [&](size_t index) {
+        QCOMPARE(route[index].getSize(), SIZE);
+        QCOMPARE(route[index].isStyleDifferentFromRoute(), true);
+        QCOMPARE(route[index].isNameChangedByUser(), true);
+        QCOMPARE(route[index].getNodeName(), NAME);
+        QCOMPARE(route[index].getInvisible(), true);
+    };
+
+    route.eraseNode(8);
+    checkNode(4);
+    route.eraseNode(3);
+    checkNode(3);
+    route.eraseNode(0);
+    checkNode(2);
+    route.eraseNode(6);
+    checkNode(2);
+
 }
 
 void RouteDataUnitTests::changingTest() {
