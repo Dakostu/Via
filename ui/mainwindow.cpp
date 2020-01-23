@@ -10,6 +10,9 @@
 #include <QGraphicsRectItem>
 #include <QPainterPath>
 
+#include "../controller/uiaddnodestate.h"
+#include "../controller/uimovenodesstate.h"
+#include "../controller/uiselectnodestate.h"
 #include "../shapes/routenode.h"
 #include "../shapes/route.h"
 #include "../shapes/octagon.h"
@@ -19,7 +22,8 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     : QMainWindow(parent),
       controller(newController),
       ui(new Ui::MainWindow),
-      currentScene(std::make_unique<QGraphicsScene>())
+      currentScene(std::make_unique<QGraphicsScene>()),
+      currentState(new UIMoveNodesState)
 {
     ui->setupUi(this);
 
@@ -27,6 +31,14 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     initializeShapeSelections();
 
     ui->picture->setBackgroundRole(QPalette::Base);
+
+    currentState->setToggleButtons(ui->quickButtonAutoAdd,
+                                   ui->quickButtonMove,
+                                   ui->quickButtonSelect);
+
+    connect(ui->quickButtonMove, &QAbstractButton::pressed, this, [&]() { changeUIState<UIMoveNodesState>(); });
+    connect(ui->quickButtonAutoAdd, &QAbstractButton::pressed, this, [&]() { changeUIState<UIAddNodeState>(); });
+    connect(ui->quickButtonSelect, &QAbstractButton::pressed, this, [&]() { changeUIState<UISelectNodeState>(); });
 
 
     QPixmap m("/home/dk/Documents/Code/C++/QT/Wegweiser/test/gtavc_vice_city_map_hq.jpg");
