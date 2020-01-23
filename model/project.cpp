@@ -38,6 +38,11 @@ void Project::setHasbeenModified(bool value)
     hasbeenModified = value;
 }
 
+QString Project::getFileName() const
+{
+    return fileName;
+}
+
 QByteArray Project::pixMapToBytes() const {
     QBuffer buffer;
     buffer.open(QIODevice::WriteOnly);

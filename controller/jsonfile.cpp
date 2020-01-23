@@ -35,3 +35,7 @@ QJsonArray JSONFile::load() {
 
     return savedJSONObjects;
 }
+
+void JSONFile::operator+=(const QJsonObject &obj) {
+    add(obj);
+}

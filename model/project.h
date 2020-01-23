@@ -27,11 +27,13 @@ public:
 
     bool getHasbeenModified() const;
     void setHasbeenModified(bool value);
+    QString getFileName() const;
 
     void addRoute(const RouteData &route);
 
     const RouteData& operator[](size_t index);
     bool operator==(const Project &other) const;
+
 };
 
 #endif // PROJECT_H

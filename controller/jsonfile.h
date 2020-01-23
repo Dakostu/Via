@@ -15,6 +15,8 @@ public:
     void add(const QJsonObject &obj);
     void save();
     QJsonArray load();
+
+    void operator+=(const QJsonObject &obj);
 };
 
 #endif // JSONFILE_H
