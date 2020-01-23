@@ -5,11 +5,11 @@ ViewCustomizable::ViewCustomizable() : elementSize{1}
 {    
 }
 
-qreal ViewCustomizable::getElementSize() {
+int ViewCustomizable::getElementSize() {
     return elementSize;
 }
 
-void ViewCustomizable::setElementSize(qreal newSize) {
+void ViewCustomizable::setElementSize(int newSize) {
     elementSize = newSize;
 }
 

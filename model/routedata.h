@@ -33,7 +33,7 @@ public:
 
     virtual void setColors(const QColor &routeColor) override;
     virtual void setDefaultColors() override;
-    virtual void setElementSize(qreal newSize) override;
+    virtual void setElementSize(int newSize) override;
 
     QString getName() const;
     QColor getColor() const;

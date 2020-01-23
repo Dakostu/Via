@@ -16,7 +16,7 @@ RouteData::RouteData(const QJsonObject &object) : RouteData() {
 
 void RouteData::fromJSON(const QJsonObject &object) {
     name = object["name"].toString();
-    elementSize = object["nodeSize"].toDouble();
+    elementSize = object["nodeSize"].toInt();
     routeColor = QColor(object["color"][0].toInt(), object["color"][1].toInt(), object["color"][2].toInt());
     showDirection = object["showDirection"].toBool();
 
@@ -155,7 +155,7 @@ void RouteData::setDefaultColors() {
     }
 }
 
-void RouteData::setElementSize(qreal newSize) {
+void RouteData::setElementSize(int newSize) {
     elementSize = newSize;
     for (auto &node : nodes) {
         if (!node.isStyleDifferentFromRoute()) {

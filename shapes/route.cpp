@@ -40,7 +40,7 @@ void Route::addNode(qreal x, qreal y) {
     currentScene->addItem(nodes.back());
 }
 
-void Route::setElementSize(qreal newSize) {
+void Route::setElementSize(int newSize) {
     for (auto &currentNode : nodes) {
         currentNode->setElementSize(newSize);
     }

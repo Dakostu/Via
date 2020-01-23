@@ -15,7 +15,7 @@ protected:
 public:
     RouteExtraTextLabel(QString text, NodeShapeable *parent);
 
-    virtual void setElementSize(qreal newSize) override;
+    virtual void setElementSize(int newSize) override;
     virtual void setColors(const QColor &color) override;
     virtual void setDefaultColors() override;
 

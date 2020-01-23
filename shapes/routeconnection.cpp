@@ -18,7 +18,7 @@ void RouteConnection::setDefaultColors() {
     this->pen().setColor(defaultPen.color());
 }
 
-void RouteConnection::setElementSize(qreal newSize) {
+void RouteConnection::setElementSize(int newSize) {
     elementSize = newSize;
     elementSize = sizeMultiplier(SIZE_FACTOR) + SIZE_OFFSET;
     this->setPen(QPen(pen().color(), elementSize));

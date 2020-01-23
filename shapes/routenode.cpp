@@ -26,7 +26,7 @@ RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extr
 RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText) :
     RouteNode(newNode, nodeLabelText, "") {}
 
-void RouteNode::setElementSize(qreal newSize) {
+void RouteNode::setElementSize(int newSize) {
     elementSize = newSize;
     node->setElementSize(newSize);
     extraTextLabel.setElementSize(newSize);

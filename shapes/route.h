@@ -24,7 +24,7 @@ public:
     Route(const QColor &color, QGraphicsScene *scene);
 
     virtual void addNode(qreal x, qreal y);
-    virtual void setElementSize(qreal newSize) override;
+    virtual void setElementSize(int newSize) override;
 };
 
 #endif // ROUTE_H

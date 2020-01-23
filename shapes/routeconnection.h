@@ -19,7 +19,7 @@ public:
     virtual void setColors(const QColor &color) override;
     virtual void setDefaultColors() override;
 
-    virtual void setElementSize(qreal newSize) override;
+    virtual void setElementSize(int newSize) override;
     virtual void setNewPosition(QPointF p1, QPointF p2);
     QPointF p1();
     QPointF p2();

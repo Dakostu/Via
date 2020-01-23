@@ -12,7 +12,7 @@ RouteExtraTextLabel::RouteExtraTextLabel(QString text, NodeShapeable *parent)
 }
 
 
-void RouteExtraTextLabel::setElementSize(qreal newSize) {
+void RouteExtraTextLabel::setElementSize(int newSize) {
     ViewCustomizable::setElementSize(newSize);
     auto font = this->font();
     font.setPointSizeF(elementSize / 2 + 7);

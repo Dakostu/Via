@@ -8,7 +8,7 @@ class ViewCustomizable
 {
 
 protected:
-    qreal elementSize;
+    int elementSize;
     static constexpr qreal FILLCOLOR_LIGHTNESS_THRESHOLD = 0.3;
 
     ViewCustomizable();
@@ -18,8 +18,8 @@ public:
     virtual void setColors(const QColor &color) = 0;
     virtual void setDefaultColors() = 0;
 
-    virtual qreal getElementSize();
-    virtual void setElementSize(qreal newSize);
+    virtual int getElementSize();
+    virtual void setElementSize(int newSize);
 
 };
 
