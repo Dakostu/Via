@@ -23,22 +23,14 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
       controller(newController),
       ui(new Ui::MainWindow),
       currentScene(std::make_unique<QGraphicsScene>()),
+      quickButtonGroup(std::make_unique<QButtonGroup>()),
       currentState(new UIMoveNodesState)
 {
     ui->setupUi(this);
 
+    initializeQuickButtons();
     initializeMenus();
     initializeShapeSelections();
-
-    ui->picture->setBackgroundRole(QPalette::Base);
-
-    currentState->setToggleButtons(ui->quickButtonAutoAdd,
-                                   ui->quickButtonMove,
-                                   ui->quickButtonSelect);
-
-    connect(ui->quickButtonMove, &QAbstractButton::pressed, this, [&]() { changeUIState<UIMoveNodesState>(); });
-    connect(ui->quickButtonAutoAdd, &QAbstractButton::pressed, this, [&]() { changeUIState<UIAddNodeState>(); });
-    connect(ui->quickButtonSelect, &QAbstractButton::pressed, this, [&]() { changeUIState<UISelectNodeState>(); });
 
 
     QPixmap m("/home/dk/Documents/Code/C++/QT/Wegweiser/test/gtavc_vice_city_map_hq.jpg");
@@ -56,9 +48,23 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
 
 MainWindow::~MainWindow()
 {
+    delete currentState;
     delete ui;
 }
 
+void MainWindow::initializeQuickButtons() {
+    currentState->setToggleButtons(ui->quickButtonAutoAdd,
+                                   ui->quickButtonMove,
+                                   ui->quickButtonSelect);
+
+
+    quickButtonGroup->addButton(ui->quickButtonAutoAdd);
+    quickButtonGroup->addButton(ui->quickButtonMove);
+    quickButtonGroup->addButton(ui->quickButtonSelect);
+    connect(ui->quickButtonAutoAdd, &QAbstractButton::pressed, this, [&]() { changeUIState<UIAddNodeState>(); });
+    connect(ui->quickButtonMove, &QAbstractButton::pressed, this, [&]() { changeUIState<UIMoveNodesState>(); });
+    connect(ui->quickButtonSelect, &QAbstractButton::pressed, this, [&]() { changeUIState<UISelectNodeState>(); });
+}
 
 void MainWindow::initializeMenus() {
 

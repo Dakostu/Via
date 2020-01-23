@@ -9,11 +9,11 @@ class UIState
 
 public:
 
-    ~UIState() { qDebug() << "destroyed"; }
+    virtual ~UIState();
 
     virtual void setToggleButtons(QAbstractButton *quickButtonAutoAdd,
                                   QAbstractButton *quickButtonMove,
-                                  QAbstractButton *quickButtonSelect) = 0;
+                                  QAbstractButton *quickButtonSelect) = 0;   
 
 
 };

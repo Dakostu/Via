@@ -57,9 +57,6 @@ void MapView::mouseMoveEvent(QMouseEvent* event) {
         eventPos.setX(reEnterBoundaries(eventPos.x(), screenRect.left(), screenRect.right(), hBar));
         eventPos.setY(reEnterBoundaries(eventPos.y(), screenRect.top(), screenRect.bottom(), vBar));
 
-        qDebug() << oldX << oldY;
-
-
         if (event->globalX() != eventPos.x()) {
             hBar->setValue(oldX+200);
             QCursor::setPos(eventPos);

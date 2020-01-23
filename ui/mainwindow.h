@@ -7,8 +7,9 @@
 #include "../controller/uistate.h"
 #include <vector>
 #include <memory>
-#include <QMainWindow>
+#include <QButtonGroup>
 #include <QGraphicsScene>
+#include <QMainWindow>
 #include <QToolButton>
 
 #include <QDebug>
@@ -26,25 +27,23 @@ class MainWindow : public QMainWindow
     Ui::MainWindow *ui;
 
     std::unique_ptr<QGraphicsScene> currentScene;
+    std::unique_ptr<QButtonGroup> quickButtonGroup;
     UIState *currentState;
 
     std::vector<std::unique_ptr<QAction>> actions;
     std::vector<std::unique_ptr<QMenu>> menus;
 
+    void initializeQuickButtons();
     void initializeMenus();
     void initializeShapeSelections();
 
     template <typename State>
     void changeUIState() {
-        qDebug() << "Pressed";
-
         delete currentState;
         currentState = new State;
         //auto newState = std::make_unique<State>();
         //currentState.swap(*newState);
-        currentState->setToggleButtons(ui->quickButtonAutoAdd,
-                                       ui->quickButtonMove,
-                                       ui->quickButtonSelect);
+
     }
 
 public:
