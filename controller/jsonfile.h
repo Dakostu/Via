@@ -13,7 +13,7 @@ public:
     JSONFile(const QString &fileName);
 
     void add(const QJsonObject &obj);
-    void writeToFile();
+    void save();
     QJsonArray load();
 };
 

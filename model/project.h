@@ -6,18 +6,17 @@
 #include <QPixmap>
 #include <QLatin1String>
 #include <QString>
-#include <QVector>
+#include <vector>
 
 class Project : public Serializable
 {    
     QString fileName;
     QPixmap imagePixMap;
     bool hasbeenModified;
-    QVector<RouteData> routes;
+    std::vector<RouteData> routes;
 
-    QLatin1String pixMapToBytes() const;
+    QByteArray pixMapToBytes() const;
     void pixMapFromBytes(const QJsonValue &bytes);
-
 
 public:
     Project(const QString &newFileName, const QPixmap &map);
@@ -31,7 +30,7 @@ public:
 
     void addRoute(const RouteData &route);
 
-    const RouteData& operator[](int index);
+    const RouteData& operator[](size_t index);
     bool operator==(const Project &other) const;
 };
 

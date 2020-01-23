@@ -1,11 +1,13 @@
-#include <QtTest/QtTest>
 #include <QPainter>
 #include <QPixmap>
+#include <QtTest/QtTest>
+#include <QTemporaryFile>
 
-#include "unittestsjson.h"
+#include "../controller/jsonfile.h"
 #include "../model/project.h"
 #include "../model/routenodedata.h"
 #include "../model/routedata.h"
+#include "unittestsjson.h"
 
 
 void JSONUnitTests::testRouteNodeDataSerialization() {
@@ -97,9 +99,53 @@ void JSONUnitTests::testProjectSerialization() {
 
     auto dataJSON = proj.toJSON();
 
+    QVERIFY(dataJSON["image"].toString() != "");
+
     Project dataFromJSON(proj.toJSON());
 
     QCOMPARE(dataFromJSON, proj);
 }
 
+void JSONUnitTests::testJSONFileInterface() {
+    QVector<Project> projects;
+
+    projects.append(Project("Project1", QPixmap(200,500)));
+    for (int i = 0; i < 3; ++i) {
+        auto route = RouteData();
+        route.setColor(Qt::red);
+        projects.back().addRoute(route);
+    }
+
+    projects.append(Project("Project2", QPixmap(1500,900)));
+    for (int i = 0; i < 7; ++i) {
+        auto route = RouteData();
+        route.setColor(Qt::blue);
+        projects.back().addRoute(route);
+    }
+
+    QTemporaryFile tempFile;
+
+    tempFile.open();
+    JSONFile jsonFile(tempFile.fileName());
+    tempFile.close();
+
+    for (const auto &proj : projects) {
+        jsonFile.add(proj.toJSON());
+    }
+
+    jsonFile.save();
+
+    auto savedProjects = jsonFile.load();
+
+    QCOMPARE(projects.size(), savedProjects.size());
+
+    for (auto i = 0; i < savedProjects.size(); ++i) {
+        auto originalProj = projects[i];
+        auto loadedProj = Project(savedProjects[i].toObject());
+        QCOMPARE(originalProj, loadedProj);
+    }
+
+}
+
 #include "unittestsjson.moc"
+

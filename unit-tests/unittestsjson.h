@@ -12,6 +12,7 @@ private slots:
     void testRouteNodeDataSerialization();
     void testRouteSerialization();
     void testProjectSerialization();
+    void testJSONFileInterface();
 };
 
 #endif // JSONUNITTESTS_H
