@@ -5,8 +5,8 @@
 
 class ProgramVersion
 {
-    int major;
-    int minor;
+    unsigned major;
+    unsigned minor;
 
     static const auto CURRENT_MAJOR_VERSION = 1;
     static const auto CURRENT_MINOR_VERSION = 0;
@@ -14,7 +14,7 @@ class ProgramVersion
 
 public:
 
-    ProgramVersion(int majorNum, int minorNum);
+    ProgramVersion(unsigned majorNum, unsigned minorNum);
     ProgramVersion(const QString &version);
 
     static ProgramVersion generateCurrentProgramVersion();

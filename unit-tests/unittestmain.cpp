@@ -1,4 +1,5 @@
 #include "unittestsjson.h"
+#include "unittestsprogramversion.h"
 #include "unittestsroutedata.h"
 
 #include <memory>
@@ -18,6 +19,8 @@ int main(int argc, char **argv) {
 
     status += runTest<JSONUnitTests>(argc, argv);
     status += runTest<RouteDataUnitTests>(argc, argv);
+    status += runTest<ProgramVersionUnitTests>(argc, argv);
+
 
     return status;
 }
