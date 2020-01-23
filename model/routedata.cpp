@@ -6,6 +6,10 @@ RouteData::RouteData() : nodeSize(DEFAULT_SIZE), showDirection(DEFAULT_SHOW_DIR)
 
 }
 
+RouteData::RouteData(const QColor &routeColor) : RouteData() {
+    setColor(routeColor);
+}
+
 RouteData::RouteData(const QJsonObject &object) : RouteData() {
     fromJSON(object);
 }

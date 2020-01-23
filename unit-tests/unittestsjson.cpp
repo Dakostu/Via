@@ -111,15 +111,13 @@ void JSONUnitTests::testJSONFileInterface() {
 
     projects.append(Project("Project1", QPixmap(200,500)));
     for (int i = 0; i < 3; ++i) {
-        auto route = RouteData();
-        route.setColor(Qt::red);
+        auto route = RouteData(Qt::red);
         projects.back().addRoute(route);
     }
 
     projects.append(Project("Project2", QPixmap(1500,900)));
     for (int i = 0; i < 7; ++i) {
-        auto route = RouteData();
-        route.setColor(Qt::blue);
+        auto route = RouteData(Qt::blue);
         projects.back().addRoute(route);
     }
 
