@@ -1,0 +1,8 @@
+#include "uiaddnodestate.h"
+
+
+void UIAddNodeState::setToggleButtons(QAbstractButton *quickButtonAutoAdd, QAbstractButton *quickButtonMove, QAbstractButton *quickButtonSelect) {
+    quickButtonAutoAdd->setChecked(true);
+    quickButtonMove->setChecked(false);
+    quickButtonSelect->setChecked(false);
+}
