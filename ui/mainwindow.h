@@ -4,7 +4,6 @@
 
 #include "./ui_mainwindow.h"
 #include "../controller/mainwindowcontroller.h"
-#include "../controller/uistate.h"
 #include <vector>
 #include <memory>
 #include <QButtonGroup>
@@ -28,23 +27,13 @@ class MainWindow : public QMainWindow
 
     std::unique_ptr<QGraphicsScene> currentScene;
     std::unique_ptr<QButtonGroup> quickButtonGroup;
-    UIState *currentState;
 
     std::vector<std::unique_ptr<QAction>> actions;
     std::vector<std::unique_ptr<QMenu>> menus;
 
     void initializeQuickButtons();
     void initializeMenus();
-    void initializeShapeSelections();
-
-    template <typename State>
-    void changeUIState() {
-        delete currentState;
-        currentState = new State;
-        //auto newState = std::make_unique<State>();
-        //currentState.swap(*newState);
-
-    }
+    void initializeShapeSelections();    
 
 public:
     MainWindow(QWidget *parent, MainWindowController &newController);

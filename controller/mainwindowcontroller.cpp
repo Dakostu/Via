@@ -1,8 +1,10 @@
+#include "uimovenodesstate.h"
 #include "mainwindowcontroller.h"
 #include "programversion.h"
 #include "jsonfile.h"
 
 MainWindowController::MainWindowController()
+    : currentState(new UIMoveNodesState)
 {
 
 }
@@ -32,6 +34,11 @@ void MainWindowController::loadCurrentProjectFromFile(const QString &fileName) {
 
     setCurrentProject(fileName);
     addFileToRecentlyOpenedProjects(fileName);
+}
+
+UIState *MainWindowController::getCurrentState() const
+{
+    return currentState;
 }
 
 void MainWindowController::addFileToRecentlyOpenedProjects(const QString &fileName) {
