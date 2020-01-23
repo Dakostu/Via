@@ -35,29 +35,6 @@ set (ALL_FILES ${controller_src} ${interface_src} ${model_src} ${shapes_src} ${u
 set (LINK_LIBS PRIVATE Qt5::Widgets)
 set (PACKAGES COMPONENTS Widgets LinguistTools REQUIRED)
 
-project(Wegweiser LANGUAGES CXX)
-
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-find_package(Qt5 ${PACKAGES})
-
-set(TS_FILES test/test_translate.ts)
-
-  add_executable(Wegweiser
-    main.cpp
-    ${ALL_FILES}
-  )
-
-target_link_libraries(Wegweiser ${LINK_LIBS})
-
-
 
 project (UnitTests LANGUAGES CXX)
 
@@ -80,9 +57,29 @@ add_executable(UnitTests
     ${ALL_FILES}
 )
 
-#add_test(UnitTests JSONUnitTests)
-
 target_link_libraries(UnitTests ${LINK_LIBS} Qt5::Test)
 
+
+project(Wegweiser LANGUAGES CXX)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(Qt5 ${PACKAGES})
+
+set(TS_FILES test/test_translate.ts)
+
+  add_executable(Wegweiser
+    main.cpp
+    ${ALL_FILES}
+  )
+
+target_link_libraries(Wegweiser ${LINK_LIBS})
 
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
