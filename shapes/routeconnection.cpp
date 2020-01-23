@@ -18,10 +18,10 @@ void RouteConnection::setDefaultColors() {
     this->pen().setColor(defaultPen.color());
 }
 
-void RouteConnection::setSize(qreal newSize) {
-    size = newSize;
-    size = sizeMultiplier(SIZE_FACTOR) + SIZE_OFFSET;
-    this->setPen(QPen(pen().color(), size));
+void RouteConnection::setElementSize(qreal newSize) {
+    elementSize = newSize;
+    elementSize = sizeMultiplier(SIZE_FACTOR) + SIZE_OFFSET;
+    this->setPen(QPen(pen().color(), elementSize));
 }
 
 void RouteConnection::setNewPosition(QPointF p1, QPointF p2) {

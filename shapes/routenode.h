@@ -30,7 +30,7 @@ public:
     RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extraTextLabelText);
     RouteNode(NodeShapeable *newNode, QString nodeLabelText);
 
-    virtual void setSize(qreal newSize) override;
+    virtual void setElementSize(qreal newSize) override;
     virtual void setColors(const QColor &color) override;
     virtual void setDefaultColors() override;
 

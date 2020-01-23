@@ -8,10 +8,10 @@ RouteNodeLabel::RouteNodeLabel(QString text)
     setDefaultColors();
 }
 
-void RouteNodeLabel::setSize(qreal newSize) {
-    ViewCustomizable::setSize(newSize);
+void RouteNodeLabel::setElementSize(qreal newSize) {
+    ViewCustomizable::setElementSize(newSize);
     auto font = this->font();
-    font.setPointSizeF(size / 2 + 7);
+    font.setPointSizeF(elementSize / 2 + 7);
     this->setFont(font);
 }
 

@@ -2,6 +2,7 @@
 #define ROUTEDATA_H
 
 #include "../interfaces/serializable.h"
+#include "../interfaces/viewcustomizable.h"
 #include "routenodedata.h"
 #include <list>
 #include <variant>
@@ -9,14 +10,12 @@
 
 using RouteDataIterator = std::list<RouteNodeData>::iterator;
 
-class RouteData : public Serializable
+class RouteData : public Serializable, public ViewCustomizable
 {
-    static constexpr auto DEFAULT_SIZE = 1;
     static constexpr bool DEFAULT_SHOW_DIR = false;
 
     QString name;
-    int nodeSize;
-    QColor color;
+    QColor routeColor;
     bool showDirection;
     std::list<RouteNodeData> nodes;
 
@@ -32,16 +31,17 @@ public:
     virtual void fromJSON(const QJsonObject &object) override;
     virtual QJsonObject toJSON() const override;
 
+    virtual void setColors(const QColor &routeColor) override;
+    virtual void setDefaultColors() override;
+    virtual void setElementSize(qreal newSize) override;
+
     QString getName() const;
-    int getSize() const;
     QColor getColor() const;
     bool getShowDirection() const;
     RouteNodeData& getFirstNode();
     RouteNodeData& getLastNode();
 
     void setName(const QString &value);
-    void setSize(int value);
-    void setColor(const QColor &value);
     void setShowDirection(bool value);
 
     void addNode(int x, int y);

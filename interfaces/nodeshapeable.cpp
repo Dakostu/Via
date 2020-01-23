@@ -4,8 +4,8 @@
 #include <QGraphicsSceneMouseEvent>
 
 
-void NodeShapeable::setSize(qreal newSize) {
-    ViewCustomizable::setSize(newSize);
+void NodeShapeable::setElementSize(qreal newSize) {
+    ViewCustomizable::setElementSize(newSize);
     this->drawShape();
 }
 

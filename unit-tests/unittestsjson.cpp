@@ -24,11 +24,11 @@ void JSONUnitTests::testRouteNodeDataSerialization() {
 
     data.setX(X);
     data.setY(Y);
-    data.setSize(SIZE);
+    data.setElementSize(SIZE);
     data.setInvisible(INVISIBLE);
     data.setNodeName(NODE_NAME);
     data.setNodeLabel(NODE_LABEL);
-    data.setColor(NODE_COLOR);
+    data.setColors(NODE_COLOR);
     data.setDifferentStyleFromRoute(IS_DIFFERENT);
 
     auto dataJSON = data.toJSON();
@@ -41,7 +41,7 @@ void JSONUnitTests::testRouteNodeDataSerialization() {
 void JSONUnitTests::testRouteSerialization() {
     RouteData data;
     const auto ROUTE_COLOR = QColor(Qt::blue);
-    data.setColor(ROUTE_COLOR);
+    data.setColors(ROUTE_COLOR);
     data.setName("Check this");
     data.setShowDirection(true);
 
@@ -53,8 +53,8 @@ void JSONUnitTests::testRouteSerialization() {
 
     data.addNode(500,-321);
     data.getLastNode().setDifferentStyleFromRoute(true);
-    data.getLastNode().setSize(200);
-    data.getLastNode().setColor(Qt::red);
+    data.getLastNode().setElementSize(200);
+    data.getLastNode().setColors(Qt::red);
     data.getLastNode().setNodeName("Very Important");
     data.getLastNode().setNameChangedByUser(true);
 
@@ -78,19 +78,19 @@ void JSONUnitTests::testProjectSerialization() {
     Project proj(PROJECT_NAME, picture);
 
     RouteData firstRoute;
-    firstRoute.setColor(Qt::red);
+    firstRoute.setColors(Qt::red);
     firstRoute.addNode(2,51);
     firstRoute.addNode(99,-69);
     firstRoute.addNode(999,123);
     proj.addRoute(firstRoute);
 
     RouteData secondRoute;
-    secondRoute.setColor(Qt::blue);
+    secondRoute.setColors(Qt::blue);
     secondRoute.addNode(99,24);
     secondRoute.addNode(1425,2626);
     secondRoute.addNode(99,11);
-    secondRoute.getLastNode().setColor(Qt::black);
-    secondRoute.getLastNode().setSize(332);
+    secondRoute.getLastNode().setColors(Qt::black);
+    secondRoute.getLastNode().setElementSize(332);
     secondRoute.getLastNode().setDifferentStyleFromRoute(true);
 
     secondRoute.getFirstNode().setNameChangedByUser(true);

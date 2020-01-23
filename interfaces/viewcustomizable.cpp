@@ -1,19 +1,19 @@
 #include "viewcustomizable.h"
 #include <QBrush>
 
-ViewCustomizable::ViewCustomizable() : size{1}
+ViewCustomizable::ViewCustomizable() : elementSize{1}
 {    
 }
 
-qreal ViewCustomizable::getSize() {
-    return size;
+qreal ViewCustomizable::getElementSize() {
+    return elementSize;
 }
 
-void ViewCustomizable::setSize(qreal newSize) {
-    size = newSize;
+void ViewCustomizable::setElementSize(qreal newSize) {
+    elementSize = newSize;
 }
 
 qreal ViewCustomizable::sizeMultiplier(qreal val) {
-    return val * size;
+    return val * elementSize;
 }
 

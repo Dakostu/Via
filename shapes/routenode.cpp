@@ -20,19 +20,19 @@ RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extr
     addToGroup(&nodeLabel);
 
     auto center = node->boundingRect().center();
-    extraTextLabel.setPos(center.x() + (90 * size - 60), center.y() - extraTextLabel.boundingRect().height() / 2);
+    extraTextLabel.setPos(center.x() + (90 * elementSize - 60), center.y() - extraTextLabel.boundingRect().height() / 2);
 }
 
 RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText) :
     RouteNode(newNode, nodeLabelText, "") {}
 
-void RouteNode::setSize(qreal newSize) {
-    size = newSize;
-    node->setSize(newSize);
-    extraTextLabel.setSize(newSize);
-    nodeLabel.setSize(newSize);
+void RouteNode::setElementSize(qreal newSize) {
+    elementSize = newSize;
+    node->setElementSize(newSize);
+    extraTextLabel.setElementSize(newSize);
+    nodeLabel.setElementSize(newSize);
     centerNodeLabelBox();
-    std::for_each(toConnections.begin(), toConnections.end(), [&](auto &conn) { conn->setSize(newSize); });
+    std::for_each(toConnections.begin(), toConnections.end(), [&](auto &conn) { conn->setElementSize(newSize); });
 }
 
 void RouteNode::setColors(const QColor &color) {
@@ -89,7 +89,7 @@ RouteExtraTextLabel* RouteNode::getExtraText() {
 void RouteNode::connect(RouteNode &from) {
     auto color = node->brush().color();
     auto connection = new RouteConnection(from.boundingRect().center(), this->boundingRect().center(), color);
-    connection->setSize(size);
+    connection->setElementSize(elementSize);
     this->fromConnections.emplace_back(connection);
     from.toConnections.emplace_back(connection);
 }

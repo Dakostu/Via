@@ -1,13 +1,13 @@
 #include "routedata.h"
 #include <QJsonArray>
 
-RouteData::RouteData() : nodeSize(DEFAULT_SIZE), showDirection(DEFAULT_SHOW_DIR)
+RouteData::RouteData() : ViewCustomizable(), showDirection(DEFAULT_SHOW_DIR)
 {
 
 }
 
-RouteData::RouteData(const QColor &routeColor) : RouteData() {
-    setColor(routeColor);
+RouteData::RouteData(const QColor &routeColor) : ViewCustomizable() {
+    setColors(routeColor);
 }
 
 RouteData::RouteData(const QJsonObject &object) : RouteData() {
@@ -16,8 +16,8 @@ RouteData::RouteData(const QJsonObject &object) : RouteData() {
 
 void RouteData::fromJSON(const QJsonObject &object) {
     name = object["name"].toString();
-    nodeSize = object["nodeSize"].toInt();
-    color = QColor(object["color"][0].toInt(), object["color"][1].toInt(), object["color"][2].toInt());
+    elementSize = object["nodeSize"].toDouble();
+    routeColor = QColor(object["color"][0].toInt(), object["color"][1].toInt(), object["color"][2].toInt());
     showDirection = object["showDirection"].toBool();
 
     auto nodesArray = object["nodes"].toArray();
@@ -25,8 +25,8 @@ void RouteData::fromJSON(const QJsonObject &object) {
     for (auto nodeJSON : nodesArray) {
         RouteNodeData node(nodeJSON.toObject());
         if (!node.isStyleDifferentFromRoute()) {
-            node.setColor(this->color);
-            node.setSize(this->nodeSize);
+            node.setColors(this->routeColor);
+            node.setElementSize(this->elementSize);
         }
         addNode(node);
     }
@@ -37,8 +37,8 @@ QJsonObject RouteData::toJSON() const {
     QJsonObject routeJSON;
 
     routeJSON["name"] = name;
-    routeJSON["nodeSize"] = nodeSize;
-    routeJSON["color"] = QJsonArray({color.red(), color.green(), color.blue()});
+    routeJSON["nodeSize"] = elementSize;
+    routeJSON["color"] = QJsonArray({routeColor.red(), routeColor.green(), routeColor.blue()});
     routeJSON["showDirection"] = showDirection;
 
     QJsonArray nodesJSON;
@@ -55,9 +55,9 @@ RouteNodeData RouteData::generateNewNode(int x, int y) {
     RouteNodeData newNode;
     newNode.setX(x);
     newNode.setY(y);
-    newNode.setColor(this->color);
+    newNode.setColors(this->routeColor);
     newNode.setNodeName(QString::number(nodes.size() + 1));
-    newNode.setSize(this->nodeSize);
+    newNode.setElementSize(this->elementSize);
     newNode.setNodeLabel("");
     return newNode;
 }
@@ -121,34 +121,10 @@ void RouteData::setName(const QString &value)
     name = value;
 }
 
-int RouteData::getSize() const
-{
-    return nodeSize;
-}
-
-void RouteData::setSize(int value)
-{
-    nodeSize = value;
-    for (auto &node : nodes) {
-        if (!node.isStyleDifferentFromRoute()) {
-            node.setSize(nodeSize);
-        }
-    }
-}
 
 QColor RouteData::getColor() const
 {
-    return color;
-}
-
-void RouteData::setColor(const QColor &value)
-{
-    color = value;
-    for (auto &node : nodes) {
-        if (!node.isStyleDifferentFromRoute()) {
-            node.setColor(color);
-        }
-    }
+    return routeColor;
 }
 
 bool RouteData::getShowDirection() const
@@ -160,6 +136,34 @@ void RouteData::setShowDirection(bool value)
 {
     showDirection = value;
 }
+
+void RouteData::setColors(const QColor &color) {
+    routeColor = color;
+    for (auto &node : nodes) {
+        if (!node.isStyleDifferentFromRoute()) {
+            node.setColors(color);
+        }
+    }
+}
+
+void RouteData::setDefaultColors() {
+    routeColor = Qt::black;
+    for (auto &node : nodes) {
+        if (!node.isStyleDifferentFromRoute()) {
+            node.setDefaultColors();
+        }
+    }
+}
+
+void RouteData::setElementSize(qreal newSize) {
+    elementSize = newSize;
+    for (auto &node : nodes) {
+        if (!node.isStyleDifferentFromRoute()) {
+            node.setElementSize(newSize);
+        }
+    }
+}
+
 
 RouteDataIterator RouteData::iterateToPosition(size_t index) {
     auto nodesSize = nodes.size();
@@ -204,8 +208,8 @@ bool RouteData::operator==(const RouteData &other) const {
     }
 
     return (this->name == other.name
-            && this->nodeSize == other.nodeSize
-            && this->color == other.color
+            && this->elementSize == other.elementSize
+            && this->routeColor == other.routeColor
             && this->showDirection == other.showDirection
             && this->nodes == other.nodes);
 }

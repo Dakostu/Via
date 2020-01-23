@@ -29,7 +29,7 @@ void Route::addNode(qreal x, qreal y) {
     nodes.emplace_back(new RouteNode(new Hexagon(x,y, routeColor),
                        QString::number(nodes.size() + 1)));
 
-    nodes.back()->setSize(getSize());
+    nodes.back()->setElementSize(getElementSize());
     if (previousNode) {
         nodes.back()->connect(*previousNode);
         for (const auto &connection : *previousNode->getToConnections()) {
@@ -40,9 +40,9 @@ void Route::addNode(qreal x, qreal y) {
     currentScene->addItem(nodes.back());
 }
 
-void Route::setSize(qreal newSize) {
+void Route::setElementSize(qreal newSize) {
     for (auto &currentNode : nodes) {
-        currentNode->setSize(newSize);
+        currentNode->setElementSize(newSize);
     }
-    ViewCustomizable::setSize(newSize);
+    ViewCustomizable::setElementSize(newSize);
 }

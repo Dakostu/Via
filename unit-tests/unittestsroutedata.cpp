@@ -109,14 +109,14 @@ void RouteDataUnitTests::removalTestWithCustomNode() {
     const auto SIZE = 200;
     const QString NAME("Nami");
 
-    route[4].setSize(SIZE);
+    route[4].setElementSize(SIZE);
     route[4].setDifferentStyleFromRoute(true);
     route[4].setNameChangedByUser(true);
     route[4].setNodeName(NAME);
     route[4].setInvisible(true);
 
     auto checkNode = [&](size_t index) {
-        QCOMPARE(route[index].getSize(), SIZE);
+        QCOMPARE(route[index].getElementSize(), SIZE);
         QCOMPARE(route[index].isStyleDifferentFromRoute(), true);
         QCOMPARE(route[index].isNameChangedByUser(), true);
         QCOMPARE(route[index].getNodeName(), NAME);

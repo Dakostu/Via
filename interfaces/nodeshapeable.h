@@ -22,7 +22,7 @@ public:
 
     QPointF getCenter();
 
-    virtual void setSize(qreal newSize) override;
+    virtual void setElementSize(qreal newSize) override;
     virtual void setColors(const QColor &color) override;
     virtual void setDefaultColors() override;
 
