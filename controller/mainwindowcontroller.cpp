@@ -27,7 +27,7 @@ void MainWindowController::loadCurrentProjectFromFile(const QString &fileName) {
         JSONFile readFile(fileName);
         auto loadedProjects = readFile.load();
         auto project = Project(loadedProjects[0].toObject());
-        openProjects[fileName] = project;
+        openProjects.insert_or_assign(fileName, project);
     }
 
     setCurrentProject(fileName);
@@ -51,13 +51,12 @@ void MainWindowController::addFileToRecentlyOpenedProjects(const QString &fileNa
 
 }
 
-
 Project* MainWindowController::getCurrentProject() {
     return currentProject;
 }
 
 void MainWindowController::setCurrentProject(const QString &fileName) {
-    currentProject = &openProjects[fileName];
+    currentProject = &openProjects.at(fileName);
 }
 
 void MainWindowController::printCurrentProject() {
