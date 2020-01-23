@@ -15,9 +15,10 @@
 #include "../shapes/octagon.h"
 #include "../shapes/routeconnection.h"
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow),
+MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
+    : QMainWindow(parent),
+      controller(newController),
+      ui(new Ui::MainWindow),
       currentScene(std::make_unique<QGraphicsScene>())
 {
     ui->setupUi(this);

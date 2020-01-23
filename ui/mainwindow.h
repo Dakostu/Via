@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+
+#include "../controller/mainwindowcontroller.h"
 #include <vector>
 #include <memory>
 #include <QMainWindow>
@@ -16,8 +18,10 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+    MainWindowController &controller;
+
 public:
-    MainWindow(QWidget *parent = nullptr);    
+    MainWindow(QWidget *parent, MainWindowController &newController);
     ~MainWindow();
 
 private:
