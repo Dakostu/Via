@@ -15,3 +15,11 @@ void UIAddNodeState::routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphicsSce
 void UIAddNodeState::routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
 
 }
+
+void UIAddNodeState::routeNodeMousePressEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
+
+}
+
+void UIAddNodeState::routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
+
+}

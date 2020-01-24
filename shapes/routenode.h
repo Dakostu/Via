@@ -40,8 +40,12 @@ public:
 
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
     void triggerParentMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
+
+
 
     virtual void setOpacity(qreal opacity);
     virtual void setNodeLabelOpacity(qreal opacity);

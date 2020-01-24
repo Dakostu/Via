@@ -12,4 +12,13 @@ void UISelectNodeState::routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphics
 }
 
 void UISelectNodeState::routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
+
+}
+
+void UISelectNodeState::routeNodeMousePressEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
+
+}
+
+void UISelectNodeState::routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
+
 }

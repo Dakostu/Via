@@ -1,5 +1,6 @@
 #include "uimovenodesstate.h"
 
+#include <QCursor>
 
 void UIMoveNodesState::setToggleButtons(QAbstractButton *quickButtonAutoAdd, QAbstractButton *quickButtonMove, QAbstractButton *quickButtonSelect) {
     quickButtonAutoAdd->setChecked(false);
@@ -27,4 +28,12 @@ void UIMoveNodesState::routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMo
 
     node->triggerParentMouseMoveEvent(mouseEvent);
 
+}
+
+void UIMoveNodesState::routeNodeMousePressEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
+    node->setCursor(Qt::ClosedHandCursor);
+}
+
+void UIMoveNodesState::routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
+    node->setCursor(Qt::OpenHandCursor);
 }

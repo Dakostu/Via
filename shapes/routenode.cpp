@@ -106,6 +106,16 @@ void RouteNode::triggerParentMouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent
     QGraphicsItemGroup::mouseMoveEvent(mouseEvent);
 }
 
+void RouteNode::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
+    currentState->routeNodeMousePressEvent(this, mouseEvent);
+    QGraphicsItemGroup::mousePressEvent(mouseEvent);
+}
+
+void RouteNode::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
+    currentState->routeNodeMouseReleaseEvent(this, mouseEvent);
+    QGraphicsItemGroup::mouseReleaseEvent(mouseEvent);
+}
+
 ConnectionVector* RouteNode::getFromConnections() {
     return &fromConnections;
 }
