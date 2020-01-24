@@ -11,3 +11,20 @@ void UIMoveNodesState::routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphicsS
     auto nodeColorInverted = ~(node->getColor().rgb());
     node->setColors(nodeColorInverted);
 }
+
+void UIMoveNodesState::routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
+    if (mouseEvent->buttons().testFlag(Qt::LeftButton)) {
+        auto thisPos = node->boundingRect().center() + node->pos();
+        for (auto &conn : *node->getFromConnections()) {
+            auto fromNodePos = conn->p1();
+            conn->setNewPosition(fromNodePos, thisPos);
+        }
+        for (auto &conn : *node->getToConnections()) {
+            auto toNodePos = conn->p2();
+            conn->setNewPosition(thisPos, toNodePos);
+        }
+    }
+
+    node->triggerParentMouseMoveEvent(mouseEvent);
+
+}

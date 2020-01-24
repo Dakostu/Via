@@ -41,12 +41,14 @@ public:
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
+    void triggerParentMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
 
     virtual void setOpacity(qreal opacity);
     virtual void setNodeLabelOpacity(qreal opacity);
     bool isInvisible();
 
     QColor getColor() const;
+    ConnectionVector* getFromConnections();
     ConnectionVector* getToConnections();
     RouteExtraTextLabel* getExtraText();
 

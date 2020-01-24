@@ -11,3 +11,7 @@ void UIAddNodeState::setToggleButtons(QAbstractButton *quickButtonAutoAdd, QAbst
 void UIAddNodeState::routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {
 
 }
+
+void UIAddNodeState::routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
+
+}

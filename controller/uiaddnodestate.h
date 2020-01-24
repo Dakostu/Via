@@ -12,6 +12,7 @@ public:
                                   QAbstractButton *quickButtonSelect) override;
 
     virtual void routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) override;
+    virtual void routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
 
 };
 

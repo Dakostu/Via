@@ -11,8 +11,8 @@ RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extr
 
     setDefaultColors();
 
-    acceptHoverEvents();
     setFlag(ItemIsMovable);
+    acceptHoverEvents();
 
     nodeLabel.setColors(node->pen().brush().color());
     extraTextLabel.setColors(node->pen().brush().color());
@@ -99,18 +99,15 @@ void RouteNode::connect(RouteNode &from) {
 }
 
 void RouteNode::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
-    if (mouseEvent->buttons().testFlag(Qt::LeftButton)) {
-        auto thisPos = this->boundingRect().center() + this->pos();
-        for (auto &conn : fromConnections) {
-            auto fromNodePos = conn->p1();
-            conn->setNewPosition(fromNodePos, thisPos);
-        }
-        for (auto &conn : toConnections) {
-            auto toNodePos = conn->p2();
-            conn->setNewPosition(thisPos, toNodePos);
-        }
-    }
+    currentState->routeNodeMouseMoveEvent(this, mouseEvent);
+}
+
+void RouteNode::triggerParentMouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     QGraphicsItemGroup::mouseMoveEvent(mouseEvent);
+}
+
+ConnectionVector* RouteNode::getFromConnections() {
+    return &fromConnections;
 }
 
 ConnectionVector* RouteNode::getToConnections() {

@@ -1,5 +1,4 @@
 #include "uistate.h"
 
 
-UIState::~UIState() {
-}
+UIState::~UIState() {}
