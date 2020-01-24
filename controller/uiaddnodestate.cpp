@@ -23,3 +23,9 @@ void UIAddNodeState::routeNodeMousePressEvent(RouteNode *node, QGraphicsSceneMou
 void UIAddNodeState::routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
 
 }
+
+void UIAddNodeState::mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
+    view->setDragMode(QGraphicsView::NoDrag);
+    view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+    view->setCursor(Qt::CrossCursor);
+}

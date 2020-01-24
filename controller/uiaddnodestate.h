@@ -15,6 +15,8 @@ public:
     virtual void routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
     virtual void routeNodeMousePressEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
     virtual void routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
+
+    virtual void mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) override;
 };
 
 #endif // UIADDNODESTATE_H

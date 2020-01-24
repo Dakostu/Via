@@ -35,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     QPixmap m("/home/dk/Documents/Code/C++/QT/Wegweiser/test/gtavc_vice_city_map_hq.jpg");
     currentScene->addPixmap(m);
     ui->picture->setScene(currentScene.get());
+    ui->picture->setUIState(controller.getCurrentState());
 
     Route route(Qt::red, currentScene.get(), controller.getCurrentState());
     //route.setElementSize(30);

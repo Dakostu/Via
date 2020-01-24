@@ -2,12 +2,14 @@
 #define UISTATE_H
 
 #include "../shapes/routenode.h"
+#include "../ui/mapview.h"
 
 #include <QAbstractButton>
 #include <QDebug>
 #include <QGraphicsSceneHoverEvent>
 
 class RouteNode;
+class MapView;
 
 class UIState
 {
@@ -25,6 +27,7 @@ public:
     virtual void routeNodeMousePressEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) = 0;
     virtual void routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) = 0;
 
+    virtual void mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) = 0;
 
 };
 
