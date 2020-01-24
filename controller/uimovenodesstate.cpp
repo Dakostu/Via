@@ -50,8 +50,6 @@ void UIMoveNodesState::mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEv
         auto eventPos = mouseEvent->globalPos();
         auto hBar = view->horizontalScrollBar();
         auto vBar = view->verticalScrollBar();
-        auto oldX = hBar->value();
-        auto oldY = vBar->value();
 
         auto reEnterBoundaries = [](auto boundaryValue, auto firstBoundary, auto secondBoundary, QScrollBar *bar) {
             if (boundaryValue <= firstBoundary + 4 && bar->value() < bar->maximum() - 10) {
@@ -66,13 +64,13 @@ void UIMoveNodesState::mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEv
         eventPos.setY(reEnterBoundaries(eventPos.y(), screenRect.top(), screenRect.bottom(), vBar));
 
         if (mouseEvent->globalX() != eventPos.x()) {
-            hBar->setValue(oldX+200);
+            view->setDragMode(QGraphicsView::NoDrag);
             QCursor::setPos(eventPos);
-            //hBar->setValue(oldX);
+            view->setDragMode(QGraphicsView::ScrollHandDrag);
         } else if (mouseEvent->globalY() != eventPos.y()) {
-            vBar->setValue(oldY+200);
+            view->setDragMode(QGraphicsView::NoDrag);
             QCursor::setPos(eventPos);
-            //vBar->setValue(oldY);
+            view->setDragMode(QGraphicsView::ScrollHandDrag);
         }
     }
 

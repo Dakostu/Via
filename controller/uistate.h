@@ -9,6 +9,7 @@
 #include <QGraphicsSceneHoverEvent>
 
 class RouteNode;
+class Route;
 class MapView;
 
 class UIState

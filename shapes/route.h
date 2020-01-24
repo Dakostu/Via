@@ -9,6 +9,9 @@
 #include <QGraphicsScene>
 #include <list>
 
+class UIState;
+class RouteNode;
+
 class Route : public ViewCustomizable
 {
 protected:

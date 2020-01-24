@@ -2,10 +2,15 @@
 #define MAPVIEW_H
 
 #include "../controller/uistate.h"
+#include "../shapes/route.h"
+#include "../interfaces/nodeshapeable.h"
+#include <list>
 #include <memory>
 #include <QGraphicsView>
 
 class UIState;
+class RouteNode;
+class Route;
 
 class MapView : public QGraphicsView
 {
@@ -14,6 +19,8 @@ class MapView : public QGraphicsView
     static constexpr qreal DETAIL_LEVEL_MIN = 0.05;
     static constexpr qreal DETAIL_LEVEL_MAX = 17;
     std::unique_ptr<UIState> *currentState;
+    std::list<std::unique_ptr<Route>> drawnRoutes;
+    Route* currentRoute;
 
 public:
 
@@ -24,7 +31,13 @@ public:
     void wheelEvent(QWheelEvent *event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
 
+    void triggerParentMousePressEvent(QMouseEvent* event);
     void triggerParentMouseMoveEvent(QMouseEvent* event);
+
+    void addRoute();
+    void addNodeToCurrentRoute(int x, int y);
+
+    Route *getCurrentRoute() const;
 };
 
 #endif // MAPVIEW_H

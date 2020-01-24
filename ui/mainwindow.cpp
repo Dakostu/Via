@@ -37,12 +37,12 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     ui->picture->setScene(currentScene.get());
     ui->picture->setUIState(controller.getCurrentState());
 
-    Route route(Qt::red, currentScene.get(), controller.getCurrentState());
-    //route.setElementSize(30);
-    route.addNode(500,600);
-    route.addNode(500,700);
-    route.addNode(600,550);
-    route.addNode(400,150);
+
+    ui->picture->addRoute();
+    ui->picture->addNodeToCurrentRoute(500,600);
+    ui->picture->addNodeToCurrentRoute(500,700);
+    ui->picture->addNodeToCurrentRoute(600,550);
+    ui->picture->addNodeToCurrentRoute(400,150);
 
 }
 

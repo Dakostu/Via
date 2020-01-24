@@ -41,6 +41,24 @@ void MapView::mouseMoveEvent(QMouseEvent* event) {
     currentState->get()->mapViewMouseMoveEvent(this, event);
 }
 
+void MapView::triggerParentMousePressEvent(QMouseEvent *event) {
+    QGraphicsView::mousePressEvent(event);
+}
+
 void MapView::triggerParentMouseMoveEvent(QMouseEvent *event) {
     QGraphicsView::mouseMoveEvent(event);
+}
+
+void MapView::addRoute() {
+    drawnRoutes.emplace_back(new Route(Qt::red, this->scene(), *currentState));
+    currentRoute = drawnRoutes.back().get();
+}
+
+void MapView::addNodeToCurrentRoute(int x, int y) {
+    currentRoute->addNode(x,y);
+}
+
+Route *MapView::getCurrentRoute() const
+{
+    return currentRoute;
 }
