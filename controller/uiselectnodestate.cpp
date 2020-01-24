@@ -6,3 +6,7 @@ void UISelectNodeState::setToggleButtons(QAbstractButton *quickButtonAutoAdd, QA
     quickButtonMove->setChecked(false);
     quickButtonSelect->setChecked(true);
 }
+
+void UISelectNodeState::routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {
+
+}

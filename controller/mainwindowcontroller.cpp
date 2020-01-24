@@ -36,7 +36,7 @@ void MainWindowController::loadCurrentProjectFromFile(const QString &fileName) {
     addFileToRecentlyOpenedProjects(fileName);
 }
 
-UIState *MainWindowController::getCurrentState() const
+std::unique_ptr<UIState>& MainWindowController::getCurrentState()
 {
     return currentState;
 }

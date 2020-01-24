@@ -1,6 +1,7 @@
 #ifndef ROUTENODE_H
 #define ROUTENODE_H
 
+#include "../controller/uistate.h"
 #include "../interfaces/nodeshapeable.h"
 #include "../interfaces/viewcustomizable.h"
 #include "../ui/routenodelabel.h"
@@ -9,6 +10,8 @@
 #include <QObject>
 #include <QGraphicsItemGroup>
 #include <memory>
+
+class UIState;
 
 using ConnectionVector = std::vector<RouteConnection*>;
 
@@ -22,13 +25,14 @@ protected:
     bool styleDiffersFromRoute;
     ConnectionVector fromConnections;
     ConnectionVector toConnections;
+    std::unique_ptr<UIState> &currentState;
 
     void centerNodeLabelBox();    
 
 
 public:
-    RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extraTextLabelText);
-    RouteNode(NodeShapeable *newNode, QString nodeLabelText);
+    RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extraTextLabelText, std::unique_ptr<UIState> &state);
+    RouteNode(NodeShapeable *newNode, QString nodeLabelText, std::unique_ptr<UIState> &state);
 
     virtual void setElementSize(int newSize) override;
     virtual void setColors(const QColor &color) override;
@@ -42,8 +46,10 @@ public:
     virtual void setNodeLabelOpacity(qreal opacity);
     bool isInvisible();
 
+    QColor getColor() const;
     ConnectionVector* getToConnections();
     RouteExtraTextLabel* getExtraText();
+
     void connect(RouteNode &from);
 
 };

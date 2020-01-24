@@ -1,9 +1,12 @@
 #include "routenode.h"
 #include <QGraphicsSceneMouseEvent>
 
-RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extraTextLabelText)
-    : node(newNode), nodeLabel(nodeLabelText), extraTextLabel(extraTextLabelText, node.get()),
-    styleDiffersFromRoute(false)
+RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extraTextLabelText, std::unique_ptr<UIState> &state)
+    : node(newNode),
+      nodeLabel(nodeLabelText),
+      extraTextLabel(extraTextLabelText, node.get()),
+      styleDiffersFromRoute(false),
+      currentState(state)
 {
 
     setDefaultColors();
@@ -23,8 +26,8 @@ RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extr
     extraTextLabel.setPos(center.x() + (90 * elementSize - 60), center.y() - extraTextLabel.boundingRect().height() / 2);
 }
 
-RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText) :
-    RouteNode(newNode, nodeLabelText, "") {}
+RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, std::unique_ptr<UIState> &state) :
+    RouteNode(newNode, nodeLabelText, "", state) {}
 
 void RouteNode::setElementSize(int newSize) {
     elementSize = newSize;
@@ -37,9 +40,13 @@ void RouteNode::setElementSize(int newSize) {
 
 void RouteNode::setColors(const QColor &color) {
     node->setColors(color);
-    extraTextLabel.setColors(color);
     nodeLabel.setColors(color);
+    extraTextLabel.setColors(color);
     std::for_each(toConnections.begin(), toConnections.end(), [&](auto &conn) { conn->setColors(color); });
+}
+
+QColor RouteNode::getColor() const {
+    return node->brush().color();
 }
 
 void RouteNode::setDefaultColors() {
@@ -56,10 +63,7 @@ void RouteNode::centerNodeLabelBox() {
 }
 
 void RouteNode::hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) {
-    auto nodeColorInverted = ~(node->brush().color().rgb());
-    node->setColors(nodeColorInverted);
-    nodeLabel.setColors(nodeColorInverted);
-    extraTextLabel.setColors(nodeColorInverted);
+    currentState->routeNodeMouseHoverEnterEvent(this, hoverEvent);
     QGraphicsItemGroup::hoverEnterEvent(hoverEvent);
 }
 

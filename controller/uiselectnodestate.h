@@ -9,6 +9,8 @@ public:
     virtual void setToggleButtons(QAbstractButton *quickButtonAutoAdd,
                                   QAbstractButton *quickButtonMove,
                                   QAbstractButton *quickButtonSelect) override;
+
+    virtual void routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) override;
 };
 
 #endif // UISELECTNODESTATE_H

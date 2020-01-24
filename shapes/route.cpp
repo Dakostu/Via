@@ -2,8 +2,8 @@
 #include "hexagon.h"
 #include "diamond.h"
 
-Route::Route(const QColor &color, QGraphicsScene *scene)
-    : routeColor(color), currentScene(scene)
+Route::Route(const QColor &color, QGraphicsScene *scene, std::unique_ptr<UIState> &state)
+    : routeColor(color), currentScene(scene), currentState(state)
 {
 }
 
@@ -27,7 +27,7 @@ void Route::addNode(qreal x, qreal y) {
 
     auto previousNode = nodes.back();
     nodes.emplace_back(new RouteNode(new Hexagon(x,y, routeColor),
-                       QString::number(nodes.size() + 1)));
+                       QString::number(nodes.size() + 1), currentState));
 
     nodes.back()->setElementSize(getElementSize());
     if (previousNode) {

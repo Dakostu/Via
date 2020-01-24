@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     currentScene->addPixmap(m);
     ui->picture->setScene(currentScene.get());
 
-    Route route(Qt::red, currentScene.get());    
+    Route route(Qt::red, currentScene.get(), controller.getCurrentState());
     //route.setElementSize(30);
     route.addNode(500,600);
     route.addNode(500,700);

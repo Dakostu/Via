@@ -6,3 +6,8 @@ void UIMoveNodesState::setToggleButtons(QAbstractButton *quickButtonAutoAdd, QAb
     quickButtonMove->setChecked(true);
     quickButtonSelect->setChecked(false);
 }
+
+void UIMoveNodesState::routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {
+    auto nodeColorInverted = ~(node->getColor().rgb());
+    node->setColors(nodeColorInverted);
+}

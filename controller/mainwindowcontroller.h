@@ -3,6 +3,7 @@
 
 #include "../model/project.h"
 #include "../controller/uistate.h"
+#include <memory>
 #include <QObject>
 #include <QUndoStack>
 #include <QtPrintSupport/QPrinter>
@@ -11,12 +12,12 @@ class MainWindowController : public QObject
 {
     Q_OBJECT
 
+    static constexpr size_t MAX_LIST_SIZE = 10;
     QUndoStack undoCommandStack;
     std::unordered_map<QString, Project> openProjects;
     Project *currentProject;
     std::list<QString> recentlyOpenedProjects;
-    static constexpr size_t MAX_LIST_SIZE = 10;
-    UIState *currentState;
+    std::unique_ptr<UIState> currentState;
 
 #ifndef QT_NO_PRINTER
     //QPrinter printer;
@@ -31,11 +32,11 @@ public:
 
     Project* getCurrentProject();
 
-    UIState *getCurrentState() const;
+    std::unique_ptr<UIState>& getCurrentState();
+
     template <typename State>
     void changeUIState() {
-        delete currentState;
-        currentState = new State;
+        currentState.reset(new State);
     }
 
 public slots:
