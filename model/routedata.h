@@ -1,6 +1,7 @@
 #ifndef ROUTEDATA_H
 #define ROUTEDATA_H
 
+#include "../data-structures/indexlist.h"
 #include "../interfaces/serializable.h"
 #include "../interfaces/viewcustomizable.h"
 #include "routenodedata.h"
@@ -8,7 +9,7 @@
 #include <variant>
 
 
-using RouteDataIterator = std::list<RouteNodeData>::iterator;
+using RouteDataIterator = IndexList<RouteNodeData>::iterator;
 
 class RouteData : public Serializable, public ViewCustomizable
 {
@@ -17,9 +18,8 @@ class RouteData : public Serializable, public ViewCustomizable
     QString name;
     QColor routeColor;
     bool showDirection;
-    std::list<RouteNodeData> nodes;
+    IndexList<RouteNodeData> nodes;
 
-    RouteDataIterator iterateToPosition(size_t index);
     RouteNodeData generateNewNode(int x, int y);
     void refreshNames(RouteDataIterator& it, size_t index);
 

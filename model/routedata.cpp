@@ -75,7 +75,7 @@ void RouteData::addNode(int x, int y) {
 }
 
 void RouteData::addNode(int x, int y, size_t index) {
-    auto iterator = iterateToPosition(index);
+    auto iterator = nodes[index];
     auto newNode = generateNewNode(x,y);
 
     newNode.setNodeName(QString::number(index + 1));
@@ -104,7 +104,7 @@ void RouteData::addNode(const RouteNodeData &node) {
 }
 
 void RouteData::eraseNode(size_t index) {
-    auto iterator = iterateToPosition(index);
+    auto iterator = nodes[index];
 
     iterator = nodes.erase(iterator);
 
@@ -164,42 +164,12 @@ void RouteData::setElementSize(int newSize) {
     }
 }
 
-
-RouteDataIterator RouteData::iterateToPosition(size_t index) {
-    auto nodesSize = nodes.size();
-
-    if (index >= nodesSize) {
-        throw std::out_of_range("route node index is larger than route size");
-    }
-
-    if (index == 0) {
-        return nodes.begin();
-    } else if (index == nodesSize - 1) {
-        return --nodes.end();
-    }
-
-    std::list<RouteNodeData>::iterator currentIterator;
-    int distance;
-    auto indexIsInLeftHalf = index < nodesSize/2;
-
-    if (indexIsInLeftHalf) {
-        currentIterator = ++nodes.begin();
-        distance = static_cast<int>(index - 1);
-    } else {
-        currentIterator = nodes.end();
-        distance = static_cast<int>(-nodesSize + index);
-    }
-
-    std::advance(currentIterator, distance);
-    return currentIterator;
-}
-
 size_t RouteData::length() const {
     return nodes.size();
 }
 
 RouteNodeData& RouteData::operator[](size_t index) {
-    return *iterateToPosition(index);
+    return *nodes[index];
 }
 
 bool RouteData::operator==(const RouteData &other) const {
