@@ -61,49 +61,30 @@
            <item>
             <layout class="QHBoxLayout" name="routeBoxButtonLayout">
              <item>
-              <widget class="QPushButton" name="routeBoxButtonPushAdd">
+              <widget class="QPushButton" name="routeBoxButtonAddRoute">
                <property name="text">
-                <string>Push-Add</string>
-               </property>
-               <property name="checkable">
-                <bool>false</bool>
-               </property>
-               <property name="flat">
-                <bool>false</bool>
+                <string notr="true">+</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="routeBoxButtonAddNode">
+              <widget class="QPushButton" name="routeBoxButtonDeleteRoute">
                <property name="text">
-                <string>Add @ selected</string>
+                <string notr="true">-</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="routeBoxButtonDeleteNode">
+              <widget class="QPushButton" name="routeBoxButtonUp">
                <property name="text">
-                <string>Delete</string>
+                <string>^</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QToolButton" name="routeBoxButtonUp">
+              <widget class="QPushButton" name="routeBoxButtonDown">
                <property name="text">
-                <string>Up</string>
-               </property>
-               <property name="arrowType">
-                <enum>Qt::UpArrow</enum>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QToolButton" name="routeBoxButtonDown">
-               <property name="text">
-                <string>Down</string>
-               </property>
-               <property name="arrowType">
-                <enum>Qt::DownArrow</enum>
+                <string>V</string>
                </property>
               </widget>
              </item>
@@ -136,49 +117,30 @@
            <item>
             <layout class="QHBoxLayout" name="nodeBoxButtonLayout">
              <item>
-              <widget class="QPushButton" name="nodeBoxButtonPushAdd">
-               <property name="text">
-                <string>Push-Add</string>
-               </property>
-               <property name="checkable">
-                <bool>false</bool>
-               </property>
-               <property name="flat">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QPushButton" name="nodeBoxButtonAddNode">
                <property name="text">
-                <string>Add @ selected</string>
+                <string notr="true">+</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QPushButton" name="nodeBoxButtonDeleteNode">
                <property name="text">
-                <string>Delete</string>
+                <string notr="true">-</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QToolButton" name="nodeBoxButtonUp">
+              <widget class="QPushButton" name="nodeBoxButtonUp">
                <property name="text">
-                <string>Up</string>
-               </property>
-               <property name="arrowType">
-                <enum>Qt::UpArrow</enum>
+                <string>^</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QToolButton" name="nodeBoxButtonDown">
+              <widget class="QPushButton" name="nodeBoxButtonDown">
                <property name="text">
-                <string>Down</string>
-               </property>
-               <property name="arrowType">
-                <enum>Qt::DownArrow</enum>
+                <string>V</string>
                </property>
               </widget>
              </item>
@@ -215,27 +177,6 @@
               </item>
               <item>
                <widget class="QLineEdit" name="routeNameLineEdit">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="routeLabelLayout">
-              <item>
-               <widget class="QLabel" name="routeLabelLabel">
-                <property name="text">
-                 <string>Label</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="routeLineEdit">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -473,30 +414,6 @@
               </item>
               <item>
                <widget class="QCheckBox" name="nodeShowOrderCheckBox">
-                <property name="maximumSize">
-                 <size>
-                  <width>15</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="nodeInvisibleLayout">
-              <item>
-               <widget class="QLabel" name="nodeInvisibleLabel">
-                <property name="text">
-                 <string>Invisible</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="nodeInvisibleCheckBox">
                 <property name="maximumSize">
                  <size>
                   <width>15</width>
