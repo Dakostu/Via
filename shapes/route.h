@@ -1,13 +1,13 @@
 #ifndef ROUTE_H
 #define ROUTE_H
 
+#include "../data-structures/indexlist.h"
 #include "../controller/uistate.h"
 #include "../interfaces/viewcustomizable.h"
 #include "routenode.h"
 #include "routeconnection.h"
 #include <QLinkedList>
 #include <QGraphicsScene>
-#include <list>
 
 class UIState;
 class RouteNode;
@@ -20,7 +20,7 @@ protected:
     QGraphicsScene *currentScene;
     std::unique_ptr<UIState> &currentState;
 
-    std::list<RouteNode*> nodes;
+    IndexList<RouteNode*> nodes;
 public:
     virtual void setColors(const QColor &color) override;
     virtual void setDefaultColors() override;
