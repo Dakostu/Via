@@ -10,6 +10,11 @@ file(GLOB interface_src
         "interfaces/*.cpp"
         )
 
+file(GLOB structures_src
+        "data-structures/*.h"
+        "data-structures/*.cpp"
+        )
+
 file(GLOB model_src
         "model/*.h"
         "model/*.cpp"
@@ -31,7 +36,7 @@ file(GLOB ui_src
         "unit-tests/*.cpp")
 
 
-set (ALL_FILES ${controller_src} ${interface_src} ${model_src} ${shapes_src} ${ui_src} ${TS_FILES})
+set (ALL_FILES ${controller_src} ${interface_src} ${structures_src} ${model_src} ${shapes_src} ${ui_src} ${TS_FILES})
 set (LINK_LIBS PRIVATE Qt5::Widgets)
 set (PACKAGES COMPONENTS Widgets LinguistTools REQUIRED)
 
