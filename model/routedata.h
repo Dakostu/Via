@@ -13,11 +13,11 @@ using RouteDataIterator = IndexList<RouteNodeData>::iterator;
 
 class RouteData : public Serializable, public ViewCustomizable
 {
-    static constexpr bool DEFAULT_SHOW_DIR = false;
+    static constexpr bool DEFAULT_SHOW_ORDER = true;
 
     QString name;
     QColor routeColor;
-    bool showDirection;
+    bool showOrder;
     IndexList<RouteNodeData> nodes;
 
     RouteNodeData generateNewNode(int x, int y);
@@ -37,12 +37,12 @@ public:
 
     QString getName() const;
     QColor getColor() const;
-    bool getShowDirection() const;
+    bool getShowOrder() const;
     RouteNodeData& getFirstNode();
     RouteNodeData& getLastNode();
 
     void setName(const QString &value);
-    void setShowDirection(bool value);
+    void setShowOrder(bool value);
 
     void addNode(int x, int y);
     void addNode(int x, int y, size_t index);

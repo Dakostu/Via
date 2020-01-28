@@ -43,7 +43,7 @@ void JSONUnitTests::testRouteSerialization() {
     const auto ROUTE_COLOR = QColor(Qt::blue);
     data.setColors(ROUTE_COLOR);
     data.setName("Check this");
-    data.setShowDirection(true);
+    data.setShowOrder(true);
 
     data.addNode(600,200);
     data.getLastNode().setInvisible(true);

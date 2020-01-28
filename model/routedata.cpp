@@ -1,7 +1,7 @@
 #include "routedata.h"
 #include <QJsonArray>
 
-RouteData::RouteData() : ViewCustomizable(), showDirection(DEFAULT_SHOW_DIR)
+RouteData::RouteData() : ViewCustomizable(), showOrder(DEFAULT_SHOW_ORDER)
 {
 
 }
@@ -18,7 +18,7 @@ void RouteData::fromJSON(const QJsonObject &object) {
     name = object["name"].toString();
     elementSize = object["nodeSize"].toInt();
     routeColor = QColor(object["color"][0].toInt(), object["color"][1].toInt(), object["color"][2].toInt());
-    showDirection = object["showDirection"].toBool();
+    showOrder = object["showOrder"].toBool();
 
     auto nodesArray = object["nodes"].toArray();
 
@@ -39,7 +39,7 @@ QJsonObject RouteData::toJSON() const {
     routeJSON["name"] = name;
     routeJSON["nodeSize"] = elementSize;
     routeJSON["color"] = QJsonArray({routeColor.red(), routeColor.green(), routeColor.blue()});
-    routeJSON["showDirection"] = showDirection;
+    routeJSON["showOrder"] = showOrder;
 
     QJsonArray nodesJSON;
     for (const auto &node : nodes) {
@@ -127,14 +127,14 @@ QColor RouteData::getColor() const
     return routeColor;
 }
 
-bool RouteData::getShowDirection() const
+bool RouteData::getShowOrder() const
 {
-    return showDirection;
+    return showOrder;
 }
 
-void RouteData::setShowDirection(bool value)
+void RouteData::setShowOrder(bool value)
 {
-    showDirection = value;
+    showOrder = value;
 }
 
 void RouteData::setColors(const QColor &color) {
@@ -180,6 +180,6 @@ bool RouteData::operator==(const RouteData &other) const {
     return (this->name == other.name
             && this->elementSize == other.elementSize
             && this->routeColor == other.routeColor
-            && this->showDirection == other.showDirection
+            && this->showOrder == other.showOrder
             && this->nodes == other.nodes);
 }
