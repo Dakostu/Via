@@ -39,13 +39,19 @@ public:
         currentState.reset(new State);
     }
 
+    void addNewRouteToCurrentProject(const QColor &newColor);
+    size_t amountOfOpenProjects();
+
 public slots:
 
+    void addProject(const Project &project);
     void setCurrentProject(const QString &fileName);
     void saveCurrentProject();
     void saveCurrentProjectAs(const QString &fileName);
     void loadCurrentProjectFromFile(const QString &fileName);
     void printCurrentProject();
+
+
 
 };
 

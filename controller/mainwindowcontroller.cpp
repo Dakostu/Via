@@ -2,11 +2,17 @@
 #include "mainwindowcontroller.h"
 #include "programversion.h"
 #include "jsonfile.h"
+#include "../interfaces/localizable.h"
+
 
 MainWindowController::MainWindowController()
     : currentState(new UIMoveNodesState)
 {
 
+}
+
+void MainWindowController::addProject(const Project &project) {
+    openProjects.emplace(project.getFileName(), project);
 }
 
 void MainWindowController::saveCurrentProjectAs(const QString &fileName) {
@@ -71,4 +77,14 @@ void MainWindowController::printCurrentProject() {
 
 
     #endif
+}
+
+
+void MainWindowController::addNewRouteToCurrentProject(const QColor &newColor) {
+    RouteData newRoute(newColor);
+    currentProject->addRoute(newRoute);
+}
+
+size_t MainWindowController::amountOfOpenProjects() {
+    return openProjects.size();
 }

@@ -34,7 +34,7 @@ public:
     void triggerParentMousePressEvent(QMouseEvent* event);
     void triggerParentMouseMoveEvent(QMouseEvent* event);
 
-    void addRoute();
+    void addRoute(const QColor &color);
     void addNodeToCurrentRoute(int x, int y);
 
     Route *getCurrentRoute() const;

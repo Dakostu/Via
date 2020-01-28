@@ -1,14 +1,17 @@
 #include "../interfaces/localizable.h"
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include <QGuiApplication>
-#include <QScreen>
-#include <QGraphicsView>
-#include <QWheelEvent>
-#include <QPen>
 #include <QBrush>
+#include <QFileDialog>
 #include <QGraphicsRectItem>
+#include <QGraphicsView>
+#include <QGuiApplication>
+#include <QImageReader>
 #include <QPainterPath>
+#include <QPen>
+#include <QScreen>
+#include <QPushButton>
+#include <QWheelEvent>
 
 #include "../controller/uiaddnodestate.h"
 #include "../controller/uimovenodesstate.h"
@@ -31,18 +34,23 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     initializeMenus();
     initializeShapeSelections();
 
+    createNewProject();
 
-    QPixmap m("/home/dk/Documents/Code/C++/QT/Wegweiser/test/gtavc_vice_city_map_hq.jpg");
-    currentScene->addPixmap(m);
-    ui->picture->setScene(currentScene.get());
+
+    connect(ui->routeBoxButtonAddRoute, &QPushButton::pressed, this, &MainWindow::addRoute);
+
+
+    //QPixmap m("/home/dk/Documents/Code/C++/QT/Wegweiser/test/gtavc_vice_city_map_hq.jpg");
+    //currentScene->addPixmap(m);
+    //ui->picture->setScene(currentScene.get());
     ui->picture->setUIState(controller.getCurrentState());
 
 
-    ui->picture->addRoute();
-    ui->picture->addNodeToCurrentRoute(500,600);
-    ui->picture->addNodeToCurrentRoute(500,700);
-    ui->picture->addNodeToCurrentRoute(600,550);
-    ui->picture->addNodeToCurrentRoute(400,150);
+    //ui->picture->addRoute(Qt::red);
+    //ui->picture->addNodeToCurrentRoute(500,600);
+    //ui->picture->addNodeToCurrentRoute(500,700);
+    //ui->picture->addNodeToCurrentRoute(600,550);
+    //ui->picture->addNodeToCurrentRoute(400,150);
 
 }
 
@@ -100,3 +108,32 @@ void MainWindow::initializeShapeSelections() {
     ui->routeStyleComboBox->addItems(availableStyles);
 }
 
+
+void MainWindow::addRoute() {
+    auto color = Qt::red;
+    ui->picture->addRoute(color);
+    controller.addNewRouteToCurrentProject(color);
+}
+
+void MainWindow::createNewProject() {
+    QString newFileName = QFileDialog::getSaveFileName(
+                this, Localizable::getUIString("CREATE_NEW_PROJECT_TITLE"),
+                "",
+                Localizable::getUIString("PROJECT_FILE_TYPES"));
+
+
+
+    QString pictureFileName = QFileDialog::getOpenFileName(
+                this,
+                Localizable::getUIString("LOAD_IMAGE_FILE"),
+                "",
+                Localizable::getUIString("QPIXMAP_SUPPORTED_FILE_TYPES"));
+
+
+
+
+    controller.addProject(Project(newFileName, pictureFileName));
+    currentScene->addPixmap(pictureFileName);
+    ui->picture->setScene(currentScene.get());
+
+}

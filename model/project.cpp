@@ -73,8 +73,10 @@ QJsonObject Project::toJSON() const {
     return projectJSON;
 }
 
-void Project::addRoute(const RouteData &route) {
+void Project::addRoute(RouteData &route) {
+    route.setName(QString("Route %1").arg(routes.size() + 1));
     routes.emplace_back(route);
+
 }
 
 const RouteData& Project::operator[](size_t index) {

@@ -39,6 +39,10 @@ public:
     MainWindow(QWidget *parent, MainWindowController &newController);
     ~MainWindow();
 
+public slots:
+    void addRoute();
+    void createNewProject();
+
 
 };
 #endif // MAINWINDOW_H
