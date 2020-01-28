@@ -42,6 +42,7 @@ public:
 public slots:
     void addRoute();
     void createNewProject();
+    void setNoProjectsOpenMode(bool noProjectsOpen);
 
 
 };

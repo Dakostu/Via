@@ -450,14 +450,28 @@
         <item>
          <widget class="QToolButton" name="quickButtonNew">
           <property name="text">
-           <string>New Project</string>
+           <string>New...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="quickButtonOpen">
+          <property name="text">
+           <string>Open...</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QToolButton" name="quickButtonSave">
           <property name="text">
-           <string>Save Current Project</string>
+           <string>Save</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="quickButtonSave_2">
+          <property name="text">
+           <string>Save As...</string>
           </property>
          </widget>
         </item>

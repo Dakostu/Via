@@ -35,9 +35,7 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     initializeMenus();
     initializeShapeSelections();
 
-    createNewProject();
-
-
+    connect(ui->quickButtonNew, &QPushButton::pressed, this, &MainWindow::createNewProject);
     connect(ui->routeBoxButtonAddRoute, &QPushButton::pressed, this, &MainWindow::addRoute);
 
 
@@ -126,11 +124,18 @@ void MainWindow::addRoute() {
 }
 
 void MainWindow::createNewProject() {
+
+    this->setEnabled(false);
+
     QString newFileName = QFileDialog::getSaveFileName(
                 this, Localizable::getUIString("CREATE_NEW_PROJECT_TITLE"),
                 "",
                 Localizable::getUIString("PROJECT_FILE_TYPES"));
 
+    if (newFileName.isEmpty()) {
+        this->setEnabled(true);
+        return;
+    }
 
 
     QString pictureFileName = QFileDialog::getOpenFileName(
@@ -139,10 +144,18 @@ void MainWindow::createNewProject() {
                 "",
                 Localizable::getUIString("QPIXMAP_SUPPORTED_FILE_TYPES"));
 
+    if (!pictureFileName.isEmpty()) {
+        controller.addProject(Project(newFileName, pictureFileName));
+        currentScene->addPixmap(pictureFileName);
+        ui->picture->setScene(currentScene.get());
+    }
 
+    this->setEnabled(true);
+}
 
-    controller.addProject(Project(newFileName, pictureFileName));
-    currentScene->addPixmap(pictureFileName);
-    ui->picture->setScene(currentScene.get());
+void MainWindow::setNoProjectsOpenMode(bool noProjectsOpen) {
+    this->setEnabled(!noProjectsOpen);
+    ui->quickButtonNew->setEnabled(true);
+    ui->quickButtonOpen->setEnabled(true);
 
 }
