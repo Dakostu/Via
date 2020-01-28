@@ -56,7 +56,11 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <widget class="QListView" name="routeBoxRouteList"/>
+            <widget class="QListView" name="routeBoxRouteList">
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
            <item>
             <layout class="QHBoxLayout" name="routeBoxButtonLayout">
@@ -112,7 +116,11 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
-            <widget class="QListView" name="nodeBoxNodeList"/>
+            <widget class="QListView" name="nodeBoxNodeList">
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
            <item>
             <layout class="QHBoxLayout" name="nodeBoxButtonLayout">
@@ -442,14 +450,14 @@
         <item>
          <widget class="QToolButton" name="quickButtonNew">
           <property name="text">
-           <string>New</string>
+           <string>New Project</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QToolButton" name="quickButtonSave">
           <property name="text">
-           <string>Save Current</string>
+           <string>Save Current Project</string>
           </property>
          </widget>
         </item>
@@ -525,7 +533,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>483</width>
+           <width>538</width>
            <height>499</height>
           </rect>
          </property>

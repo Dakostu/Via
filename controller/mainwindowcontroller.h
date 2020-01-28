@@ -5,8 +5,9 @@
 #include "../controller/uistate.h"
 #include <memory>
 #include <QObject>
-#include <QUndoStack>
+#include <QStringListModel>
 #include <QtPrintSupport/QPrinter>
+#include <QUndoStack>
 
 class MainWindowController : public QObject
 {
@@ -18,6 +19,7 @@ class MainWindowController : public QObject
     Project *currentProject;
     std::list<QString> recentlyOpenedProjects;
     std::unique_ptr<UIState> currentState;
+    QStringListModel currentRoutes;
 
 #ifndef QT_NO_PRINTER
     //QPrinter printer;
@@ -31,8 +33,8 @@ public:
     MainWindowController();
 
     Project* getCurrentProject();
-
     std::unique_ptr<UIState>& getCurrentState();
+    QStringListModel& getCurrentRoutes();
 
     template <typename State>
     void changeUIState() {

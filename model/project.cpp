@@ -43,6 +43,11 @@ QString Project::getFileName() const
     return fileName;
 }
 
+std::vector<RouteData> Project::getRoutes() const
+{
+    return routes;
+}
+
 QByteArray Project::pixMapToBytes() const {
     QBuffer buffer;
     buffer.open(QIODevice::WriteOnly);

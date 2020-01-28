@@ -13,6 +13,7 @@ MainWindowController::MainWindowController()
 
 void MainWindowController::addProject(const Project &project) {
     openProjects.emplace(project.getFileName(), project);
+    setCurrentProject(project.getFileName());
 }
 
 void MainWindowController::saveCurrentProjectAs(const QString &fileName) {
@@ -70,6 +71,18 @@ Project* MainWindowController::getCurrentProject() {
 
 void MainWindowController::setCurrentProject(const QString &fileName) {
     currentProject = &openProjects.at(fileName);
+}
+
+QStringListModel& MainWindowController::getCurrentRoutes() {
+    QStringList currentRouteList;
+    //currentRoutes.removeRows(0, currentRoutes.rowCount());
+
+    for (const auto &route : currentProject->getRoutes()) {
+        currentRouteList << route.getName();
+    }
+
+    currentRoutes.setStringList(currentRouteList);
+    return currentRoutes;
 }
 
 void MainWindowController::printCurrentProject() {

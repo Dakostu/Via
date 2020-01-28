@@ -111,8 +111,9 @@ void MainWindow::initializeShapeSelections() {
 
 void MainWindow::addRoute() {
     auto color = Qt::red;
-    ui->picture->addRoute(color);
     controller.addNewRouteToCurrentProject(color);
+    ui->picture->addRoute(color);
+    ui->routeBoxRouteList->setModel(&controller.getCurrentRoutes());
 }
 
 void MainWindow::createNewProject() {
@@ -128,7 +129,6 @@ void MainWindow::createNewProject() {
                 Localizable::getUIString("LOAD_IMAGE_FILE"),
                 "",
                 Localizable::getUIString("QPIXMAP_SUPPORTED_FILE_TYPES"));
-
 
 
 

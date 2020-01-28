@@ -28,6 +28,7 @@ public:
     bool getHasbeenModified() const;
     void setHasbeenModified(bool value);
     QString getFileName() const;
+    std::vector<RouteData> getRoutes() const;
 
     void addRoute(RouteData &route);
 
