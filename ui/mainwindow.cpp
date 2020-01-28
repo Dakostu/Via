@@ -132,6 +132,8 @@ void MainWindow::deleteSelectedRoute() {
     ui->routeBoxRouteList->setModel(&controller.getCurrentRoutes());
     ui->nodeBoxNodeList->clearSelection();
 
+    moveSelectionTo(ui->routeBoxRouteList, selectedRoute - 1);
+
 }
 
 void MainWindow::createNewProject() {
