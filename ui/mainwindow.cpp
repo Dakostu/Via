@@ -143,7 +143,7 @@ void MainWindow::createNewProject() {
         ui->picture->setScene(currentScene.get());
     }
 
-    //setNoProjectsOpenMode(false);
+    setNoProjectsOpenMode(false);
     this->setEnabled(true);
 }
 

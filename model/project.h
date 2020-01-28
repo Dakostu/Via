@@ -13,7 +13,7 @@ class Project : public Serializable
     QString fileName;
     QPixmap imagePixMap;
     bool hasbeenModified;
-    std::vector<RouteData> routes;
+    std::unordered_map<QString, RouteData> routes;
 
     QByteArray pixMapToBytes() const;
     void pixMapFromBytes(const QJsonValue &bytes);
@@ -28,11 +28,10 @@ public:
     bool getHasbeenModified() const;
     void setHasbeenModified(bool value);
     QString getFileName() const;
-    std::vector<RouteData> getRoutes() const;
+    std::unordered_map<QString, RouteData> getRoutes() const;
 
     void addRoute(RouteData &route);
 
-    const RouteData& operator[](size_t index);
     bool operator==(const Project &other) const;
 
 };

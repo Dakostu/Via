@@ -24,7 +24,7 @@ void Project::fromJSON(const QJsonObject &object) {
 
     for (const auto routeJSON : routesJSON) {
         RouteData currentRoute(routeJSON.toObject());
-        routes.emplace_back(currentRoute);
+        routes.emplace(currentRoute.getName(), currentRoute);
     }
 }
 
@@ -43,7 +43,7 @@ QString Project::getFileName() const
     return fileName;
 }
 
-std::vector<RouteData> Project::getRoutes() const
+std::unordered_map<QString, RouteData> Project::getRoutes() const
 {
     return routes;
 }
@@ -71,7 +71,7 @@ QJsonObject Project::toJSON() const {
     QJsonArray routesJSON;
 
     for (const auto &route : routes) {
-        routesJSON.append(route.toJSON());
+        routesJSON.append(route.second.toJSON());
     }
     projectJSON["routes"] = routesJSON;
 
@@ -80,12 +80,7 @@ QJsonObject Project::toJSON() const {
 
 void Project::addRoute(RouteData &route) {
     route.setName(QString("Route %1").arg(routes.size() + 1));
-    routes.emplace_back(route);
-
-}
-
-const RouteData& Project::operator[](size_t index) {
-    return routes.at(index);
+    routes.emplace(route.getName(), route);
 }
 
 bool Project::operator==(const Project &other) const {

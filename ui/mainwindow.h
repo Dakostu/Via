@@ -7,6 +7,7 @@
 #include <vector>
 #include <memory>
 #include <QButtonGroup>
+#include <QListView>
 #include <QGraphicsScene>
 #include <QMainWindow>
 #include <QToolButton>

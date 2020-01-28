@@ -77,7 +77,7 @@ QStringListModel& MainWindowController::getCurrentRoutes() {
     QStringList currentRouteList;
 
     for (const auto &route : currentProject->getRoutes()) {
-        currentRouteList << route.getName();
+        currentRouteList << route.second.getName();
     }
 
     currentRoutes.setStringList(currentRouteList);
