@@ -43,7 +43,7 @@ public:
 
     void addNewRouteToCurrentProject(const QColor &newColor);
     size_t amountOfOpenProjects();
-    void deleteRouteofCurrentProject(size_t index);
+    void deleteRouteofCurrentProject(int index);
 
 
 public slots:

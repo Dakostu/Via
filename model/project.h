@@ -14,6 +14,7 @@ class Project : public Serializable
     QString fileName;
     QPixmap imagePixMap;
     bool hasbeenModified;
+    int totalCreatedRoutes;
     IndexList<RouteData> routes;
 
     QByteArray pixMapToBytes() const;
@@ -32,7 +33,7 @@ public:
     IndexList<RouteData> getRoutes() const;
 
     void addRoute(RouteData &route);
-    void deleteRoute(size_t index);
+    void deleteRoute(int index);
 
     bool operator==(const Project &other) const;
 

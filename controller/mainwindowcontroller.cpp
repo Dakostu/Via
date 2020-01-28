@@ -84,7 +84,7 @@ QStringListModel& MainWindowController::getCurrentRoutes() {
     return currentRoutes;
 }
 
-void MainWindowController::deleteRouteofCurrentProject(size_t index) {
+void MainWindowController::deleteRouteofCurrentProject(int index) {
     currentProject->deleteRoute(index);
 }
 

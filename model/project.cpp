@@ -5,7 +5,7 @@
 
 
 Project::Project(const QString &newFileName, const QPixmap &map)
-    : fileName(newFileName), imagePixMap(map), hasbeenModified(false)
+    : fileName(newFileName), imagePixMap(map), hasbeenModified(false), totalCreatedRoutes(0)
 {
 
 }
@@ -19,6 +19,7 @@ void Project::fromJSON(const QJsonObject &object) {
 
     pixMapFromBytes(object["image"]);
     fileName = object["fileName"].toString();
+    totalCreatedRoutes = object["totalCreatedRoutes"].toInt();
 
     auto routesJSON = object["routes"].toArray();
 
@@ -67,6 +68,7 @@ QJsonObject Project::toJSON() const {
 
     projectJSON["image"] = QString(pixMapToBytes());
     projectJSON["fileName"] = fileName;
+    projectJSON["totalCreatedRoutes"] = totalCreatedRoutes;
 
     QJsonArray routesJSON;
 
@@ -79,16 +81,18 @@ QJsonObject Project::toJSON() const {
 }
 
 void Project::addRoute(RouteData &route) {
-    route.setName(QString("Route %1").arg(routes.size() + 1));
+    ++totalCreatedRoutes;
+    route.setName(QString("Route %1").arg(totalCreatedRoutes));
     routes.emplace_back(route);
 }
 
-void Project::deleteRoute(size_t index) {
+void Project::deleteRoute(int index) {
     routes.erase(routes[index]);
 }
 
 bool Project::operator==(const Project &other) const {
     return this->fileName == other.fileName
             && this->pixMapToBytes() == other.pixMapToBytes()
+            && this->totalCreatedRoutes == other.totalCreatedRoutes
             && this->routes == other.routes;
 }
