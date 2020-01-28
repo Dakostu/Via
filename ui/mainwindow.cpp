@@ -39,6 +39,18 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
 
     connect(ui->routeBoxButtonAddRoute, &QPushButton::pressed, this, &MainWindow::addRoute);
     connect(ui->routeBoxButtonDeleteRoute, &QPushButton::pressed, this, &MainWindow::deleteSelectedRoute);
+    connect(ui->routeBoxButtonUp, &QPushButton::pressed, this, [&]() {
+        auto selectedRoute = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
+        controller.getCurrentProject()->swapRoutes(selectedRoute, selectedRoute - 1);
+        updateViewLists();
+        moveSelectionTo(ui->routeBoxRouteList, selectedRoute - 1);
+    });
+    connect(ui->routeBoxButtonDown, &QPushButton::pressed, this, [&]() {
+        auto selectedRoute = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
+        controller.getCurrentProject()->swapRoutes(selectedRoute, selectedRoute + 1);
+        updateViewLists();
+        moveSelectionTo(ui->routeBoxRouteList, selectedRoute + 1);
+    });
 
     ui->picture->setUIState(controller.getCurrentState());
     if (controller.amountOfOpenProjects() == 0) {
@@ -112,8 +124,7 @@ void MainWindow::addRoute() {
     auto color = Qt::red;
     controller.addNewRouteToCurrentProject(color);
     ui->picture->addRoute(color);
-    ui->routeBoxRouteList->setModel(&controller.getCurrentRoutes());
-    ui->nodeBoxNodeList->clearSelection();
+    updateViewLists();
 
     moveSelectionTo(ui->routeBoxRouteList, ui->routeBoxRouteList->model()->rowCount() - 1);
 
@@ -129,8 +140,7 @@ void MainWindow::deleteSelectedRoute() {
 
     auto selectedRoute = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
     controller.deleteRouteofCurrentProject(selectedRoute);
-    ui->routeBoxRouteList->setModel(&controller.getCurrentRoutes());
-    ui->nodeBoxNodeList->clearSelection();
+    updateViewLists();
 
     moveSelectionTo(ui->routeBoxRouteList, selectedRoute - 1);
 
@@ -182,5 +192,9 @@ void MainWindow::setNoProjectsOpenMode(bool noProjectsOpen) {
 
     ui->quickButtonNew->setEnabled(true);
     ui->quickButtonOpen->setEnabled(true);
+}
 
+void MainWindow::updateViewLists() {
+    ui->routeBoxRouteList->setModel(&controller.getCurrentRoutes());
+    ui->nodeBoxNodeList->clearSelection();
 }

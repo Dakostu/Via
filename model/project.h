@@ -34,6 +34,7 @@ public:
 
     void addRoute(RouteData &route);
     void deleteRoute(int index);
+    void swapRoutes(size_t i, size_t j);
 
     bool operator==(const Project &other) const;
 

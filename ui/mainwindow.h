@@ -46,6 +46,7 @@ public slots:
     void deleteSelectedRoute();
     void createNewProject();
     void setNoProjectsOpenMode(bool noProjectsOpen);
+    void updateViewLists();
 
 
 };

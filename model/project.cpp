@@ -90,6 +90,10 @@ void Project::deleteRoute(int index) {
     routes.erase(routes[index]);
 }
 
+void Project::swapRoutes(size_t i, size_t j) {
+    std::swap(*routes[i], *routes[j]);
+}
+
 bool Project::operator==(const Project &other) const {
     return this->fileName == other.fileName
             && this->pixMapToBytes() == other.pixMapToBytes()
