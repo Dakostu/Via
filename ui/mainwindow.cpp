@@ -36,7 +36,9 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     initializeShapeSelections();
 
     connect(ui->quickButtonNew, &QPushButton::pressed, this, &MainWindow::createNewProject);
+
     connect(ui->routeBoxButtonAddRoute, &QPushButton::pressed, this, &MainWindow::addRoute);
+    connect(ui->routeBoxButtonDeleteRoute, &QPushButton::pressed, this, &MainWindow::deleteSelectedRoute);
 
     ui->picture->setUIState(controller.getCurrentState());
     if (controller.amountOfOpenProjects() == 0) {
@@ -100,6 +102,11 @@ void MainWindow::initializeShapeSelections() {
     ui->routeStyleComboBox->addItems(availableStyles);
 }
 
+void MainWindow::moveSelectionTo(QListView *listView, int index) {
+    auto model = listView->model();
+    auto modelIndex = model->index(index, 0);
+    listView->selectionModel()->select(modelIndex, QItemSelectionModel::ClearAndSelect);
+}
 
 void MainWindow::addRoute() {
     auto color = Qt::red;
@@ -108,12 +115,23 @@ void MainWindow::addRoute() {
     ui->routeBoxRouteList->setModel(&controller.getCurrentRoutes());
     ui->nodeBoxNodeList->clearSelection();
 
-    auto model = ui->routeBoxRouteList->model();
-    auto index = model->index(model->rowCount() - 1, 0);
-    ui->routeBoxRouteList->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect);
+    moveSelectionTo(ui->routeBoxRouteList, ui->routeBoxRouteList->model()->rowCount() - 1);
 
     auto vBar = ui->routeBoxRouteList->verticalScrollBar();
     vBar->setValue(vBar->maximum());
+}
+
+void MainWindow::deleteSelectedRoute() {
+
+    if (!ui->routeBoxRouteList->selectionModel()->hasSelection()) {
+        return;
+    }
+
+    auto selectedRoute = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
+    controller.deleteRouteofCurrentProject(selectedRoute);
+    ui->routeBoxRouteList->setModel(&controller.getCurrentRoutes());
+    ui->nodeBoxNodeList->clearSelection();
+
 }
 
 void MainWindow::createNewProject() {

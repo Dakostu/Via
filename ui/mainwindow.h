@@ -34,7 +34,8 @@ class MainWindow : public QMainWindow
 
     void initializeQuickButtons();
     void initializeMenus();
-    void initializeShapeSelections();    
+    void initializeShapeSelections();
+    void moveSelectionTo(QListView *listView, int index);
 
 public:
     MainWindow(QWidget *parent, MainWindowController &newController);
@@ -42,6 +43,7 @@ public:
 
 public slots:
     void addRoute();
+    void deleteSelectedRoute();
     void createNewProject();
     void setNoProjectsOpenMode(bool noProjectsOpen);
 

@@ -43,6 +43,8 @@ public:
 
     void addNewRouteToCurrentProject(const QColor &newColor);
     size_t amountOfOpenProjects();
+    void deleteRouteofCurrentProject(size_t index);
+
 
 public slots:
 
@@ -52,6 +54,7 @@ public slots:
     void saveCurrentProjectAs(const QString &fileName);
     void loadCurrentProjectFromFile(const QString &fileName);
     void printCurrentProject();
+
 
 
 

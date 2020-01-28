@@ -77,11 +77,15 @@ QStringListModel& MainWindowController::getCurrentRoutes() {
     QStringList currentRouteList;
 
     for (const auto &route : currentProject->getRoutes()) {
-        currentRouteList << route.second.getName();
+        currentRouteList << route.getName();
     }
 
     currentRoutes.setStringList(currentRouteList);
     return currentRoutes;
+}
+
+void MainWindowController::deleteRouteofCurrentProject(size_t index) {
+    currentProject->deleteRoute(index);
 }
 
 void MainWindowController::printCurrentProject() {
