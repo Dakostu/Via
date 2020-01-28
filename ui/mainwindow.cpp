@@ -10,6 +10,7 @@
 #include <QPainterPath>
 #include <QPen>
 #include <QScreen>
+#include <QScrollBar>
 #include <QPushButton>
 #include <QWheelEvent>
 
@@ -114,6 +115,14 @@ void MainWindow::addRoute() {
     controller.addNewRouteToCurrentProject(color);
     ui->picture->addRoute(color);
     ui->routeBoxRouteList->setModel(&controller.getCurrentRoutes());
+    ui->nodeBoxNodeList->clearSelection();
+
+    auto model = ui->routeBoxRouteList->model();
+    auto index = model->index(model->rowCount() - 1, 0);
+    ui->routeBoxRouteList->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect);
+
+    auto vBar = ui->routeBoxRouteList->verticalScrollBar();
+    vBar->setValue(vBar->maximum());
 }
 
 void MainWindow::createNewProject() {

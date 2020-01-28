@@ -75,7 +75,6 @@ void MainWindowController::setCurrentProject(const QString &fileName) {
 
 QStringListModel& MainWindowController::getCurrentRoutes() {
     QStringList currentRouteList;
-    //currentRoutes.removeRows(0, currentRoutes.rowCount());
 
     for (const auto &route : currentProject->getRoutes()) {
         currentRouteList << route.getName();
