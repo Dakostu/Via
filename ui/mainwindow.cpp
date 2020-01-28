@@ -38,18 +38,11 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     connect(ui->quickButtonNew, &QPushButton::pressed, this, &MainWindow::createNewProject);
     connect(ui->routeBoxButtonAddRoute, &QPushButton::pressed, this, &MainWindow::addRoute);
 
-
-    //QPixmap m("/home/dk/Documents/Code/C++/QT/Wegweiser/test/gtavc_vice_city_map_hq.jpg");
-    //currentScene->addPixmap(m);
-    //ui->picture->setScene(currentScene.get());
     ui->picture->setUIState(controller.getCurrentState());
+    if (controller.amountOfOpenProjects() == 0) {
+        setNoProjectsOpenMode(true);
+    }
 
-
-    //ui->picture->addRoute(Qt::red);
-    //ui->picture->addNodeToCurrentRoute(500,600);
-    //ui->picture->addNodeToCurrentRoute(500,700);
-    //ui->picture->addNodeToCurrentRoute(600,550);
-    //ui->picture->addNodeToCurrentRoute(400,150);
 
 }
 
@@ -150,11 +143,23 @@ void MainWindow::createNewProject() {
         ui->picture->setScene(currentScene.get());
     }
 
+    //setNoProjectsOpenMode(false);
     this->setEnabled(true);
 }
 
 void MainWindow::setNoProjectsOpenMode(bool noProjectsOpen) {
-    this->setEnabled(!noProjectsOpen);
+    ui->nodeBox->setEnabled(!noProjectsOpen);
+    ui->picture->setEnabled(!noProjectsOpen);
+    ui->routeBox->setEnabled(!noProjectsOpen);
+    ui->settingsBox->setEnabled(!noProjectsOpen);
+    ui->quickButtonMove->setEnabled(!noProjectsOpen);
+    ui->quickButtonRedo->setEnabled(!noProjectsOpen);
+    ui->quickButtonSave->setEnabled(!noProjectsOpen);
+    ui->quickButtonUndo->setEnabled(!noProjectsOpen);
+    ui->quickButtonSaveAs->setEnabled(!noProjectsOpen);
+    ui->quickButtonAutoAdd->setEnabled(!noProjectsOpen);
+    ui->quickButtonSelect->setEnabled(!noProjectsOpen);
+
     ui->quickButtonNew->setEnabled(true);
     ui->quickButtonOpen->setEnabled(true);
 

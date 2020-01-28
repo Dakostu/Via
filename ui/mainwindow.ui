@@ -469,7 +469,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="quickButtonSave_2">
+         <widget class="QToolButton" name="quickButtonSaveAs">
           <property name="text">
            <string>Save As...</string>
           </property>
