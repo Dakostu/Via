@@ -22,6 +22,7 @@
 #include "../shapes/octagon.h"
 #include "../shapes/routeconnection.h"
 
+
 MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     : QMainWindow(parent),
       controller(newController),
@@ -34,23 +35,7 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     initializeQuickButtons();
     initializeMenus();
     initializeShapeSelections();
-
-    connect(ui->quickButtonNew, &QPushButton::pressed, this, &MainWindow::createNewProject);
-
-    connect(ui->routeBoxButtonAddRoute, &QPushButton::pressed, this, &MainWindow::addRoute);
-    connect(ui->routeBoxButtonDeleteRoute, &QPushButton::pressed, this, &MainWindow::deleteSelectedRoute);
-    connect(ui->routeBoxButtonUp, &QPushButton::pressed, this, [&]() {
-        auto selectedRoute = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
-        controller.getCurrentProject()->swapRoutes(selectedRoute, selectedRoute - 1);
-        updateViewLists();
-        moveSelectionTo(ui->routeBoxRouteList, selectedRoute - 1);
-    });
-    connect(ui->routeBoxButtonDown, &QPushButton::pressed, this, [&]() {
-        auto selectedRoute = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
-        controller.getCurrentProject()->swapRoutes(selectedRoute, selectedRoute + 1);
-        updateViewLists();
-        moveSelectionTo(ui->routeBoxRouteList, selectedRoute + 1);
-    });
+    initializeRouteBoxButtons();
 
     ui->picture->setUIState(controller.getCurrentState());
     if (controller.amountOfOpenProjects() == 0) {
@@ -74,6 +59,7 @@ void MainWindow::initializeQuickButtons() {
     quickButtonGroup->addButton(ui->quickButtonAutoAdd);
     quickButtonGroup->addButton(ui->quickButtonMove);
     quickButtonGroup->addButton(ui->quickButtonSelect);
+    connect(ui->quickButtonNew, &QPushButton::pressed, this, &MainWindow::createNewProject);
     connect(ui->quickButtonAutoAdd, &QAbstractButton::pressed, this, [&]() { controller.changeUIState<UIAddNodeState>(); });
     connect(ui->quickButtonMove, &QAbstractButton::pressed, this, [&]() { controller.changeUIState<UIMoveNodesState>(); });
     connect(ui->quickButtonSelect, &QAbstractButton::pressed, this, [&]() { controller.changeUIState<UISelectNodeState>(); });
@@ -114,6 +100,25 @@ void MainWindow::initializeShapeSelections() {
     ui->routeStyleComboBox->addItems(availableStyles);
 }
 
+void MainWindow::initializeRouteBoxButtons() {
+    connect(ui->routeBoxButtonAddRoute, &QPushButton::pressed, this, &MainWindow::addRoute);
+    connect(ui->routeBoxButtonDeleteRoute, &QPushButton::pressed, this, &MainWindow::deleteSelectedRoute);
+    connect(ui->routeBoxButtonUp, &QPushButton::pressed, this, [&]() {
+        auto selectedRoute = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
+        controller.getCurrentProject()->swapRoutes(selectedRoute, selectedRoute - 1);
+        updateViewLists();
+        moveSelectionTo(ui->routeBoxRouteList, selectedRoute - 1);
+    });
+    connect(ui->routeBoxButtonDown, &QPushButton::pressed, this, [&]() {
+        auto selectedRoute = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
+        controller.getCurrentProject()->swapRoutes(selectedRoute, selectedRoute + 1);
+        updateViewLists();
+        moveSelectionTo(ui->routeBoxRouteList, selectedRoute + 1);
+    });
+
+    connect(ui->routeBoxRouteList, &QListView::clicked, this, &MainWindow::routeSelectionEvent);
+}
+
 void MainWindow::moveSelectionTo(QListView *listView, int index) {
     auto model = listView->model();
     auto modelIndex = model->index(index, 0);
@@ -142,7 +147,14 @@ void MainWindow::deleteSelectedRoute() {
     controller.deleteRouteofCurrentProject(selectedRoute);
     updateViewLists();
 
-    moveSelectionTo(ui->routeBoxRouteList, selectedRoute - 1);
+    if (ui->routeBoxRouteList->model()->rowCount() == 0) {
+        ui->routeBoxButtonUp->setEnabled(false);
+        ui->routeBoxButtonDown->setEnabled(false);
+        ui->routeBoxButtonDeleteRoute->setEnabled(false);
+        ui->nodeBox->setEnabled(false);
+    } else {
+        moveSelectionTo(ui->routeBoxRouteList, selectedRoute - 1);
+    }
 
 }
 
@@ -171,9 +183,9 @@ void MainWindow::createNewProject() {
         controller.addProject(Project(newFileName, pictureFileName));
         currentScene->addPixmap(pictureFileName);
         ui->picture->setScene(currentScene.get());
+        setNoProjectsOpenMode(false);
     }
 
-    setNoProjectsOpenMode(false);
     this->setEnabled(true);
 }
 
@@ -197,4 +209,22 @@ void MainWindow::setNoProjectsOpenMode(bool noProjectsOpen) {
 void MainWindow::updateViewLists() {
     ui->routeBoxRouteList->setModel(&controller.getCurrentRoutes());
     ui->nodeBoxNodeList->clearSelection();
+}
+
+
+void MainWindow::routeSelectionEvent() {
+    qDebug() << "Clicked";
+    auto selectedRoute = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
+
+    ui->routeBoxButtonDeleteRoute->setEnabled(true);
+    ui->routeBoxButtonUp->setEnabled(selectedRoute != 0);
+    ui->routeBoxButtonDown->setEnabled(selectedRoute != ui->routeBoxRouteList->model()->rowCount() - 1);
+    ui->currentRouteBox->setEnabled(true);
+    ui->currentNodeBox->setEnabled(true);
+
+    auto routeData = controller.getCurrentProject()->getRoutes()[selectedRoute];
+    ui->routeNameLineEdit->setText(routeData->getName());
+    ui->routeColorButton->setStyleSheet(QString("QPushButton {background-color: %1}").arg(routeData->getColor().name()));
+    //shape
+    ui->routeNodeOrderCheckBox->setChecked(routeData->getShowOrder());
 }

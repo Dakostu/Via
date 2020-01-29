@@ -35,6 +35,7 @@ class MainWindow : public QMainWindow
     void initializeQuickButtons();
     void initializeMenus();
     void initializeShapeSelections();
+    void initializeRouteBoxButtons();
     void moveSelectionTo(QListView *listView, int index);
 
 public:
@@ -47,6 +48,7 @@ public slots:
     void createNewProject();
     void setNoProjectsOpenMode(bool noProjectsOpen);
     void updateViewLists();
+    void routeSelectionEvent();
 
 
 };

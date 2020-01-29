@@ -73,6 +73,9 @@
              </item>
              <item>
               <widget class="QPushButton" name="routeBoxButtonDeleteRoute">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="text">
                 <string notr="true">-</string>
                </property>
@@ -80,6 +83,9 @@
              </item>
              <item>
               <widget class="QPushButton" name="routeBoxButtonUp">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="text">
                 <string>^</string>
                </property>
@@ -87,6 +93,9 @@
              </item>
              <item>
               <widget class="QPushButton" name="routeBoxButtonDown">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="text">
                 <string>V</string>
                </property>
@@ -99,6 +108,9 @@
         </item>
         <item>
          <widget class="QGroupBox" name="nodeBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -133,6 +145,9 @@
              </item>
              <item>
               <widget class="QPushButton" name="nodeBoxButtonDeleteNode">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="text">
                 <string notr="true">-</string>
                </property>
@@ -140,6 +155,9 @@
              </item>
              <item>
               <widget class="QPushButton" name="nodeBoxButtonUp">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="text">
                 <string>^</string>
                </property>
@@ -147,6 +165,9 @@
              </item>
              <item>
               <widget class="QPushButton" name="nodeBoxButtonDown">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="text">
                 <string>V</string>
                </property>
@@ -167,6 +188,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
           <widget class="QGroupBox" name="currentRouteBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="title">
             <string>Route</string>
            </property>
@@ -219,7 +243,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>PushButton</string>
+                 <string notr="true"/>
                 </property>
                </widget>
               </item>
@@ -276,35 +300,14 @@
               </item>
              </layout>
             </item>
-            <item>
-             <layout class="QHBoxLayout" name="routeDirectionLayout">
-              <item>
-               <widget class="QLabel" name="routeDirectionLabel">
-                <property name="text">
-                 <string>Show Direction</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="routeDirectionCheckBox">
-                <property name="maximumSize">
-                 <size>
-                  <width>15</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
            </layout>
           </widget>
          </item>
          <item>
           <widget class="QGroupBox" name="currentNodeBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="title">
             <string>Current Node</string>
            </property>
@@ -378,7 +381,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>PushButton</string>
+                 <string notr="true"/>
                 </property>
                </widget>
               </item>
