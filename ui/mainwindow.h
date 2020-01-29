@@ -36,6 +36,7 @@ class MainWindow : public QMainWindow
     void initializeMenus();
     void initializeShapeSelections();
     void initializeRouteBoxButtons();
+    void initializeRouteSettingsUI();
     void moveSelectionTo(QListView *listView, int index);
 
 public:
@@ -49,6 +50,7 @@ public slots:
     void setNoProjectsOpenMode(bool noProjectsOpen);
     void updateViewLists();
     void routeSelectionEvent();
+    void colorChangeEvent(Data *data, QPushButton *correspondingButton);
 
 
 };

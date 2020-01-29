@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include <QBrush>
+#include <QColorDialog>
 #include <QFileDialog>
 #include <QGraphicsRectItem>
 #include <QGraphicsView>
@@ -119,6 +120,13 @@ void MainWindow::initializeRouteBoxButtons() {
     connect(ui->routeBoxRouteList, &QListView::clicked, this, &MainWindow::routeSelectionEvent);    
 }
 
+void MainWindow::initializeRouteSettingsUI() {
+    connect(ui->routeColorButton, &QPushButton::pressed, this, [&]() {
+        colorChangeEvent()
+    });
+
+}
+
 void MainWindow::moveSelectionTo(QListView *listView, int index) {
     auto model = listView->model();
     auto modelIndex = model->index(index, 0);
@@ -226,4 +234,12 @@ void MainWindow::routeSelectionEvent() {
     ui->routeColorButton->setStyleSheet(QString("QPushButton {background-color: %1}").arg(routeData.getColor().name()));
     //shape
     ui->routeNodeOrderCheckBox->setChecked(routeData.getShowOrder());
+}
+
+void MainWindow::colorChangeEvent(Data *data, QPushButton *correspondingButton) {
+    auto newColor = QColorDialog::getColor(data->getColor(), this);
+    if (!newColor.isValid()) {
+        return;
+    }
+    data->setColors(newColor);
 }
