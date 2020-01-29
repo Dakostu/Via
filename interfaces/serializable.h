@@ -7,6 +7,7 @@ class Serializable
 {
 protected:
     Serializable();
+    virtual ~Serializable() = default;
 
 public:
     virtual void fromJSON(const QJsonObject &object) = 0;

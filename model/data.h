@@ -9,7 +9,7 @@
 class Data : public Serializable, public ViewCustomizable
 {
 protected:
-    ~Data() = default;
+    virtual ~Data() = default;
 
     QString name;
     QColor currentColor;
@@ -19,6 +19,7 @@ public:
     QColor getColor() const;
     QString getName() const;
     void setName(const QString &value);
+
 };
 
 #endif // DATA_H
