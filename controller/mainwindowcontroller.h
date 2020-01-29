@@ -34,7 +34,7 @@ public:
 
     Project* getCurrentProject();
     std::unique_ptr<UIState>& getCurrentState();
-    QStringListModel& getCurrentRoutes();
+    QStringListModel& getCurrentRoutesStringList();
 
     template <typename State>
     void changeUIState() {

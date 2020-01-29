@@ -73,7 +73,7 @@ void MainWindowController::setCurrentProject(const QString &fileName) {
     currentProject = &openProjects.at(fileName);
 }
 
-QStringListModel& MainWindowController::getCurrentRoutes() {
+QStringListModel& MainWindowController::getCurrentRoutesStringList() {
     QStringList currentRouteList;
 
     for (const auto &route : currentProject->getRoutes()) {
