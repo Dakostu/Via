@@ -213,7 +213,6 @@ void MainWindow::updateViewLists() {
 
 
 void MainWindow::routeSelectionEvent() {
-    qDebug() << "Clicked";
     auto selectedRoute = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
 
     ui->routeBoxButtonDeleteRoute->setEnabled(true);
@@ -222,9 +221,9 @@ void MainWindow::routeSelectionEvent() {
     ui->currentRouteBox->setEnabled(true);
     ui->currentNodeBox->setEnabled(true);
 
-    auto routeData = controller.getCurrentProject()->getRoutes()[selectedRoute];
-    ui->routeNameLineEdit->setText(routeData->getName());
-    ui->routeColorButton->setStyleSheet(QString("QPushButton {background-color: %1}").arg(routeData->getColor().name()));
+    auto routeData = *(controller.getCurrentProject()->getRoutes()[selectedRoute]);
+    ui->routeNameLineEdit->setText(routeData.getName());
+    ui->routeColorButton->setStyleSheet(QString("QPushButton {background-color: %1}").arg(routeData.getColor().name()));
     //shape
-    ui->routeNodeOrderCheckBox->setChecked(routeData->getShowOrder());
+    ui->routeNodeOrderCheckBox->setChecked(routeData.getShowOrder());
 }

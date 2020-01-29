@@ -17,7 +17,7 @@ class IndexList : public std::list<T>
         if (index == 0) {
             return this->begin();
         } else if (index == nodesSize - 1) {
-            return --this->end();
+            return std::prev(this->end());
         }
 
         typename std::list<T>::iterator currentIterator;

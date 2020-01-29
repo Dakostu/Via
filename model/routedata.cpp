@@ -6,7 +6,7 @@ RouteData::RouteData() : ViewCustomizable(), showOrder(DEFAULT_SHOW_ORDER)
 
 }
 
-RouteData::RouteData(const QColor &routeColor) : ViewCustomizable() {
+RouteData::RouteData(const QColor &routeColor) : RouteData() {
     setColors(routeColor);
 }
 
