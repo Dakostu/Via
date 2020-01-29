@@ -116,7 +116,7 @@ void MainWindow::initializeRouteBoxButtons() {
         moveSelectionTo(ui->routeBoxRouteList, selectedRoute + 1);
     });
 
-    connect(ui->routeBoxRouteList, &QListView::clicked, this, &MainWindow::routeSelectionEvent);
+    connect(ui->routeBoxRouteList, &QListView::clicked, this, &MainWindow::routeSelectionEvent);    
 }
 
 void MainWindow::moveSelectionTo(QListView *listView, int index) {

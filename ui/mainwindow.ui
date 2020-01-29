@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>986</width>
+    <width>991</width>
     <height>600</height>
    </rect>
   </property>
@@ -414,30 +414,6 @@
               </item>
              </layout>
             </item>
-            <item>
-             <layout class="QHBoxLayout" name="nodeShowOrderLayout">
-              <item>
-               <widget class="QLabel" name="nodeShowOrderLabel">
-                <property name="text">
-                 <string>Show Node Order</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="nodeShowOrderCheckBox">
-                <property name="maximumSize">
-                 <size>
-                  <width>15</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
            </layout>
           </widget>
          </item>
@@ -550,7 +526,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>538</width>
+           <width>543</width>
            <height>499</height>
           </rect>
          </property>
@@ -578,7 +554,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>986</width>
+     <width>991</width>
      <height>23</height>
     </rect>
    </property>
