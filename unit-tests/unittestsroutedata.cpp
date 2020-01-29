@@ -17,7 +17,7 @@ void RouteDataUnitTests::checkRouteInsertion(size_t size) {
 RouteData RouteDataUnitTests::generateRoute(size_t size) {
     RouteData route;
 
-    for (int i = 0; i < size; ++i) {
+    for (size_t i = 0; i < size; ++i) {
         route.addNode(i,i);
     }
 
@@ -38,50 +38,50 @@ void RouteDataUnitTests::indexOperationTestEvenSize() {
 void RouteDataUnitTests::insertionTest() {
     auto route = generateRoute(10);
 
-    route[5].setNodeName("Custom");
+    route[5].setName("Custom");
     route[5].setNameChangedByUser(true);
 
     route.addNode(10, 10, 0);
 
     QCOMPARE(route[0].getX(), 10);
     QCOMPARE(route[0].getY(), 10);
-    QCOMPARE(route[0].getNodeName(), "1");
+    QCOMPARE(route[0].getName(), "1");
 
     QCOMPARE(route[1].getX(), 0);
     QCOMPARE(route[1].getY(), 0);
-    QCOMPARE(route[1].getNodeName(), "2");
+    QCOMPARE(route[1].getName(), "2");
 
-    QCOMPARE(route[6].getNodeName(), "Custom");
+    QCOMPARE(route[6].getName(), "Custom");
 
     route.addNode(11, 11, 3);
     QCOMPARE(route[3].getX(), 11);
     QCOMPARE(route[3].getY(), 11);
-    QCOMPARE(route[3].getNodeName(), "4");
+    QCOMPARE(route[3].getName(), "4");
 
     QCOMPARE(route[2].getX(), 1);
     QCOMPARE(route[2].getY(), 1);
-    QCOMPARE(route[2].getNodeName(), "3");
+    QCOMPARE(route[2].getName(), "3");
 
     QCOMPARE(route[4].getX(), 2);
     QCOMPARE(route[4].getY(), 2);
-    QCOMPARE(route[4].getNodeName(), "5");
+    QCOMPARE(route[4].getName(), "5");
 
-    QCOMPARE(route[7].getNodeName(), "Custom");
+    QCOMPARE(route[7].getName(), "Custom");
 
     route.addNode(12, 12, 9);
     QCOMPARE(route[9].getX(), 12);
     QCOMPARE(route[9].getY(), 12);
-    QCOMPARE(route[9].getNodeName(), "10");
+    QCOMPARE(route[9].getName(), "10");
 
     QCOMPARE(route[8].getX(), 6);
     QCOMPARE(route[8].getY(), 6);
-    QCOMPARE(route[8].getNodeName(), "9");
+    QCOMPARE(route[8].getName(), "9");
 
     QCOMPARE(route[10].getX(), 7);
     QCOMPARE(route[10].getY(), 7);
-    QCOMPARE(route[10].getNodeName(), "11");
+    QCOMPARE(route[10].getName(), "11");
 
-    QCOMPARE(route[7].getNodeName(), "Custom");
+    QCOMPARE(route[7].getName(), "Custom");
 
 }
 
@@ -90,7 +90,7 @@ void RouteDataUnitTests::removalTest() {
 
     auto compareRoute = [&route](){
         for (size_t i = 0; i < route.length(); ++i) {
-            QCOMPARE(route[i].getNodeName(), QString::number(i + 1));
+            QCOMPARE(route[i].getName(), QString::number(i + 1));
         }
     };
 
@@ -112,14 +112,14 @@ void RouteDataUnitTests::removalTestWithCustomNode() {
     route[4].setElementSize(SIZE);
     route[4].setDifferentStyleFromRoute(true);
     route[4].setNameChangedByUser(true);
-    route[4].setNodeName(NAME);
+    route[4].setName(NAME);
     route[4].setInvisible(true);
 
     auto checkNode = [&](size_t index) {
         QCOMPARE(route[index].getElementSize(), SIZE);
         QCOMPARE(route[index].isStyleDifferentFromRoute(), true);
         QCOMPARE(route[index].isNameChangedByUser(), true);
-        QCOMPARE(route[index].getNodeName(), NAME);
+        QCOMPARE(route[index].getName(), NAME);
         QCOMPARE(route[index].getInvisible(), true);
     };
 

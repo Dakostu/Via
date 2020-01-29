@@ -2,8 +2,7 @@
 #define ROUTEDATA_H
 
 #include "../data-structures/indexlist.h"
-#include "../interfaces/serializable.h"
-#include "../interfaces/viewcustomizable.h"
+#include "data.h"
 #include "routenodedata.h"
 #include <list>
 #include <variant>
@@ -11,12 +10,10 @@
 
 using RouteDataIterator = IndexList<RouteNodeData>::iterator;
 
-class RouteData : public Serializable, public ViewCustomizable
+class RouteData : public Data
 {
     static constexpr bool DEFAULT_SHOW_ORDER = true;
 
-    QString name;
-    QColor routeColor;
     bool showOrder;
     IndexList<RouteNodeData> nodes;
 
@@ -25,7 +22,7 @@ class RouteData : public Serializable, public ViewCustomizable
 
 public:
     RouteData();
-    RouteData(const QColor &routeColor);
+    RouteData(const QColor &color);
     RouteData(const QJsonObject &object);
 
     virtual void fromJSON(const QJsonObject &object) override;
@@ -35,13 +32,10 @@ public:
     virtual void setDefaultColors() override;
     virtual void setElementSize(int newSize) override;
 
-    QString getName() const;
-    QColor getColor() const;
     bool getShowOrder() const;
     RouteNodeData& getFirstNode();
     RouteNodeData& getLastNode();
 
-    void setName(const QString &value);
     void setShowOrder(bool value);
 
     void addNode(int x, int y);

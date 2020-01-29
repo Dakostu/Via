@@ -1,21 +1,18 @@
 #ifndef ROUTENODEDATA_H
 #define ROUTENODEDATA_H
 
-#include "../interfaces/serializable.h"
-#include "../interfaces/viewcustomizable.h"
+#include "data.h"
 #include <QString>
 #include <QColor>
 
-class RouteNodeData : public Serializable, public ViewCustomizable
+class RouteNodeData : public Data
 {
-    QString nodeName;
     QString nodeLabel;
     int x;
     int y;
     bool differentStyleFromRoute;
     bool nameChanged;
     bool invisible;
-    QColor nodeColor;
 
 public:
     RouteNodeData();
@@ -24,19 +21,16 @@ public:
     virtual void fromJSON(const QJsonObject &object) override;
     virtual QJsonObject toJSON() const override;
 
-    virtual void setColors(const QColor &color) override;
+    virtual void setColors(const QColor &currentColor) override;
     virtual void setDefaultColors() override;
 
     bool isStyleDifferentFromRoute() const;
-    QString getNodeName() const;
     QString getNodeLabel() const;
     int getX() const;
     int getY() const;
     bool getInvisible() const;
-    QColor getColor() const;
     bool isNameChangedByUser() const;
 
-    void setNodeName(const QString &value);
     void setNodeLabel(const QString &value);
     void setX(int value);
     void setY(int value);
