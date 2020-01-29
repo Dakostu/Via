@@ -105,16 +105,16 @@ void MainWindow::initializeRouteBoxButtons() {
     connect(ui->routeBoxButtonAddRoute, &QPushButton::pressed, this, &MainWindow::addRoute);
     connect(ui->routeBoxButtonDeleteRoute, &QPushButton::pressed, this, &MainWindow::deleteSelectedRoute);
     connect(ui->routeBoxButtonUp, &QPushButton::pressed, this, [&]() {
-        auto selectedRoute = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
-        controller.getCurrentProject()->swapRoutes(selectedRoute, selectedRoute - 1);
+        auto selectedRouteIndex = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
+        controller.getCurrentProject()->swapRoutes(selectedRouteIndex, selectedRouteIndex - 1);
         updateViewLists();
-        moveSelectionTo(ui->routeBoxRouteList, selectedRoute - 1);
+        moveSelectionTo(ui->routeBoxRouteList, selectedRouteIndex - 1);
     });
     connect(ui->routeBoxButtonDown, &QPushButton::pressed, this, [&]() {
-        auto selectedRoute = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
-        controller.getCurrentProject()->swapRoutes(selectedRoute, selectedRoute + 1);
+        auto selectedRouteIndex = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
+        controller.getCurrentProject()->swapRoutes(selectedRouteIndex, selectedRouteIndex + 1);
         updateViewLists();
-        moveSelectionTo(ui->routeBoxRouteList, selectedRoute + 1);
+        moveSelectionTo(ui->routeBoxRouteList, selectedRouteIndex + 1);
     });
 
     connect(ui->routeBoxRouteList, &QListView::clicked, this, &MainWindow::routeSelectionEvent);    
@@ -151,8 +151,8 @@ void MainWindow::deleteSelectedRoute() {
         return;
     }
 
-    auto selectedRoute = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
-    controller.deleteRouteofCurrentProject(selectedRoute);
+    auto selectedRouteIndex = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
+    controller.deleteRouteofCurrentProject(selectedRouteIndex);
     updateViewLists();
 
     if (ui->routeBoxRouteList->model()->rowCount() == 0) {
@@ -161,9 +161,8 @@ void MainWindow::deleteSelectedRoute() {
         ui->routeBoxButtonDeleteRoute->setEnabled(false);
         ui->nodeBox->setEnabled(false);
     } else {
-        moveSelectionTo(ui->routeBoxRouteList, selectedRoute - 1);
+        moveSelectionTo(ui->routeBoxRouteList, selectedRouteIndex - 1);
     }
-
 }
 
 void MainWindow::createNewProject() {
