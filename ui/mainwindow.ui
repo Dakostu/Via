@@ -229,7 +229,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="routeColorButton">
+               <widget class="ColorPreviewButton" name="routeColorButton">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -367,7 +367,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="nodeColorButton">
+               <widget class="ColorPreviewButton" name="nodeColorButton">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -569,6 +569,11 @@
    <class>MapView</class>
    <extends>QGraphicsView</extends>
    <header>ui/mapview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ColorPreviewButton</class>
+   <extends>QPushButton</extends>
+   <header>ui/colorpreviewbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

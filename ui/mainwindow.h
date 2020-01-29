@@ -50,7 +50,7 @@ public slots:
     void setNoProjectsOpenMode(bool noProjectsOpen);
     void updateViewLists();
     void routeSelectionEvent();
-    void colorChangeEvent(Data *data, QPushButton *correspondingButton);
+    void colorChangeEvent(Data *data);
 
 
 };

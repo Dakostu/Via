@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     initializeMenus();
     initializeShapeSelections();
     initializeRouteBoxButtons();
+    initializeRouteSettingsUI();
 
     ui->picture->setUIState(controller.getCurrentState());
     if (controller.amountOfOpenProjects() == 0) {
@@ -122,7 +123,10 @@ void MainWindow::initializeRouteBoxButtons() {
 
 void MainWindow::initializeRouteSettingsUI() {
     connect(ui->routeColorButton, &QPushButton::pressed, this, [&]() {
-        colorChangeEvent()
+        auto selectedRouteIndex = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
+        auto selectedRoute = *controller.getCurrentProject()->getRoutes()[selectedRouteIndex];
+        colorChangeEvent(&selectedRoute);
+        ui->routeColorButton->changeColor((selectedRoute).getColor());
     });
 
 }
@@ -214,29 +218,30 @@ void MainWindow::setNoProjectsOpenMode(bool noProjectsOpen) {
 }
 
 void MainWindow::updateViewLists() {
-    ui->routeBoxRouteList->setModel(&controller.getCurrentRoutes());
+    ui->routeBoxRouteList->setModel(&controller.getCurrentRoutesStringList());
     ui->nodeBoxNodeList->clearSelection();
 }
 
 
 void MainWindow::routeSelectionEvent() {
-    auto selectedRoute = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
+    auto selectedRouteIndex = ui->routeBoxRouteList->selectionModel()->selectedRows()[0].row();
 
     ui->routeBoxButtonDeleteRoute->setEnabled(true);
-    ui->routeBoxButtonUp->setEnabled(selectedRoute != 0);
-    ui->routeBoxButtonDown->setEnabled(selectedRoute != ui->routeBoxRouteList->model()->rowCount() - 1);
+    ui->routeBoxButtonUp->setEnabled(selectedRouteIndex != 0);
+    ui->routeBoxButtonDown->setEnabled(selectedRouteIndex != ui->routeBoxRouteList->model()->rowCount() - 1);
     ui->currentRouteBox->setEnabled(true);
     ui->currentNodeBox->setEnabled(true);
 
-    auto routeData = *(controller.getCurrentProject()->getRoutes()[selectedRoute]);
+    auto &routeData = *(controller.getCurrentProject()->getRoutes()[selectedRouteIndex]);
     ui->routeNameLineEdit->setText(routeData.getName());
-    ui->routeColorButton->setStyleSheet(QString("QPushButton {background-color: %1}").arg(routeData.getColor().name()));
+    ui->routeColorButton->changeColor(routeData.getColor());
     //shape
     ui->routeNodeOrderCheckBox->setChecked(routeData.getShowOrder());
 }
 
-void MainWindow::colorChangeEvent(Data *data, QPushButton *correspondingButton) {
-    auto newColor = QColorDialog::getColor(data->getColor(), this);
+void MainWindow::colorChangeEvent(Data *data) {
+    auto color = data->getColor();
+    auto newColor = QColorDialog::getColor(color, this);
     if (!newColor.isValid()) {
         return;
     }
