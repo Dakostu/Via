@@ -9,6 +9,7 @@
 #include <QGuiApplication>
 #include <QImageReader>
 #include <QLineEdit>
+#include <QListView>
 #include <QPainterPath>
 #include <QPen>
 #include <QScreen>
@@ -37,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     initializeQuickButtons();
     initializeMenus();
     initializeShapeSelections();
-    initializeRouteBoxButtons();
+    initializeRouteBoxUI();
     initializeRouteSettingsUI();
 
     ui->picture->setUIState(controller.getCurrentState());
@@ -103,7 +104,10 @@ void MainWindow::initializeShapeSelections() {
     ui->routeStyleComboBox->addItems(availableStyles);
 }
 
-void MainWindow::initializeRouteBoxButtons() {
+void MainWindow::initializeRouteBoxUI() {
+    connect(ui->routeBoxRouteList->itemDelegate(), &QAbstractItemDelegate::commitData, this, [&](QWidget* lineEdit){
+        routeNameChangeEvent((static_cast<QLineEdit*>(lineEdit))->text());}
+    );
     connect(ui->routeBoxButtonAddRoute, &QPushButton::pressed, this, &MainWindow::addRoute);
     connect(ui->routeBoxButtonDeleteRoute, &QPushButton::pressed, this, &MainWindow::deleteSelectedRoute);
     connect(ui->routeBoxButtonUp, &QPushButton::pressed, this, [&]() { moveRouteEvent(-1); });

@@ -35,7 +35,7 @@ class MainWindow : public QMainWindow
     void initializeQuickButtons();
     void initializeMenus();
     void initializeShapeSelections();
-    void initializeRouteBoxButtons();
+    void initializeRouteBoxUI();
     void initializeRouteSettingsUI();
 
 public:
