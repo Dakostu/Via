@@ -246,14 +246,14 @@ void MainWindow::updateViewLists() {
 }
 
 void MainWindow::routeSelectionEvent() {
-    auto selectedRows = ui->routeBoxRouteList->getSelectedRows();
-    auto selectedRouteIndex = selectedRows[0].row();
+    auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
 
     ui->routeBoxButtonDeleteRoute->setEnabled(true);
     ui->routeBoxButtonUp->setEnabled(selectedRouteIndex != 0);
     ui->routeBoxButtonDown->setEnabled(selectedRouteIndex != ui->routeBoxRouteList->model()->rowCount() - 1);
     ui->currentRouteBox->setEnabled(true);
     ui->currentNodeBox->setEnabled(true);
+    ui->routeColorButton->setFlat(false);
 
     auto routeData = *(controller.getCurrentProject()->getRoutes()[selectedRouteIndex]);
     ui->routeNameLineEdit->setText(routeData.getName());
