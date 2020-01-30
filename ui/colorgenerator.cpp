@@ -2,7 +2,6 @@
 #include <QRandomGenerator>
 #include <QRgb>
 
-
 QColor ColorGenerator::operator()() {
     if (!lastColor.isValid()) {
         lastColor = QColor::fromRgb(QRandomGenerator::global()->generate());
@@ -11,14 +10,18 @@ QColor ColorGenerator::operator()() {
         lastColor.getHsvF(&h, &s, &v);
 
         h += GOLDEN_RATIO;
+
         if (h > 1.0) {
             h -= 1.0;
-            s = std::min(1.0, s + 0.1);
-            v = std::max(0.0, v - 0.1);
-        } else {
-            s = std::max(0.0, s - 0.1);
-            v = std::min(1.0, v + 0.1);
         }
+        if (QRandomGenerator::global()->bounded(256) & 1) {
+            s = std::min(0.65, s + 0.05);
+            v = std::max(0.35, v - 0.05);
+        } else {
+            s = std::max(0.35, s - 0.05);
+            v = std::min(0.65, v + 0.05);
+        }
+
 
         lastColor = QColor::fromHsvF(h,s,v);
     }
