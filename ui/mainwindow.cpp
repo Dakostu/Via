@@ -153,13 +153,14 @@ void MainWindow::deleteSelectedRoute() {
     controller.deleteRouteofCurrentProject(selectedRouteIndex);
     updateViewLists();
 
-    if (ui->routeBoxRouteList->model()->rowCount() == 0) {
+    auto newRowCount = ui->routeBoxRouteList->model()->rowCount();
+    if (newRowCount == 0) {
         ui->routeBoxButtonUp->setEnabled(false);
         ui->routeBoxButtonDown->setEnabled(false);
         ui->routeBoxButtonDeleteRoute->setEnabled(false);
         ui->nodeBox->setEnabled(false);
     } else {
-        ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex - 1);
+        ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex - (selectedRouteIndex == newRowCount));
     }
 }
 
