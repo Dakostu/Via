@@ -8,6 +8,7 @@
 #include <QGraphicsView>
 #include <QGuiApplication>
 #include <QImageReader>
+#include <QLineEdit>
 #include <QPainterPath>
 #include <QPen>
 #include <QScreen>
@@ -33,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
 {
     ui->setupUi(this);
 
+    connect(ui->routeNameLineEdit, &QLineEdit::textEdited, this, &MainWindow::routeNameChangeEvent);
     initializeQuickButtons();
     initializeMenus();
     initializeShapeSelections();
@@ -239,4 +241,11 @@ void MainWindow::colorChangeEvent(Data *data) {
         return;
     }
     data->setColors(newColor);
+}
+
+void MainWindow::routeNameChangeEvent(const QString &newName) {
+    auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
+    (*controller.getCurrentProject())[selectedRouteIndex].setName(newName);
+    updateViewLists();
+    ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex);
 }

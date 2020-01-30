@@ -37,6 +37,7 @@ public:
     void swapRoutes(int i, int j);
 
     bool operator==(const Project &other) const;
+    RouteData& operator[](int index);
 
 };
 

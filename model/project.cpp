@@ -100,3 +100,7 @@ bool Project::operator==(const Project &other) const {
             && this->totalCreatedRoutes == other.totalCreatedRoutes
             && this->routes == other.routes;
 }
+
+RouteData& Project::operator[](int index) {
+    return *routes[index];
+}

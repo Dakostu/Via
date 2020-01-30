@@ -50,6 +50,7 @@ public slots:
     void updateViewLists();
     void routeSelectionEvent();
     void colorChangeEvent(Data *data);
+    void routeNameChangeEvent(const QString &newName);
 
 
 };
