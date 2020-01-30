@@ -36,9 +36,11 @@ public:
     void deleteRoute(int index);
     void swapRoutes(int i, int j);
 
+    void setFileName(const QString &value);
+
     bool operator==(const Project &other) const;
     RouteData& operator[](int index);
-
+    QPixmap getImagePixMap() const;
 };
 
 #endif // PROJECT_H

@@ -17,9 +17,10 @@ void MainWindowController::addProject(const Project &project) {
 }
 
 void MainWindowController::saveCurrentProjectAs(const QString &fileName) {
+    currentProject->setFileName(fileName);
+
     auto projectJSON = currentProject->toJSON();
     projectJSON["programVer"] = ProgramVersion::generateCurrentProgramVersion()();
-    projectJSON["fileName"] = fileName;
 
     JSONFile saveFile(fileName);
     saveFile += projectJSON;

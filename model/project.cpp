@@ -49,6 +49,16 @@ IndexList<RouteData> Project::getRoutes() const
     return routes;
 }
 
+void Project::setFileName(const QString &value)
+{
+    fileName = value;
+}
+
+QPixmap Project::getImagePixMap() const
+{
+    return imagePixMap;
+}
+
 QByteArray Project::pixMapToBytes() const {
     QBuffer buffer;
     buffer.open(QIODevice::WriteOnly);

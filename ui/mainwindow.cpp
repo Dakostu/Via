@@ -55,11 +55,14 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::initializeQuickButtons() {
+
+    connect(ui->quickButtonOpen, &QPushButton::pressed, this, &MainWindow::loadProject);
+    connect(ui->quickButtonSave, &QPushButton::pressed, this, &MainWindow::saveProject);
+    connect(ui->quickButtonSaveAs, &QPushButton::pressed, this, &MainWindow::saveProjectAs);
+
     controller.getCurrentState()->setToggleButtons(ui->quickButtonAutoAdd,
                                    ui->quickButtonMove,
                                    ui->quickButtonSelect);
-
-
     quickButtonGroup->addButton(ui->quickButtonAutoAdd);
     quickButtonGroup->addButton(ui->quickButtonMove);
     quickButtonGroup->addButton(ui->quickButtonSelect);
@@ -125,6 +128,15 @@ void MainWindow::initializeRouteSettingsUI() {
     connect(ui->routeNodeOrderCheckBox, &QCheckBox::toggled, this, &MainWindow::routeShowOrderChangeEvent);
 }
 
+void MainWindow::getDataFromCurrentProject() {
+    currentScene.reset(new QGraphicsScene);
+    auto currentProj = controller.getCurrentProject();
+    currentScene->addPixmap(currentProj->getImagePixMap());
+    updateViewLists();
+    ui->picture->setScene(currentScene.get());
+
+}
+
 void MainWindow::addRoute() {
     auto color = Qt::red;
     controller.addNewRouteToCurrentProject(color);
@@ -160,15 +172,12 @@ void MainWindow::deleteSelectedRoute() {
 
 void MainWindow::createNewProject() {
 
-    this->setEnabled(false);
-
     QString newFileName = QFileDialog::getSaveFileName(
                 this, Localizable::getUIString("CREATE_NEW_PROJECT_TITLE"),
                 "",
                 Localizable::getUIString("PROJECT_FILE_TYPES"));
 
     if (newFileName.isEmpty()) {
-        this->setEnabled(true);
         return;
     }
 
@@ -181,13 +190,39 @@ void MainWindow::createNewProject() {
 
     if (!pictureFileName.isEmpty()) {
         controller.addProject(Project(newFileName, pictureFileName));
-        currentScene->addPixmap(pictureFileName);
-        ui->picture->setScene(currentScene.get());
+        getDataFromCurrentProject();
         setNoProjectsOpenMode(false);
     }
-
-    this->setEnabled(true);
 }
+
+void MainWindow::loadProject() {
+    QString newFileName = QFileDialog::getOpenFileName(
+                this, Localizable::getUIString("CREATE_NEW_PROJECT_TITLE"),
+                "",
+                Localizable::getUIString("PROJECT_FILE_TYPES"));
+
+    if (!newFileName.isEmpty()) {
+        controller.loadCurrentProjectFromFile(newFileName);
+        getDataFromCurrentProject();
+        setNoProjectsOpenMode(false);
+    }
+}
+
+void MainWindow::saveProject() {
+    controller.saveCurrentProject();
+}
+
+void MainWindow::saveProjectAs() {
+    QString fileName = QFileDialog::getSaveFileName(
+                this, Localizable::getUIString("SAVE_PROJECT_AS_TITLE"),
+                "",
+                Localizable::getUIString("PROJECT_FILE_TYPES"));
+
+    if (!fileName.isEmpty()) {
+        controller.saveCurrentProjectAs(fileName);
+    }
+}
+
 
 void MainWindow::setNoProjectsOpenMode(bool noProjectsOpen) {
     ui->nodeBox->setEnabled(!noProjectsOpen);

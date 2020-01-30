@@ -37,6 +37,7 @@ class MainWindow : public QMainWindow
     void initializeShapeSelections();
     void initializeRouteBoxUI();
     void initializeRouteSettingsUI();
+    void getDataFromCurrentProject();
 
 public:
     MainWindow(QWidget *parent, MainWindowController &newController);
@@ -46,6 +47,9 @@ public slots:
     void addRoute();
     void deleteSelectedRoute();
     void createNewProject();
+    void loadProject();
+    void saveProject();
+    void saveProjectAs();
     void setNoProjectsOpenMode(bool noProjectsOpen);
     void updateViewLists();
     void routeSelectionEvent();
