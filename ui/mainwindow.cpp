@@ -34,7 +34,6 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
 {
     ui->setupUi(this);
 
-    connect(ui->routeNameLineEdit, &QLineEdit::textEdited, this, &MainWindow::routeNameChangeEvent);
     initializeQuickButtons();
     initializeMenus();
     initializeShapeSelections();
@@ -107,19 +106,8 @@ void MainWindow::initializeShapeSelections() {
 void MainWindow::initializeRouteBoxButtons() {
     connect(ui->routeBoxButtonAddRoute, &QPushButton::pressed, this, &MainWindow::addRoute);
     connect(ui->routeBoxButtonDeleteRoute, &QPushButton::pressed, this, &MainWindow::deleteSelectedRoute);
-    connect(ui->routeBoxButtonUp, &QPushButton::pressed, this, [&]() {
-        auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
-        controller.getCurrentProject()->swapRoutes(selectedRouteIndex, selectedRouteIndex - 1);
-        updateViewLists();
-        ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex - 1);
-    });
-    connect(ui->routeBoxButtonDown, &QPushButton::pressed, this, [&]() {
-        auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
-        controller.getCurrentProject()->swapRoutes(selectedRouteIndex, selectedRouteIndex + 1);
-        updateViewLists();
-        ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex + 1);
-    });
-
+    connect(ui->routeBoxButtonUp, &QPushButton::pressed, this, [&]() { moveRouteEvent(-1); });
+    connect(ui->routeBoxButtonDown, &QPushButton::pressed, this, [&]() { moveRouteEvent(1); });
     connect(ui->routeBoxRouteList, &QListView::clicked, this, &MainWindow::routeSelectionEvent);    
 }
 
@@ -127,10 +115,11 @@ void MainWindow::initializeRouteSettingsUI() {
     connect(ui->routeColorButton, &QPushButton::pressed, this, [&]() {
         auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
         auto selectedRoute = *controller.getCurrentProject()->getRoutes()[selectedRouteIndex];
-        colorChangeEvent(&selectedRoute);
-        ui->routeColorButton->changeColor((selectedRoute).getColor());
+        colorChangeEvent(&selectedRoute);        
     });
-
+    connect(ui->routeNameLineEdit, &QLineEdit::textEdited, this, &MainWindow::routeNameChangeEvent);
+    // change shape
+    connect(ui->routeNodeOrderCheckBox, &QCheckBox::toggled, this, &MainWindow::routeShowOrderChangeEvent);
 }
 
 void MainWindow::addRoute() {
@@ -241,6 +230,7 @@ void MainWindow::colorChangeEvent(Data *data) {
         return;
     }
     data->setColors(newColor);
+    ui->routeColorButton->changeColor(newColor);
 }
 
 void MainWindow::routeNameChangeEvent(const QString &newName) {
@@ -248,4 +238,17 @@ void MainWindow::routeNameChangeEvent(const QString &newName) {
     (*controller.getCurrentProject())[selectedRouteIndex].setName(newName);
     updateViewLists();
     ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex);
+}
+
+void MainWindow::routeShowOrderChangeEvent(bool value) {
+    auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
+    (*controller.getCurrentProject())[selectedRouteIndex].setShowOrder(value);
+}
+
+void MainWindow::moveRouteEvent(int by) {
+    auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
+    controller.getCurrentProject()->swapRoutes(selectedRouteIndex, selectedRouteIndex + by);
+    updateViewLists();
+    ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex + by);
+    routeSelectionEvent();
 }

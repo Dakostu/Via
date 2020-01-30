@@ -51,6 +51,8 @@ public slots:
     void routeSelectionEvent();
     void colorChangeEvent(Data *data);
     void routeNameChangeEvent(const QString &newName);
+    void routeShowOrderChangeEvent(bool value);
+    void moveRouteEvent(int by);
 
 
 };
