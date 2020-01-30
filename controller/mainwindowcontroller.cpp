@@ -2,7 +2,7 @@
 #include "mainwindowcontroller.h"
 #include "programversion.h"
 #include "jsonfile.h"
-#include "../interfaces/localizable.h"
+#include "../ui/localizeduistrings.h"
 
 
 MainWindowController::MainWindowController()

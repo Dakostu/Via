@@ -1,7 +1,7 @@
-#include "localizable.h"
+#include "localizeduistrings.h"
 
 
-QString Localizable::getUIString(MapKey key) {
+QString LocalizedUIStrings::getUIString(MapKey key) {
 
     static const StringMap map = {
         {"YES", tr("&Yes")},
@@ -29,7 +29,7 @@ QString Localizable::getUIString(MapKey key) {
         {"CREATE_NEW_PROJECT_TITLE", tr("Save new project file")},
         {"LOAD_PROJECT_TITLE", tr("Open project file")},
         {"SAVE_PROJECT_AS_TITLE", tr("Save project as...")},
-        {"PROJECT_FILE_TYPES", tr("ROU file (*.rou);")},
+        {"PROJECT_FILE_TYPES", tr("ROU file(*.rou);")},
         {"LOAD_IMAGE_FILE", tr("Select image file for project background")},
         {"QPIXMAP_SUPPORTED_FILE_TYPES", tr("Supported image types "
          "(.bmp, .gif, .jpg, .jpeg, .png, .pbm, .pgm, .ppm, .xbm, .xpm)"

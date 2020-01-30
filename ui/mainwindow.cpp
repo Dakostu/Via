@@ -1,4 +1,4 @@
-#include "../interfaces/localizable.h"
+#include "../ui/localizeduistrings.h"
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include <QBrush>
@@ -74,22 +74,22 @@ void MainWindow::initializeQuickButtons() {
 
 void MainWindow::initializeMenus() {
 
-    menus.emplace_back(std::make_unique<QMenu>(Localizable::getUIString("FILE")));
-    menus[0]->addAction(Localizable::getUIString("OPEN"));
-    menus[0]->addAction(Localizable::getUIString("SAVE"));
-    menus[0]->addAction(Localizable::getUIString("SAVE_AS"));
-    menus[0]->addAction(Localizable::getUIString("PRINT"));
-    menus[0]->addAction(Localizable::getUIString("EXPORT"));
+    menus.emplace_back(std::make_unique<QMenu>(LocalizedUIStrings::getUIString("FILE")));
+    menus[0]->addAction(LocalizedUIStrings::getUIString("OPEN"));
+    menus[0]->addAction(LocalizedUIStrings::getUIString("SAVE"));
+    menus[0]->addAction(LocalizedUIStrings::getUIString("SAVE_AS"));
+    menus[0]->addAction(LocalizedUIStrings::getUIString("PRINT"));
+    menus[0]->addAction(LocalizedUIStrings::getUIString("EXPORT"));
     menus[0]->addSeparator();
-    menus[0]->addAction(Localizable::getUIString("QUIT"));
+    menus[0]->addAction(LocalizedUIStrings::getUIString("QUIT"));
 
-    menus.emplace_back(std::make_unique<QMenu>(Localizable::getUIString("EDIT")));
-    menus[1]->addAction(Localizable::getUIString("UNDO"));
-    menus[1]->addAction(Localizable::getUIString("REDO"));
+    menus.emplace_back(std::make_unique<QMenu>(LocalizedUIStrings::getUIString("EDIT")));
+    menus[1]->addAction(LocalizedUIStrings::getUIString("UNDO"));
+    menus[1]->addAction(LocalizedUIStrings::getUIString("REDO"));
     menus[1]->addSeparator();
-    menus[1]->addAction(Localizable::getUIString("CUT"));
-    menus[1]->addAction(Localizable::getUIString("COPY"));
-    menus[1]->addAction(Localizable::getUIString("PASTE"));
+    menus[1]->addAction(LocalizedUIStrings::getUIString("CUT"));
+    menus[1]->addAction(LocalizedUIStrings::getUIString("COPY"));
+    menus[1]->addAction(LocalizedUIStrings::getUIString("PASTE"));
 
     for (const auto &menu : menus) {
         this->menuBar()->addMenu(menu.get());
@@ -97,11 +97,11 @@ void MainWindow::initializeMenus() {
 }
 
 void MainWindow::initializeShapeSelections() {
-    QStringList availableStyles({Localizable::getUIString("SQUARE"),
-                                 Localizable::getUIString("TRIANGLE_UP"),
-                                 Localizable::getUIString("TRIANGLE_DOWN"),
-                                 Localizable::getUIString("DIAMOND"),
-                                 Localizable::getUIString("HEXAGON"),
+    QStringList availableStyles({LocalizedUIStrings::getUIString("SQUARE"),
+                                 LocalizedUIStrings::getUIString("TRIANGLE_UP"),
+                                 LocalizedUIStrings::getUIString("TRIANGLE_DOWN"),
+                                 LocalizedUIStrings::getUIString("DIAMOND"),
+                                 LocalizedUIStrings::getUIString("HEXAGON"),
                                 });
     ui->nodeStyleComboBox->addItems(availableStyles);
     ui->routeStyleComboBox->addItems(availableStyles);
@@ -173,9 +173,10 @@ void MainWindow::deleteSelectedRoute() {
 void MainWindow::createNewProject() {
 
     QString newFileName = QFileDialog::getSaveFileName(
-                this, Localizable::getUIString("CREATE_NEW_PROJECT_TITLE"),
+                this,
+                LocalizedUIStrings::getUIString("CREATE_NEW_PROJECT_TITLE"),
                 "",
-                Localizable::getUIString("PROJECT_FILE_TYPES"));
+                LocalizedUIStrings::getUIString("PROJECT_FILE_TYPES"));
 
     if (newFileName.isEmpty()) {
         return;
@@ -184,9 +185,9 @@ void MainWindow::createNewProject() {
 
     QString pictureFileName = QFileDialog::getOpenFileName(
                 this,
-                Localizable::getUIString("LOAD_IMAGE_FILE"),
+                LocalizedUIStrings::getUIString("LOAD_IMAGE_FILE"),
                 "",
-                Localizable::getUIString("QPIXMAP_SUPPORTED_FILE_TYPES"));
+                LocalizedUIStrings::getUIString("QPIXMAP_SUPPORTED_FILE_TYPES"));
 
     if (!pictureFileName.isEmpty()) {
         controller.addProject(Project(newFileName, pictureFileName));
@@ -197,9 +198,10 @@ void MainWindow::createNewProject() {
 
 void MainWindow::loadProject() {
     QString newFileName = QFileDialog::getOpenFileName(
-                this, Localizable::getUIString("CREATE_NEW_PROJECT_TITLE"),
+                this,
+                LocalizedUIStrings::getUIString("LOAD_PROJECT_TITLE"),
                 "",
-                Localizable::getUIString("PROJECT_FILE_TYPES"));
+                LocalizedUIStrings::getUIString("PROJECT_FILE_TYPES"));
 
     if (!newFileName.isEmpty()) {
         controller.loadCurrentProjectFromFile(newFileName);
@@ -214,9 +216,9 @@ void MainWindow::saveProject() {
 
 void MainWindow::saveProjectAs() {
     QString fileName = QFileDialog::getSaveFileName(
-                this, Localizable::getUIString("SAVE_PROJECT_AS_TITLE"),
+                this, LocalizedUIStrings::getUIString("SAVE_PROJECT_AS_TITLE"),
                 "",
-                Localizable::getUIString("PROJECT_FILE_TYPES"));
+                LocalizedUIStrings::getUIString("PROJECT_FILE_TYPES"));
 
     if (!fileName.isEmpty()) {
         controller.saveCurrentProjectAs(fileName);
