@@ -225,7 +225,7 @@ void MainWindow::routeSelectionEvent() {
     ui->currentRouteBox->setEnabled(true);
     ui->currentNodeBox->setEnabled(true);
 
-    auto &routeData = *(controller.getCurrentProject()->getRoutes()[selectedRouteIndex]);
+    auto routeData = *(controller.getCurrentProject()->getRoutes()[selectedRouteIndex]);
     ui->routeNameLineEdit->setText(routeData.getName());
     ui->routeColorButton->changeColor(routeData.getColor());
     //shape
