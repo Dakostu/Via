@@ -44,7 +44,7 @@ public:
     void eraseNode(size_t index);
 
     size_t length() const;
-    RouteNodeData& operator[](size_t index);
+    RouteNodeData& operator[](int index);
 
     bool operator==(const RouteData &other) const;
 };

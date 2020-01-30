@@ -152,7 +152,7 @@ size_t RouteData::length() const {
     return nodes.size();
 }
 
-RouteNodeData& RouteData::operator[](size_t index) {
+RouteNodeData& RouteData::operator[](int index) {
     return *nodes[index];
 }
 
