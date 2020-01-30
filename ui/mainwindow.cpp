@@ -106,13 +106,13 @@ void MainWindow::initializeRouteBoxButtons() {
     connect(ui->routeBoxButtonAddRoute, &QPushButton::pressed, this, &MainWindow::addRoute);
     connect(ui->routeBoxButtonDeleteRoute, &QPushButton::pressed, this, &MainWindow::deleteSelectedRoute);
     connect(ui->routeBoxButtonUp, &QPushButton::pressed, this, [&]() {
-        auto selectedRouteIndex = getSelectedRoutes()[0].row();
+        auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
         controller.getCurrentProject()->swapRoutes(selectedRouteIndex, selectedRouteIndex - 1);
         updateViewLists();
         moveSelectionTo(ui->routeBoxRouteList, selectedRouteIndex - 1);
     });
     connect(ui->routeBoxButtonDown, &QPushButton::pressed, this, [&]() {
-        auto selectedRouteIndex = getSelectedRoutes()[0].row();
+        auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
         controller.getCurrentProject()->swapRoutes(selectedRouteIndex, selectedRouteIndex + 1);
         updateViewLists();
         moveSelectionTo(ui->routeBoxRouteList, selectedRouteIndex + 1);
@@ -123,7 +123,7 @@ void MainWindow::initializeRouteBoxButtons() {
 
 void MainWindow::initializeRouteSettingsUI() {
     connect(ui->routeColorButton, &QPushButton::pressed, this, [&]() {
-        auto selectedRouteIndex = getSelectedRoutes()[0].row();
+        auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
         auto selectedRoute = *controller.getCurrentProject()->getRoutes()[selectedRouteIndex];
         colorChangeEvent(&selectedRoute);
         ui->routeColorButton->changeColor((selectedRoute).getColor());
@@ -135,18 +135,6 @@ void MainWindow::moveSelectionTo(QListView *listView, int index) {
     auto model = listView->model();
     auto modelIndex = model->index(index, 0);
     listView->selectionModel()->select(modelIndex, QItemSelectionModel::ClearAndSelect);
-}
-
-QModelIndexList MainWindow::getSelectedRows(QListView *listView) {
-    return listView->selectionModel()->selectedRows();
-}
-
-QModelIndexList MainWindow::getSelectedRoutes() {
-    return getSelectedRows(ui->routeBoxRouteList);
-}
-
-QModelIndexList MainWindow::getSelectedRouteNodes() {
-    return getSelectedRows(ui->nodeBoxNodeList);
 }
 
 void MainWindow::addRoute() {
@@ -167,7 +155,7 @@ void MainWindow::deleteSelectedRoute() {
         return;
     }
 
-    auto selectedRouteIndex = getSelectedRoutes()[0].row();
+    auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
     controller.deleteRouteofCurrentProject(selectedRouteIndex);
     updateViewLists();
 
@@ -236,7 +224,7 @@ void MainWindow::updateViewLists() {
 
 
 void MainWindow::routeSelectionEvent() {
-    auto selectedRouteIndex = getSelectedRoutes()[0].row();
+    auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
 
     ui->routeBoxButtonDeleteRoute->setEnabled(true);
     ui->routeBoxButtonUp->setEnabled(selectedRouteIndex != 0);

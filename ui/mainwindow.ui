@@ -56,7 +56,7 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <widget class="QListView" name="routeBoxRouteList">
+            <widget class="RouteDataView" name="routeBoxRouteList">
              <property name="alternatingRowColors">
               <bool>true</bool>
              </property>
@@ -128,7 +128,7 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
-            <widget class="QListView" name="nodeBoxNodeList">
+            <widget class="RouteDataView" name="nodeBoxNodeList">
              <property name="alternatingRowColors">
               <bool>true</bool>
              </property>
@@ -574,6 +574,11 @@
    <class>ColorPreviewButton</class>
    <extends>QPushButton</extends>
    <header>ui/colorpreviewbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>RouteDataView</class>
+   <extends>QListView</extends>
+   <header>ui/routedataview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
