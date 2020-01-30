@@ -37,7 +37,6 @@ class MainWindow : public QMainWindow
     void initializeShapeSelections();
     void initializeRouteBoxUI();
     void initializeRouteSettingsUI();
-    void getDataFromCurrentProject();
 
 public:
     MainWindow(QWidget *parent, MainWindowController &newController);
@@ -57,6 +56,7 @@ public slots:
     void routeNameChangeEvent(const QString &newName);
     void routeShowOrderChangeEvent(bool value);
     void moveRouteEvent(int by);
+    void getDataFromCurrentProject();
 
 
 };

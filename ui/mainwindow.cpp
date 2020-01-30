@@ -35,6 +35,9 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
 {
     ui->setupUi(this);
 
+    connect(&controller, &MainWindowController::currentProjectChanged, this, &MainWindow::getDataFromCurrentProject);
+    connect(&controller, &MainWindowController::routeListChanged, this, &MainWindow::updateViewLists);
+
     initializeQuickButtons();
     initializeMenus();
     initializeShapeSelections();
@@ -139,9 +142,8 @@ void MainWindow::getDataFromCurrentProject() {
 
 void MainWindow::addRoute() {
     auto color = Qt::red;
-    controller.addNewRouteToCurrentProject(color);
     ui->picture->addRoute(color);
-    updateViewLists();
+    controller.addNewRouteToCurrentProject(color);
 
     ui->routeBoxRouteList->moveSelectionTo(ui->routeBoxRouteList->model()->rowCount() - 1);
 
@@ -157,7 +159,6 @@ void MainWindow::deleteSelectedRoute() {
 
     auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
     controller.deleteRouteofCurrentProject(selectedRouteIndex);
-    updateViewLists();
 
     auto newRowCount = ui->routeBoxRouteList->model()->rowCount();
     if (newRowCount == 0) {
@@ -191,7 +192,6 @@ void MainWindow::createNewProject() {
 
     if (!pictureFileName.isEmpty()) {
         controller.addProject(Project(newFileName, pictureFileName));
-        getDataFromCurrentProject();
         setNoProjectsOpenMode(false);
     }
 }
@@ -205,7 +205,6 @@ void MainWindow::loadProject() {
 
     if (!newFileName.isEmpty()) {
         controller.loadCurrentProjectFromFile(newFileName);
-        getDataFromCurrentProject();
         setNoProjectsOpenMode(false);
     }
 }
@@ -287,8 +286,7 @@ void MainWindow::routeShowOrderChangeEvent(bool value) {
 
 void MainWindow::moveRouteEvent(int by) {
     auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
-    controller.getCurrentProject()->swapRoutes(selectedRouteIndex, selectedRouteIndex + by);
-    updateViewLists();
+    controller.swapCurrentProjectRoutes(selectedRouteIndex, selectedRouteIndex + by);
     ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex + by);
     routeSelectionEvent();
 }

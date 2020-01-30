@@ -72,6 +72,7 @@ Project* MainWindowController::getCurrentProject() {
 
 void MainWindowController::setCurrentProject(const QString &fileName) {
     currentProject = &openProjects.at(fileName);
+    emit currentProjectChanged();
 }
 
 QStringListModel& MainWindowController::getCurrentRoutesStringList() {
@@ -87,6 +88,12 @@ QStringListModel& MainWindowController::getCurrentRoutesStringList() {
 
 void MainWindowController::deleteRouteofCurrentProject(int index) {
     currentProject->deleteRoute(index);
+    emit routeListChanged();
+}
+
+void MainWindowController::swapCurrentProjectRoutes(int x, int y) {
+    currentProject->swapRoutes(x,y);
+    emit routeListChanged();
 }
 
 void MainWindowController::printCurrentProject() {
@@ -100,6 +107,7 @@ void MainWindowController::printCurrentProject() {
 void MainWindowController::addNewRouteToCurrentProject(const QColor &newColor) {
     RouteData newRoute(newColor);
     currentProject->addRoute(newRoute);
+    emit routeListChanged();
 }
 
 size_t MainWindowController::amountOfOpenProjects() {
