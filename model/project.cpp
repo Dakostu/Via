@@ -90,7 +90,7 @@ void Project::deleteRoute(int index) {
     routes.erase(routes[index]);
 }
 
-void Project::swapRoutes(size_t i, size_t j) {
+void Project::swapRoutes(int i, int j) {
     std::swap(*routes[i], *routes[j]);
 }
 

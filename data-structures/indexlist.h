@@ -7,7 +7,7 @@
 template <typename T>
 class IndexList : public std::list<T>
 {
-    typename std::list<T>::iterator iterateToPosition(size_t index) {
+    typename std::list<T>::iterator iterateToPosition(int index) {
         auto nodesSize = this->size();
 
         if (index >= nodesSize) {
@@ -40,7 +40,7 @@ class IndexList : public std::list<T>
 public:
     IndexList() : std::list<T>() {}
 
-    typename std::list<T>::iterator operator[](size_t index) {
+    typename std::list<T>::iterator operator[](int index) {
         return iterateToPosition(index);
     }
 
