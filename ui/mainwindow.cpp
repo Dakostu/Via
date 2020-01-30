@@ -114,8 +114,7 @@ void MainWindow::initializeRouteBoxButtons() {
 void MainWindow::initializeRouteSettingsUI() {
     connect(ui->routeColorButton, &QPushButton::pressed, this, [&]() {
         auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
-        auto selectedRoute = *controller.getCurrentProject()->getRoutes()[selectedRouteIndex];
-        colorChangeEvent(&selectedRoute);        
+        colorChangeEvent(&(*controller.getCurrentProject())[selectedRouteIndex]);
     });
     connect(ui->routeNameLineEdit, &QLineEdit::textEdited, this, &MainWindow::routeNameChangeEvent);
     // change shape
