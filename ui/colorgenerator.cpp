@@ -9,7 +9,7 @@ QColor ColorGenerator::operator()() {
         qreal h, s, v;
         lastColor.getHsvF(&h, &s, &v);
 
-        h += GOLDEN_RATIO;
+        h += GOLDEN_RATIO + (QRandomGenerator::global()->bounded(100)/1000.0 - 0.5);
 
         if (h > 1.0) {
             h -= 1.0;

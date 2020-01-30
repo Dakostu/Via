@@ -6,7 +6,7 @@
 
 class ColorGenerator
 {
-    static constexpr qreal GOLDEN_RATIO = 0.618033988749895;
+    static constexpr qreal GOLDEN_RATIO = 0.718033988749895;
     QColor lastColor;
 
 public:
