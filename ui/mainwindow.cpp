@@ -56,9 +56,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::initializeQuickButtons() {
 
-    connect(ui->quickButtonOpen, &QPushButton::pressed, this, &MainWindow::loadProject);
-    connect(ui->quickButtonSave, &QPushButton::pressed, this, &MainWindow::saveProject);
-    connect(ui->quickButtonSaveAs, &QPushButton::pressed, this, &MainWindow::saveProjectAs);
+    connect(ui->quickButtonOpen, &QPushButton::clicked, this, &MainWindow::loadProject);
+    connect(ui->quickButtonSave, &QPushButton::clicked, this, &MainWindow::saveProject);
+    connect(ui->quickButtonSaveAs, &QPushButton::clicked, this, &MainWindow::saveProjectAs);
 
     controller.getCurrentState()->setToggleButtons(ui->quickButtonAutoAdd,
                                    ui->quickButtonMove,
@@ -66,10 +66,10 @@ void MainWindow::initializeQuickButtons() {
     quickButtonGroup->addButton(ui->quickButtonAutoAdd);
     quickButtonGroup->addButton(ui->quickButtonMove);
     quickButtonGroup->addButton(ui->quickButtonSelect);
-    connect(ui->quickButtonNew, &QPushButton::pressed, this, &MainWindow::createNewProject);
-    connect(ui->quickButtonAutoAdd, &QAbstractButton::pressed, this, [&]() { controller.changeUIState<UIAddNodeState>(); });
-    connect(ui->quickButtonMove, &QAbstractButton::pressed, this, [&]() { controller.changeUIState<UIMoveNodesState>(); });
-    connect(ui->quickButtonSelect, &QAbstractButton::pressed, this, [&]() { controller.changeUIState<UISelectNodeState>(); });
+    connect(ui->quickButtonNew, &QPushButton::clicked, this, &MainWindow::createNewProject);
+    connect(ui->quickButtonAutoAdd, &QAbstractButton::clicked, this, [&]() { controller.changeUIState<UIAddNodeState>(); });
+    connect(ui->quickButtonMove, &QAbstractButton::clicked, this, [&]() { controller.changeUIState<UIMoveNodesState>(); });
+    connect(ui->quickButtonSelect, &QAbstractButton::clicked, this, [&]() { controller.changeUIState<UISelectNodeState>(); });
 }
 
 void MainWindow::initializeMenus() {
@@ -111,10 +111,10 @@ void MainWindow::initializeRouteBoxUI() {
     connect(ui->routeBoxRouteList->itemDelegate(), &QAbstractItemDelegate::commitData, this, [&](QWidget* lineEdit){
         routeNameChangeEvent((static_cast<QLineEdit*>(lineEdit))->text());}
     );
-    connect(ui->routeBoxButtonAddRoute, &QPushButton::pressed, this, &MainWindow::addRoute);
-    connect(ui->routeBoxButtonDeleteRoute, &QPushButton::pressed, this, &MainWindow::deleteSelectedRoute);
-    connect(ui->routeBoxButtonUp, &QPushButton::pressed, this, [&]() { moveRouteEvent(-1); });
-    connect(ui->routeBoxButtonDown, &QPushButton::pressed, this, [&]() { moveRouteEvent(1); });
+    connect(ui->routeBoxButtonAddRoute, &QPushButton::clicked, this, &MainWindow::addRoute);
+    connect(ui->routeBoxButtonDeleteRoute, &QPushButton::clicked, this, &MainWindow::deleteSelectedRoute);
+    connect(ui->routeBoxButtonUp, &QPushButton::clicked, this, [&]() { moveRouteEvent(-1); });
+    connect(ui->routeBoxButtonDown, &QPushButton::clicked, this, [&]() { moveRouteEvent(1); });
     connect(ui->routeBoxRouteList, &QListView::clicked, this, &MainWindow::routeSelectionEvent);    
 }
 
