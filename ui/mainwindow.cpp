@@ -247,10 +247,6 @@ void MainWindow::updateViewLists() {
 
 void MainWindow::routeSelectionEvent() {
     auto selectedRows = ui->routeBoxRouteList->getSelectedRows();
-    if (selectedRows.isEmpty()) {
-        return;
-    }
-
     auto selectedRouteIndex = selectedRows[0].row();
 
     ui->routeBoxButtonDeleteRoute->setEnabled(true);

@@ -19,6 +19,8 @@ void RouteDataView::moveSelectionTo(int index) {
 
 void RouteDataView::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) {
     QListView::selectionChanged(selected, deselected);
-    emit changedSelection();
+    if (!getSelectedRows().empty()) {
+        emit changedSelection();
+    }
 }
 
