@@ -59,6 +59,7 @@ public slots:
     void routeShowOrderChangeEvent(bool value);
     void moveRouteEvent(int by);
     void getDataFromCurrentProject();
+    void resetSettingsBox();
 
 
 };

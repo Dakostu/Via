@@ -89,6 +89,9 @@ QStringListModel& MainWindowController::getCurrentRoutesStringList() {
 void MainWindowController::deleteRouteofCurrentProject(int index) {
     currentProject->deleteRoute(index);
     emit routeListChanged();
+    if (currentProject->getRoutes().empty()) {
+        emit routeListEmpty();
+    }
 }
 
 void MainWindowController::swapCurrentProjectRoutes(int x, int y) {

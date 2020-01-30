@@ -60,6 +60,7 @@ public slots:
 signals:
     void currentProjectChanged();
     void routeListChanged();
+    void routeListEmpty();
 
 
 

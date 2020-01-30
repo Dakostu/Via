@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
 
     connect(&controller, &MainWindowController::currentProjectChanged, this, &MainWindow::getDataFromCurrentProject);
     connect(&controller, &MainWindowController::routeListChanged, this, &MainWindow::updateViewLists);
+    connect(&controller, &MainWindowController::routeListEmpty, this, &MainWindow::resetSettingsBox);
 
     initializeQuickButtons();
     initializeMenus();
@@ -141,6 +142,9 @@ void MainWindow::getDataFromCurrentProject() {
 }
 
 void MainWindow::addRoute() {
+    ui->settingsBox->setEnabled(true);
+    ui->routeColorButton->setFlat(false);
+
     auto color = colorGenerator();
     ui->picture->addRoute(color);
     controller.addNewRouteToCurrentProject(color);
@@ -161,12 +165,7 @@ void MainWindow::deleteSelectedRoute() {
     controller.deleteRouteofCurrentProject(selectedRouteIndex);
 
     auto newRowCount = ui->routeBoxRouteList->model()->rowCount();
-    if (newRowCount == 0) {
-        ui->routeBoxButtonUp->setEnabled(false);
-        ui->routeBoxButtonDown->setEnabled(false);
-        ui->routeBoxButtonDeleteRoute->setEnabled(false);
-        ui->nodeBox->setEnabled(false);
-    } else {
+    if (newRowCount != 0) {
         ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex - (selectedRouteIndex == newRowCount));
     }
 }
@@ -285,7 +284,12 @@ void MainWindow::routeNameChangeEvent(const QString &newName) {
 }
 
 void MainWindow::routeShowOrderChangeEvent(bool value) {
-    auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
+    auto selectedRows = ui->routeBoxRouteList->getSelectedRows();
+    if (selectedRows.empty()) {
+        return;
+    }
+
+    auto selectedRouteIndex = selectedRows[0].row();
     (*controller.getCurrentProject())[selectedRouteIndex].setShowOrder(value);
 }
 
@@ -294,4 +298,15 @@ void MainWindow::moveRouteEvent(int by) {
     controller.swapCurrentProjectRoutes(selectedRouteIndex, selectedRouteIndex + by);
     ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex + by);
     routeSelectionEvent();
+}
+
+void MainWindow::resetSettingsBox() {
+    ui->routeBoxButtonUp->setEnabled(false);
+    ui->routeBoxButtonDown->setEnabled(false);
+    ui->routeBoxButtonDeleteRoute->setEnabled(false);
+    ui->nodeBox->setEnabled(false);
+    ui->settingsBox->setEnabled(false);
+    ui->routeNameLineEdit->clear();
+    ui->routeColorButton->setFlat(true);
+    ui->routeNodeOrderCheckBox->setChecked(false);
 }
