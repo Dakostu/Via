@@ -9,6 +9,7 @@ public:
     RouteDataView(QWidget *widget);
 
     QModelIndexList getSelectedRows();
+    void moveSelectionTo(int index);
 };
 
 #endif // ROUTEDATAVIEW_H

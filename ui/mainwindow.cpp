@@ -109,13 +109,13 @@ void MainWindow::initializeRouteBoxButtons() {
         auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
         controller.getCurrentProject()->swapRoutes(selectedRouteIndex, selectedRouteIndex - 1);
         updateViewLists();
-        moveSelectionTo(ui->routeBoxRouteList, selectedRouteIndex - 1);
+        ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex - 1);
     });
     connect(ui->routeBoxButtonDown, &QPushButton::pressed, this, [&]() {
         auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
         controller.getCurrentProject()->swapRoutes(selectedRouteIndex, selectedRouteIndex + 1);
         updateViewLists();
-        moveSelectionTo(ui->routeBoxRouteList, selectedRouteIndex + 1);
+        ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex + 1);
     });
 
     connect(ui->routeBoxRouteList, &QListView::clicked, this, &MainWindow::routeSelectionEvent);    
@@ -131,19 +131,13 @@ void MainWindow::initializeRouteSettingsUI() {
 
 }
 
-void MainWindow::moveSelectionTo(QListView *listView, int index) {
-    auto model = listView->model();
-    auto modelIndex = model->index(index, 0);
-    listView->selectionModel()->select(modelIndex, QItemSelectionModel::ClearAndSelect);
-}
-
 void MainWindow::addRoute() {
     auto color = Qt::red;
     controller.addNewRouteToCurrentProject(color);
     ui->picture->addRoute(color);
     updateViewLists();
 
-    moveSelectionTo(ui->routeBoxRouteList, ui->routeBoxRouteList->model()->rowCount() - 1);
+    ui->routeBoxRouteList->moveSelectionTo(ui->routeBoxRouteList->model()->rowCount() - 1);
 
     auto vBar = ui->routeBoxRouteList->verticalScrollBar();
     vBar->setValue(vBar->maximum());
@@ -165,7 +159,7 @@ void MainWindow::deleteSelectedRoute() {
         ui->routeBoxButtonDeleteRoute->setEnabled(false);
         ui->nodeBox->setEnabled(false);
     } else {
-        moveSelectionTo(ui->routeBoxRouteList, selectedRouteIndex - 1);
+        ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex - 1);
     }
 }
 
@@ -219,9 +213,7 @@ void MainWindow::setNoProjectsOpenMode(bool noProjectsOpen) {
 
 void MainWindow::updateViewLists() {
     ui->routeBoxRouteList->setModel(&controller.getCurrentRoutesStringList());
-    ui->nodeBoxNodeList->clearSelection();
 }
-
 
 void MainWindow::routeSelectionEvent() {
     auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();

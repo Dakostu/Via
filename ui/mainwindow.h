@@ -37,7 +37,6 @@ class MainWindow : public QMainWindow
     void initializeShapeSelections();
     void initializeRouteBoxButtons();
     void initializeRouteSettingsUI();
-    void moveSelectionTo(QListView *listView, int index);
 
 public:
     MainWindow(QWidget *parent, MainWindowController &newController);
