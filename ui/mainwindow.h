@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 
+#include "colorgenerator.h"
 #include "./ui_mainwindow.h"
 #include "../controller/mainwindowcontroller.h"
 #include <vector>
@@ -26,6 +27,7 @@ class MainWindow : public QMainWindow
     MainWindowController &controller;
     Ui::MainWindow *ui;
 
+    ColorGenerator colorGenerator;
     std::unique_ptr<QGraphicsScene> currentScene;
     std::unique_ptr<QButtonGroup> quickButtonGroup;
 

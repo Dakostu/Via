@@ -141,7 +141,7 @@ void MainWindow::getDataFromCurrentProject() {
 }
 
 void MainWindow::addRoute() {
-    auto color = Qt::red;
+    auto color = colorGenerator();
     ui->picture->addRoute(color);
     controller.addNewRouteToCurrentProject(color);
 
