@@ -111,14 +111,14 @@ void MainWindow::initializeShapeSelections() {
 }
 
 void MainWindow::initializeRouteBoxUI() {
-    connect(ui->routeBoxRouteList->itemDelegate(), &QAbstractItemDelegate::commitData, this, [&](QWidget* lineEdit){
-        routeNameChangeEvent((static_cast<QLineEdit*>(lineEdit))->text());}
-    );
     connect(ui->routeBoxButtonAddRoute, &QPushButton::clicked, this, &MainWindow::addRoute);
     connect(ui->routeBoxButtonDeleteRoute, &QPushButton::clicked, this, &MainWindow::deleteSelectedRoute);
     connect(ui->routeBoxButtonUp, &QPushButton::clicked, this, [&]() { moveRouteEvent(-1); });
     connect(ui->routeBoxButtonDown, &QPushButton::clicked, this, [&]() { moveRouteEvent(1); });
-    connect(ui->routeBoxRouteList, &QListView::clicked, this, &MainWindow::routeSelectionEvent);    
+    connect(ui->routeBoxRouteList->itemDelegate(), &QAbstractItemDelegate::commitData, this, [&](QWidget* lineEdit){
+        routeNameChangeEvent((static_cast<QLineEdit*>(lineEdit))->text());}
+    );
+    connect(ui->routeBoxRouteList, &RouteDataView::changedSelection, this, &MainWindow::routeSelectionEvent);
 }
 
 void MainWindow::initializeRouteSettingsUI() {
@@ -247,7 +247,12 @@ void MainWindow::updateViewLists() {
 }
 
 void MainWindow::routeSelectionEvent() {
-    auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
+    auto selectedRows = ui->routeBoxRouteList->getSelectedRows();
+    if (selectedRows.isEmpty()) {
+        return;
+    }
+
+    auto selectedRouteIndex = selectedRows[0].row();
 
     ui->routeBoxButtonDeleteRoute->setEnabled(true);
     ui->routeBoxButtonUp->setEnabled(selectedRouteIndex != 0);
