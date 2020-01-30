@@ -38,6 +38,9 @@ class MainWindow : public QMainWindow
     void initializeRouteBoxButtons();
     void initializeRouteSettingsUI();
     void moveSelectionTo(QListView *listView, int index);
+    QModelIndexList getSelectedRows(QListView *listView);
+    QModelIndexList getSelectedRoutes();
+    QModelIndexList getSelectedRouteNodes();
 
 public:
     MainWindow(QWidget *parent, MainWindowController &newController);
