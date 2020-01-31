@@ -24,7 +24,6 @@ void Route::setDefaultColors() {
 }
 
 void Route::addNode(qreal x, qreal y) {
-
     auto previousNode = nodes.back();
     nodes.emplace_back(new RouteNode(new Hexagon(x,y, routeColor),
                        QString::number(nodes.size() + 1), currentState));
@@ -35,7 +34,18 @@ void Route::addNode(qreal x, qreal y) {
         currentScene->addItem(previousNode->getToConnection());
     }
     currentScene->addItem(nodes.back());
-    temporaryPreviewNode.reset();
+    temporaryPreviewNodeFlag = false;
+}
+
+void Route::addTemporaryPreviewNode(qreal x, qreal y) {
+    if (temporaryPreviewNodeFlag) {
+        eraseNode(nodes.size() - 1);
+    }
+
+    addNode(x, y);
+    nodes.back()->getFromConnection()->setOpacity(0.5);
+    nodes.back()->setOpacity(0.5);
+    temporaryPreviewNodeFlag = true;
 }
 
 void Route::eraseNode(int index) {
