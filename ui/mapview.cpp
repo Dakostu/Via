@@ -41,12 +41,24 @@ void MapView::mouseMoveEvent(QMouseEvent* event) {
     currentState->get()->mapViewMouseMoveEvent(this, event);
 }
 
+void MapView::mousePressEvent(QMouseEvent *event) {
+    currentState->get()->mapViewMousePressEvent(this, event);
+}
+
+void MapView::mouseReleaseEvent(QMouseEvent *event) {
+    currentState->get()->mapViewMouseReleaseEvent(this, event);
+}
+
 void MapView::triggerParentMousePressEvent(QMouseEvent *event) {
     QGraphicsView::mousePressEvent(event);
 }
 
 void MapView::triggerParentMouseMoveEvent(QMouseEvent *event) {
     QGraphicsView::mouseMoveEvent(event);
+}
+
+void MapView::triggerParentMouseReleaseEvent(QMouseEvent *event) {
+    QGraphicsView::mouseReleaseEvent(event);
 }
 
 void MapView::addRoute(const QColor &color) {

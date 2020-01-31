@@ -29,6 +29,8 @@ public:
     virtual void routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) = 0;
 
     virtual void mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) = 0;
+    virtual void mapViewMousePressEvent(MapView *view, QMouseEvent *mouseEvent) = 0;
+    virtual void mapViewMouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) = 0;
 
 };
 

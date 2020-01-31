@@ -16,6 +16,8 @@ public:
     virtual void routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
 
     virtual void mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) override;
+    virtual void mapViewMousePressEvent(MapView *view, QMouseEvent *mouseEvent) override;
+    virtual void mapViewMouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) override;
 };
 
 #endif // UISELECTNODESTATE_H

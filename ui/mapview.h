@@ -30,9 +30,12 @@ public:
 
     void wheelEvent(QWheelEvent *event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
 
     void triggerParentMousePressEvent(QMouseEvent* event);
     void triggerParentMouseMoveEvent(QMouseEvent* event);
+    void triggerParentMouseReleaseEvent(QMouseEvent* event);
 
     void addRoute(const QColor &color);
     void addNodeToCurrentRoute(int x, int y);

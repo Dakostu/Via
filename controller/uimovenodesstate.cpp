@@ -75,3 +75,11 @@ void UIMoveNodesState::mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEv
     }
 
 }
+
+void UIMoveNodesState::mapViewMousePressEvent(MapView *view, QMouseEvent *mouseEvent) {
+    view->triggerParentMousePressEvent(mouseEvent);
+}
+
+void UIMoveNodesState::mapViewMouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) {
+    view->triggerParentMouseReleaseEvent(mouseEvent);
+}

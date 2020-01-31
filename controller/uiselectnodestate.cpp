@@ -25,5 +25,12 @@ void UISelectNodeState::routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSce
 
 void UISelectNodeState::mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
     view->setDragMode(QGraphicsView::NoDrag);
+}
 
+void UISelectNodeState::mapViewMousePressEvent(MapView *view, QMouseEvent *mouseEvent) {
+    view->triggerParentMousePressEvent(mouseEvent);
+}
+
+void UISelectNodeState::mapViewMouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) {
+    view->triggerParentMouseReleaseEvent(mouseEvent);
 }

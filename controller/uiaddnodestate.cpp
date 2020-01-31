@@ -31,3 +31,12 @@ void UIAddNodeState::mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEven
     auto coords = view->mapToScene(mouseEvent->pos());
     view->getCurrentRoute()->addTemporaryPreviewNode(coords.x(), coords.y());
 }
+
+void UIAddNodeState::mapViewMousePressEvent(MapView *view, QMouseEvent *mouseEvent) {
+    view->triggerParentMousePressEvent(mouseEvent);
+}
+
+void UIAddNodeState::mapViewMouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) {
+    auto coords = view->mapToScene(mouseEvent->pos());
+    view->addNodeToCurrentRoute(coords.x(), coords.y());
+}
