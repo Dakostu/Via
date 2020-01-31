@@ -6,6 +6,8 @@ RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extr
       nodeLabel(nodeLabelText),
       extraTextLabel(extraTextLabelText, node.get()),
       styleDiffersFromRoute(false),
+      fromConnection(nullptr),
+      toConnection(nullptr),
       currentState(state)
 {
 
@@ -35,14 +37,18 @@ void RouteNode::setElementSize(int newSize) {
     extraTextLabel.setElementSize(newSize);
     nodeLabel.setElementSize(newSize);
     centerNodeLabelBox();
-    std::for_each(toConnections.begin(), toConnections.end(), [&](auto &conn) { conn->setElementSize(newSize); });
+    if (toConnection) {
+        toConnection->setElementSize(newSize);
+    }
 }
 
 void RouteNode::setColors(const QColor &color) {
     node->setColors(color);
     nodeLabel.setColors(color);
     extraTextLabel.setColors(color);
-    std::for_each(toConnections.begin(), toConnections.end(), [&](auto &conn) { conn->setColors(color); });
+    if (toConnection) {
+        toConnection->setColors(color);
+    }
 }
 
 QColor RouteNode::getColor() const {
@@ -53,7 +59,9 @@ void RouteNode::setDefaultColors() {
     node->setDefaultColors();
     nodeLabel.setColors(node->pen().brush().color());
     extraTextLabel.setColors(node->pen().brush().color());
-    std::for_each(toConnections.begin(), toConnections.end(), [&](auto &conn) { conn->setDefaultColors(); });
+    if (toConnection) {
+        toConnection->setDefaultColors();
+    }
 }
 
 void RouteNode::centerNodeLabelBox() {
@@ -94,8 +102,7 @@ void RouteNode::connect(RouteNode &from) {
     auto color = node->brush().color();
     auto connection = new RouteConnection(from.boundingRect().center(), this->boundingRect().center(), color);
     connection->setElementSize(elementSize);
-    this->fromConnections.emplace_back(connection);
-    from.toConnections.emplace_back(connection);
+    fromConnection = from.toConnection = connection;
 }
 
 void RouteNode::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
@@ -116,10 +123,10 @@ void RouteNode::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     QGraphicsItemGroup::mouseReleaseEvent(mouseEvent);
 }
 
-ConnectionVector* RouteNode::getFromConnections() {
-    return &fromConnections;
+RouteConnection* RouteNode::getFromConnection() {
+    return fromConnection;
 }
 
-ConnectionVector* RouteNode::getToConnections() {
-    return &toConnections;
+RouteConnection* RouteNode::getToConnection() {
+    return toConnection;
 }

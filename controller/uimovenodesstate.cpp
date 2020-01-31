@@ -19,13 +19,13 @@ void UIMoveNodesState::routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphicsS
 void UIMoveNodesState::routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
     if (mouseEvent->buttons().testFlag(Qt::LeftButton)) {
         auto thisPos = node->boundingRect().center() + node->pos();
-        for (auto &conn : *node->getFromConnections()) {
-            auto fromNodePos = conn->p1();
-            conn->setNewPosition(fromNodePos, thisPos);
+        if (auto fromConn = node->getFromConnection()) {
+            auto fromNodePos = fromConn->p1();
+            fromConn->setNewPosition(fromNodePos, thisPos);
         }
-        for (auto &conn : *node->getToConnections()) {
-            auto toNodePos = conn->p2();
-            conn->setNewPosition(thisPos, toNodePos);
+        if (auto toConn = node->getToConnection()) {
+            auto toNodePos = toConn->p2();
+            toConn->setNewPosition(thisPos, toNodePos);
         }
     }
 

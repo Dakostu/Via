@@ -13,8 +13,6 @@
 
 class UIState;
 
-using ConnectionVector = std::vector<RouteConnection*>;
-
 class RouteNode : public QGraphicsItemGroup, public ViewCustomizable
 {
 
@@ -23,8 +21,8 @@ protected:
     RouteNodeLabel nodeLabel;
     RouteExtraTextLabel extraTextLabel;
     bool styleDiffersFromRoute;
-    ConnectionVector fromConnections;
-    ConnectionVector toConnections;
+    RouteConnection* fromConnection;
+    RouteConnection* toConnection;
     std::unique_ptr<UIState> &currentState;
 
     void centerNodeLabelBox();    
@@ -52,8 +50,8 @@ public:
     bool isInvisible();
 
     QColor getColor() const;
-    ConnectionVector* getFromConnections();
-    ConnectionVector* getToConnections();
+    RouteConnection* getFromConnection();
+    RouteConnection* getToConnection();
     RouteExtraTextLabel* getExtraText();
 
     void connect(RouteNode &from);

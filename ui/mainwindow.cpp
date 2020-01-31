@@ -206,6 +206,11 @@ void MainWindow::loadProject() {
         controller.loadCurrentProjectFromFile(newFileName);
         setNoProjectsOpenMode(false);
     }
+
+    ui->picture->addRoute(Qt::red);
+    ui->picture->addNodeToCurrentRoute(20,20);
+    ui->picture->addNodeToCurrentRoute(20,50);
+    ui->picture->addNodeToCurrentRoute(20,90);
 }
 
 void MainWindow::saveProject() {
