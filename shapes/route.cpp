@@ -34,8 +34,35 @@ void Route::addNode(qreal x, qreal y) {
         nodes.back()->connect(*previousNode);
         currentScene->addItem(previousNode->getToConnection());
     }
-    nodes.back()->setZValue(std::numeric_limits<qreal>::max());
     currentScene->addItem(nodes.back());
+    temporaryPreviewNode.reset();
+}
+
+void Route::eraseNode(int index) {
+    auto currentNodePos = nodes[index];
+    auto currentNode = *currentNodePos;
+    currentScene->removeItem(currentNode->getFromConnection());
+    currentScene->removeItem(currentNode->getToConnection());
+    currentScene->removeItem(currentNode);
+
+    currentNodePos = nodes.erase(currentNodePos);
+    currentNode = *currentNodePos;
+
+    if (index == 0) {
+        nodes.front()->resetFromConnection();
+    } else if (index == nodes.size()) {
+        nodes.back()->resetToConnection();
+    } else if (index > 0 && index < nodes.size()) {
+        auto &previousNode = **nodes[index - 1];
+        currentNode->connect(previousNode);
+        currentScene->addItem(previousNode.getToConnection());
+    }
+
+    for (; currentNodePos != nodes.end(); ++currentNodePos) {
+        (*currentNodePos)->setNodeLabelText(QString::number(index + 1));
+        ++index;
+    }
+
 }
 
 void Route::setElementSize(int newSize) {

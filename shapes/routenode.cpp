@@ -96,6 +96,14 @@ void RouteNode::setNodeLabelText(const QString &newText) {
     nodeLabel.setText(newText);
 }
 
+void RouteNode::resetFromConnection() {
+    fromConnection = nullptr;
+}
+
+void RouteNode::resetToConnection() {
+    toConnection.reset(nullptr);
+}
+
 bool RouteNode::isInvisible() {
     return opacity() < 0.000001;
 }

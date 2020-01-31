@@ -19,6 +19,7 @@ protected:
     QColor routeColor;
     QGraphicsScene *currentScene;
     std::unique_ptr<UIState> &currentState;
+    std::unique_ptr<RouteNode> temporaryPreviewNode;
 
     IndexList<RouteNode*> nodes;
 public:
@@ -28,6 +29,7 @@ public:
     Route(const QColor &color, QGraphicsScene *scene, std::unique_ptr<UIState> &state);
 
     virtual void addNode(qreal x, qreal y);
+    virtual void eraseNode(int index);
     virtual void setElementSize(int newSize) override;
 };
 

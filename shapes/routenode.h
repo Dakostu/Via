@@ -46,6 +46,8 @@ public:
     virtual void setOpacity(qreal opacity);
     virtual void setNodeLabelOpacity(qreal opacity);
     virtual void setNodeLabelText(const QString &newText);
+    virtual void resetFromConnection();
+    virtual void resetToConnection();
     bool isInvisible();
 
     QColor getColor() const;

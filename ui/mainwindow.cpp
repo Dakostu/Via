@@ -211,6 +211,7 @@ void MainWindow::loadProject() {
     ui->picture->addNodeToCurrentRoute(20,20);
     ui->picture->addNodeToCurrentRoute(20,50);
     ui->picture->addNodeToCurrentRoute(20,90);
+    ui->picture->getCurrentRoute()->eraseNode(2);
 }
 
 void MainWindow::saveProject() {
