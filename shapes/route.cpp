@@ -33,7 +33,7 @@ void Route::addNode(qreal x, qreal y) {
     if (previousNode) {
         nodes.back()->connect(*previousNode);
         for (const auto &connection : *previousNode->getToConnections()) {
-            currentScene->addItem(connection.get());
+            currentScene->addItem(connection);
         }
     }
     nodes.back()->setZValue(std::numeric_limits<qreal>::max());
