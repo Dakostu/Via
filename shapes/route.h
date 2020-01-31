@@ -15,11 +15,12 @@ class RouteNode;
 class Route : public ViewCustomizable
 {
 protected:
+    static constexpr qreal TEMPORARY_NODE_OPACITY = 0.5;
+
     bool showDirection;
     QColor routeColor;
     QGraphicsScene *currentScene;
     std::unique_ptr<UIState> &currentState;
-    bool temporaryPreviewNodeFlag;
 
     IndexList<RouteNode*> nodes;
 public:
