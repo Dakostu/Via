@@ -102,7 +102,8 @@ void RouteNode::connect(RouteNode &from) {
     auto color = node->brush().color();
     auto connection = new RouteConnection(from.boundingRect().center(), this->boundingRect().center(), color);
     connection->setElementSize(elementSize);
-    fromConnection = from.toConnection = connection;
+    from.toConnection.reset(connection);
+    fromConnection = connection;
 }
 
 void RouteNode::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
@@ -128,5 +129,5 @@ RouteConnection* RouteNode::getFromConnection() {
 }
 
 RouteConnection* RouteNode::getToConnection() {
-    return toConnection;
+    return toConnection.get();
 }

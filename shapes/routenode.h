@@ -22,7 +22,7 @@ protected:
     RouteExtraTextLabel extraTextLabel;
     bool styleDiffersFromRoute;
     RouteConnection* fromConnection;
-    RouteConnection* toConnection;
+    std::unique_ptr<RouteConnection> toConnection;
     std::unique_ptr<UIState> &currentState;
 
     void centerNodeLabelBox();    
