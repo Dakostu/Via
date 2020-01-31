@@ -28,5 +28,6 @@ void UIAddNodeState::mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEven
     view->setDragMode(QGraphicsView::NoDrag);
     view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     view->setCursor(Qt::CrossCursor);
-    view->getCurrentRoute()->addTemporaryPreviewNode(mouseEvent->x(), mouseEvent->y());
+    auto coords = view->mapToScene(mouseEvent->pos());
+    view->getCurrentRoute()->addTemporaryPreviewNode(coords.x(), coords.y());
 }
