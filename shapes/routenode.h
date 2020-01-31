@@ -13,7 +13,7 @@
 
 class UIState;
 
-using ConnectionVector = std::vector<RouteConnection*>;
+using ConnectionVector = std::vector<std::unique_ptr<RouteConnection>>;
 
 class RouteNode : public QGraphicsItemGroup, public ViewCustomizable
 {
