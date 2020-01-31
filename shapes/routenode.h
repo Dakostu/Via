@@ -43,10 +43,9 @@ public:
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
     void triggerParentMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
 
-
-
     virtual void setOpacity(qreal opacity);
     virtual void setNodeLabelOpacity(qreal opacity);
+    virtual void setNodeLabelText(const QString &newText);
     bool isInvisible();
 
     QColor getColor() const;

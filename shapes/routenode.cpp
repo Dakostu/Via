@@ -22,10 +22,12 @@ RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extr
     centerNodeLabelBox();
 
     addToGroup(node.get());
-    addToGroup(&nodeLabel);
+    addToGroup(&nodeLabel);        
 
     auto center = node->boundingRect().center();
     extraTextLabel.setPos(center.x() + (90 * elementSize - 60), center.y() - extraTextLabel.boundingRect().height() / 2);
+
+    this->setZValue(std::numeric_limits<qreal>::max());
 }
 
 RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, std::unique_ptr<UIState> &state) :
@@ -88,6 +90,10 @@ void RouteNode::setOpacity(qreal opacity) {
 
 void RouteNode::setNodeLabelOpacity(qreal opacity) {
     nodeLabel.setOpacity(opacity);
+}
+
+void RouteNode::setNodeLabelText(const QString &newText) {
+    nodeLabel.setText(newText);
 }
 
 bool RouteNode::isInvisible() {
