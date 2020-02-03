@@ -33,6 +33,7 @@ public:
     IndexList<RouteData> getRoutes() const;
 
     void addRoute(RouteData &route);
+    void addRouteNode(RouteNodeData &node, int routeIndex);
     void deleteRoute(int index);
     void swapRoutes(int i, int j);
 

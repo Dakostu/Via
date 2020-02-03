@@ -20,6 +20,7 @@ class MainWindowController : public QObject
     std::list<QString> recentlyOpenedProjects;
     std::unique_ptr<UIState> currentState;
     QStringListModel currentRouteTitles;
+    QStringListModel routeNodeTitles;
 
 #ifndef QT_NO_PRINTER
     //QPrinter printer;
@@ -35,6 +36,7 @@ public:
     Project* getCurrentProject();
     std::unique_ptr<UIState>& getCurrentState();
     QStringListModel& getCurrentRouteTitles();
+    QStringListModel& getNodeTitlesOfRoute(int index);
 
     template <typename State>
     void changeUIState() {
@@ -42,6 +44,7 @@ public:
     }
 
     void addNewRouteToCurrentProject(const QColor &newColor);
+    void addNewNodeToRoute(int x, int y, const QColor &newColor, int routeIndex);
     size_t amountOfOpenProjects();
     void deleteRouteofCurrentProject(int index);
     void swapCurrentProjectRoutes(int x, int y);
@@ -60,6 +63,7 @@ public slots:
 signals:
     void currentProjectChanged();
     void routeListChanged();
+    void routeNodeListChanged();
     void routeListEmpty();
 
 

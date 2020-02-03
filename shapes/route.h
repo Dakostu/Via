@@ -24,10 +24,12 @@ protected:
 
     IndexList<RouteNode*> nodes;
 public:
+    Route(const QColor &color, QGraphicsScene *scene, std::unique_ptr<UIState> &state);
+
+    virtual QColor getColors() const;
+
     virtual void setColors(const QColor &color) override;
     virtual void setDefaultColors() override;
-
-    Route(const QColor &color, QGraphicsScene *scene, std::unique_ptr<UIState> &state);
 
     virtual void addNode(qreal x, qreal y);
     virtual void addTemporaryPreviewNode(qreal x, qreal y);

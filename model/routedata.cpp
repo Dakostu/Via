@@ -70,6 +70,15 @@ RouteNodeData& RouteData::getLastNode() {
     return nodes.back();
 }
 
+QStringList RouteData::getNodeTitles() {
+    QStringList nodeTitleList;
+
+    for (const auto &node : nodes) {
+        nodeTitleList << node.getName();
+    }
+    return nodeTitleList;
+}
+
 void RouteData::addNode(int x, int y) {
     nodes.emplace_back(generateNewNode(x,y));
 }

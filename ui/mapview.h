@@ -14,6 +14,7 @@ class Route;
 
 class MapView : public QGraphicsView
 {
+    Q_OBJECT
 
     qreal currentDetailLevel;
     static constexpr qreal DETAIL_LEVEL_MIN = 0.05;
@@ -41,6 +42,9 @@ public:
     void addNodeToCurrentRoute(int x, int y);
 
     Route *getCurrentRoute() const;
+
+signals:
+    void routeNodeAdded(int x, int y);
 };
 
 #endif // MAPVIEW_H

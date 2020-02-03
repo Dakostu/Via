@@ -5,8 +5,7 @@
 #include "data.h"
 #include "routenodedata.h"
 #include <list>
-#include <variant>
-
+#include <QStringList>
 
 using RouteDataIterator = IndexList<RouteNodeData>::iterator;
 
@@ -35,6 +34,7 @@ public:
     bool getShowOrder() const;
     RouteNodeData& getFirstNode();
     RouteNodeData& getLastNode();
+    QStringList getNodeTitles();
 
     void setShowOrder(bool value);
 

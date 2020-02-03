@@ -86,6 +86,11 @@ QStringListModel& MainWindowController::getCurrentRouteTitles() {
     return currentRouteTitles;
 }
 
+QStringListModel& MainWindowController::getNodeTitlesOfRoute(int index) {
+    routeNodeTitles.setStringList(getCurrentProject()->getRoutes()[index]->getNodeTitles());
+    return routeNodeTitles;
+}
+
 void MainWindowController::deleteRouteofCurrentProject(int index) {
     currentProject->deleteRoute(index);
     emit routeListChanged();
@@ -112,6 +117,14 @@ void MainWindowController::addNewRouteToCurrentProject(const QColor &newColor) {
     RouteData newRoute(newColor);
     currentProject->addRoute(newRoute);
     emit routeListChanged();
+}
+
+void MainWindowController::addNewNodeToRoute(int x, int y, const QColor &newColor, int routeIndex) {
+    RouteNodeData newRouteNode(newColor);
+    newRouteNode.setX(x);
+    newRouteNode.setY(y);
+    currentProject->addRouteNode(newRouteNode, routeIndex);
+    emit routeNodeListChanged();
 }
 
 size_t MainWindowController::amountOfOpenProjects() {

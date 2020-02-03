@@ -34,6 +34,8 @@ class MainWindow : public QMainWindow
     std::vector<std::unique_ptr<QAction>> actions;
     std::vector<std::unique_ptr<QMenu>> menus;
 
+    int selectedRouteIndex;
+
     void initializeQuickButtons();
     void initializeMenus();
     void initializeShapeSelections();
@@ -42,19 +44,23 @@ class MainWindow : public QMainWindow
     void initializeNodeBoxUI();
     void initializeNodeSettingsUI();
 
+    void refreshSelectedRouteIndex();
+
 public:
     MainWindow(QWidget *parent, MainWindowController &newController);
     ~MainWindow();
 
 public slots:
     void addRoute();
+    void addRouteNode(int x, int y);
     void deleteSelectedRoute();
     void createNewProject();
     void loadProject();
     void saveProject();
     void saveProjectAs();
     void setNoProjectsOpenMode(bool noProjectsOpen);
-    void updateViewLists();
+    void updateRouteList();
+    void updateNodeList();
     void routeSelectionEvent();
     void colorChangeEvent(Data *data);
     void routeNameChangeEvent(const QString &newName);
@@ -63,6 +69,7 @@ public slots:
     void getDataFromCurrentProject();
     void resetSettingsBox();
     void activateAutoAddMode();
+
 
 
 };

@@ -7,6 +7,9 @@ Route::Route(const QColor &color, QGraphicsScene *scene, std::unique_ptr<UIState
 {
 }
 
+QColor Route::getColors() const {
+    return routeColor;
+}
 
 void Route::setColors(const QColor &color) {
     routeColor = color;
@@ -93,3 +96,4 @@ void Route::setElementSize(int newSize) {
     }
     ViewCustomizable::setElementSize(newSize);
 }
+

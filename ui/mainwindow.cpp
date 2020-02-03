@@ -33,11 +33,14 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
       currentScene(std::make_unique<QGraphicsScene>()),
       quickButtonGroup(std::make_unique<QButtonGroup>())
 {
+    selectedRouteIndex = 0;
     ui->setupUi(this);
 
     connect(&controller, &MainWindowController::currentProjectChanged, this, &MainWindow::getDataFromCurrentProject);
-    connect(&controller, &MainWindowController::routeListChanged, this, &MainWindow::updateViewLists);
+    connect(&controller, &MainWindowController::routeListChanged, this, &MainWindow::updateRouteList);
     connect(&controller, &MainWindowController::routeListEmpty, this, &MainWindow::resetSettingsBox);
+    connect(&controller, &MainWindowController::routeNodeListChanged, this, &MainWindow::updateNodeList);
+    connect(ui->picture, &MapView::routeNodeAdded, this, &MainWindow::addRouteNode);
 
     initializeQuickButtons();
     initializeMenus();
@@ -135,9 +138,15 @@ void MainWindow::initializeNodeSettingsUI() {
 
 }
 
+void MainWindow::refreshSelectedRouteIndex() {
+    if (ui->routeBoxRouteList->selectionModel() && ui->routeBoxRouteList->selectionModel()->hasSelection()) {
+        selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
+    }
+}
+
 void MainWindow::initializeRouteSettingsUI() {
     connect(ui->routeColorButton, &QPushButton::pressed, this, [&]() {
-        auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
+        refreshSelectedRouteIndex();
         colorChangeEvent(&(*controller.getCurrentProject())[selectedRouteIndex]);
     });
     connect(ui->routeNameLineEdit, &QLineEdit::textEdited, this, &MainWindow::routeNameChangeEvent);
@@ -149,7 +158,7 @@ void MainWindow::getDataFromCurrentProject() {
     currentScene.reset(new QGraphicsScene);
     auto currentProj = controller.getCurrentProject();
     currentScene->addPixmap(currentProj->getImagePixMap());
-    updateViewLists();
+    updateRouteList();
     ui->picture->setScene(currentScene.get());
 
 }
@@ -168,6 +177,16 @@ void MainWindow::addRoute() {
     vBar->setValue(vBar->maximum());
 }
 
+void MainWindow::addRouteNode(int x, int y) {
+    refreshSelectedRouteIndex();
+    controller.addNewNodeToRoute(x, y, ui->picture->getCurrentRoute()->getColors(), selectedRouteIndex);
+
+    ui->nodeBoxNodeList->moveSelectionTo(ui->nodeBoxNodeList->model()->rowCount() - 1);
+
+    auto vBar = ui->nodeBoxNodeList->verticalScrollBar();
+    vBar->setValue(vBar->maximum());
+}
+
 void MainWindow::deleteSelectedRoute() {
 
     if (!ui->routeBoxRouteList->selectionModel()->hasSelection()) {
@@ -175,7 +194,7 @@ void MainWindow::deleteSelectedRoute() {
     }
 
     ui->picture->getCurrentRoute()->eraseAllNodes();
-    auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
+    refreshSelectedRouteIndex();
     controller.deleteRouteofCurrentProject(selectedRouteIndex);
 
     auto newRowCount = ui->routeBoxRouteList->model()->rowCount();
@@ -221,11 +240,6 @@ void MainWindow::loadProject() {
         setNoProjectsOpenMode(false);
     }
 
-    ui->picture->addRoute(Qt::red);
-    ui->picture->addNodeToCurrentRoute(20,20);
-    ui->picture->addNodeToCurrentRoute(20,50);
-    ui->picture->addNodeToCurrentRoute(20,90);
-    ui->picture->getCurrentRoute()->eraseNode(2);
 }
 
 void MainWindow::saveProject() {
@@ -261,12 +275,18 @@ void MainWindow::setNoProjectsOpenMode(bool noProjectsOpen) {
     ui->quickButtonOpen->setEnabled(true);
 }
 
-void MainWindow::updateViewLists() {
-    ui->routeBoxRouteList->setModel(&controller.getCurrentRoutesStringList());
+void MainWindow::updateRouteList() {
+    ui->routeBoxRouteList->setModel(&controller.getCurrentRouteTitles());
+}
+
+void MainWindow::updateNodeList() {
+    refreshSelectedRouteIndex();
+
+    ui->nodeBoxNodeList->setModel(&controller.getNodeTitlesOfRoute(selectedRouteIndex));
 }
 
 void MainWindow::routeSelectionEvent() {
-    auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
+    refreshSelectedRouteIndex();
 
     ui->routeBoxButtonDeleteRoute->setEnabled(true);
     ui->routeBoxButtonUp->setEnabled(selectedRouteIndex != 0);
@@ -280,6 +300,8 @@ void MainWindow::routeSelectionEvent() {
     ui->routeColorButton->changeColor(routeData.getColor());
     //shape
     ui->routeNodeOrderCheckBox->setChecked(routeData.getShowOrder());
+
+    updateNodeList();
 }
 
 void MainWindow::colorChangeEvent(Data *data) {
@@ -293,9 +315,10 @@ void MainWindow::colorChangeEvent(Data *data) {
 }
 
 void MainWindow::routeNameChangeEvent(const QString &newName) {
-    auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
+    refreshSelectedRouteIndex();
+
     (*controller.getCurrentProject())[selectedRouteIndex].setName(newName);
-    updateViewLists();
+    updateRouteList();
     ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex);
 }
 
@@ -310,7 +333,8 @@ void MainWindow::routeShowOrderChangeEvent(bool value) {
 }
 
 void MainWindow::moveRouteEvent(int by) {
-    auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
+    refreshSelectedRouteIndex();
+
     controller.swapCurrentProjectRoutes(selectedRouteIndex, selectedRouteIndex + by);
     ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex + by);
     routeSelectionEvent();

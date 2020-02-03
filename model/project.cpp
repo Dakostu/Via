@@ -96,6 +96,12 @@ void Project::addRoute(RouteData &route) {
     routes.emplace_back(route);
 }
 
+void Project::addRouteNode(RouteNodeData &node, int routeIndex) {
+    auto &selectedRoute = *routes[routeIndex];
+    node.setName(QString("Node %1").arg(selectedRoute.length() + 1));
+    selectedRoute.addNode(node);
+}
+
 void Project::deleteRoute(int index) {
     routes.erase(routes[index]);
 }

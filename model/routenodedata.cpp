@@ -8,6 +8,10 @@ RouteNodeData::RouteNodeData() : Data(),
 
 }
 
+RouteNodeData::RouteNodeData(const QColor &color) : RouteNodeData() {
+    setColors(color);
+}
+
 RouteNodeData::RouteNodeData(const QJsonObject &object) {
     fromJSON(object);
 }

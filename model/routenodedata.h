@@ -16,6 +16,7 @@ class RouteNodeData : public Data
 
 public:
     RouteNodeData();
+    RouteNodeData(const QColor &color);
     RouteNodeData(const QJsonObject &object);
 
     virtual void fromJSON(const QJsonObject &object) override;

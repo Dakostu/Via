@@ -68,6 +68,7 @@ void MapView::addRoute(const QColor &color) {
 
 void MapView::addNodeToCurrentRoute(int x, int y) {
     currentRoute->addNode(x,y);
+    emit routeNodeAdded(x, y);
 }
 
 Route *MapView::getCurrentRoute() const
