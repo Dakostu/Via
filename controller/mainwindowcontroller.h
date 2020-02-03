@@ -19,7 +19,7 @@ class MainWindowController : public QObject
     Project *currentProject;
     std::list<QString> recentlyOpenedProjects;
     std::unique_ptr<UIState> currentState;
-    QStringListModel currentRoutes;
+    QStringListModel currentRouteTitles;
 
 #ifndef QT_NO_PRINTER
     //QPrinter printer;
@@ -34,7 +34,7 @@ public:
 
     Project* getCurrentProject();
     std::unique_ptr<UIState>& getCurrentState();
-    QStringListModel& getCurrentRoutesStringList();
+    QStringListModel& getCurrentRouteTitles();
 
     template <typename State>
     void changeUIState() {

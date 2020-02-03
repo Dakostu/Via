@@ -75,15 +75,15 @@ void MainWindowController::setCurrentProject(const QString &fileName) {
     emit currentProjectChanged();
 }
 
-QStringListModel& MainWindowController::getCurrentRoutesStringList() {
+QStringListModel& MainWindowController::getCurrentRouteTitles() {
     QStringList currentRouteList;
 
     for (const auto &route : currentProject->getRoutes()) {
         currentRouteList << route.getName();
     }
 
-    currentRoutes.setStringList(currentRouteList);
-    return currentRoutes;
+    currentRouteTitles.setStringList(currentRouteList);
+    return currentRouteTitles;
 }
 
 void MainWindowController::deleteRouteofCurrentProject(int index) {
@@ -96,6 +96,7 @@ void MainWindowController::deleteRouteofCurrentProject(int index) {
 
 void MainWindowController::swapCurrentProjectRoutes(int x, int y) {
     currentProject->swapRoutes(x,y);
+
     emit routeListChanged();
 }
 
