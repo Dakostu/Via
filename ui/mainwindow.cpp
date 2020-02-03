@@ -328,4 +328,8 @@ void MainWindow::resetSettingsBox() {
 
 void MainWindow::activateAutoAddMode() {
     controller.changeUIState<UIAddNodeState>();
+
+    if (!ui->routeBoxRouteList->selectionModel()->hasSelection() || ui->routeBoxRouteList->model()->rowCount() == 0) {
+        addRoute();
+    }
 }

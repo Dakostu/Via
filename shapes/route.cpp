@@ -43,8 +43,11 @@ void Route::addNode(qreal x, qreal y) {
 
 void Route::addTemporaryPreviewNode(qreal x, qreal y) {
     addNode(x, y);
-    nodes.back()->getFromConnection()->setOpacity(TEMPORARY_NODE_OPACITY);
-    nodes.back()->setOpacity(TEMPORARY_NODE_OPACITY);
+    auto tempNode = nodes.back();
+    if (tempNode->getFromConnection()) {
+        tempNode->getFromConnection()->setOpacity(TEMPORARY_NODE_OPACITY);
+    }
+    tempNode->setOpacity(TEMPORARY_NODE_OPACITY);
 }
 
 void Route::eraseNode(int index) {
