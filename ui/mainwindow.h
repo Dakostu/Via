@@ -39,6 +39,8 @@ class MainWindow : public QMainWindow
     void initializeShapeSelections();
     void initializeRouteBoxUI();
     void initializeRouteSettingsUI();
+    void initializeNodeBoxUI();
+    void initializeNodeSettingsUI();
 
 public:
     MainWindow(QWidget *parent, MainWindowController &newController);
@@ -60,6 +62,7 @@ public slots:
     void moveRouteEvent(int by);
     void getDataFromCurrentProject();
     void resetSettingsBox();
+    void activateAutoAddMode();
 
 
 };

@@ -71,7 +71,7 @@ void MainWindow::initializeQuickButtons() {
     quickButtonGroup->addButton(ui->quickButtonMove);
     quickButtonGroup->addButton(ui->quickButtonSelect);
     connect(ui->quickButtonNew, &QPushButton::clicked, this, &MainWindow::createNewProject);
-    connect(ui->quickButtonAutoAdd, &QAbstractButton::clicked, this, [&]() { controller.changeUIState<UIAddNodeState>(); });
+    connect(ui->quickButtonAutoAdd, &QAbstractButton::clicked, this, [&]() { activateAutoAddMode(); });
     connect(ui->quickButtonMove, &QAbstractButton::clicked, this, [&]() { controller.changeUIState<UIMoveNodesState>(); });
     connect(ui->quickButtonSelect, &QAbstractButton::clicked, this, [&]() { controller.changeUIState<UISelectNodeState>(); });
 }
@@ -120,6 +120,14 @@ void MainWindow::initializeRouteBoxUI() {
         routeNameChangeEvent((static_cast<QLineEdit*>(lineEdit))->text());}
     );
     connect(ui->routeBoxRouteList, &RouteDataView::changedSelection, this, &MainWindow::routeSelectionEvent);
+}
+
+void MainWindow::initializeNodeBoxUI() {
+    connect(ui->nodeBoxButtonAddNode, &QPushButton::clicked, this, &MainWindow::activateAutoAddMode);
+}
+
+void MainWindow::initializeNodeSettingsUI() {
+
 }
 
 void MainWindow::initializeRouteSettingsUI() {
@@ -311,4 +319,8 @@ void MainWindow::resetSettingsBox() {
     ui->routeNameLineEdit->clear();
     ui->routeColorButton->setFlat(true);
     ui->routeNodeOrderCheckBox->setChecked(false);
+}
+
+void MainWindow::activateAutoAddMode() {
+    controller.changeUIState<UIAddNodeState>();
 }
