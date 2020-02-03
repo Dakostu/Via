@@ -58,6 +58,11 @@ void Route::eraseNode(int index) {
     currentScene->removeItem(currentNode);
 
     currentNodePos = nodes.erase(currentNodePos);
+
+    if (nodes.empty()) {
+        return;
+    }
+
     currentNode = *currentNodePos;
 
     if (index == 0) {
@@ -74,7 +79,12 @@ void Route::eraseNode(int index) {
         (*currentNodePos)->setNodeLabelText(QString::number(index + 1));
         ++index;
     }
+}
 
+void Route::eraseAllNodes() {
+    while (!nodes.empty()) {
+        eraseNode(0);
+    }
 }
 
 void Route::setElementSize(int newSize) {

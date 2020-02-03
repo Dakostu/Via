@@ -174,6 +174,7 @@ void MainWindow::deleteSelectedRoute() {
         return;
     }
 
+    ui->picture->getCurrentRoute()->eraseAllNodes();
     auto selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
     controller.deleteRouteofCurrentProject(selectedRouteIndex);
 
