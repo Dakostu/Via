@@ -61,6 +61,15 @@ void MapView::triggerParentMouseReleaseEvent(QMouseEvent *event) {
     QGraphicsView::mouseReleaseEvent(event);
 }
 
+void MapView::addRoute(const RouteData &route) {
+    addRoute(route.getColor());
+    currentRoute->setElementSize(route.getElementSize());
+
+    for (const auto &node : route.getNodes()) {
+        currentRoute->addNode(node);
+    }
+}
+
 void MapView::addRoute(const QColor &color) {
     drawnRoutes.emplace_back(new Route(color, this->scene(), *currentState));
     currentRoute = drawnRoutes.back().get();

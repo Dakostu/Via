@@ -20,7 +20,7 @@ public:
     virtual void setColors(const QColor &color) = 0;
     virtual void setDefaultColors() = 0;
 
-    virtual int getElementSize();
+    virtual int getElementSize() const;
     virtual void setElementSize(int newSize);
 
 };

@@ -26,6 +26,19 @@ void Route::setDefaultColors() {
     }
 }
 
+void Route::addNode(const RouteNodeData &node) {
+    addNode(node.getX(), node.getY());
+
+    auto newNode = nodes.back();
+
+    if (node.isStyleDifferentFromRoute()) {
+        newNode->setColors(node.getColor());
+        newNode->setElementSize(node.getElementSize());
+        // shape?
+    }
+
+}
+
 void Route::addNode(qreal x, qreal y) {
     if (nodes.back() && nodes.back()->opacity() == TEMPORARY_NODE_OPACITY) {
         currentScene->removeItem(nodes.back());

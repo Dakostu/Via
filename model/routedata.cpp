@@ -51,6 +51,11 @@ QJsonObject RouteData::toJSON() const {
     return routeJSON;
 }
 
+IndexList<RouteNodeData> RouteData::getNodes() const
+{
+    return nodes;
+}
+
 RouteNodeData RouteData::generateNewNode(int x, int y) {
     RouteNodeData newNode;
     newNode.setX(x);

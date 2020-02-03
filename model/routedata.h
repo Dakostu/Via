@@ -35,6 +35,7 @@ public:
     RouteNodeData& getFirstNode();
     RouteNodeData& getLastNode();
     QStringList getNodeTitles();
+    IndexList<RouteNodeData> getNodes() const;
 
     void setShowOrder(bool value);
 

@@ -4,6 +4,7 @@
 #include "../controller/uistate.h"
 #include "../shapes/route.h"
 #include "../interfaces/nodeshapeable.h"
+#include "../model/routedata.h"
 #include <list>
 #include <memory>
 #include <QGraphicsView>
@@ -38,6 +39,7 @@ public:
     void triggerParentMouseMoveEvent(QMouseEvent* event);
     void triggerParentMouseReleaseEvent(QMouseEvent* event);
 
+    void addRoute(const RouteData &route);
     void addRoute(const QColor &color);
     void addNodeToCurrentRoute(int x, int y);
 

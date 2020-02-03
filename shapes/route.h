@@ -4,6 +4,7 @@
 #include "../data-structures/indexlist.h"
 #include "../controller/uistate.h"
 #include "../interfaces/viewcustomizable.h"
+#include "../model/routenodedata.h"
 #include "routenode.h"
 #include "routeconnection.h"
 #include <QLinkedList>
@@ -31,6 +32,7 @@ public:
     virtual void setColors(const QColor &color) override;
     virtual void setDefaultColors() override;
 
+    virtual void addNode(const RouteNodeData &node);
     virtual void addNode(qreal x, qreal y);
     virtual void addTemporaryPreviewNode(qreal x, qreal y);
     virtual void eraseNode(int index);

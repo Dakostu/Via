@@ -5,7 +5,7 @@ ViewCustomizable::ViewCustomizable() : elementSize{1}
 {    
 }
 
-int ViewCustomizable::getElementSize() {
+int ViewCustomizable::getElementSize() const {
     return elementSize;
 }
 

@@ -238,6 +238,9 @@ void MainWindow::loadProject() {
     if (!newFileName.isEmpty()) {
         controller.loadCurrentProjectFromFile(newFileName);
         setNoProjectsOpenMode(false);
+        for (const auto &route : controller.getCurrentProject()->getRoutes()) {
+            ui->picture->addRoute(route);
+        }
     }
 
 }
