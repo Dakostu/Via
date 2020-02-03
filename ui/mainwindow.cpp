@@ -44,6 +44,8 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     initializeShapeSelections();
     initializeRouteBoxUI();
     initializeRouteSettingsUI();
+    initializeNodeBoxUI();
+    initializeNodeSettingsUI();
 
     ui->picture->setUIState(controller.getCurrentState());
     if (controller.amountOfOpenProjects() == 0) {
@@ -123,7 +125,10 @@ void MainWindow::initializeRouteBoxUI() {
 }
 
 void MainWindow::initializeNodeBoxUI() {
-    connect(ui->nodeBoxButtonAddNode, &QPushButton::clicked, this, &MainWindow::activateAutoAddMode);
+    connect(ui->nodeBoxButtonAddNode, &QPushButton::clicked, this, [&]() {
+        ui->quickButtonAutoAdd->click();
+        QCursor::setPos(this->pos() + ui->pictureLayout->geometry().center());
+    });
 }
 
 void MainWindow::initializeNodeSettingsUI() {
