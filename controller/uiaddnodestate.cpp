@@ -25,18 +25,29 @@ void UIAddNodeState::routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSceneM
 }
 
 void UIAddNodeState::mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
-    view->setDragMode(QGraphicsView::NoDrag);
-    view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-    view->setCursor(Qt::CrossCursor);
+    if (!mouseEvent->buttons().testFlag(Qt::RightButton)) {
+        view->setDragMode(QGraphicsView::NoDrag);
+        view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+        view->setCursor(Qt::CrossCursor);
+    }
+
     auto coords = view->mapToScene(mouseEvent->pos());
     view->getCurrentRoute()->addTemporaryPreviewNode(coords.x(), coords.y());
 }
 
 void UIAddNodeState::mapViewMousePressEvent(MapView *view, QMouseEvent *mouseEvent) {
     view->triggerParentMousePressEvent(mouseEvent);
+
+    if (mouseEvent->buttons().testFlag(Qt::RightButton)) {
+        view->setDragMode(QGraphicsView::ScrollHandDrag);
+    }
 }
 
 void UIAddNodeState::mapViewMouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) {
-    auto coords = view->mapToScene(mouseEvent->pos());
-    view->addNodeToCurrentRoute(coords.x(), coords.y());
+    if (mouseEvent->button() == Qt::LeftButton) {
+        auto coords = view->mapToScene(mouseEvent->pos());
+        view->addNodeToCurrentRoute(coords.x(), coords.y());
+    } else if (mouseEvent->button() == Qt::RightButton) {
+        view->setDragMode(QGraphicsView::NoDrag);
+    }
 }
