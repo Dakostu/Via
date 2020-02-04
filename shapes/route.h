@@ -30,7 +30,7 @@ public:
     virtual QColor getColors() const;
 
     virtual void setColors(const QColor &color) override;
-    virtual void setDefaultColors() override;
+    virtual void activateColors() override;
 
     virtual void addNode(const RouteNodeData &node);
     virtual void addNode(qreal x, qreal y);

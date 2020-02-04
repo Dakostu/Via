@@ -19,9 +19,9 @@ void Route::setColors(const QColor &color) {
     }
 }
 
-void Route::setDefaultColors() {
+void Route::activateColors() {
     for (auto &currentNode : nodes) {
-        currentNode->setDefaultColors();
+        currentNode->activateColors();
     }
 }
 

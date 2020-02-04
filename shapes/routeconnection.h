@@ -17,7 +17,7 @@ public:
     RouteConnection(QPointF from, QPointF to, QColor color);
 
     virtual void setColors(const QColor &color) override;
-    virtual void setDefaultColors() override;
+    virtual void activateColors() override;
 
     virtual void setElementSize(int newSize) override;
     virtual void setNewPosition(QPointF p1, QPointF p2);

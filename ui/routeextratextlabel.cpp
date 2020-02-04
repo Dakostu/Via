@@ -7,7 +7,7 @@ RouteExtraTextLabel::RouteExtraTextLabel(QString text, NodeShapeable *parent)
     : QGraphicsSimpleTextItem(text), parentNode(parent)
 {
    setFlag(ItemIsMovable);
-   setDefaultColors();
+   activateColors();
    this->acceptHoverEvents();
 }
 
@@ -23,7 +23,7 @@ void RouteExtraTextLabel::setColors(const QColor &color) {
     setBrush(color);
 }
 
-void RouteExtraTextLabel::setDefaultColors() {
+void RouteExtraTextLabel::activateColors() {
     if (this->brush().color().lightnessF() < FILLCOLOR_LIGHTNESS_THRESHOLD) {
         setColors(Qt::white);
     } else {
@@ -38,7 +38,7 @@ void RouteExtraTextLabel::hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) 
 }
 
 void RouteExtraTextLabel::hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) {
-    setDefaultColors();
+    activateColors();
     QGraphicsSimpleTextItem::hoverLeaveEvent(hoverEvent);
 }
 

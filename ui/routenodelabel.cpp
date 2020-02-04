@@ -5,7 +5,7 @@
 RouteNodeLabel::RouteNodeLabel(QString text)
     : QGraphicsSimpleTextItem(text)
 {
-    setDefaultColors();
+    activateColors();
 }
 
 void RouteNodeLabel::setElementSize(int newSize) {
@@ -20,7 +20,7 @@ void RouteNodeLabel::setColors(const QColor &color) {
     setBrush(color);
 }
 
-void RouteNodeLabel::setDefaultColors() {
+void RouteNodeLabel::activateColors() {
     if (this->brush().color().lightnessF() < FILLCOLOR_LIGHTNESS_THRESHOLD) {
         setColors(Qt::white);
     } else {

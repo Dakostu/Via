@@ -24,7 +24,7 @@ void NodeShapeable::setColors(const QColor &color) {
     this->setBrush(color);
 }
 
-void NodeShapeable::setDefaultColors() {
+void NodeShapeable::activateColors() {
     if (this->brush().color().lightnessF() < FILLCOLOR_LIGHTNESS_THRESHOLD) {
         setPen(QPen(Qt::white));
     } else {

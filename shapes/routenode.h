@@ -34,7 +34,7 @@ public:
 
     virtual void setElementSize(int newSize) override;
     virtual void setColors(const QColor &color) override;
-    virtual void setDefaultColors() override;
+    virtual void activateColors() override;
 
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) override;

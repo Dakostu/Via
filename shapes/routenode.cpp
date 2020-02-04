@@ -11,7 +11,7 @@ RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extr
       currentState(state)
 {
 
-    setDefaultColors();
+    activateColors();
 
     setFlag(ItemIsMovable);
     acceptHoverEvents();
@@ -51,20 +51,19 @@ void RouteNode::setColors(const QColor &color) {
         toConnection->setColors(color);
     }
 
-    node->setDefaultColors();
-    nodeLabel.setColors(node->pen().brush().color());
+    activateColors();
 }
 
 QColor RouteNode::getColor() const {
     return node->brush().color();
 }
 
-void RouteNode::setDefaultColors() {
-    node->setDefaultColors();
+void RouteNode::activateColors() {
+    node->activateColors();
     nodeLabel.setColors(node->pen().brush().color());
     extraTextLabel.setColors(node->pen().brush().color());
     if (toConnection) {
-        toConnection->setDefaultColors();
+        toConnection->activateColors();
     }
 }
 

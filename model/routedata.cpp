@@ -88,7 +88,7 @@ void RouteData::addNode(int x, int y) {
     nodes.emplace_back(generateNewNode(x,y));
 }
 
-void RouteData::addNode(int x, int y, size_t index) {
+void RouteData::addNode(int x, int y, int index) {
     auto iterator = nodes[index];
     auto newNode = generateNewNode(x,y);
 
@@ -99,7 +99,7 @@ void RouteData::addNode(int x, int y, size_t index) {
     refreshNames(iterator, index + 1);
 }
 
-void RouteData::refreshNames(RouteDataIterator& it, size_t index) {
+void RouteData::refreshNames(RouteDataIterator& it, int index) {
     if (it == nodes.end()) {
         return;
     }
@@ -117,7 +117,7 @@ void RouteData::addNode(const RouteNodeData &node) {
     nodes.emplace_back(node);
 }
 
-void RouteData::eraseNode(size_t index) {
+void RouteData::eraseNode(int index) {
     auto iterator = nodes[index];
 
     iterator = nodes.erase(iterator);
@@ -144,11 +144,11 @@ void RouteData::setColors(const QColor &color) {
     }
 }
 
-void RouteData::setDefaultColors() {
+void RouteData::activateColors() {
     currentColor = Qt::black;
     for (auto &node : nodes) {
         if (!node.isStyleDifferentFromRoute()) {
-            node.setDefaultColors();
+            node.activateColors();
         }
     }
 }

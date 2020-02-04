@@ -17,7 +17,7 @@ class RouteData : public Data
     IndexList<RouteNodeData> nodes;
 
     RouteNodeData generateNewNode(int x, int y);
-    void refreshNames(RouteDataIterator& it, size_t index);
+    void refreshNames(RouteDataIterator& it, int index);
 
 public:
     RouteData();
@@ -28,7 +28,7 @@ public:
     virtual QJsonObject toJSON() const override;
 
     virtual void setColors(const QColor &routeColor) override;
-    virtual void setDefaultColors() override;
+    virtual void activateColors() override;
     virtual void setElementSize(int newSize) override;
 
     bool getShowOrder() const;
@@ -40,9 +40,9 @@ public:
     void setShowOrder(bool value);
 
     void addNode(int x, int y);
-    void addNode(int x, int y, size_t index);
+    void addNode(int x, int y, int index);
     void addNode(const RouteNodeData &node);
-    void eraseNode(size_t index);
+    void eraseNode(int index);
 
     size_t length() const;
     RouteNodeData& operator[](int index);

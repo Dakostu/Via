@@ -122,7 +122,7 @@ void RouteNodeData::setColors(const QColor &color) {
     currentColor = color;
 }
 
-void RouteNodeData::setDefaultColors() {
+void RouteNodeData::activateColors() {
     setColors(Qt::white);
 }
 

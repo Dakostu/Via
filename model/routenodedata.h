@@ -23,7 +23,7 @@ public:
     virtual QJsonObject toJSON() const override;
 
     virtual void setColors(const QColor &currentColor) override;
-    virtual void setDefaultColors() override;
+    virtual void activateColors() override;
 
     bool isStyleDifferentFromRoute() const;
     QString getNodeLabel() const;

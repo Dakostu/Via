@@ -17,7 +17,7 @@ void UIMoveNodesState::routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphicsS
 }
 
 void UIMoveNodesState::routeNodeMouseHoverLeaveEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {
-    node->setDefaultColors();
+    node->activateColors();
 }
 
 void UIMoveNodesState::routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {

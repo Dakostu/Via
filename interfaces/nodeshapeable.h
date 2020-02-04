@@ -24,7 +24,7 @@ public:
 
     virtual void setElementSize(int newSize) override;
     virtual void setColors(const QColor &color) override;
-    virtual void setDefaultColors() override;
+    virtual void activateColors() override;
 
     virtual void drawShape() = 0;
 
