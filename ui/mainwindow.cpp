@@ -314,6 +314,7 @@ void MainWindow::colorChangeEvent(Data *data) {
         return;
     }
     data->setColors(newColor);
+    ui->picture->getCurrentRoute()->setColors(newColor);
     ui->routeColorButton->changeColor(newColor);
 }
 

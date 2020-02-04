@@ -46,11 +46,13 @@ void RouteNode::setElementSize(int newSize) {
 
 void RouteNode::setColors(const QColor &color) {
     node->setColors(color);
-    nodeLabel.setColors(color);
     extraTextLabel.setColors(color);
     if (toConnection) {
         toConnection->setColors(color);
     }
+
+    node->setDefaultColors();
+    nodeLabel.setColors(node->pen().brush().color());
 }
 
 QColor RouteNode::getColor() const {
@@ -66,6 +68,11 @@ void RouteNode::setDefaultColors() {
     }
 }
 
+RouteNodeLabel* RouteNode::getNodeLabel()
+{
+    return &nodeLabel;
+}
+
 void RouteNode::centerNodeLabelBox() {
     auto center = node->boundingRect().center();
     auto nodeLabelBox = nodeLabel.boundingRect();
@@ -78,8 +85,13 @@ void RouteNode::hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) {
 }
 
 void RouteNode::hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) {
-    setDefaultColors();
+    currentState->routeNodeMouseHoverLeaveEvent(this, hoverEvent);
     QGraphicsItemGroup::hoverLeaveEvent(hoverEvent);
+}
+
+void RouteNode::setNodeOutlineColor(const QColor &color) {
+    nodeLabel.setColors(color);
+    node->setPen(color);
 }
 
 void RouteNode::setOpacity(qreal opacity) {

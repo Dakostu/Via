@@ -21,13 +21,13 @@ NodeShapeable::NodeShapeable(qreal x, qreal y, const QColor &color)
 
 
 void NodeShapeable::setColors(const QColor &color) {
-    setPen(QPen(color));
+    this->setBrush(color);
 }
 
 void NodeShapeable::setDefaultColors() {
     if (this->brush().color().lightnessF() < FILLCOLOR_LIGHTNESS_THRESHOLD) {
-        setColors(Qt::white);
+        setPen(QPen(Qt::white));
     } else {
-        setColors(Qt::black);
+        setPen(QPen(Qt::black));
     }
 }

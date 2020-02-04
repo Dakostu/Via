@@ -11,11 +11,12 @@ RouteConnection::RouteConnection(QPointF from, QPointF to, QColor color)
 
 
 void RouteConnection::setColors(const QColor &color) {
-    this->pen().setColor(color);
+    defaultPen = QPen(color, getElementSize());
+    setDefaultColors();
 }
 
 void RouteConnection::setDefaultColors() {
-    this->pen().setColor(defaultPen.color());
+    this->setPen(defaultPen);
 }
 
 void RouteConnection::setElementSize(int newSize) {

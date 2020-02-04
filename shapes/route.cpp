@@ -12,7 +12,7 @@ QColor Route::getColors() const {
 }
 
 void Route::setColors(const QColor &color) {
-    routeColor = color;
+    routeColor = color;    
 
     for (auto &currentNode : nodes) {
         currentNode->setColors(routeColor);
@@ -20,7 +20,6 @@ void Route::setColors(const QColor &color) {
 }
 
 void Route::setDefaultColors() {
-
     for (auto &currentNode : nodes) {
         currentNode->setDefaultColors();
     }

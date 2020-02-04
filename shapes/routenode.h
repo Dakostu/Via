@@ -43,6 +43,7 @@ public:
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
     void triggerParentMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
 
+    virtual void setNodeOutlineColor(const QColor &color);
     virtual void setOpacity(qreal opacity);
     virtual void setNodeLabelOpacity(qreal opacity);
     virtual void setNodeLabelText(const QString &newText);
@@ -54,6 +55,7 @@ public:
     RouteConnection* getFromConnection();
     RouteConnection* getToConnection();
     RouteExtraTextLabel* getExtraText();
+    RouteNodeLabel* getNodeLabel();
 
     void connect(RouteNode &from);
 
