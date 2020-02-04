@@ -35,6 +35,7 @@ class MainWindow : public QMainWindow
     std::vector<std::unique_ptr<QMenu>> menus;
 
     int selectedRouteIndex;
+    int selectedRouteNodeIndex;
 
     void initializeQuickButtons();
     void initializeMenus();
@@ -45,6 +46,7 @@ class MainWindow : public QMainWindow
     void initializeNodeSettingsUI();
 
     void refreshSelectedRouteIndex();
+    void refreshSelectedRouteNodeIndex();
 
 public:
     MainWindow(QWidget *parent, MainWindowController &newController);
@@ -62,6 +64,7 @@ public slots:
     void updateRouteList();
     void updateNodeList();
     void routeSelectionEvent();
+    void routeNodeSelectionEvent();
     void colorChangeEvent(Data *data);
     void routeNameChangeEvent(const QString &newName);
     void routeShowOrderChangeEvent(bool value);
