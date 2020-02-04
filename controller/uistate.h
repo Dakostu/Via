@@ -14,23 +14,25 @@ class MapView;
 
 class UIState
 {
+protected:
+    UIState() {}
 
-public:
-
-    virtual ~UIState();
+public:   
+    virtual ~UIState() {}
 
     virtual void setToggleButtons(QAbstractButton *quickButtonAutoAdd,
                                   QAbstractButton *quickButtonMove,
-                                  QAbstractButton *quickButtonSelect) = 0;   
+                                  QAbstractButton *quickButtonSelect) {}
 
-    virtual void routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) = 0;
-    virtual void routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) = 0;
-    virtual void routeNodeMousePressEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) = 0;
-    virtual void routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) = 0;
+    virtual void routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {}
+    virtual void routeNodeMouseHoverLeaveEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {}
+    virtual void routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {}
+    virtual void routeNodeMousePressEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {}
+    virtual void routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {}
 
-    virtual void mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) = 0;
-    virtual void mapViewMousePressEvent(MapView *view, QMouseEvent *mouseEvent) = 0;
-    virtual void mapViewMouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) = 0;
+    virtual void mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {}
+    virtual void mapViewMousePressEvent(MapView *view, QMouseEvent *mouseEvent) {}
+    virtual void mapViewMouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) {}
 
 };
 

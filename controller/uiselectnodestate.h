@@ -10,11 +10,6 @@ public:
                                   QAbstractButton *quickButtonMove,
                                   QAbstractButton *quickButtonSelect) override;
 
-    virtual void routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) override;
-    virtual void routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
-    virtual void routeNodeMousePressEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
-    virtual void routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
-
     virtual void mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) override;
     virtual void mapViewMousePressEvent(MapView *view, QMouseEvent *mouseEvent) override;
     virtual void mapViewMouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) override;

@@ -7,23 +7,6 @@ void UIAddNodeState::setToggleButtons(QAbstractButton *quickButtonAutoAdd, QAbst
     quickButtonSelect->setChecked(false);
 }
 
-
-void UIAddNodeState::routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {
-
-}
-
-void UIAddNodeState::routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
-
-}
-
-void UIAddNodeState::routeNodeMousePressEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
-
-}
-
-void UIAddNodeState::routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
-
-}
-
 void UIAddNodeState::mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
     if (!mouseEvent->buttons().testFlag(Qt::RightButton)) {
         view->setDragMode(QGraphicsView::NoDrag);

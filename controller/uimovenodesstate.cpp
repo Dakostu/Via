@@ -13,7 +13,11 @@ void UIMoveNodesState::setToggleButtons(QAbstractButton *quickButtonAutoAdd, QAb
 
 void UIMoveNodesState::routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {
     auto nodeColorInverted = ~(node->getColor().rgb());
-    node->setColors(nodeColorInverted);
+    node->setNodeOutlineColor(nodeColorInverted);
+}
+
+void UIMoveNodesState::routeNodeMouseHoverLeaveEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {
+    node->setDefaultColors();
 }
 
 void UIMoveNodesState::routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
@@ -40,7 +44,6 @@ void UIMoveNodesState::routeNodeMousePressEvent(RouteNode *node, QGraphicsSceneM
 void UIMoveNodesState::routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
     node->setCursor(Qt::OpenHandCursor);
 }
-
 
 void UIMoveNodesState::mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
     view->setDragMode(QGraphicsView::ScrollHandDrag);
