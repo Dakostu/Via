@@ -1,4 +1,5 @@
 #include "project.h"
+#include "../ui/localizeduistrings.h"
 #include <QBuffer>
 #include <QByteArray>
 #include <QJsonArray>
@@ -44,7 +45,7 @@ QString Project::getFileName() const
     return fileName;
 }
 
-IndexList<RouteData> Project::getRoutes() const
+IndexList<RouteData>& Project::getRoutes()
 {
     return routes;
 }
@@ -92,13 +93,13 @@ QJsonObject Project::toJSON() const {
 
 void Project::addRoute(RouteData &route) {
     ++totalCreatedRoutes;
-    route.setName(QString("Route %1").arg(totalCreatedRoutes));
+    route.setName(LocalizedUIStrings::getUIString("ROUTE_DEFAULT_NAME").arg(totalCreatedRoutes));
     routes.emplace_back(route);
 }
 
 void Project::addRouteNode(RouteNodeData &node, int routeIndex) {
     auto &selectedRoute = *routes[routeIndex];
-    node.setName(QString("Node %1").arg(selectedRoute.length() + 1));
+    node.setName(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(selectedRoute.length() + 1));
     selectedRoute.addNode(node);
 }
 

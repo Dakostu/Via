@@ -47,6 +47,7 @@ public:
     void addNewNodeToRoute(int x, int y, const QColor &newColor, int routeIndex);
     size_t amountOfOpenProjects();
     void deleteRouteofCurrentProject(int index);
+    void deleteNodeofRoute(int routeIndex, int nodeIndex);
     void swapCurrentProjectRoutes(int x, int y);
 
 
@@ -64,7 +65,6 @@ signals:
     void currentProjectChanged();
     void routeListChanged();
     void routeNodeListChanged();
-    void routeListEmpty();
 
 
 

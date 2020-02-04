@@ -1,3 +1,4 @@
+#include "../ui/localizeduistrings.h"
 #include "routedata.h"
 #include <QJsonArray>
 
@@ -108,7 +109,7 @@ void RouteData::refreshNames(RouteDataIterator& it, int index) {
         auto &node = *it;
         QString newNumber = QString::number(index + 1);
         if (!node.isNameChangedByUser() && node.getName() != newNumber) {
-            node.setName(newNumber);
+            node.setName(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(newNumber));
         }
     }
 }

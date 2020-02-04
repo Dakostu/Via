@@ -30,7 +30,7 @@ public:
     bool getHasbeenModified() const;
     void setHasbeenModified(bool value);
     QString getFileName() const;
-    IndexList<RouteData> getRoutes() const;
+    IndexList<RouteData>& getRoutes();
 
     void addRoute(RouteData &route);
     void addRouteNode(RouteNodeData &node, int routeIndex);

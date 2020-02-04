@@ -53,8 +53,7 @@ public:
     ~MainWindow();
 
 public slots:
-    void addRoute();
-    void addRouteNode(int x, int y);
+    void addRoute();    
     void deleteSelectedRoute();
     void createNewProject();
     void loadProject();
@@ -72,6 +71,9 @@ public slots:
     void getDataFromCurrentProject();
     void resetSettingsBox();
     void activateAutoAddMode();
+    void addRouteNode(int x, int y);
+    void deleteSelectedRouteNode();
+    void setNodeSettingsEnabled(bool enabled);
 
 
 

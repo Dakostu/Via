@@ -94,14 +94,15 @@ QStringListModel& MainWindowController::getNodeTitlesOfRoute(int index) {
 void MainWindowController::deleteRouteofCurrentProject(int index) {
     currentProject->deleteRoute(index);
     emit routeListChanged();
-    if (currentProject->getRoutes().empty()) {
-        emit routeListEmpty();
-    }
+}
+
+void MainWindowController::deleteNodeofRoute(int routeIndex, int nodeIndex) {
+    currentProject->getRoutes()[routeIndex]->eraseNode(nodeIndex);
+    emit routeNodeListChanged();
 }
 
 void MainWindowController::swapCurrentProjectRoutes(int x, int y) {
     currentProject->swapRoutes(x,y);
-
     emit routeListChanged();
 }
 

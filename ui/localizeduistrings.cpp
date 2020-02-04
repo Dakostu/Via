@@ -33,7 +33,9 @@ QString LocalizedUIStrings::getUIString(MapKey key) {
         {"LOAD_IMAGE_FILE", tr("Select image file for project background")},
         {"QPIXMAP_SUPPORTED_FILE_TYPES", tr("Supported image types "
          "(.bmp, .gif, .jpg, .jpeg, .png, .pbm, .pgm, .ppm, .xbm, .xpm)"
-         "(*.bmp *.gif *.jpg *.jpeg *.png *.pbm *.pgm *.ppm *.xbm *.xpm);")}
+         "(*.bmp *.gif *.jpg *.jpeg *.png *.pbm *.pgm *.ppm *.xbm *.xpm);")},
+        {"ROUTE_DEFAULT_NAME", tr("Route %1")},
+        {"NODE_DEFAULT_NAME", tr("Node %1")}
 
     };
 

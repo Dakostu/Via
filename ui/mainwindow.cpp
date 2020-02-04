@@ -39,7 +39,6 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
 
     connect(&controller, &MainWindowController::currentProjectChanged, this, &MainWindow::getDataFromCurrentProject);
     connect(&controller, &MainWindowController::routeListChanged, this, &MainWindow::updateRouteList);
-    connect(&controller, &MainWindowController::routeListEmpty, this, &MainWindow::resetSettingsBox);
     connect(&controller, &MainWindowController::routeNodeListChanged, this, &MainWindow::updateNodeList);
     connect(ui->picture, &MapView::routeNodeAdded, this, &MainWindow::addRouteNode);
 
@@ -133,6 +132,7 @@ void MainWindow::initializeNodeBoxUI() {
         ui->quickButtonAutoAdd->click();
         QCursor::setPos(this->pos() + ui->pictureLayout->geometry().center());
     });
+    connect(ui->nodeBoxButtonDeleteNode, &QPushButton::clicked, this, &MainWindow::deleteSelectedRouteNode);
 
     connect(ui->nodeBoxNodeList, &RouteDataView::changedSelection, this, &MainWindow::routeNodeSelectionEvent);
 }
@@ -186,18 +186,7 @@ void MainWindow::addRoute() {
     vBar->setValue(vBar->maximum());
 }
 
-void MainWindow::addRouteNode(int x, int y) {
-    refreshSelectedRouteIndex();
-    controller.addNewNodeToRoute(x, y, ui->picture->getCurrentRoute()->getColors(), selectedRouteIndex);
-
-    ui->nodeBoxNodeList->moveSelectionTo(ui->nodeBoxNodeList->model()->rowCount() - 1);
-
-    auto vBar = ui->nodeBoxNodeList->verticalScrollBar();
-    vBar->setValue(vBar->maximum());
-}
-
 void MainWindow::deleteSelectedRoute() {
-
     if (!ui->routeBoxRouteList->selectionModel()->hasSelection()) {
         return;
     }
@@ -289,17 +278,17 @@ void MainWindow::setNoProjectsOpenMode(bool noProjectsOpen) {
 
 void MainWindow::updateRouteList() {
     ui->routeBoxRouteList->setModel(&controller.getCurrentRouteTitles());
+    if (ui->routeBoxRouteList->model()->rowCount() == 0) {
+        resetSettingsBox();
+    }
 }
 
 void MainWindow::updateNodeList() {
     refreshSelectedRouteIndex();
 
     ui->nodeBoxNodeList->setModel(&controller.getNodeTitlesOfRoute(selectedRouteIndex));
-    ui->currentNodeBox->setEnabled(false);
-    ui->nodeNameLineEdit->setText("");
-    ui->nodeLabelLineEdit->setText("");
-    ui->nodeColorButton->setFlat(true);
 
+    setNodeSettingsEnabled(ui->nodeBoxNodeList->model()->rowCount() != 0);
 }
 
 void MainWindow::routeSelectionEvent() {
@@ -326,8 +315,7 @@ void MainWindow::routeNodeSelectionEvent() {
     ui->nodeBoxButtonDeleteNode->setEnabled(true);
     ui->nodeBoxButtonUp->setEnabled(selectedRouteNodeIndex != 0);
     ui->nodeBoxButtonDown->setEnabled(selectedRouteNodeIndex != ui->nodeBoxNodeList->model()->rowCount() - 1);
-    ui->currentNodeBox->setEnabled(true);
-    ui->nodeColorButton->setFlat(false);
+    setNodeSettingsEnabled(true);
 
     auto routeNodeData = (*(controller.getCurrentProject()->getRoutes()[selectedRouteIndex]))[selectedRouteNodeIndex];
     ui->nodeNameLineEdit->setText(routeNodeData.getName());
@@ -390,5 +378,38 @@ void MainWindow::activateAutoAddMode() {
 
     if (!ui->routeBoxRouteList->selectionModel()->hasSelection() || ui->routeBoxRouteList->model()->rowCount() == 0) {
         addRoute();
+    }
+}
+
+void MainWindow::addRouteNode(int x, int y) {
+    refreshSelectedRouteIndex();
+    controller.addNewNodeToRoute(x, y, ui->picture->getCurrentRoute()->getColors(), selectedRouteIndex);
+
+    ui->nodeBoxNodeList->moveSelectionTo(ui->nodeBoxNodeList->model()->rowCount() - 1);
+
+    auto vBar = ui->nodeBoxNodeList->verticalScrollBar();
+    vBar->setValue(vBar->maximum());
+}
+
+void MainWindow::deleteSelectedRouteNode() {
+    if (!ui->routeBoxRouteList->selectionModel()->hasSelection()) {
+        return;
+    }
+
+    ui->picture->getCurrentRoute()->eraseNode(selectedRouteNodeIndex);
+    controller.deleteNodeofRoute(selectedRouteIndex, selectedRouteNodeIndex);
+
+    auto newRowCount = ui->nodeBoxNodeList->model()->rowCount();
+    if (newRowCount != 0) {
+        ui->nodeBoxNodeList->moveSelectionTo(selectedRouteNodeIndex - (selectedRouteNodeIndex == newRowCount));
+    }
+}
+
+void MainWindow::setNodeSettingsEnabled(bool enabled) {
+    ui->currentNodeBox->setEnabled(enabled);
+    ui->nodeColorButton->setFlat(!enabled);
+    if (!enabled) {
+        ui->nodeNameLineEdit->setText("");
+        ui->nodeLabelLineEdit->setText("");
     }
 }
