@@ -26,7 +26,6 @@ void UIMoveNodesState::routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMo
     }
 
     node->triggerParentMouseMoveEvent(mouseEvent);
-
 }
 
 void UIMoveNodesState::routeNodeMousePressEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {

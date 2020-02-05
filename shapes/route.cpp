@@ -38,11 +38,19 @@ void Route::addNode(const RouteNodeData &node) {
 
 }
 
-void Route::addNode(qreal x, qreal y) {
-    if (nodes.back() && nodes.back()->opacity() == TEMPORARY_NODE_OPACITY) {
+bool Route::hasTemporaryPreviewNode() {
+    return nodes.back() && nodes.back()->opacity() == TEMPORARY_NODE_OPACITY;
+}
+
+void Route::removeTemporaryPreviewNode() {
+    if (hasTemporaryPreviewNode()) {
         currentScene->removeItem(nodes.back());
         nodes.erase(nodes[nodes.size() - 1]);
     }
+}
+
+void Route::addNode(qreal x, qreal y) {
+    removeTemporaryPreviewNode();
 
     auto previousNode = nodes.back();
     nodes.emplace_back(new RouteNode(new Hexagon(x,y, routeColor),
@@ -88,6 +96,7 @@ void Route::eraseNode(int index) {
         auto &previousNode = **nodes[index - 1];
         currentNode->connect(previousNode);
         currentScene->addItem(previousNode.getToConnection());
+        currentNode->updateRouteConnections();
     }
 
     for (; currentNodePos != nodes.end(); ++currentNodePos) {

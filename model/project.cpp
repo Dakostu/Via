@@ -112,7 +112,14 @@ void Project::swapRoutes(int i, int j) {
 }
 
 void Project::swapNodes(int routeIndex, int i, int j) {
-    std::swap((*routes[routeIndex])[i], (*routes[routeIndex])[j]);
+    auto &firstNode = (*routes[routeIndex])[i];
+    auto &secondNode = (*routes[routeIndex])[j];
+
+    std::swap(firstNode, secondNode);
+
+    auto tempName = firstNode.getName();
+    firstNode.setName(secondNode.getName());
+    secondNode.setName(tempName);
 }
 
 bool Project::operator==(const Project &other) const {

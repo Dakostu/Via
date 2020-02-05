@@ -43,6 +43,7 @@ public:
     void addRoute(const RouteData &route);
     void addRoute(const QColor &color);
     void addNodeToCurrentRoute(int x, int y);
+    void eraseTemporaryNode();
 
     Route *getCurrentRoute() const;
     void setCurrentRoute(int routeIndex);

@@ -35,6 +35,8 @@ public:
     virtual void addNode(const RouteNodeData &node);
     virtual void addNode(qreal x, qreal y);
     virtual void addTemporaryPreviewNode(qreal x, qreal y);
+    virtual void removeTemporaryPreviewNode();
+    virtual bool hasTemporaryPreviewNode();
     virtual void eraseNode(int index);
     virtual void eraseAllNodes();
     virtual void swapNodes(int x, int y);
