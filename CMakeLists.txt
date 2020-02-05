@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
+set(EXEC_NAME Via)
+
 file(GLOB controller_src
         "controller/*.h"
         "controller/*.cpp"
@@ -65,7 +67,7 @@ add_executable(UnitTests
 target_link_libraries(UnitTests ${LINK_LIBS} Qt5::Test)
 
 
-project(Wegweiser LANGUAGES CXX)
+project(${EXEC_NAME} LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -80,11 +82,11 @@ find_package(Qt5 ${PACKAGES})
 
 set(TS_FILES test/test_translate.ts)
 
-  add_executable(Wegweiser
+  add_executable(${EXEC_NAME}
     main.cpp
     ${ALL_FILES}
   )
 
-target_link_libraries(Wegweiser ${LINK_LIBS})
+target_link_libraries(${EXEC_NAME} ${LINK_LIBS})
 
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
