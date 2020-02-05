@@ -2,7 +2,7 @@
 #include "routedata.h"
 #include <QJsonArray>
 
-RouteData::RouteData() : Data(), showOrder(DEFAULT_SHOW_ORDER), totalCreatedNodes(0)
+RouteData::RouteData() : Data(), showOrder(DEFAULT_SHOW_ORDER)
 {
 
 }
@@ -57,11 +57,6 @@ IndexList<RouteNodeData> RouteData::getNodes() const
     return nodes;
 }
 
-int RouteData::getTotalCreatedNodes() const
-{
-    return totalCreatedNodes;
-}
-
 RouteNodeData RouteData::generateNewNode(int x, int y) {
     RouteNodeData newNode;
     newNode.setX(x);
@@ -92,11 +87,9 @@ QStringList RouteData::getNodeTitles() {
 
 void RouteData::addNode(int x, int y) {
     nodes.emplace_back(generateNewNode(x,y));
-    ++totalCreatedNodes;
 }
 
 void RouteData::addNode(int x, int y, int index) {
-    ++totalCreatedNodes;
     auto iterator = nodes[index];
     auto newNode = generateNewNode(x,y);
 
@@ -122,12 +115,13 @@ void RouteData::refreshNames(RouteDataIterator& it, int index) {
 }
 
 void RouteData::addNode(const RouteNodeData &node) {
-    ++totalCreatedNodes;
     nodes.emplace_back(node);
 }
 
 void RouteData::eraseNode(int index) {
-    nodes.erase(nodes[index]);
+    auto iterator = nodes[index];
+    iterator = nodes.erase(iterator);
+    refreshNames(iterator, index);
 }
 
 bool RouteData::getShowOrder() const

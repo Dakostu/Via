@@ -15,7 +15,6 @@ class RouteData : public Data
 
     bool showOrder;
     IndexList<RouteNodeData> nodes;
-    int totalCreatedNodes;
 
     RouteNodeData generateNewNode(int x, int y);
     void refreshNames(RouteDataIterator& it, int index);
@@ -37,7 +36,6 @@ public:
     RouteNodeData& getLastNode();
     QStringList getNodeTitles();
     IndexList<RouteNodeData> getNodes() const;
-    int getTotalCreatedNodes() const;
 
     void setShowOrder(bool value);
 
