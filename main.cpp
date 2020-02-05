@@ -7,8 +7,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    MainWindowController controller;
-    MainWindow w(nullptr, controller);
+    Via::Control::MainWindowController controller;
+    Via::UI::MainWindow w(nullptr, controller);
     w.show();
     return a.exec();
 }

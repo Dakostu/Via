@@ -5,6 +5,10 @@
 #include <QDesktopWidget>
 #include <QScrollBar>
 
+using namespace Via::Control;
+using namespace Via::UI;
+using namespace Via::Shapes;
+
 void UIMoveNodesState::setToggleButtons(QAbstractButton *quickButtonAutoAdd, QAbstractButton *quickButtonMove, QAbstractButton *quickButtonSelect) {
     quickButtonAutoAdd->setChecked(false);
     quickButtonMove->setChecked(true);

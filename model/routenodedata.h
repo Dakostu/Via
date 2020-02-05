@@ -5,6 +5,8 @@
 #include <QString>
 #include <QColor>
 
+namespace Via::Model {
+
 class RouteNodeData : public Data
 {
     QString nodeLabel;
@@ -42,5 +44,7 @@ public:
 
     bool operator==(const RouteNodeData &other) const;
 };
+
+}
 
 #endif // ROUTENODEDATA_H

@@ -4,6 +4,8 @@
 #include "jsonfile.h"
 #include "../ui/localizeduistrings.h"
 
+using namespace Via::Control;
+using namespace Via::Model;
 
 MainWindowController::MainWindowController()
     : currentState(new UIMoveNodesState)

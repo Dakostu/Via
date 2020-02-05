@@ -2,6 +2,8 @@
 
 #include <QIODevice>
 
+using namespace Via::Control;
+
 JSONFile::JSONFile(const QString &fileName) : QFile(fileName) {
 
 

@@ -3,7 +3,9 @@
 
 #include "../interfaces/nodeshapeable.h"
 
-class Hexagon : public NodeShapeable
+namespace Via::Shapes {
+
+class Hexagon : public Via::Interfaces::NodeShapeable
 {
     static constexpr qreal SIZE_QUOTIENT = 2.0;
 public:
@@ -11,5 +13,7 @@ public:
 
     void drawShape() override;
 };
+
+}
 
 #endif // HEXAGON_H

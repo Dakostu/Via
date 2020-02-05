@@ -3,6 +3,8 @@
 
 #include <QString>
 
+namespace Via::Control {
+
 class ProgramVersion
 {
     unsigned major;
@@ -21,5 +23,7 @@ public:
 
     QString operator()();
 };
+
+}
 
 #endif // PROGRAMVERSION_H

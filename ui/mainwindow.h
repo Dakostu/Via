@@ -16,15 +16,24 @@
 #include <QDebug>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+using namespace Via::UI;
+using namespace Via::Model;
+using namespace Via::Shapes;
+using namespace Via::Control;
+using namespace Via::Structures;
+using namespace Via::Interfaces;
+namespace Ui {
+    class MainWindow;
+}
 QT_END_NAMESPACE
 
+namespace Via::UI {
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-    MainWindowController &controller;
+    Via::Control::MainWindowController &controller;
     Ui::MainWindow *ui;
 
     ColorGenerator colorGenerator;
@@ -49,7 +58,7 @@ class MainWindow : public QMainWindow
     void refreshSelectedRouteNodeIndex();
 
 public:
-    MainWindow(QWidget *parent, MainWindowController &newController);
+    MainWindow(QWidget *parent, Via::Control::MainWindowController &newController);
     ~MainWindow();
 
 public slots:
@@ -64,7 +73,7 @@ public slots:
     void updateNodeList();
     void routeSelectionEvent();
     void routeNodeSelectionEvent();
-    void colorChangeEvent(Data *data);
+    void colorChangeEvent(Via::Model::Data *data);
     void routeNameChangeEvent(const QString &newName);
     void routeShowOrderChangeEvent(bool value);
     void moveRouteEvent(int by);
@@ -76,7 +85,7 @@ public slots:
     void setNodeSettingsEnabled(bool enabled);
     void moveNodeEvent(int by);
 
-
-
 };
+
+}
 #endif // MAINWINDOW_H

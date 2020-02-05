@@ -2,6 +2,8 @@
 #include <QBrush>
 #include <QFont>
 
+using namespace Via::UI;
+
 RouteNodeLabel::RouteNodeLabel(QString text)
     : QGraphicsSimpleTextItem(text)
 {

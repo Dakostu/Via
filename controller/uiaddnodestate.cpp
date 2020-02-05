@@ -1,5 +1,7 @@
 #include "uiaddnodestate.h"
 
+using namespace Via::Control;
+using namespace Via::UI;
 
 void UIAddNodeState::setToggleButtons(QAbstractButton *quickButtonAutoAdd, QAbstractButton *quickButtonMove, QAbstractButton *quickButtonSelect) {
     quickButtonAutoAdd->setChecked(true);

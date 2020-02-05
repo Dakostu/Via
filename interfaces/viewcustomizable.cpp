@@ -1,6 +1,8 @@
 #include "viewcustomizable.h"
 #include <QBrush>
 
+using namespace Via::Interfaces;
+
 ViewCustomizable::ViewCustomizable() : elementSize{1}
 {    
 }

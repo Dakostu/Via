@@ -9,14 +9,16 @@
 #include <QtPrintSupport/QPrinter>
 #include <QUndoStack>
 
+namespace Via::Control {
+
 class MainWindowController : public QObject
 {
     Q_OBJECT
 
     static constexpr size_t MAX_LIST_SIZE = 10;
     QUndoStack undoCommandStack;
-    std::unordered_map<QString, Project> openProjects;
-    Project *currentProject;
+    std::unordered_map<QString, Via::Model::Project> openProjects;
+    Via::Model::Project *currentProject;
     std::list<QString> recentlyOpenedProjects;
     std::unique_ptr<UIState> currentState;
     QStringListModel currentRouteTitles;
@@ -33,7 +35,7 @@ public:
 
     MainWindowController();
 
-    Project* getCurrentProject();
+    Via::Model::Project* getCurrentProject();
     std::unique_ptr<UIState>& getCurrentState();
     QStringListModel& getCurrentRouteTitles();
     QStringListModel& getNodeTitlesOfRoute(int index);
@@ -54,7 +56,7 @@ public:
 
 public slots:
 
-    void addProject(const Project &project);
+    void addProject(const Via::Model::Project &project);
     void setCurrentProject(const QString &fileName);
     void saveCurrentProject();
     void saveCurrentProjectAs(const QString &fileName);
@@ -67,8 +69,8 @@ signals:
     void routeListChanged();
     void routeNodeListChanged();
 
-
-
 };
+
+}
 
 #endif // MAINWINDOWCONTROLLER_H

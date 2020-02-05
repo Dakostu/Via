@@ -9,13 +9,15 @@
 #include <QString>
 #include <vector>
 
-class Project : public Serializable
+namespace Via::Model {
+
+class Project : public Via::Interfaces::Serializable
 {    
     QString fileName;
     QPixmap imagePixMap;
     bool hasbeenModified;
     int totalCreatedRoutes;    
-    IndexList<RouteData> routes;
+    Via::Structures::IndexList<RouteData> routes;
 
     QByteArray pixMapToBytes() const;
     void pixMapFromBytes(const QJsonValue &bytes);
@@ -30,7 +32,7 @@ public:
     bool getHasbeenModified() const;
     void setHasbeenModified(bool value);
     QString getFileName() const;
-    IndexList<RouteData>& getRoutes();
+    Via::Structures::IndexList<RouteData>& getRoutes();
 
     void addRoute(RouteData &route);
     void addRouteNode(RouteNodeData &node, int routeIndex);
@@ -44,5 +46,7 @@ public:
     RouteData& operator[](int index);
     QPixmap getImagePixMap() const;
 };
+
+}
 
 #endif // PROJECT_H

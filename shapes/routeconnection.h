@@ -6,7 +6,9 @@
 #include <QGraphicsItemGroup>
 #include <QGraphicsLineItem>
 
-class RouteConnection : public QGraphicsLineItem, public ViewCustomizable
+namespace Via::Shapes {
+
+class RouteConnection : public QGraphicsLineItem, public Via::Interfaces::ViewCustomizable
 {
     QColor elementColor;
     static constexpr qreal SIZE_FACTOR = 0.2;
@@ -25,5 +27,7 @@ public:
     QPointF p2();
 
 };
+
+}
 
 #endif // ROUTECONNECTION_H

@@ -3,6 +3,9 @@
 
 #include <QtTest/QtTest>
 
+using namespace Via::UnitTest;
+using namespace Via::Control;
+
 void ProgramVersionUnitTests::testProjectVersionOutput() {
     ProgramVersion ver(1,2);
     QCOMPARE(ver(), "1.02");

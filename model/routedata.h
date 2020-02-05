@@ -7,14 +7,17 @@
 #include <list>
 #include <QStringList>
 
-using RouteDataIterator = IndexList<RouteNodeData>::iterator;
+
+namespace Via::Model {
+
+using RouteDataIterator = Via::Structures::IndexList<Via::Model::RouteNodeData>::iterator;
 
 class RouteData : public Data
 {
     static constexpr bool DEFAULT_SHOW_ORDER = true;
 
     bool showOrder;
-    IndexList<RouteNodeData> nodes;
+    Via::Structures::IndexList<RouteNodeData> nodes;
 
     RouteNodeData generateNewNode(int x, int y);
     void refreshNames(RouteDataIterator& it, int index);
@@ -35,7 +38,7 @@ public:
     RouteNodeData& getFirstNode();
     RouteNodeData& getLastNode();
     QStringList getNodeTitles();
-    IndexList<RouteNodeData> getNodes() const;
+    Via::Structures::IndexList<RouteNodeData> getNodes() const;
 
     void setShowOrder(bool value);
 
@@ -49,5 +52,7 @@ public:
 
     bool operator==(const RouteData &other) const;
 };
+
+}
 
 #endif // ROUTEDATA_H

@@ -7,6 +7,8 @@
 #include <QtTest/QtTest>
 #include <QTest>
 
+using namespace Via::UnitTest;
+
 template <typename TestClass>
 int runTest(int argc, char **argv) {
     QApplication app(argc, argv);

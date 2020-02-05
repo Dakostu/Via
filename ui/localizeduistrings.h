@@ -4,6 +4,8 @@
 #include <unordered_map>
 #include <QApplication>
 
+namespace Via::UI {
+
 using MapKey = QString;
 using MapValue = QString;
 using StringMap = std::unordered_map<MapKey, MapValue>;
@@ -16,5 +18,7 @@ class LocalizedUIStrings
 public:
     static QString getUIString(MapKey key);
 };
+
+}
 
 #endif // LOCALIZABLESTRINGS_H

@@ -9,6 +9,9 @@
 #include "../model/routedata.h"
 #include "unittestsjson.h"
 
+using namespace Via::UnitTest;
+using namespace Via::Model;
+using namespace Via::Control;
 
 void JSONUnitTests::testRouteNodeDataSerialization() {
     RouteNodeData data;

@@ -1,5 +1,7 @@
 #include "triangleup.h"
 
+using namespace Via::Shapes;
+
 TriangleUp::TriangleUp(qreal x, qreal y, const QColor &color)
     : NodeShapeable(x, y, color)
 

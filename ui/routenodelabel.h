@@ -4,7 +4,9 @@
 #include "../interfaces/viewcustomizable.h"
 #include <QGraphicsSimpleTextItem>
 
-class RouteNodeLabel : public QGraphicsSimpleTextItem, public ViewCustomizable
+namespace Via::UI {
+
+class RouteNodeLabel : public QGraphicsSimpleTextItem, public Via::Interfaces::ViewCustomizable
 {
 public:
     RouteNodeLabel(QString text);
@@ -15,5 +17,7 @@ public:
 
 
 };
+
+}
 
 #endif // ROUTENODELABEL_H

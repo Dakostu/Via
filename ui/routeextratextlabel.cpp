@@ -3,6 +3,9 @@
 #include <QFont>
 #include <QRectF>
 
+using namespace Via::UI;
+using namespace Via::Interfaces;
+
 RouteExtraTextLabel::RouteExtraTextLabel(QString text, NodeShapeable *parent)
     : QGraphicsSimpleTextItem(text), parentNode(parent)
 {

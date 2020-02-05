@@ -1,5 +1,7 @@
 #include "square.h"
 
+using namespace Via::Shapes;
+
 Square::Square(qreal x, qreal y, const QColor &color)
     : NodeShapeable(x, y, color)
 

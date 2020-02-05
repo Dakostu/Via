@@ -2,6 +2,8 @@
 #include <QRgb>
 #include <QJsonArray>
 
+using namespace Via::Model;
+
 RouteNodeData::RouteNodeData() : Data(),
     differentStyleFromRoute(false), nameChanged(false), invisible(false)
 {

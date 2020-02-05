@@ -3,7 +3,9 @@
 
 #include "../interfaces/nodeshapeable.h"
 
-class TriangleUp : public NodeShapeable
+namespace Via::Shapes {
+
+class TriangleUp : public Via::Interfaces::NodeShapeable
 {
 public:
     TriangleUp(qreal x, qreal y, const QColor &color);
@@ -11,4 +13,5 @@ public:
     void drawShape() override;
 };
 
+}
 #endif // NODESHAPETRIANGLEUP_H

@@ -2,6 +2,10 @@
 #include "routedata.h"
 #include <QJsonArray>
 
+using namespace Via::Model;
+using namespace Via::Structures;
+using namespace Via::UI;
+
 RouteData::RouteData() : Data(), showOrder(DEFAULT_SHOW_ORDER)
 {
 

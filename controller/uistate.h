@@ -8,9 +8,16 @@
 #include <QDebug>
 #include <QGraphicsSceneHoverEvent>
 
-class RouteNode;
-class Route;
-class MapView;
+namespace Via::Shapes {
+    class RouteNode;
+    class Route;
+}
+
+namespace Via::UI {
+    class MapView;
+}
+
+namespace Via::Control {
 
 class UIState
 {
@@ -24,17 +31,19 @@ public:
                                   QAbstractButton *quickButtonMove,
                                   QAbstractButton *quickButtonSelect) {}
 
-    virtual void routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {}
-    virtual void routeNodeMouseHoverLeaveEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {}
-    virtual void routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {}
-    virtual void routeNodeMousePressEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {}
-    virtual void routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {}
+    virtual void routeNodeMouseHoverEnterEvent(Via::Shapes::RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {}
+    virtual void routeNodeMouseHoverLeaveEvent(Via::Shapes::RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {}
+    virtual void routeNodeMouseMoveEvent(Via::Shapes::RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {}
+    virtual void routeNodeMousePressEvent(Via::Shapes::RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {}
+    virtual void routeNodeMouseReleaseEvent(Via::Shapes::RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {}
 
-    virtual void mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {}
-    virtual void mapViewMousePressEvent(MapView *view, QMouseEvent *mouseEvent) {}
-    virtual void mapViewMouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) {}
-    virtual void mapViewMouseLeaveEvent(MapView *view, QEvent *mouseEvent) {}
+    virtual void mapViewMouseMoveEvent(Via::UI::MapView *view, QMouseEvent *mouseEvent) {}
+    virtual void mapViewMousePressEvent(Via::UI::MapView *view, QMouseEvent *mouseEvent) {}
+    virtual void mapViewMouseReleaseEvent(Via::UI::MapView *view, QMouseEvent *mouseEvent) {}
+    virtual void mapViewMouseLeaveEvent(Via::UI::MapView *view, QEvent *mouseEvent) {}
 
 };
+
+}
 
 #endif // UISTATE_H
