@@ -3,6 +3,8 @@
 
 #include <QListView>
 
+namespace Via::UI {
+
 class RouteDataView : public QListView
 {
     Q_OBJECT
@@ -19,5 +21,7 @@ public:
 signals:
     void changedSelection();
 };
+
+}
 
 #endif // ROUTEDATAVIEW_H

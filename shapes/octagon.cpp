@@ -1,5 +1,7 @@
 #include "octagon.h"
 
+using namespace Via::Shapes;
+
 Octagon::Octagon(qreal x, qreal y, const QColor &color)
     : NodeShapeable(x, y, color)
 

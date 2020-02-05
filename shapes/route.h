@@ -10,10 +10,13 @@
 #include <QLinkedList>
 #include <QGraphicsScene>
 
-class UIState;
+namespace Via::Control { class UIState; }
+
+namespace Via::Shapes {
+
 class RouteNode;
 
-class Route : public ViewCustomizable
+class Route : public Via::Interfaces::ViewCustomizable
 {
 protected:
     static constexpr qreal TEMPORARY_NODE_OPACITY = 0.5;
@@ -21,18 +24,18 @@ protected:
     bool showDirection;
     QColor routeColor;
     QGraphicsScene *currentScene;
-    std::unique_ptr<UIState> &currentState;
+    std::unique_ptr<Via::Control::UIState> &currentState;
 
-    IndexList<RouteNode*> nodes;
+    Via::Structures::IndexList<RouteNode*> nodes;
 public:
-    Route(const QColor &color, QGraphicsScene *scene, std::unique_ptr<UIState> &state);
+    Route(const QColor &color, QGraphicsScene *scene, std::unique_ptr<Via::Control::UIState> &state);
 
     virtual QColor getColors() const;
 
     void setColors(const QColor &color) override;
     void activateColors() override;
 
-    virtual void addNode(const RouteNodeData &node);
+    virtual void addNode(const Via::Model::RouteNodeData &node);
     virtual void addNode(qreal x, qreal y);
     virtual void addTemporaryPreviewNode(qreal x, qreal y);
     virtual void removeTemporaryPreviewNode();
@@ -43,4 +46,5 @@ public:
     virtual void setElementSize(int newSize) override;
 };
 
+}
 #endif // ROUTE_H

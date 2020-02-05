@@ -3,12 +3,16 @@
 
 #include "../interfaces/nodeshapeable.h"
 
-class Square : public NodeShapeable
+namespace Via::Shapes {
+
+class Square : public Via::Interfaces::NodeShapeable
 {
 public:
     Square(qreal x, qreal y, const QColor &color);
 
     void drawShape() override;
 };
+
+}
 
 #endif // SQUARE_H

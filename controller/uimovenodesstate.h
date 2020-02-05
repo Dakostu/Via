@@ -3,6 +3,8 @@
 
 #include "uistate.h"
 
+namespace Via::Control {
+
 class UIMoveNodesState : public UIState
 {
 public:
@@ -10,15 +12,17 @@ public:
                           QAbstractButton *quickButtonMove,
                           QAbstractButton *quickButtonSelect) override;
 
-    void routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) override;
-    void routeNodeMouseHoverLeaveEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) override;
-    void routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
-    void routeNodeMousePressEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
-    void routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
+    void routeNodeMouseHoverEnterEvent(Via::Shapes::RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) override;
+    void routeNodeMouseHoverLeaveEvent(Via::Shapes::RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) override;
+    void routeNodeMouseMoveEvent(Via::Shapes::RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
+    void routeNodeMousePressEvent(Via::Shapes::RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
+    void routeNodeMouseReleaseEvent(Via::Shapes::RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
 
-    void mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) override;
-    void mapViewMousePressEvent(MapView *view, QMouseEvent *mouseEvent) override;
-    void mapViewMouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) override;
+    void mapViewMouseMoveEvent(Via::UI::MapView *view, QMouseEvent *mouseEvent) override;
+    void mapViewMousePressEvent(Via::UI::MapView *view, QMouseEvent *mouseEvent) override;
+    void mapViewMouseReleaseEvent(Via::UI::MapView *view, QMouseEvent *mouseEvent) override;
 };
+
+}
 
 #endif // UIMOVENODESSTATE_H

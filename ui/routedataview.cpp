@@ -2,6 +2,8 @@
 #include <QItemSelectionModel>
 #include <QMouseEvent>
 
+using namespace Via::UI;
+
 RouteDataView::RouteDataView(QWidget *widget) : QListView(widget)
 {
 

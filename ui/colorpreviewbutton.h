@@ -3,6 +3,8 @@
 
 #include <QPushButton>
 
+namespace Via::UI {
+
 class ColorPreviewButton : public QPushButton
 {
 public:
@@ -10,5 +12,7 @@ public:
 
     void changeColor(const QColor &newColor);
 };
+
+}
 
 #endif // COLORPREVIEWBUTTON_H

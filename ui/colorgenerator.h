@@ -3,6 +3,7 @@
 
 #include <QColor>
 
+namespace Via::UI {
 
 class ColorGenerator
 {
@@ -13,4 +14,5 @@ public:
     QColor operator()();
 };
 
+}
 #endif // COLORGENERATOR_H

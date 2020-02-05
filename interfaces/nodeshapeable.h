@@ -8,6 +8,8 @@
 #include <QPen>
 #include <QGraphicsSimpleTextItem>
 
+namespace Via::Interfaces {
+
 class NodeShapeable : public QGraphicsPolygonItem, public ViewCustomizable
 {
 
@@ -28,7 +30,8 @@ public:
 
     virtual void drawShape() = 0;
 
-
 };
+
+}
 
 #endif // NODESHAPEABLE_H

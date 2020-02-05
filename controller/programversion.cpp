@@ -2,6 +2,7 @@
 
 #include <QStringList>
 
+using namespace Via::Control;
 
 const QString ProgramVersion::DELIMITER = QString(".");
 

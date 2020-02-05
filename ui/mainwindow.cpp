@@ -25,6 +25,9 @@
 #include "../shapes/octagon.h"
 #include "../shapes/routeconnection.h"
 
+using namespace Via::UI;
+using namespace Via::Control;
+using namespace Via::Model;
 
 MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     : QMainWindow(parent),

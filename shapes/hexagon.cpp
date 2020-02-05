@@ -1,5 +1,7 @@
 #include "hexagon.h"
 
+using namespace Via::Shapes;
+
 Hexagon::Hexagon(qreal x, qreal y, const QColor &color)
     : NodeShapeable(x, y, color)
 

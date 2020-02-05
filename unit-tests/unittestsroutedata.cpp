@@ -3,6 +3,8 @@
 #include "unittestsroutedata.h"
 #include "../model/routedata.h"
 
+using namespace Via::UnitTest;
+using namespace Via::Model;
 
 void RouteDataUnitTests::checkRouteInsertion(size_t size) {
     auto route = generateRoute(size);

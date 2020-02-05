@@ -1,6 +1,8 @@
 #include "routeconnection.h"
 #include "triangleup.h"
 
+using namespace Via::Shapes;
+
 RouteConnection::RouteConnection(QPointF from, QPointF to, QColor color)
     : elementColor(color),
       cartesianLine(new QLineF(from, to))

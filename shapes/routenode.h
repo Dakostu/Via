@@ -11,26 +11,30 @@
 #include <QGraphicsItemGroup>
 #include <memory>
 
-class UIState;
+namespace Via::Control {
+    class UIState;
+}
 
-class RouteNode : public QGraphicsItemGroup, public ViewCustomizable
+namespace Via::Shapes {
+
+class RouteNode : public QGraphicsItemGroup, public Via::Interfaces::ViewCustomizable
 {
 
 protected:
-    std::unique_ptr<NodeShapeable> node;
-    RouteNodeLabel nodeLabel;
-    RouteExtraTextLabel extraTextLabel;
+    std::unique_ptr<Via::Interfaces::NodeShapeable> node;
+    Via::UI::RouteNodeLabel nodeLabel;
+    Via::UI::RouteExtraTextLabel extraTextLabel;
     bool styleDiffersFromRoute;
     RouteConnection* fromConnection;
     std::unique_ptr<RouteConnection> toConnection;
-    std::unique_ptr<UIState> &currentState;
+    std::unique_ptr<Via::Control::UIState> &currentState;
 
     void centerNodeLabelBox();    
 
 
 public:
-    RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extraTextLabelText, std::unique_ptr<UIState> &state);
-    RouteNode(NodeShapeable *newNode, QString nodeLabelText, std::unique_ptr<UIState> &state);
+    RouteNode(Via::Interfaces::NodeShapeable *newNode, QString nodeLabelText, QString extraTextLabelText, std::unique_ptr<Via::Control::UIState> &state);
+    RouteNode(Via::Interfaces::NodeShapeable *newNode, QString nodeLabelText, std::unique_ptr<Via::Control::UIState> &state);
 
     void setElementSize(int newSize) override;
     void setColors(const QColor &color) override;
@@ -53,8 +57,8 @@ public:
     QColor getColor() const;
     RouteConnection* getFromConnection();
     RouteConnection* getToConnection();
-    RouteExtraTextLabel* getExtraText();
-    RouteNodeLabel* getNodeLabel();
+    Via::UI::RouteExtraTextLabel* getExtraText();
+    Via::UI::RouteNodeLabel* getNodeLabel();
 
     void connect(RouteNode &from);
     void swap(RouteNode *with);
@@ -66,4 +70,5 @@ public:
     void setStyleDiffersFromRoute(bool value);
 };
 
+}
 #endif // ROUTENODE_H

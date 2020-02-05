@@ -4,6 +4,8 @@
 #include <stdexcept>
 #include <list>
 
+namespace Via::Structures {
+
 template <typename T>
 class IndexList : public std::list<T>
 {
@@ -46,5 +48,7 @@ public:
 
 
 };
+
+}
 
 #endif // INDEXLIST_H

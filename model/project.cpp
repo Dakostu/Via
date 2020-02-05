@@ -4,6 +4,9 @@
 #include <QByteArray>
 #include <QJsonArray>
 
+using namespace Via::Model;
+using namespace Via::Structures;
+using namespace Via::UI;
 
 Project::Project(const QString &newFileName, const QPixmap &map)
     : fileName(newFileName), imagePixMap(map), hasbeenModified(false), totalCreatedRoutes(0)

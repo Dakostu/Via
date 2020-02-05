@@ -6,7 +6,9 @@
 #include <QString>
 #include <QColor>
 
-class Data : public Serializable, public ViewCustomizable
+namespace Via::Model {
+
+class Data : public Via::Interfaces::Serializable, public Via::Interfaces::ViewCustomizable
 {
 protected:
     virtual ~Data() = default;
@@ -21,5 +23,7 @@ public:
     void setName(const QString &value);
 
 };
+
+}
 
 #endif // DATA_H

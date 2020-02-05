@@ -3,6 +3,8 @@
 
 #include "uistate.h"
 
+namespace Via::Control {
+
 class UIAddNodeState : public UIState
 {
 public:
@@ -11,10 +13,11 @@ public:
                           QAbstractButton *quickButtonMove,
                           QAbstractButton *quickButtonSelect) override;
 
-    void mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) override;
-    void mapViewMousePressEvent(MapView *view, QMouseEvent *mouseEvent) override;
-    void mapViewMouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) override;
-    void mapViewMouseLeaveEvent(MapView *view, QEvent *mouseEvent) override;
+    void mapViewMouseMoveEvent(Via::UI::MapView *view, QMouseEvent *mouseEvent) override;
+    void mapViewMousePressEvent(Via::UI::MapView *view, QMouseEvent *mouseEvent) override;
+    void mapViewMouseReleaseEvent(Via::UI::MapView *view, QMouseEvent *mouseEvent) override;
+    void mapViewMouseLeaveEvent(Via::UI::MapView *view, QEvent *mouseEvent) override;
 };
 
+}
 #endif // UIADDNODESTATE_H

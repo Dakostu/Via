@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 
+using namespace Via::Interfaces;
 
 void NodeShapeable::setElementSize(int newSize) {
     ViewCustomizable::setElementSize(newSize);

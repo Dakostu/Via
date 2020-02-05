@@ -1,6 +1,11 @@
 #include "routenode.h"
 #include <QGraphicsSceneMouseEvent>
 
+using namespace Via::Shapes;
+using namespace Via::Interfaces;
+using namespace Via::Control;
+using namespace Via::UI;
+
 RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extraTextLabelText, std::unique_ptr<UIState> &state)
     : node(newNode),
       nodeLabel(nodeLabelText),

@@ -6,6 +6,9 @@
 #include <QWheelEvent>
 #include "../shapes/octagon.h"
 
+using namespace Via::UI;
+using namespace Via::Control;
+
 MapView::MapView(QWidget* parent) : QGraphicsView(parent) {
     currentDetailLevel = QStyleOptionGraphicsItem::levelOfDetailFromTransform(transform());
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);

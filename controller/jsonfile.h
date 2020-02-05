@@ -5,6 +5,8 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 
+namespace Via::Control {
+
 class JSONFile : protected QFile
 {
     QJsonDocument doccy;
@@ -19,4 +21,5 @@ public:
     void operator+=(const QJsonObject &obj);
 };
 
+}
 #endif // JSONFILE_H

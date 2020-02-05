@@ -3,7 +3,9 @@
 
 #include "../interfaces/nodeshapeable.h"
 
-class Diamond : public NodeShapeable
+namespace Via::Shapes {
+
+class Diamond : public Via::Interfaces::NodeShapeable
 {
     static constexpr qreal SIZE_QUOTIENT = 1.2;
 public:
@@ -12,4 +14,5 @@ public:
     void drawShape() override;
 };
 
+}
 #endif // DIAMOND_H

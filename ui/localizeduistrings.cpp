@@ -1,5 +1,6 @@
 #include "localizeduistrings.h"
 
+using namespace Via::UI;
 
 QString LocalizedUIStrings::getUIString(MapKey key) {
 

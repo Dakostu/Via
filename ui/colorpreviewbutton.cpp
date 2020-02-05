@@ -1,5 +1,7 @@
 #include "colorpreviewbutton.h"
 
+using namespace Via::UI;
+
 ColorPreviewButton::ColorPreviewButton(QWidget *parent) : QPushButton(parent)
 {
 

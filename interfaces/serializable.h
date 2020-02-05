@@ -3,6 +3,8 @@
 
 #include <QJsonObject>
 
+namespace Via::Interfaces {
+
 class Serializable
 {
 protected:
@@ -15,4 +17,5 @@ public:
 
 };
 
+}
 #endif // SERIALIZABLE_H

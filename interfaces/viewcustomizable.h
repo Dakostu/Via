@@ -4,6 +4,8 @@
 #include <QAbstractGraphicsShapeItem>
 #include <QBrush>
 
+namespace Via::Interfaces {
+
 class ViewCustomizable
 {
 
@@ -24,5 +26,7 @@ public:
     virtual void setElementSize(int newSize);
 
 };
+
+}
 
 #endif // VIEWCUSTOMIZABLE_H

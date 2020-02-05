@@ -2,6 +2,8 @@
 #include <QRandomGenerator>
 #include <QRgb>
 
+using namespace Via::UI;
+
 QColor ColorGenerator::operator()() {
     if (!lastColor.isValid()) {
         lastColor = QColor::fromRgb(QRandomGenerator::global()->generate());

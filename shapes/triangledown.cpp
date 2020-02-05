@@ -1,5 +1,7 @@
 #include "triangledown.h"
 
+using namespace Via::Shapes;
+
 TriangleDown::TriangleDown(qreal x, qreal y, const QColor &color)
     : NodeShapeable(x, y, color)
 
