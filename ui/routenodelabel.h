@@ -9,9 +9,9 @@ class RouteNodeLabel : public QGraphicsSimpleTextItem, public ViewCustomizable
 public:
     RouteNodeLabel(QString text);
 
-    virtual void setElementSize(int newSize) override;
-    virtual void setColors(const QColor &color) override;
-    virtual void activateColors() override;
+    void setElementSize(int newSize) override;
+    void setColors(const QColor &color) override;
+    void activateColors() override;
 
 
 };

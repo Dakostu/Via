@@ -15,13 +15,13 @@ protected:
 public:
     RouteExtraTextLabel(QString text, NodeShapeable *parent);
 
-    virtual void setElementSize(int newSize) override;
-    virtual void setColors(const QColor &color) override;
-    virtual void activateColors() override;
+    void setElementSize(int newSize) override;
+    void setColors(const QColor &color) override;
+    void activateColors() override;
 
-    virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
-    virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
-    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
+    void hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
 };
 
 #endif // ROUTEEXTRATEXTLABEL_H

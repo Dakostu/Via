@@ -19,11 +19,11 @@ public:
     RouteNodeData(const QColor &color);
     RouteNodeData(const QJsonObject &object);
 
-    virtual void fromJSON(const QJsonObject &object) override;
-    virtual QJsonObject toJSON() const override;
+    void fromJSON(const QJsonObject &object) override;
+    QJsonObject toJSON() const override;
 
-    virtual void setColors(const QColor &currentColor) override;
-    virtual void activateColors() override;
+    void setColors(const QColor &currentColor) override;
+    void activateColors() override;
 
     bool isStyleDifferentFromRoute() const;
     QString getNodeLabel() const;

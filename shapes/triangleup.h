@@ -8,7 +8,7 @@ class TriangleUp : public NodeShapeable
 public:
     TriangleUp(qreal x, qreal y, const QColor &color);
 
-    virtual void drawShape() override;
+    void drawShape() override;
 };
 
 #endif // NODESHAPETRIANGLEUP_H

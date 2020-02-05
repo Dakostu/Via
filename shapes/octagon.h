@@ -10,7 +10,7 @@ class Octagon : public NodeShapeable
 public:
     Octagon(qreal x, qreal y, const QColor &color);
 
-    virtual void drawShape() override;
+    void drawShape() override;
 };
 
 #endif // OCTAGON_H

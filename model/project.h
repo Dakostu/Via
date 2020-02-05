@@ -24,8 +24,8 @@ public:
     Project(const QString &newFileName, const QPixmap &map);
     Project(const QJsonObject &object);
 
-    virtual void fromJSON(const QJsonObject &object) override;
-    virtual QJsonObject toJSON() const override;
+    void fromJSON(const QJsonObject &object) override;
+    QJsonObject toJSON() const override;
 
     bool getHasbeenModified() const;
     void setHasbeenModified(bool value);

@@ -24,12 +24,12 @@ public:
     RouteData(const QColor &color);
     RouteData(const QJsonObject &object);
 
-    virtual void fromJSON(const QJsonObject &object) override;
-    virtual QJsonObject toJSON() const override;
+    void fromJSON(const QJsonObject &object) override;
+    QJsonObject toJSON() const override;
 
-    virtual void setColors(const QColor &routeColor) override;
-    virtual void activateColors() override;
-    virtual void setElementSize(int newSize) override;
+    void setColors(const QColor &routeColor) override;
+    void activateColors() override;
+    void setElementSize(int newSize) override;
 
     bool getShowOrder() const;
     RouteNodeData& getFirstNode();

@@ -9,7 +9,7 @@ class Hexagon : public NodeShapeable
 public:
     Hexagon(qreal x, qreal y, const QColor &color);
 
-    virtual void drawShape() override;
+    void drawShape() override;
 };
 
 #endif // HEXAGON_H

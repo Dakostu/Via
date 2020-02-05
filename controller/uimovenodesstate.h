@@ -6,19 +6,19 @@
 class UIMoveNodesState : public UIState
 {
 public:
-    virtual void setToggleButtons(QAbstractButton *quickButtonAutoAdd,
-                                  QAbstractButton *quickButtonMove,
-                                  QAbstractButton *quickButtonSelect) override;
+    void setToggleButtons(QAbstractButton *quickButtonAutoAdd,
+                          QAbstractButton *quickButtonMove,
+                          QAbstractButton *quickButtonSelect) override;
 
-    virtual void routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) override;
-    virtual void routeNodeMouseHoverLeaveEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) override;
-    virtual void routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
-    virtual void routeNodeMousePressEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
-    virtual void routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
+    void routeNodeMouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) override;
+    void routeNodeMouseHoverLeaveEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) override;
+    void routeNodeMouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
+    void routeNodeMousePressEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
+    void routeNodeMouseReleaseEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) override;
 
-    virtual void mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) override;
-    virtual void mapViewMousePressEvent(MapView *view, QMouseEvent *mouseEvent) override;
-    virtual void mapViewMouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) override;
+    void mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) override;
+    void mapViewMousePressEvent(MapView *view, QMouseEvent *mouseEvent) override;
+    void mapViewMouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) override;
 };
 
 #endif // UIMOVENODESSTATE_H

@@ -9,7 +9,7 @@ class Diamond : public NodeShapeable
 public:
     Diamond(qreal x, qreal y, const QColor &color);
 
-    virtual void drawShape() override;
+    void drawShape() override;
 };
 
 #endif // DIAMOND_H

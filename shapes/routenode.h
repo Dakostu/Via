@@ -32,15 +32,15 @@ public:
     RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extraTextLabelText, std::unique_ptr<UIState> &state);
     RouteNode(NodeShapeable *newNode, QString nodeLabelText, std::unique_ptr<UIState> &state);
 
-    virtual void setElementSize(int newSize) override;
-    virtual void setColors(const QColor &color) override;
-    virtual void activateColors() override;
+    void setElementSize(int newSize) override;
+    void setColors(const QColor &color) override;
+    void activateColors() override;
 
-    virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
-    virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
-    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
+    void hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
     void triggerParentMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
 
     virtual void setNodeOutlineColor(const QColor &color);

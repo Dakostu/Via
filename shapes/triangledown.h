@@ -8,7 +8,7 @@ class TriangleDown : public NodeShapeable
 public:
     TriangleDown(qreal x, qreal y, const QColor &color);
 
-    virtual void drawShape() override;
+    void drawShape() override;
 };
 
 #endif // NODESHAPETRIANGLEDOWN_H
