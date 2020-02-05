@@ -111,6 +111,10 @@ void Project::swapRoutes(int i, int j) {
     std::swap(*routes[i], *routes[j]);
 }
 
+void Project::swapNodes(int routeIndex, int i, int j) {
+    std::swap((*routes[routeIndex])[i], (*routes[routeIndex])[j]);
+}
+
 bool Project::operator==(const Project &other) const {
     return this->fileName == other.fileName
             && this->pixMapToBytes() == other.pixMapToBytes()

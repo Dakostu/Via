@@ -72,6 +72,16 @@ RouteNodeLabel* RouteNode::getNodeLabel()
     return &nodeLabel;
 }
 
+bool RouteNode::getStyleDiffersFromRoute() const
+{
+    return styleDiffersFromRoute;
+}
+
+void RouteNode::setStyleDiffersFromRoute(bool value)
+{
+    styleDiffersFromRoute = value;
+}
+
 void RouteNode::centerNodeLabelBox() {
     auto center = node->boundingRect().center();
     auto nodeLabelBox = nodeLabel.boundingRect();
@@ -115,20 +125,8 @@ void RouteNode::resetToConnection() {
     toConnection.reset(nullptr);
 }
 
-bool RouteNode::isInvisible() {
-    return opacity() < 0.000001;
-}
-
 RouteExtraTextLabel* RouteNode::getExtraText() {
     return &extraTextLabel;
-}
-
-void RouteNode::connect(RouteNode &from) {
-    auto color = node->brush().color();
-    auto connection = new RouteConnection(from.boundingRect().center() + from.pos(), this->boundingRect().center(), color);
-    connection->setElementSize(elementSize);
-    from.toConnection.reset(connection);
-    fromConnection = connection;
 }
 
 void RouteNode::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
@@ -155,4 +153,60 @@ RouteConnection* RouteNode::getFromConnection() {
 
 RouteConnection* RouteNode::getToConnection() {
     return toConnection.get();
+}
+
+void RouteNode::connect(RouteNode &from) {
+    auto color = node->brush().color();
+    auto connection = new RouteConnection(from.boundingRect().center() + from.pos(), this->boundingRect().center(), color);
+    connection->setElementSize(elementSize);
+    from.toConnection.reset(connection);
+    fromConnection = connection;
+}
+
+void RouteNode::swap(RouteNode *with) {
+    auto tempCenter = with->getCenter();
+    auto tempColor = with->getColor();
+    auto tempSize = with->getElementSize();
+    auto tempExtraLabelText = with->getExtraText()->text();
+    auto tempStyleIsDifferent = with->getStyleDiffersFromRoute();
+
+
+    with->getExtraText()->setText(this->getExtraText()->text());
+    with->setStyleDiffersFromRoute(this->styleDiffersFromRoute);
+    with->moveBy(this->getCenter().x() - with->getCenter().x(), this->getCenter().y() - with->getCenter().y());
+    if (this->styleDiffersFromRoute) {
+        with->setColors(this->getColor());
+        with->setElementSize(this->elementSize);
+        //shape
+    }
+
+    this->getExtraText()->setText(tempExtraLabelText);
+    this->setStyleDiffersFromRoute(tempStyleIsDifferent);
+    this->moveBy(tempCenter.x() - this->getCenter().x(), tempCenter.y() - this->getCenter().y());
+    if (tempStyleIsDifferent) {
+        this->setColors(tempColor);
+        this->setElementSize(tempSize);
+        // shape
+    }
+}
+
+QPointF RouteNode::getCenter() {
+    return this->boundingRect().center() + this->pos();
+}
+
+void RouteNode::updateRouteConnections() {
+    auto thisPos = this->getCenter();
+    if (auto fromConn = this->getFromConnection()) {
+        auto fromNodePos = fromConn->p1();
+        fromConn->setNewPosition(fromNodePos, thisPos);
+    }
+    if (auto toConn = this->getToConnection()) {
+        auto toNodePos = toConn->p2();
+        toConn->setNewPosition(thisPos, toNodePos);
+    }
+}
+
+void RouteNode::moveBy(qreal dx, qreal dy) {
+    QGraphicsItem::moveBy(dx, dy);
+    this->updateRouteConnections();
 }

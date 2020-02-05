@@ -133,6 +133,8 @@ void MainWindow::initializeNodeBoxUI() {
         QCursor::setPos(this->pos() + ui->pictureLayout->geometry().center());
     });
     connect(ui->nodeBoxButtonDeleteNode, &QPushButton::clicked, this, &MainWindow::deleteSelectedRouteNode);
+    connect(ui->nodeBoxButtonUp, &QPushButton::clicked, this, [&]() { moveNodeEvent(-1); });
+    connect(ui->nodeBoxButtonDown, &QPushButton::clicked, this, [&]() { moveNodeEvent(1); });
 
     connect(ui->nodeBoxNodeList, &RouteDataView::changedSelection, this, &MainWindow::routeNodeSelectionEvent);
 }
@@ -359,7 +361,6 @@ void MainWindow::moveRouteEvent(int by) {
 
     controller.swapCurrentProjectRoutes(selectedRouteIndex, selectedRouteIndex + by);
     ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex + by);
-    routeSelectionEvent();
 }
 
 void MainWindow::resetSettingsBox() {
@@ -412,4 +413,12 @@ void MainWindow::setNodeSettingsEnabled(bool enabled) {
         ui->nodeNameLineEdit->setText("");
         ui->nodeLabelLineEdit->setText("");
     }
+}
+
+void MainWindow::moveNodeEvent(int by) {
+    refreshSelectedRouteNodeIndex();
+
+    controller.swapNodesOfRoute(selectedRouteIndex, selectedRouteNodeIndex, selectedRouteNodeIndex + by);
+    ui->nodeBoxNodeList->moveSelectionTo(selectedRouteNodeIndex + by);
+    ui->picture->getCurrentRoute()->swapNodes(selectedRouteNodeIndex, selectedRouteNodeIndex - by);
 }

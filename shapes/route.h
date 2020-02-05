@@ -37,6 +37,7 @@ public:
     virtual void addTemporaryPreviewNode(qreal x, qreal y);
     virtual void eraseNode(int index);
     virtual void eraseAllNodes();
+    virtual void swapNodes(int x, int y);
     virtual void setElementSize(int newSize) override;
 };
 

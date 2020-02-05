@@ -49,7 +49,6 @@ public:
     virtual void setNodeLabelText(const QString &newText);
     virtual void resetFromConnection();
     virtual void resetToConnection();
-    bool isInvisible();
 
     QColor getColor() const;
     RouteConnection* getFromConnection();
@@ -58,7 +57,13 @@ public:
     RouteNodeLabel* getNodeLabel();
 
     void connect(RouteNode &from);
+    void swap(RouteNode *with);
+    void moveBy(qreal dx, qreal dy);
+    QPointF getCenter();
+    void updateRouteConnections();
 
+    bool getStyleDiffersFromRoute() const;
+    void setStyleDiffersFromRoute(bool value);
 };
 
 #endif // ROUTENODE_H

@@ -36,6 +36,7 @@ public:
     void addRouteNode(RouteNodeData &node, int routeIndex);
     void deleteRoute(int index);
     void swapRoutes(int i, int j);
+    void swapNodes(int routeIndex, int i, int j);
 
     void setFileName(const QString &value);
 

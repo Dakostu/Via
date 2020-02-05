@@ -106,6 +106,12 @@ void MainWindowController::swapCurrentProjectRoutes(int x, int y) {
     emit routeListChanged();
 }
 
+void MainWindowController::swapNodesOfRoute(int routeIndex, int x, int y)  {
+    currentProject->swapNodes(routeIndex, x, y);
+    emit routeNodeListChanged();
+}
+
+
 void MainWindowController::printCurrentProject() {
     #ifndef QT_NO_PRINTER
 

@@ -74,6 +74,7 @@ public slots:
     void addRouteNode(int x, int y);
     void deleteSelectedRouteNode();
     void setNodeSettingsEnabled(bool enabled);
+    void moveNodeEvent(int by);
 
 
 

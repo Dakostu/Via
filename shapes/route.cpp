@@ -102,6 +102,10 @@ void Route::eraseAllNodes() {
     }
 }
 
+void Route::swapNodes(int x, int y) {
+    (*nodes[x])->swap(*nodes[y]);
+}
+
 void Route::setElementSize(int newSize) {
     for (auto &currentNode : nodes) {
         currentNode->setElementSize(newSize);

@@ -49,6 +49,7 @@ public:
     void deleteRouteofCurrentProject(int index);
     void deleteNodeofRoute(int routeIndex, int nodeIndex);
     void swapCurrentProjectRoutes(int x, int y);
+    void swapNodesOfRoute(int routeIndex, int x, int y);
 
 
 public slots:
