@@ -76,9 +76,15 @@ void MainWindow::initializeQuickButtons() {
     quickButtonGroup->addButton(ui->quickButtonMove);
     quickButtonGroup->addButton(ui->quickButtonSelect);
     connect(ui->quickButtonNew, &QPushButton::clicked, this, &MainWindow::createNewProject);
-    connect(ui->quickButtonAutoAdd, &QAbstractButton::clicked, this, [&]() { activateAutoAddMode(); });
-    connect(ui->quickButtonMove, &QAbstractButton::clicked, this, [&]() { controller.changeUIState<UIMoveNodesState>(); });
-    connect(ui->quickButtonSelect, &QAbstractButton::clicked, this, [&]() { controller.changeUIState<UISelectNodeState>(); });
+    connect(ui->quickButtonAutoAdd, &QAbstractButton::clicked, this, &MainWindow::activateAutoAddMode);
+    connect(ui->quickButtonMove, &QAbstractButton::clicked, this, [&]() {
+        ui->picture->removeTemporaryNode();
+        controller.changeUIState<UIMoveNodesState>();
+    });
+    connect(ui->quickButtonSelect, &QAbstractButton::clicked, this, [&]() {
+        ui->picture->removeTemporaryNode();
+        controller.changeUIState<UISelectNodeState>();
+    });
 }
 
 void MainWindow::initializeMenus() {
