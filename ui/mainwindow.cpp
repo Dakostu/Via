@@ -135,7 +135,6 @@ void MainWindow::initializeNodeBoxUI() {
     connect(ui->nodeBoxButtonDeleteNode, &QPushButton::clicked, this, &MainWindow::deleteSelectedRouteNode);
     connect(ui->nodeBoxButtonUp, &QPushButton::clicked, this, [&]() { moveNodeEvent(-1); });
     connect(ui->nodeBoxButtonDown, &QPushButton::clicked, this, [&]() { moveNodeEvent(1); });
-
     connect(ui->nodeBoxNodeList, &RouteDataView::changedSelection, this, &MainWindow::routeNodeSelectionEvent);
 }
 
@@ -307,6 +306,8 @@ void MainWindow::routeSelectionEvent() {
     ui->routeColorButton->changeColor(routeData.getColor());
     //shape
     ui->routeNodeOrderCheckBox->setChecked(routeData.getShowOrder());
+
+    ui->picture->setCurrentRoute(selectedRouteIndex);
 
     updateNodeList();
 }

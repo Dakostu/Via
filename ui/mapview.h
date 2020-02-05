@@ -1,6 +1,7 @@
 #ifndef MAPVIEW_H
 #define MAPVIEW_H
 
+#include "../data-structures/indexlist.h"
 #include "../controller/uistate.h"
 #include "../shapes/route.h"
 #include "../interfaces/nodeshapeable.h"
@@ -21,7 +22,7 @@ class MapView : public QGraphicsView
     static constexpr qreal DETAIL_LEVEL_MIN = 0.05;
     static constexpr qreal DETAIL_LEVEL_MAX = 17;
     std::unique_ptr<UIState> *currentState;
-    std::list<std::unique_ptr<Route>> drawnRoutes;
+    IndexList<std::unique_ptr<Route>> drawnRoutes;
     Route* currentRoute;
 
 public:
@@ -44,6 +45,7 @@ public:
     void addNodeToCurrentRoute(int x, int y);
 
     Route *getCurrentRoute() const;
+    void setCurrentRoute(int routeIndex);
 
 signals:
     void routeNodeAdded(int x, int y);

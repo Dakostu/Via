@@ -14,7 +14,7 @@ class Project : public Serializable
     QString fileName;
     QPixmap imagePixMap;
     bool hasbeenModified;
-    int totalCreatedRoutes;
+    int totalCreatedRoutes;    
     IndexList<RouteData> routes;
 
     QByteArray pixMapToBytes() const;

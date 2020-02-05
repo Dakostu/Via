@@ -99,7 +99,7 @@ void Project::addRoute(RouteData &route) {
 
 void Project::addRouteNode(RouteNodeData &node, int routeIndex) {
     auto &selectedRoute = *routes[routeIndex];
-    node.setName(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(selectedRoute.length() + 1));
+    node.setName(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(selectedRoute.getTotalCreatedNodes() + 1));
     selectedRoute.addNode(node);
 }
 

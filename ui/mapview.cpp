@@ -84,3 +84,7 @@ Route *MapView::getCurrentRoute() const
 {
     return currentRoute;
 }
+
+void MapView::setCurrentRoute(int routeIndex) {
+    currentRoute = (*drawnRoutes[routeIndex]).get();
+}
