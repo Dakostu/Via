@@ -4,6 +4,7 @@
 
 using namespace Via::Shapes;
 using namespace Via::Control;
+using namespace Via::Model;
 
 Route::Route(const QColor &color, QGraphicsScene *scene, std::unique_ptr<UIState> &state)
     : routeColor(color), currentScene(scene), currentState(state)

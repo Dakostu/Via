@@ -8,6 +8,8 @@
 
 using namespace Via::UI;
 using namespace Via::Control;
+using namespace Via::Model;
+using namespace Via::Shapes;
 
 MapView::MapView(QWidget* parent) : QGraphicsView(parent) {
     currentDetailLevel = QStyleOptionGraphicsItem::levelOfDetailFromTransform(transform());

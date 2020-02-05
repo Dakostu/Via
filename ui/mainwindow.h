@@ -16,9 +16,13 @@
 #include <QDebug>
 
 QT_BEGIN_NAMESPACE
+using namespace Via::UI;
+using namespace Via::Model;
+using namespace Via::Shapes;
+using namespace Via::Control;
+using namespace Via::Structures;
+using namespace Via::Interfaces;
 namespace Ui {
-    using namespace Via::UI;
-    using namespace Via::Model;
     class MainWindow;
 }
 QT_END_NAMESPACE
