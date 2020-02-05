@@ -36,6 +36,8 @@ public:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
 
+    bool viewportEvent(QEvent *event) override;
+
     void triggerParentMousePressEvent(QMouseEvent* event);
     void triggerParentMouseMoveEvent(QMouseEvent* event);
     void triggerParentMouseReleaseEvent(QMouseEvent* event);
@@ -43,7 +45,7 @@ public:
     void addRoute(const RouteData &route);
     void addRoute(const QColor &color);
     void addNodeToCurrentRoute(int x, int y);
-    void eraseTemporaryNode();
+    void removeTemporaryNode();
 
     Route *getCurrentRoute() const;
     void setCurrentRoute(int routeIndex);

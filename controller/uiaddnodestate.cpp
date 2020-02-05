@@ -34,3 +34,7 @@ void UIAddNodeState::mapViewMouseReleaseEvent(MapView *view, QMouseEvent *mouseE
         view->setDragMode(QGraphicsView::NoDrag);
     }
 }
+
+void UIAddNodeState::mapViewMouseLeaveEvent(MapView *view, QEvent *mouseEvent) {
+    view->removeTemporaryNode();
+}

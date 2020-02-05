@@ -49,6 +49,13 @@ void MapView::mouseReleaseEvent(QMouseEvent *event) {
     currentState->get()->mapViewMouseReleaseEvent(this, event);
 }
 
+bool MapView::viewportEvent(QEvent *event) {
+    if (event->type() == QEvent::Leave) {
+        currentState->get()->mapViewMouseLeaveEvent(this, event);
+    }
+    return QGraphicsView::viewportEvent(event);
+}
+
 void MapView::triggerParentMousePressEvent(QMouseEvent *event) {
     QGraphicsView::mousePressEvent(event);
 }
@@ -78,6 +85,10 @@ void MapView::addRoute(const QColor &color) {
 void MapView::addNodeToCurrentRoute(int x, int y) {
     currentRoute->addNode(x,y);
     emit routeNodeAdded(x, y);
+}
+
+void MapView::removeTemporaryNode() {
+    currentRoute->removeTemporaryPreviewNode();
 }
 
 Route *MapView::getCurrentRoute() const

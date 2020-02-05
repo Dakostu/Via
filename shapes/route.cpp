@@ -44,7 +44,9 @@ bool Route::hasTemporaryPreviewNode() {
 
 void Route::removeTemporaryPreviewNode() {
     if (hasTemporaryPreviewNode()) {
-        currentScene->removeItem(nodes.back());
+        auto tempNode = nodes.back();
+        currentScene->removeItem(tempNode->getFromConnection());
+        currentScene->removeItem(tempNode);
         nodes.erase(nodes[nodes.size() - 1]);
     }
 }

@@ -33,6 +33,7 @@ public:
     virtual void mapViewMouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {}
     virtual void mapViewMousePressEvent(MapView *view, QMouseEvent *mouseEvent) {}
     virtual void mapViewMouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) {}
+    virtual void mapViewMouseLeaveEvent(MapView *view, QEvent *mouseEvent) {}
 
 };
 
