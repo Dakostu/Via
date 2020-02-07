@@ -17,9 +17,9 @@
 #include <QPushButton>
 #include <QWheelEvent>
 
-#include "../controller/uiaddnodestate.h"
-#include "../controller/uimovenodesstate.h"
-#include "../controller/uiselectnodestate.h"
+#include "../controller/states/uiaddnodestate.h"
+#include "../controller/states/uimovenodesstate.h"
+#include "../controller/states/uiselectnodestate.h"
 #include "../shapes/routenode.h"
 #include "../shapes/route.h"
 #include "../shapes/octagon.h"

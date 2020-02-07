@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.5)
 
 set(EXEC_NAME Via)
 
-file(GLOB_RECURSE ALL_SRC_HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
-file(GLOB_RECURSE ALL_SRC_CODE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+file(GLOB_RECURSE ALL_SRC_HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.h" "${CMAKE_CURRENT_SOURCE_DIR}/*/*.h")
+file(GLOB_RECURSE ALL_SRC_CODE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*/*.cpp")
 
 set (ALL_FILES ${controller_src} ${interface_src} ${structures_src} ${model_src} ${shapes_src} ${ui_src} ${TS_FILES})
 set (LINK_LIBS PRIVATE Qt5::Widgets)

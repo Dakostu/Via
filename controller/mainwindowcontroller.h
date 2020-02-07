@@ -2,7 +2,7 @@
 #define MAINWINDOWCONTROLLER_H
 
 #include "../model/project.h"
-#include "../controller/uistate.h"
+#include "../controller/states/uistate.h"
 #include <memory>
 #include <QObject>
 #include <QStringListModel>

@@ -1,7 +1,7 @@
 #ifndef ROUTENODE_H
 #define ROUTENODE_H
 
-#include "../controller/uistate.h"
+#include "../controller/states/uistate.h"
 #include "../interfaces/nodeshapeable.h"
 #include "../interfaces/viewcustomizable.h"
 #include "../ui/routenodelabel.h"

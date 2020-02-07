@@ -2,7 +2,7 @@
 #define ROUTE_H
 
 #include "../data-structures/indexlist.h"
-#include "../controller/uistate.h"
+#include "../controller/states/uistate.h"
 #include "../interfaces/viewcustomizable.h"
 #include "../model/routenodedata.h"
 #include "routenode.h"

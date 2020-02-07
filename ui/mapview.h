@@ -2,7 +2,7 @@
 #define MAPVIEW_H
 
 #include "../data-structures/indexlist.h"
-#include "../controller/uistate.h"
+#include "../controller/states/uistate.h"
 #include "../shapes/route.h"
 #include "../interfaces/nodeshapeable.h"
 #include "../model/routedata.h"

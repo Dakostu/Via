@@ -1,8 +1,8 @@
 #ifndef UISTATE_H
 #define UISTATE_H
 
-#include "../shapes/routenode.h"
-#include "../ui/mapview.h"
+#include "../../shapes/routenode.h"
+#include "../../ui/mapview.h"
 
 #include <QAbstractButton>
 #include <QDebug>
