@@ -10,13 +10,12 @@ class RouteDataUnitTests : public QObject {
 
     Q_OBJECT
 
-    void checkRouteInsertion(size_t size);
-    Via::Model::RouteData generateRoute(size_t size);
+    void checkRouteInsertion(int size);
+    Via::Model::RouteData generateRoute(int size);
 
 private slots:
     void indexOperationTestOddSize();
     void indexOperationTestEvenSize();
-    void insertionTest();
     void removalTest();
     void removalTestWithCustomNode();
 };

@@ -12,8 +12,6 @@ class JSONUnitTests : public QObject
 
 private slots:
     void testRouteNodeDataSerialization();
-    void testRouteSerialization();
-    void testProjectSerialization();
     void testJSONFileInterface();
 };
 
