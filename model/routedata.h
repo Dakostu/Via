@@ -20,7 +20,7 @@ class RouteData : public Data
     Via::Structures::IndexList<RouteNodeData> nodes;
 
     RouteNodeData generateNewNode(int x, int y);
-    void refreshNames(RouteDataIterator& it, int index);
+    void refreshNames(RouteDataIterator&& it, int index);
 
 public:
     RouteData();
@@ -42,8 +42,6 @@ public:
 
     void setShowOrder(bool value);
 
-    void addNode(int x, int y);
-    void addNode(int x, int y, int index);
     void addNode(const RouteNodeData &node);
     void eraseNode(int index);
 

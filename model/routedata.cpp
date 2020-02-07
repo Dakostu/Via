@@ -36,6 +36,8 @@ void RouteData::fromJSON(const QJsonObject &object) {
         addNode(node);
     }
 
+    refreshNames(nodes.begin(), 0);
+
 }
 
 QJsonObject RouteData::toJSON() const {
@@ -89,22 +91,7 @@ QStringList RouteData::getNodeTitles() {
     return nodeTitleList;
 }
 
-void RouteData::addNode(int x, int y) {
-    nodes.emplace_back(generateNewNode(x,y));
-}
-
-void RouteData::addNode(int x, int y, int index) {
-    auto iterator = nodes[index];
-    auto newNode = generateNewNode(x,y);
-
-    newNode.setName(QString::number(index + 1));
-
-    nodes.insert(iterator, newNode);
-
-    refreshNames(iterator, index + 1);
-}
-
-void RouteData::refreshNames(RouteDataIterator& it, int index) {
+void RouteData::refreshNames(RouteDataIterator&& it, int index) {
     if (it == nodes.end()) {
         return;
     }
@@ -124,8 +111,7 @@ void RouteData::addNode(const RouteNodeData &node) {
 
 void RouteData::eraseNode(int index) {
     auto iterator = nodes[index];
-    iterator = nodes.erase(iterator);
-    refreshNames(iterator, index);
+    refreshNames(nodes.erase(iterator), index);
 }
 
 bool RouteData::getShowOrder() const
