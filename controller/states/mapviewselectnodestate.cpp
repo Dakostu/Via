@@ -1,3 +1,4 @@
+#include "../../ui/mapview.h"
 #include "mapviewselectnodestate.h"
 
 using namespace Via::Control;
@@ -8,14 +9,14 @@ MapViewSelectNodeState::MapViewSelectNodeState()
 
 }
 
-void mouseMoveEvent(Via::UI::MapView &view, QMouseEvent *mouseEvent) {
-    view.setDragMode(QGraphicsView::NoDrag);
+void mouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
+    view->setDragMode(QGraphicsView::NoDrag);
 }
 
-void mousePressEvent(Via::UI::MapView &view, QMouseEvent *mouseEvent) {
-    view.triggerParentMousePressEvent(mouseEvent);
+void mousePressEvent(MapView *view, QMouseEvent *mouseEvent) {
+    view->triggerParentMousePressEvent(mouseEvent);
 }
 
-void mouseReleaseEvent(Via::UI::MapView &view, QMouseEvent *mouseEvent) {
-    view.triggerParentMouseReleaseEvent(mouseEvent);
+void mouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) {
+    view->triggerParentMouseReleaseEvent(mouseEvent);
 }

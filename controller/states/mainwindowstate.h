@@ -1,8 +1,13 @@
 #ifndef MAINWINDOWSTATE_H
 #define MAINWINDOWSTATE_H
 
-#include "../../ui/mainwindow.h"
+#include "uistate.h"
+
 #include <QAbstractButton>
+
+namespace Via::UI {
+class MainWindow;
+}
 
 namespace Via::Control {
 
@@ -13,7 +18,7 @@ protected:
 public:    
     virtual ~MainWindowState();
 
-    virtual void setToggleButtons(Via::UI::MainWindow &window);
+    virtual void setToggleButtons(Via::UI::MainWindow *window);
 
 };
 

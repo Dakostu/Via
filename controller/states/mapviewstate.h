@@ -1,7 +1,12 @@
 #ifndef MAPVIEWSTATE_H
 #define MAPVIEWSTATE_H
 
-#include "../../ui/mapview.h"
+#include "uistate.h"
+#include <QMouseEvent>
+
+namespace Via::UI {
+class MapView;
+}
 
 namespace Via::Control {
 
@@ -13,10 +18,10 @@ protected:
 public:
     virtual ~MapViewState();
 
-    virtual void mouseMoveEvent(Via::UI::MapView &view, QMouseEvent *mouseEvent);
-    virtual void mousePressEvent(Via::UI::MapView &view, QMouseEvent *mouseEvent);
-    virtual void mouseReleaseEvent(Via::UI::MapView &view, QMouseEvent *mouseEvent);
-    virtual void mouseLeaveEvent(Via::UI::MapView &view, QEvent *mouseEvent);
+    virtual void mouseMoveEvent(Via::UI::MapView *view, QMouseEvent *mouseEvent);
+    virtual void mousePressEvent(Via::UI::MapView *view, QMouseEvent *mouseEvent);
+    virtual void mouseReleaseEvent(Via::UI::MapView *view, QMouseEvent *mouseEvent);
+    virtual void mouseLeaveEvent(Via::UI::MapView *view, QEvent *mouseEvent);
 };
 
 }

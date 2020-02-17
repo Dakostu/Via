@@ -8,7 +8,7 @@ namespace Via::Control {
 class MainWindowSelectNodeState : public MainWindowState
 {
 public:
-    void setToggleButtons(Via::UI::MainWindow &window) override;
+    void setToggleButtons(Via::UI::MainWindow *window) override;
 };
 
 }

@@ -1,3 +1,4 @@
+#include "../../ui/mapview.h"
 #include "mapviewmovenodestate.h"
 #include <QApplication>
 #include <QCursor>
@@ -12,14 +13,14 @@ MapViewMoveNodeState::MapViewMoveNodeState()
 
 }
 
-void mouseMoveEvent(Via::UI::MapView &view, QMouseEvent *mouseEvent) {
-    view.setDragMode(QGraphicsView::ScrollHandDrag);
-    view.triggerParentMouseMoveEvent(mouseEvent);
+void mouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
+    view->setDragMode(QGraphicsView::ScrollHandDrag);
+    view->triggerParentMouseMoveEvent(mouseEvent);
     if (mouseEvent->buttons().testFlag(Qt::LeftButton)) {
-        const QRect screenRect = QApplication::desktop()->screenGeometry(&view);
+        const QRect screenRect = QApplication::desktop()->screenGeometry(view);
         auto eventPos = mouseEvent->globalPos();
-        auto hBar = view.horizontalScrollBar();
-        auto vBar = view.verticalScrollBar();
+        auto hBar = view->horizontalScrollBar();
+        auto vBar = view->verticalScrollBar();
 
         auto reEnterBoundaries = [](auto boundaryValue, auto firstBoundary, auto secondBoundary, QScrollBar *bar) {
             if (boundaryValue <= firstBoundary + 4 && bar->value() < bar->maximum() - 10) {
@@ -34,21 +35,21 @@ void mouseMoveEvent(Via::UI::MapView &view, QMouseEvent *mouseEvent) {
         eventPos.setY(reEnterBoundaries(eventPos.y(), screenRect.top(), screenRect.bottom(), vBar));
 
         if (mouseEvent->globalX() != eventPos.x()) {
-            view.setDragMode(QGraphicsView::NoDrag);
+            view->setDragMode(QGraphicsView::NoDrag);
             QCursor::setPos(eventPos);
-            view.setDragMode(QGraphicsView::ScrollHandDrag);
+            view->setDragMode(QGraphicsView::ScrollHandDrag);
         } else if (mouseEvent->globalY() != eventPos.y()) {
-            view.setDragMode(QGraphicsView::NoDrag);
+            view->setDragMode(QGraphicsView::NoDrag);
             QCursor::setPos(eventPos);
-            view.setDragMode(QGraphicsView::ScrollHandDrag);
+            view->setDragMode(QGraphicsView::ScrollHandDrag);
         }
     }
 }
 
-void mousePressEvent(Via::UI::MapView &view, QMouseEvent *mouseEvent) {
-    view.triggerParentMousePressEvent(mouseEvent);
+void mousePressEvent(MapView *view, QMouseEvent *mouseEvent) {
+    view->triggerParentMousePressEvent(mouseEvent);
 }
 
-void mouseReleaseEvent(Via::UI::MapView &view, QMouseEvent *mouseEvent) {
-    view.triggerParentMouseReleaseEvent(mouseEvent);
+void mouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) {
+    view->triggerParentMouseReleaseEvent(mouseEvent);
 }

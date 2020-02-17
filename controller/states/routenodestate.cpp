@@ -1,6 +1,7 @@
 #include "routenodestate.h"
 
 using namespace Via::Control;
+using namespace Via::Shapes;
 
 RouteNodeState::RouteNodeState() {
 
@@ -10,22 +11,22 @@ RouteNodeState::~RouteNodeState() {
 
 }
 
-void RouteNodeState::mouseHoverEnterEvent(Via::Shapes::RouteNode &node, QGraphicsSceneHoverEvent *hoverEvent) {
+void RouteNodeState::mouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {
 
 }
 
-void RouteNodeState::mouseHoverLeaveEvent(Via::Shapes::RouteNode &node, QGraphicsSceneHoverEvent *hoverEvent) {
+void RouteNodeState::mouseHoverLeaveEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {
 
 }
 
-void RouteNodeState::mouseMoveEvent(Via::Shapes::RouteNode &node, QGraphicsSceneMouseEvent *mouseEvent) {
+void RouteNodeState::mouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
 
 }
 
-void RouteNodeState::mousePressEvent(Via::Shapes::RouteNode &node, QGraphicsSceneMouseEvent *mouseEvent) {
+void RouteNodeState::mousePressEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
 
 }
 
-void RouteNodeState::mouseReleaseEvent(Via::Shapes::RouteNode &node, QGraphicsSceneMouseEvent *mouseEvent) {
+void RouteNodeState::mouseReleaseEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {
 
 }
