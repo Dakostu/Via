@@ -13,7 +13,7 @@ MapViewMoveNodeState::MapViewMoveNodeState()
 
 }
 
-void mouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
+void MapViewMoveNodeState::mouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
     view->setDragMode(QGraphicsView::ScrollHandDrag);
     view->triggerParentMouseMoveEvent(mouseEvent);
     if (mouseEvent->buttons().testFlag(Qt::LeftButton)) {
@@ -46,10 +46,10 @@ void mouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
     }
 }
 
-void mousePressEvent(MapView *view, QMouseEvent *mouseEvent) {
+void MapViewMoveNodeState::mousePressEvent(MapView *view, QMouseEvent *mouseEvent) {
     view->triggerParentMousePressEvent(mouseEvent);
 }
 
-void mouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) {
+void MapViewMoveNodeState::mouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) {
     view->triggerParentMouseReleaseEvent(mouseEvent);
 }

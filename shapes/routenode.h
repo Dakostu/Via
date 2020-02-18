@@ -1,7 +1,7 @@
 #ifndef ROUTENODE_H
 #define ROUTENODE_H
 
-#include "../controller/states/uistate.h"
+#include "../controller/states/routenodestate.h"
 #include "../interfaces/nodeshapeable.h"
 #include "../interfaces/viewcustomizable.h"
 #include "../ui/routenodelabel.h"
@@ -27,14 +27,14 @@ protected:
     bool styleDiffersFromRoute;
     RouteConnection* fromConnection;
     std::unique_ptr<RouteConnection> toConnection;
-    std::unique_ptr<Via::Control::UIState> &currentState;
+    std::unique_ptr<Via::Control::RouteNodeState> &currentState;
 
     void centerNodeLabelBox();    
 
 
 public:
-    RouteNode(Via::Interfaces::NodeShapeable *newNode, QString nodeLabelText, QString extraTextLabelText, std::unique_ptr<Via::Control::UIState> &state);
-    RouteNode(Via::Interfaces::NodeShapeable *newNode, QString nodeLabelText, std::unique_ptr<Via::Control::UIState> &state);
+    RouteNode(Via::Interfaces::NodeShapeable *newNode, QString nodeLabelText, QString extraTextLabelText, std::unique_ptr<Via::Control::RouteNodeState> &state);
+    RouteNode(Via::Interfaces::NodeShapeable *newNode, QString nodeLabelText, std::unique_ptr<Via::Control::RouteNodeState> &state);
 
     void setElementSize(int newSize) override;
     void setColors(const QColor &color) override;

@@ -1,4 +1,6 @@
-#include "states/uimovenodesstate.h"
+#include "../controller/states/mainwindowmovenodestate.h"
+#include "../controller/states/mapviewmovenodestate.h"
+#include "../controller/states/routenodemovenodestate.h"
 #include "mainwindowcontroller.h"
 #include "programversion.h"
 #include "jsonfile.h"
@@ -8,7 +10,9 @@ using namespace Via::Control;
 using namespace Via::Model;
 
 MainWindowController::MainWindowController()
-    : currentState(new UIMoveNodesState)
+    : currentMainWindowState(new MainWindowMoveNodeState),
+      currentMapViewState(new MapViewMoveNodeState),
+      currentRouteNodeState(new RouteNodeMoveNodeState)
 {
 
 }
@@ -44,11 +48,6 @@ void MainWindowController::loadCurrentProjectFromFile(const QString &fileName) {
 
     setCurrentProject(fileName);
     addFileToRecentlyOpenedProjects(fileName);
-}
-
-std::unique_ptr<UIState>& MainWindowController::getCurrentState()
-{
-    return currentState;
 }
 
 void MainWindowController::addFileToRecentlyOpenedProjects(const QString &fileName) {
@@ -111,6 +110,19 @@ void MainWindowController::swapCurrentProjectRoutes(int x, int y) {
 void MainWindowController::swapNodesOfRoute(int routeIndex, int x, int y)  {
     currentProject->swapNodes(routeIndex, x, y);
     emit routeNodeListChanged();
+}
+
+
+std::unique_ptr<MainWindowState>& MainWindowController::getCurrentMainWindowState() {
+    return currentMainWindowState;
+}
+
+std::unique_ptr<MapViewState>& MainWindowController::getCurrentMapViewState() {
+    return currentMapViewState;
+}
+
+std::unique_ptr<RouteNodeState>& MainWindowController::getCurrentRouteNodeState() {
+    return currentRouteNodeState;
 }
 
 

@@ -61,6 +61,10 @@ public:
     MainWindow(QWidget *parent, Via::Control::MainWindowController &newController);
     ~MainWindow();
 
+    QAbstractButton* getQuickButtonMove();
+    QAbstractButton* getQuickButtonAutoAdd();
+    QAbstractButton* getQuickButtonSelect();
+
 public slots:
     void addRoute();    
     void deleteSelectedRoute();

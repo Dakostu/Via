@@ -3,11 +3,15 @@
 
 #include "../model/project.h"
 #include "../controller/states/uistate.h"
+#include "../controller/states/mainwindowstate.h"
+#include "../controller/states/mapviewstate.h"
+#include "../controller/states/routenodestate.h"
 #include <memory>
 #include <QObject>
 #include <QStringListModel>
 #include <QtPrintSupport/QPrinter>
 #include <QUndoStack>
+#include <type_traits>
 
 namespace Via::Control {
 
@@ -20,7 +24,9 @@ class MainWindowController : public QObject
     std::unordered_map<QString, Via::Model::Project> openProjects;
     Via::Model::Project *currentProject;
     std::list<QString> recentlyOpenedProjects;
-    std::unique_ptr<UIState> currentState;
+    std::unique_ptr<MainWindowState> currentMainWindowState;
+    std::unique_ptr<MapViewState> currentMapViewState;
+    std::unique_ptr<RouteNodeState> currentRouteNodeState;
     QStringListModel currentRouteTitles;
     QStringListModel routeNodeTitles;
 
@@ -35,16 +41,16 @@ public:
 
     MainWindowController();
 
-    Via::Model::Project* getCurrentProject();
-    std::unique_ptr<UIState>& getCurrentState();
+    Via::Model::Project* getCurrentProject();    
     QStringListModel& getCurrentRouteTitles();
     QStringListModel& getNodeTitlesOfRoute(int index);
 
-    template <typename State>
-    void changeUIState() {
-        currentState.reset(new State);
+    template <typename NewMainWindowState, typename NewMapViewState, typename NewRouteNodeState>
+    void changeUIStates() {
+        currentMainWindowState.reset(new NewMainWindowState);
+        currentMapViewState.reset(new NewMapViewState);
+        currentRouteNodeState.reset(new NewRouteNodeState);
     }
-
     void addNewRouteToCurrentProject(const QColor &newColor);
     void addNewNodeToRoute(int x, int y, const QColor &newColor, int routeIndex);
     size_t amountOfOpenProjects();
@@ -52,6 +58,10 @@ public:
     void deleteNodeofRoute(int routeIndex, int nodeIndex);
     void swapCurrentProjectRoutes(int x, int y);
     void swapNodesOfRoute(int routeIndex, int x, int y);
+
+    std::unique_ptr<MainWindowState>& getCurrentMainWindowState();
+    std::unique_ptr<MapViewState>& getCurrentMapViewState();
+    std::unique_ptr<RouteNodeState>& getCurrentRouteNodeState();
 
 
 public slots:

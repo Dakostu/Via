@@ -6,7 +6,7 @@ using namespace Via::Interfaces;
 using namespace Via::Control;
 using namespace Via::UI;
 
-RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extraTextLabelText, std::unique_ptr<UIState> &state)
+RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extraTextLabelText, std::unique_ptr<RouteNodeState> &state)
     : node(newNode),
       nodeLabel(nodeLabelText),
       extraTextLabel(extraTextLabelText, node.get()),
@@ -35,7 +35,7 @@ RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extr
     this->setZValue(std::numeric_limits<qreal>::max());
 }
 
-RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, std::unique_ptr<UIState> &state) :
+RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, std::unique_ptr<RouteNodeState> &state) :
     RouteNode(newNode, nodeLabelText, "", state) {}
 
 void RouteNode::setElementSize(int newSize) {
@@ -94,12 +94,12 @@ void RouteNode::centerNodeLabelBox() {
 }
 
 void RouteNode::hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) {
-    currentState->routeNodeMouseHoverEnterEvent(this, hoverEvent);
+    currentState->mouseHoverEnterEvent(this, hoverEvent);
     QGraphicsItemGroup::hoverEnterEvent(hoverEvent);
 }
 
 void RouteNode::hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) {
-    currentState->routeNodeMouseHoverLeaveEvent(this, hoverEvent);
+    currentState->mouseHoverLeaveEvent(this, hoverEvent);
     QGraphicsItemGroup::hoverLeaveEvent(hoverEvent);
 }
 
@@ -135,7 +135,7 @@ RouteExtraTextLabel* RouteNode::getExtraText() {
 }
 
 void RouteNode::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
-    currentState->routeNodeMouseMoveEvent(this, mouseEvent);
+    currentState->mouseMoveEvent(this, mouseEvent);
 }
 
 void RouteNode::triggerParentMouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
@@ -143,12 +143,12 @@ void RouteNode::triggerParentMouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent
 }
 
 void RouteNode::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
-    currentState->routeNodeMousePressEvent(this, mouseEvent);
+    currentState->mousePressEvent(this, mouseEvent);
     QGraphicsItemGroup::mousePressEvent(mouseEvent);
 }
 
 void RouteNode::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
-    currentState->routeNodeMouseReleaseEvent(this, mouseEvent);
+    currentState->mouseReleaseEvent(this, mouseEvent);
     QGraphicsItemGroup::mouseReleaseEvent(mouseEvent);
 }
 

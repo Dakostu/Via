@@ -17,13 +17,20 @@
 #include <QPushButton>
 #include <QWheelEvent>
 
-#include "../controller/states/uiaddnodestate.h"
-#include "../controller/states/uimovenodesstate.h"
-#include "../controller/states/uiselectnodestate.h"
 #include "../shapes/routenode.h"
 #include "../shapes/route.h"
 #include "../shapes/octagon.h"
 #include "../shapes/routeconnection.h"
+
+#include "../controller/states/mainwindowaddnodestate.h"
+#include "../controller/states/mainwindowmovenodestate.h"
+#include "../controller/states/mainwindowselectnodestate.h"
+#include "../controller/states/mapviewaddnodestate.h"
+#include "../controller/states/mapviewmovenodestate.h"
+#include "../controller/states/mapviewselectnodestate.h"
+#include "../controller/states/routenodeaddnodestate.h"
+#include "../controller/states/routenodemovenodestate.h"
+#include "../controller/states/routenodeselectnodestate.h"
 
 using namespace Via::UI;
 using namespace Via::Control;
@@ -53,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     initializeNodeBoxUI();
     initializeNodeSettingsUI();
 
-    ui->picture->setUIState(controller.getCurrentState());
+    ui->picture->setUIState(controller.getCurrentMapViewState());
     if (controller.amountOfOpenProjects() == 0) {
         setNoProjectsOpenMode(true);
     }
@@ -66,15 +73,25 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+QAbstractButton* MainWindow::getQuickButtonMove() {
+    return ui->quickButtonMove;
+}
+
+QAbstractButton* MainWindow::getQuickButtonAutoAdd() {
+    return ui->quickButtonAutoAdd;
+}
+
+QAbstractButton* MainWindow::getQuickButtonSelect() {
+    return ui->quickButtonSelect;
+}
+
 void MainWindow::initializeQuickButtons() {
 
     connect(ui->quickButtonOpen, &QPushButton::clicked, this, &MainWindow::loadProject);
     connect(ui->quickButtonSave, &QPushButton::clicked, this, &MainWindow::saveProject);
     connect(ui->quickButtonSaveAs, &QPushButton::clicked, this, &MainWindow::saveProjectAs);
 
-    controller.getCurrentState()->setToggleButtons(ui->quickButtonAutoAdd,
-                                   ui->quickButtonMove,
-                                   ui->quickButtonSelect);
+    controller.getCurrentMainWindowState()->setToggleButtons(this);
     quickButtonGroup->addButton(ui->quickButtonAutoAdd);
     quickButtonGroup->addButton(ui->quickButtonMove);
     quickButtonGroup->addButton(ui->quickButtonSelect);
@@ -82,11 +99,13 @@ void MainWindow::initializeQuickButtons() {
     connect(ui->quickButtonAutoAdd, &QAbstractButton::clicked, this, &MainWindow::activateAutoAddMode);
     connect(ui->quickButtonMove, &QAbstractButton::clicked, this, [&]() {
         ui->picture->removeTemporaryNode();
-        controller.changeUIState<UIMoveNodesState>();
+        controller.changeUIStates<MainWindowMoveNodeState, MapViewMoveNodeState, RouteNodeMoveNodeState>();
+        //controller.changeUIState<UIMoveNodesState>();
     });
     connect(ui->quickButtonSelect, &QAbstractButton::clicked, this, [&]() {
         ui->picture->removeTemporaryNode();
-        controller.changeUIState<UISelectNodeState>();
+        controller.changeUIStates<MainWindowSelectNodeState, MapViewSelectNodeState, RouteNodeSelectNodeState>();
+        //controller.changeUIState<UISelectNodeState>();
     });
 }
 
@@ -187,7 +206,7 @@ void MainWindow::addRoute() {
     ui->routeColorButton->setFlat(false);
 
     auto color = colorGenerator();
-    ui->picture->addRoute(color);
+    ui->picture->addRoute(color, controller.getCurrentRouteNodeState());
     controller.addNewRouteToCurrentProject(color);
 
     ui->routeBoxRouteList->moveSelectionTo(ui->routeBoxRouteList->model()->rowCount() - 1);
@@ -247,7 +266,7 @@ void MainWindow::loadProject() {
         controller.loadCurrentProjectFromFile(newFileName);
         setNoProjectsOpenMode(false);
         for (const auto &route : controller.getCurrentProject()->getRoutes()) {
-            ui->picture->addRoute(route);
+            ui->picture->addRoute(route, controller.getCurrentRouteNodeState());
         }
     }
 
@@ -385,7 +404,7 @@ void MainWindow::resetSettingsBox() {
 }
 
 void MainWindow::activateAutoAddMode() {
-    controller.changeUIState<UIAddNodeState>();
+    controller.changeUIStates<MainWindowAddNodeState, MapViewAddNodeState, RouteNodeAddNodeState>();
 
     if (!ui->routeBoxRouteList->selectionModel()->hasSelection() || ui->routeBoxRouteList->model()->rowCount() == 0) {
         addRoute();

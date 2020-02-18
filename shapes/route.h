@@ -2,7 +2,7 @@
 #define ROUTE_H
 
 #include "../data-structures/indexlist.h"
-#include "../controller/states/uistate.h"
+#include "../controller/states/routenodestate.h"
 #include "../interfaces/viewcustomizable.h"
 #include "../model/routenodedata.h"
 #include "routenode.h"
@@ -24,11 +24,11 @@ protected:
     bool showDirection;
     QColor routeColor;
     QGraphicsScene *currentScene;
-    std::unique_ptr<Via::Control::UIState> &currentState;
+    std::unique_ptr<Via::Control::RouteNodeState> &currentState;
 
     Via::Structures::IndexList<RouteNode*> nodes;
 public:
-    Route(const QColor &color, QGraphicsScene *scene, std::unique_ptr<Via::Control::UIState> &state);
+    Route(const QColor &color, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);
 
     virtual QColor getColors() const;
 

@@ -18,7 +18,7 @@ MapView::MapView(QWidget* parent) : QGraphicsView(parent) {
 
 }
 
-void MapView::setUIState(std::unique_ptr<UIState> &state) {
+void MapView::setUIState(std::unique_ptr<MapViewState> &state) {
     currentState = &state;
 }
 
@@ -43,20 +43,20 @@ void MapView::wheelEvent(QWheelEvent *event) {
 
 
 void MapView::mouseMoveEvent(QMouseEvent* event) {
-    currentState->get()->mapViewMouseMoveEvent(this, event);
+    currentState->get()->mouseMoveEvent(this, event);
 }
 
 void MapView::mousePressEvent(QMouseEvent *event) {
-    currentState->get()->mapViewMousePressEvent(this, event);
+    currentState->get()->mousePressEvent(this, event);
 }
 
 void MapView::mouseReleaseEvent(QMouseEvent *event) {
-    currentState->get()->mapViewMouseReleaseEvent(this, event);
+    currentState->get()->mouseReleaseEvent(this, event);
 }
 
 bool MapView::viewportEvent(QEvent *event) {
     if (event->type() == QEvent::Leave) {
-        currentState->get()->mapViewMouseLeaveEvent(this, event);
+        currentState->get()->mouseLeaveEvent(this, event);
     }
     return QGraphicsView::viewportEvent(event);
 }
@@ -73,8 +73,8 @@ void MapView::triggerParentMouseReleaseEvent(QMouseEvent *event) {
     QGraphicsView::mouseReleaseEvent(event);
 }
 
-void MapView::addRoute(const RouteData &route) {
-    addRoute(route.getColor());
+void MapView::addRoute(const RouteData &route, std::unique_ptr<RouteNodeState> &routeNodeState) {
+    addRoute(route.getColor(), routeNodeState);
     currentRoute->setElementSize(route.getElementSize());
 
     for (const auto &node : route.getNodes()) {
@@ -82,8 +82,8 @@ void MapView::addRoute(const RouteData &route) {
     }
 }
 
-void MapView::addRoute(const QColor &color) {
-    drawnRoutes.emplace_back(new Route(color, this->scene(), *currentState));
+void MapView::addRoute(const QColor &color, std::unique_ptr<RouteNodeState> &routeNodeState) {
+    drawnRoutes.emplace_back(new Route(color, this->scene(), routeNodeState));
     currentRoute = drawnRoutes.back().get();
 }
 

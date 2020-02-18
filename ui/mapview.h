@@ -2,7 +2,8 @@
 #define MAPVIEW_H
 
 #include "../data-structures/indexlist.h"
-#include "../controller/states/uistate.h"
+#include "../controller/states/mapviewstate.h"
+#include "../controller/states/routenodestate.h"
 #include "../shapes/route.h"
 #include "../interfaces/nodeshapeable.h"
 #include "../model/routedata.h"
@@ -27,7 +28,7 @@ class MapView : public QGraphicsView
     qreal currentDetailLevel;
     static constexpr qreal DETAIL_LEVEL_MIN = 0.05;
     static constexpr qreal DETAIL_LEVEL_MAX = 17;
-    std::unique_ptr<Via::Control::UIState> *currentState;
+    std::unique_ptr<Via::Control::MapViewState> *currentState;
     Via::Structures::IndexList<std::unique_ptr<Via::Shapes::Route>> drawnRoutes;
     Via::Shapes::Route* currentRoute;
 
@@ -35,7 +36,7 @@ public:
 
     MapView(QWidget *parent);
 
-    void setUIState(std::unique_ptr<Via::Control::UIState> &state);
+    void setUIState(std::unique_ptr<Via::Control::MapViewState> &state);
 
     void wheelEvent(QWheelEvent *event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
@@ -48,8 +49,8 @@ public:
     void triggerParentMouseMoveEvent(QMouseEvent* event);
     void triggerParentMouseReleaseEvent(QMouseEvent* event);
 
-    void addRoute(const Via::Model::RouteData &route);
-    void addRoute(const QColor &color);
+    void addRoute(const Via::Model::RouteData &route, std::unique_ptr<Via::Control::RouteNodeState> &routeNodeState);
+    void addRoute(const QColor &color, std::unique_ptr<Via::Control::RouteNodeState> &routeNodeState);
     void addNodeToCurrentRoute(int x, int y);
     void removeTemporaryNode();
 

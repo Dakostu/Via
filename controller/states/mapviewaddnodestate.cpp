@@ -9,7 +9,7 @@ MapViewAddNodeState::MapViewAddNodeState()
 
 }
 
-void mouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
+void MapViewAddNodeState::mouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
     if (!mouseEvent->buttons().testFlag(Qt::RightButton)) {
         view->setDragMode(QGraphicsView::NoDrag);
         view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
@@ -20,7 +20,7 @@ void mouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
     view->getCurrentRoute()->addTemporaryPreviewNode(coords.x(), coords.y());
 }
 
-void mousePressEvent(MapView *view, QMouseEvent *mouseEvent)  {
+void MapViewAddNodeState::mousePressEvent(MapView *view, QMouseEvent *mouseEvent)  {
     view->triggerParentMousePressEvent(mouseEvent);
 
     if (mouseEvent->buttons().testFlag(Qt::RightButton)) {
@@ -28,7 +28,7 @@ void mousePressEvent(MapView *view, QMouseEvent *mouseEvent)  {
     }
 }
 
-void mouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) {
+void MapViewAddNodeState::mouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) {
     if (mouseEvent->button() == Qt::LeftButton) {
         auto coords = view->mapToScene(mouseEvent->pos());
         view->addNodeToCurrentRoute(coords.x(), coords.y());
@@ -37,6 +37,6 @@ void mouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) {
     }
 }
 
-void mouseLeaveEvent(MapView *view, QEvent *mouseEvent) {
+void MapViewAddNodeState::mouseLeaveEvent(MapView *view, QEvent *mouseEvent) {
     view->removeTemporaryNode();
 }

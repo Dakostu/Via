@@ -9,14 +9,14 @@ MapViewSelectNodeState::MapViewSelectNodeState()
 
 }
 
-void mouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
+void MapViewSelectNodeState::mouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
     view->setDragMode(QGraphicsView::NoDrag);
 }
 
-void mousePressEvent(MapView *view, QMouseEvent *mouseEvent) {
+void MapViewSelectNodeState::mousePressEvent(MapView *view, QMouseEvent *mouseEvent) {
     view->triggerParentMousePressEvent(mouseEvent);
 }
 
-void mouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) {
+void MapViewSelectNodeState::mouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) {
     view->triggerParentMouseReleaseEvent(mouseEvent);
 }
