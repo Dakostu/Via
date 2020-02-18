@@ -415,7 +415,7 @@ void MainWindow::addRouteNode(int x, int y) {
     refreshSelectedRouteIndex();
     controller.addNewNodeToRoute(x, y, ui->picture->getCurrentRoute()->getColors(), selectedRouteIndex);
 
-    ui->nodeBoxNodeList->moveSelectionTo(ui->nodeBoxNodeList->model()->rowCount() - 1);
+    ui->nodeBoxNodeList->moveSelectionTo(ui->nodeBoxNodeList->model()->rowCount() - 1);    
 
     auto vBar = ui->nodeBoxNodeList->verticalScrollBar();
     vBar->setValue(vBar->maximum());

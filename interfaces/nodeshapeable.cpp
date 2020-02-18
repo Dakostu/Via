@@ -20,6 +20,9 @@ NodeShapeable::NodeShapeable(qreal x, qreal y, const QColor &color)
     this->setAcceptHoverEvents(true);
 }
 
+QColor NodeShapeable::getColors() {
+    return this->brush().color();
+}
 
 void NodeShapeable::setColors(const QColor &color) {
     this->setBrush(color);

@@ -22,6 +22,7 @@ RouteNode::RouteNode(NodeShapeable *newNode, QString nodeLabelText, QString extr
     acceptHoverEvents();
 
     nodeLabel.setColors(node->pen().brush().color());
+    nodeLabel.setZValue(std::numeric_limits<qreal>::max());
     extraTextLabel.setColors(node->pen().brush().color());
 
     centerNodeLabelBox();

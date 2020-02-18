@@ -36,6 +36,12 @@ public:
     RouteNode(Via::Interfaces::NodeShapeable *newNode, QString nodeLabelText, QString extraTextLabelText, std::unique_ptr<Via::Control::RouteNodeState> &state);
     RouteNode(Via::Interfaces::NodeShapeable *newNode, QString nodeLabelText, std::unique_ptr<Via::Control::RouteNodeState> &state);
 
+    template <typename Shape>
+    void setShape() {
+        node.reset(new Shape(getCenter().x(), getCenter().y(), node->getColors()));
+        addToGroup(node.get());
+    }
+
     void setElementSize(int newSize) override;
     void setColors(const QColor &color) override;
     void activateColors() override;

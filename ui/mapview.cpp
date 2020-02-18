@@ -78,7 +78,7 @@ void MapView::addRoute(const RouteData &route, std::unique_ptr<RouteNodeState> &
     currentRoute->setElementSize(route.getElementSize());
 
     for (const auto &node : route.getNodes()) {
-        currentRoute->addNode(node);
+        currentRoute->addNode(node);        
     }
 }
 

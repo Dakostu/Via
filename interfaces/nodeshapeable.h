@@ -22,7 +22,7 @@ protected:
 public:
     NodeShapeable(qreal x, qreal y, const QColor &color);
 
-    QPointF getCenter();
+    QColor getColors();
 
     void setElementSize(int newSize) override;
     void setColors(const QColor &color) override;

@@ -1,6 +1,7 @@
 #include "route.h"
 #include "hexagon.h"
 #include "diamond.h"
+#include "square.h"
 
 using namespace Via::Shapes;
 using namespace Via::Control;
@@ -36,9 +37,10 @@ void Route::addNode(const RouteNodeData &node) {
 
     if (node.isStyleDifferentFromRoute()) {
         newNode->setColors(node.getColor());
-        newNode->setElementSize(node.getElementSize());
+        newNode->setElementSize(node.getElementSize());        
         // shape?
     }
+    newNode->setShape<Square>();
 
 }
 
