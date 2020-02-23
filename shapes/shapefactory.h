@@ -11,7 +11,7 @@ namespace Via::Shapes {
 class ShapeFactory
 {
 
-    static std::unordered_map<char, std::function<Via::Interfaces::NodeShapeable*(int, int, QColor)>> shapeKeyTable;
+    std::unordered_map<char, std::function<Via::Interfaces::NodeShapeable*(int, int, QColor)>> shapeKeyTable;
 
     template<typename Shape>
     Via::Interfaces::NodeShapeable* generateShape(int x, int y, const QColor &color) {
