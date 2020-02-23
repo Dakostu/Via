@@ -5,7 +5,7 @@
 
 namespace Via::Shapes {
 
-class Hexagon : public Via::Interfaces::RouteNodeShape
+class Hexagon : public RouteNodeShape
 {
     static constexpr qreal SIZE_QUOTIENT = 2.0;
 public:

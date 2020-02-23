@@ -5,7 +5,7 @@
 
 namespace Via::Shapes {
 
-class Diamond : public Via::Interfaces::RouteNodeShape
+class Diamond : public RouteNodeShape
 {
     static constexpr qreal SIZE_QUOTIENT = 1.2;
 public:

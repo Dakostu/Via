@@ -8,9 +8,9 @@
 #include <QPen>
 #include <QGraphicsSimpleTextItem>
 
-namespace Via::Interfaces {
+namespace Via::Shapes {
 
-class RouteNodeShape : public QGraphicsPolygonItem, public ViewCustomizable
+class RouteNodeShape : public QGraphicsPolygonItem, public Via::Interfaces::ViewCustomizable
 {
 
 protected:

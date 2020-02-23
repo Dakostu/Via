@@ -21,7 +21,7 @@ class RouteNode : public QGraphicsItemGroup, public Via::Interfaces::ViewCustomi
 {
 
 protected:
-    std::unique_ptr<Via::Interfaces::RouteNodeShape> node;
+    std::unique_ptr<RouteNodeShape> node;
     Via::UI::RouteNodeLabel nodeLabel;
     Via::UI::RouteExtraTextLabel extraTextLabel;
     bool styleDiffersFromRoute;
@@ -33,8 +33,8 @@ protected:
 
 
 public:
-    RouteNode(Via::Interfaces::RouteNodeShape *newNode, QString nodeLabelText, QString extraTextLabelText, std::unique_ptr<Via::Control::RouteNodeState> &state);
-    RouteNode(Via::Interfaces::RouteNodeShape *newNode, QString nodeLabelText, std::unique_ptr<Via::Control::RouteNodeState> &state);
+    RouteNode(RouteNodeShape *newNode, QString nodeLabelText, QString extraTextLabelText, std::unique_ptr<Via::Control::RouteNodeState> &state);
+    RouteNode(RouteNodeShape *newNode, QString nodeLabelText, std::unique_ptr<Via::Control::RouteNodeState> &state);
 
     template <typename Shape>
     void setShape() {

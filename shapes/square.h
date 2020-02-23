@@ -5,7 +5,7 @@
 
 namespace Via::Shapes {
 
-class Square : public Via::Interfaces::RouteNodeShape
+class Square : public RouteNodeShape
 {
 public:
     Square(qreal x, qreal y, const QColor &color);

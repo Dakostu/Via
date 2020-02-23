@@ -4,6 +4,7 @@
 #include <QGraphicsSceneMouseEvent>
 
 using namespace Via::Interfaces;
+using namespace Via::Shapes;
 
 void RouteNodeShape::setElementSize(int newSize) {
     ViewCustomizable::setElementSize(newSize);

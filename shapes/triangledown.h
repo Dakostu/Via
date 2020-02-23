@@ -5,7 +5,7 @@
 
 namespace Via::Shapes {
 
-class TriangleDown : public Via::Interfaces::RouteNodeShape
+class TriangleDown : public RouteNodeShape
 {
 public:
     TriangleDown(qreal x, qreal y, const QColor &color);

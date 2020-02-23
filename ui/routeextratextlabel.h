@@ -12,10 +12,10 @@ class RouteExtraTextLabel : public QGraphicsSimpleTextItem, public Via::Interfac
 {
 
 protected:
-    Via::Interfaces::RouteNodeShape *parentNode;
+    Via::Shapes::RouteNodeShape *parentNode;
 
 public:
-    RouteExtraTextLabel(QString text, Via::Interfaces::RouteNodeShape *parent);
+    RouteExtraTextLabel(QString text, Via::Shapes::RouteNodeShape *parent);
 
     void setElementSize(int newSize) override;
     void setColors(const QColor &color) override;

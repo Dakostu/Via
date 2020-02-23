@@ -4,7 +4,7 @@
 #include <QRectF>
 
 using namespace Via::UI;
-using namespace Via::Interfaces;
+using namespace Via::Shapes;
 
 RouteExtraTextLabel::RouteExtraTextLabel(QString text, RouteNodeShape *parent)
     : QGraphicsSimpleTextItem(text), parentNode(parent)
