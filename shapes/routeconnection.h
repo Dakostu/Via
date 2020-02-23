@@ -2,7 +2,7 @@
 #define ROUTECONNECTION_H
 
 #include "../interfaces/viewcustomizable.h"
-#include "../interfaces/routenodeshape.h"
+#include "routenodeshape.h"
 #include <QGraphicsItemGroup>
 #include <QGraphicsLineItem>
 

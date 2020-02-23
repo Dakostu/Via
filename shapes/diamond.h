@@ -1,7 +1,7 @@
 #ifndef DIAMOND_H
 #define DIAMOND_H
 
-#include "../interfaces/routenodeshape.h"
+#include "routenodeshape.h"
 
 namespace Via::Shapes {
 

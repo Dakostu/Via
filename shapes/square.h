@@ -1,7 +1,7 @@
 #ifndef SQUARE_H
 #define SQUARE_H
 
-#include "../interfaces/routenodeshape.h"
+#include "routenodeshape.h"
 
 namespace Via::Shapes {
 

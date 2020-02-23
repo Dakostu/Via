@@ -1,7 +1,7 @@
 #ifndef SHAPEFACTORY_H
 #define SHAPEFACTORY_H
 
-#include "../interfaces/routenodeshape.h"
+#include "routenodeshape.h"
 #include "shapekeys.h"
 #include <functional>
 #include <unordered_map>

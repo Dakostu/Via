@@ -2,11 +2,11 @@
 #define ROUTENODE_H
 
 #include "../controller/states/routenodestate.h"
-#include "../interfaces/routenodeshape.h"
 #include "../interfaces/viewcustomizable.h"
 #include "../ui/routenodelabel.h"
 #include "../ui/routeextratextlabel.h"
 #include "routeconnection.h"
+#include "routenodeshape.h"
 #include <QObject>
 #include <QGraphicsItemGroup>
 #include <memory>

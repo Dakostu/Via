@@ -1,7 +1,7 @@
 #ifndef HEXAGON_H
 #define HEXAGON_H
 
-#include "../interfaces/routenodeshape.h"
+#include "routenodeshape.h"
 
 namespace Via::Shapes {
 

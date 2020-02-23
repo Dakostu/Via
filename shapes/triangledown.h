@@ -1,7 +1,7 @@
 #ifndef NODESHAPETRIANGLEDOWN_H
 #define NODESHAPETRIANGLEDOWN_H
 
-#include "../interfaces/routenodeshape.h"
+#include "routenodeshape.h"
 
 namespace Via::Shapes {
 

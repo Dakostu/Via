@@ -2,7 +2,7 @@
 #define ROUTEEXTRATEXTLABEL_H
 
 #include "../interfaces/viewcustomizable.h"
-#include "../interfaces/routenodeshape.h"
+#include "../shapes/routenodeshape.h"
 #include <QGraphicsSimpleTextItem>
 #include <QMouseEvent>
 

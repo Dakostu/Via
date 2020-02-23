@@ -5,7 +5,7 @@
 #include "../controller/states/mapviewstate.h"
 #include "../controller/states/routenodestate.h"
 #include "../shapes/route.h"
-#include "../interfaces/routenodeshape.h"
+#include "../shapes/routenodeshape.h"
 #include "../model/routedata.h"
 #include <list>
 #include <memory>

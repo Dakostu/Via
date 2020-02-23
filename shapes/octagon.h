@@ -1,7 +1,7 @@
 #ifndef OCTAGON_H
 #define OCTAGON_H
 
-#include "../interfaces/routenodeshape.h"
+#include "routenodeshape.h"
 
 namespace Via::Shapes {
 
