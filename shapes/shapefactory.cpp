@@ -14,7 +14,7 @@ using namespace Via::Shapes;
 ShapeFactory::ShapeFactory()
 {
 
-    shapeKeyTable = std::unordered_map<char, std::function<NodeShapeable*(int, int, QColor)>>{
+    shapeKeyTable = std::unordered_map<char, std::function<RouteNodeShape*(int, int, QColor)>>{
         {DIAMOND_KEY, [&](auto x, auto y, auto color) {return generateShape<Diamond>(x,y,color); }},
         {HEXAGON_KEY, [&](auto x, auto y, auto color) {return generateShape<Hexagon>(x,y,color); }},
         {OCTAGON_KEY, [&](auto x, auto y, auto color) {return generateShape<Octagon>(x,y,color); }},
@@ -26,7 +26,7 @@ ShapeFactory::ShapeFactory()
 }
 
 
-NodeShapeable* ShapeFactory::generateNodeShapeFromKey(char key, int x, int y, const QColor &color) {
+RouteNodeShape* ShapeFactory::generateNodeShapeFromKey(char key, int x, int y, const QColor &color) {
     assert(shapeKeyTable.find(key) != shapeKeyTable.end());
     return shapeKeyTable[key](x,y,color);
 }

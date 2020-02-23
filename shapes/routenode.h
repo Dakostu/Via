@@ -2,7 +2,7 @@
 #define ROUTENODE_H
 
 #include "../controller/states/routenodestate.h"
-#include "../interfaces/nodeshapeable.h"
+#include "../interfaces/routenodeshape.h"
 #include "../interfaces/viewcustomizable.h"
 #include "../ui/routenodelabel.h"
 #include "../ui/routeextratextlabel.h"
@@ -21,7 +21,7 @@ class RouteNode : public QGraphicsItemGroup, public Via::Interfaces::ViewCustomi
 {
 
 protected:
-    std::unique_ptr<Via::Interfaces::NodeShapeable> node;
+    std::unique_ptr<Via::Interfaces::RouteNodeShape> node;
     Via::UI::RouteNodeLabel nodeLabel;
     Via::UI::RouteExtraTextLabel extraTextLabel;
     bool styleDiffersFromRoute;
@@ -33,8 +33,8 @@ protected:
 
 
 public:
-    RouteNode(Via::Interfaces::NodeShapeable *newNode, QString nodeLabelText, QString extraTextLabelText, std::unique_ptr<Via::Control::RouteNodeState> &state);
-    RouteNode(Via::Interfaces::NodeShapeable *newNode, QString nodeLabelText, std::unique_ptr<Via::Control::RouteNodeState> &state);
+    RouteNode(Via::Interfaces::RouteNodeShape *newNode, QString nodeLabelText, QString extraTextLabelText, std::unique_ptr<Via::Control::RouteNodeState> &state);
+    RouteNode(Via::Interfaces::RouteNodeShape *newNode, QString nodeLabelText, std::unique_ptr<Via::Control::RouteNodeState> &state);
 
     template <typename Shape>
     void setShape() {

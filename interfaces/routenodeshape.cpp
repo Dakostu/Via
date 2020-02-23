@@ -1,16 +1,16 @@
-#include "nodeshapeable.h"
+#include "routenodeshape.h"
 #include <QFont>
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 
 using namespace Via::Interfaces;
 
-void NodeShapeable::setElementSize(int newSize) {
+void RouteNodeShape::setElementSize(int newSize) {
     ViewCustomizable::setElementSize(newSize);
     this->drawShape();
 }
 
-NodeShapeable::NodeShapeable(qreal x, qreal y, const QColor &color)
+RouteNodeShape::RouteNodeShape(qreal x, qreal y, const QColor &color)
     : QGraphicsPolygonItem({}, nullptr), originX(x), originY(y)
 {
     this->setBrush(QBrush(color));
@@ -20,15 +20,15 @@ NodeShapeable::NodeShapeable(qreal x, qreal y, const QColor &color)
     this->setAcceptHoverEvents(true);
 }
 
-QColor NodeShapeable::getColors() {
+QColor RouteNodeShape::getColors() {
     return this->brush().color();
 }
 
-void NodeShapeable::setColors(const QColor &color) {
+void RouteNodeShape::setColors(const QColor &color) {
     this->setBrush(color);
 }
 
-void NodeShapeable::activateColors() {
+void RouteNodeShape::activateColors() {
     if (this->brush().color().lightnessF() < FILLCOLOR_LIGHTNESS_THRESHOLD) {
         setPen(QPen(Qt::white));
     } else {

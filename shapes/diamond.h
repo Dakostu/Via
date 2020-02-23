@@ -1,11 +1,11 @@
 #ifndef DIAMOND_H
 #define DIAMOND_H
 
-#include "../interfaces/nodeshapeable.h"
+#include "../interfaces/routenodeshape.h"
 
 namespace Via::Shapes {
 
-class Diamond : public Via::Interfaces::NodeShapeable
+class Diamond : public Via::Interfaces::RouteNodeShape
 {
     static constexpr qreal SIZE_QUOTIENT = 1.2;
 public:

@@ -1,11 +1,11 @@
 #ifndef OCTAGON_H
 #define OCTAGON_H
 
-#include "../interfaces/nodeshapeable.h"
+#include "../interfaces/routenodeshape.h"
 
 namespace Via::Shapes {
 
-class Octagon : public Via::Interfaces::NodeShapeable
+class Octagon : public Via::Interfaces::RouteNodeShape
 {
     static constexpr qreal SIZE_QUOTIENT = 2.0;
 public:

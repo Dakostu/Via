@@ -4,7 +4,7 @@
 using namespace Via::Shapes;
 
 Octagon::Octagon(qreal x, qreal y, const QColor &color)
-    : NodeShapeable(x, y, color)
+    : RouteNodeShape(x, y, color)
 
 {
     this->drawShape();

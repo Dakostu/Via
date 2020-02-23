@@ -2,7 +2,7 @@
 #define ROUTEEXTRATEXTLABEL_H
 
 #include "../interfaces/viewcustomizable.h"
-#include "../interfaces/nodeshapeable.h"
+#include "../interfaces/routenodeshape.h"
 #include <QGraphicsSimpleTextItem>
 #include <QMouseEvent>
 
@@ -12,10 +12,10 @@ class RouteExtraTextLabel : public QGraphicsSimpleTextItem, public Via::Interfac
 {
 
 protected:
-    Via::Interfaces::NodeShapeable *parentNode;
+    Via::Interfaces::RouteNodeShape *parentNode;
 
 public:
-    RouteExtraTextLabel(QString text, Via::Interfaces::NodeShapeable *parent);
+    RouteExtraTextLabel(QString text, Via::Interfaces::RouteNodeShape *parent);
 
     void setElementSize(int newSize) override;
     void setColors(const QColor &color) override;

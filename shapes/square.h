@@ -1,11 +1,11 @@
 #ifndef SQUARE_H
 #define SQUARE_H
 
-#include "../interfaces/nodeshapeable.h"
+#include "../interfaces/routenodeshape.h"
 
 namespace Via::Shapes {
 
-class Square : public Via::Interfaces::NodeShapeable
+class Square : public Via::Interfaces::RouteNodeShape
 {
 public:
     Square(qreal x, qreal y, const QColor &color);

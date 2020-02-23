@@ -1,11 +1,11 @@
 #ifndef HEXAGON_H
 #define HEXAGON_H
 
-#include "../interfaces/nodeshapeable.h"
+#include "../interfaces/routenodeshape.h"
 
 namespace Via::Shapes {
 
-class Hexagon : public Via::Interfaces::NodeShapeable
+class Hexagon : public Via::Interfaces::RouteNodeShape
 {
     static constexpr qreal SIZE_QUOTIENT = 2.0;
 public:

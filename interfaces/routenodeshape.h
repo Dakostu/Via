@@ -10,7 +10,7 @@
 
 namespace Via::Interfaces {
 
-class NodeShapeable : public QGraphicsPolygonItem, public ViewCustomizable
+class RouteNodeShape : public QGraphicsPolygonItem, public ViewCustomizable
 {
 
 protected:
@@ -20,7 +20,7 @@ protected:
     qreal originY;
 
 public:
-    NodeShapeable(qreal x, qreal y, const QColor &color);
+    RouteNodeShape(qreal x, qreal y, const QColor &color);
 
     QColor getColors();
 
