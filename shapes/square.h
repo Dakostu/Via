@@ -11,6 +11,7 @@ public:
     Square(qreal x, qreal y, const QColor &color);
 
     void drawShape() override;
+    char getShapeKey() override;
 };
 
 }

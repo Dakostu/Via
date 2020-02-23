@@ -1,4 +1,5 @@
 #include "diamond.h"
+#include "shapekeys.h"
 
 using namespace Via::Shapes;
 
@@ -22,4 +23,8 @@ void Diamond::drawShape() {
                                           originY)
                                ));
 
+}
+
+char Diamond::getShapeKey() {
+    return DIAMOND_KEY;
 }

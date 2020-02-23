@@ -1,4 +1,5 @@
 #include "hexagon.h"
+#include "shapekeys.h"
 
 using namespace Via::Shapes;
 
@@ -26,4 +27,8 @@ void Hexagon::drawShape() {
                                           originY)
                                ));
 
+}
+
+char Hexagon::getShapeKey() {
+    return HEXAGON_KEY;
 }

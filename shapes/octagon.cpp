@@ -1,4 +1,5 @@
 #include "octagon.h"
+#include "shapekeys.h"
 
 using namespace Via::Shapes;
 
@@ -30,4 +31,8 @@ void Octagon::drawShape() {
                                           originY + DEFAULT_LENGTH/SIZE_QUOTIENT + sizeMultiplier(DEFAULT_EXTRA_LENGTH)/SIZE_QUOTIENT)
                                ));
 
+}
+
+char Octagon::getShapeKey() {
+    return OCTAGON_KEY;
 }

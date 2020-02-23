@@ -1,4 +1,5 @@
 #include "square.h"
+#include "shapekeys.h"
 
 using namespace Via::Shapes;
 
@@ -22,4 +23,8 @@ void Square::drawShape() {
                                           originY + DEFAULT_LENGTH + sizeMultiplier(DEFAULT_EXTRA_LENGTH))
                                ));
 
+}
+
+char Square::getShapeKey() {
+    return SQUARE_KEY;
 }

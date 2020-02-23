@@ -1,4 +1,5 @@
 #include "triangledown.h"
+#include "shapekeys.h"
 
 using namespace Via::Shapes;
 
@@ -19,4 +20,8 @@ void TriangleDown::drawShape() {
                                           originY - DEFAULT_LENGTH - sizeMultiplier(DEFAULT_EXTRA_LENGTH))
                                ));
 
+}
+
+char TriangleDown::getShapeKey() {
+    return TRIANGLE_DOWN_KEY;
 }
