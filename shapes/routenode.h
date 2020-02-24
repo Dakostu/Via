@@ -36,11 +36,6 @@ public:
     RouteNode(RouteNodeShape *newNode, QString nodeLabelText, QString extraTextLabelText, std::unique_ptr<Via::Control::RouteNodeState> &state);
     RouteNode(RouteNodeShape *newNode, QString nodeLabelText, std::unique_ptr<Via::Control::RouteNodeState> &state);
 
-    template <typename Shape>
-    void setShape() {
-        node.reset(new Shape(getCenter().x(), getCenter().y(), node->getColors()));
-        addToGroup(node.get());
-    }
 
     void setElementSize(int newSize) override;
     void setColors(const QColor &color) override;
@@ -57,6 +52,9 @@ public:
     virtual void setOpacity(qreal opacity);
     virtual void setNodeLabelOpacity(qreal opacity);
     virtual void setNodeLabelText(const QString &newText);
+    virtual void setShape(RouteNodeShape* newShape);
+    void setStyleDiffersFromRoute(bool value);
+
     virtual void resetFromConnection();
     virtual void resetToConnection();
 
@@ -65,6 +63,8 @@ public:
     RouteConnection* getToConnection();
     Via::UI::RouteExtraTextLabel* getExtraText();
     Via::UI::RouteNodeLabel* getNodeLabel();
+    RouteNodeShape* getNodeShape() const;
+    bool getStyleDiffersFromRoute() const;
 
     void connect(RouteNode &from);
     void swap(RouteNode *with);
@@ -72,8 +72,6 @@ public:
     QPointF getCenter();
     void updateRouteConnections();
 
-    bool getStyleDiffersFromRoute() const;
-    void setStyleDiffersFromRoute(bool value);
 };
 
 }

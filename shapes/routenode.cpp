@@ -88,6 +88,11 @@ void RouteNode::setStyleDiffersFromRoute(bool value)
     styleDiffersFromRoute = value;
 }
 
+RouteNodeShape* RouteNode::getNodeShape() const
+{
+    return node.get();
+}
+
 void RouteNode::centerNodeLabelBox() {
     auto center = node->boundingRect().center();
     auto nodeLabelBox = nodeLabel.boundingRect();
@@ -121,6 +126,10 @@ void RouteNode::setNodeLabelOpacity(qreal opacity) {
 
 void RouteNode::setNodeLabelText(const QString &newText) {
     nodeLabel.setText(newText);
+}
+
+void RouteNode::setShape(RouteNodeShape* newShape) {
+    node.reset(newShape);
 }
 
 void RouteNode::resetFromConnection() {

@@ -20,6 +20,14 @@ QString Route::getStyle() const
 void Route::setStyle(const QString &value)
 {
     style = value;
+    for (auto &node : nodes) {
+        if (!node->getStyleDiffersFromRoute()) {
+            node->removeFromGroup(node->getNodeShape());
+            auto newShape = nodeShapeFactory.generateNodeShape(style, node->getCenter().x(), node->getCenter().y(), routeColor);
+            node->setShape(newShape);
+            node->addToGroup(newShape);
+        }
+    }
 }
 
 QColor Route::getColors() const {
