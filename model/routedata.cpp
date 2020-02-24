@@ -6,6 +6,14 @@ using namespace Via::Model;
 using namespace Via::Structures;
 using namespace Via::UI;
 
+
+const char* RouteData::ROUTE_NAME_KEY = "n";
+const char* RouteData::ROUTE_SIZE_KEY = "s";
+const char* RouteData::ROUTE_COLOR_KEY = "c";
+const char* RouteData::ROUTE_SHOW_ORDER_KEY = "o";
+const char* RouteData::ROUTE_SHAPE_KEY = "p";
+const char* RouteData::ROUTE_NODES_KEY = "a";
+
 RouteData::RouteData() : Data(), showOrder(DEFAULT_SHOW_ORDER)
 {
 
@@ -20,12 +28,12 @@ RouteData::RouteData(const QJsonObject &object) : RouteData() {
 }
 
 void RouteData::fromJSON(const QJsonObject &object) {
-    name = object["name"].toString();
-    elementSize = object["nodeSize"].toInt();
-    currentColor = QColor(object["color"][0].toInt(), object["color"][1].toInt(), object["color"][2].toInt());
-    showOrder = object["showOrder"].toBool();
+    name = object[ROUTE_NAME_KEY].toString();
+    elementSize = object[ROUTE_SIZE_KEY].toInt();
+    currentColor = QColor(object[ROUTE_COLOR_KEY][0].toInt(), object[ROUTE_COLOR_KEY][1].toInt(), object[ROUTE_COLOR_KEY][2].toInt());
+    showOrder = object[ROUTE_SHOW_ORDER_KEY].toBool();
 
-    auto nodesArray = object["nodes"].toArray();
+    auto nodesArray = object[ROUTE_NODES_KEY].toArray();
 
     for (auto nodeJSON : nodesArray) {
         RouteNodeData node(nodeJSON.toObject());
@@ -43,17 +51,17 @@ void RouteData::fromJSON(const QJsonObject &object) {
 QJsonObject RouteData::toJSON() const {
     QJsonObject routeJSON;
 
-    routeJSON["name"] = name;
-    routeJSON["nodeSize"] = elementSize;
-    routeJSON["color"] = QJsonArray({currentColor.red(), currentColor.green(), currentColor.blue()});
-    routeJSON["showOrder"] = showOrder;
+    routeJSON[ROUTE_NAME_KEY] = name;
+    routeJSON[ROUTE_SIZE_KEY] = elementSize;
+    routeJSON[ROUTE_COLOR_KEY] = QJsonArray({currentColor.red(), currentColor.green(), currentColor.blue()});
+    routeJSON[ROUTE_SHOW_ORDER_KEY] = showOrder;
 
     QJsonArray nodesJSON;
     for (const auto &node : nodes) {
         nodesJSON << node.toJSON();
     }
 
-    routeJSON["nodes"] = nodesJSON;
+    routeJSON[ROUTE_NODES_KEY] = nodesJSON;
 
     return routeJSON;
 }

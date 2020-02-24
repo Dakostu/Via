@@ -4,6 +4,17 @@
 
 using namespace Via::Model;
 
+const char* RouteNodeData::NODE_NAME_KEY = "n";
+const char* RouteNodeData::NODE_LABEL_KEY = "l";
+const char* RouteNodeData::NODE_X_KEY = "x";
+const char* RouteNodeData::NODE_Y_KEY = "y";
+const char* RouteNodeData::NODE_DIFFERENT_STYLE_KEY = "f";
+const char* RouteNodeData::NODE_NAME_CHANGED_KEY = "c";
+const char* RouteNodeData::NODE_INVISIBLE_KEY = "i";
+const char* RouteNodeData::NODE_COLOR_KEY = "c";
+const char* RouteNodeData::NODE_SIZE_KEY = "s";
+const char* RouteNodeData::NODE_SHAPE_KEY = "p";
+
 RouteNodeData::RouteNodeData() : Data(),
     differentStyleFromRoute(false), nameChanged(false), invisible(false)
 {
@@ -81,17 +92,18 @@ void RouteNodeData::setPos(int newX, int newY) {
 }
 
 void RouteNodeData::fromJSON(const QJsonObject &object) {
-    name = object["nodeName"].toString();
-    nodeLabel = object["nodeLabel"].toString();
-    x = object["x"].toInt();
-    y = object["y"].toInt();
-    differentStyleFromRoute = object["differentStyleFromRoute"].toBool();
-    nameChanged = object["nameChanged"].toBool();
-    invisible = object["invisible"].toBool();
+    name = object[NODE_NAME_KEY].toString();
+    nodeLabel = object[NODE_LABEL_KEY].toString();
+    x = object[NODE_X_KEY].toInt();
+    y = object[NODE_Y_KEY].toInt();
+    differentStyleFromRoute = object[NODE_DIFFERENT_STYLE_KEY].toBool();
+    nameChanged = object[NODE_NAME_CHANGED_KEY].toBool();
+    invisible = object[NODE_INVISIBLE_KEY].toBool();
 
     if (differentStyleFromRoute) {
-        currentColor = QColor(object["color"][0].toInt(), object["color"][1].toInt(), object["color"][2].toInt());
-        elementSize = object["nodeSize"].toInt();
+        currentColor = QColor(object[NODE_COLOR_KEY][0].toInt(), object[NODE_COLOR_KEY][1].toInt(), object[NODE_COLOR_KEY][2].toInt());
+        elementSize = object[NODE_SIZE_KEY].toInt();
+        shapeKey = object[NODE_SHAPE_KEY].toInt();
     }
 
 }
@@ -99,17 +111,18 @@ void RouteNodeData::fromJSON(const QJsonObject &object) {
 QJsonObject RouteNodeData::toJSON() const {
     QJsonObject routeNodeJSON;
 
-    routeNodeJSON["nodeName"] = name;
-    routeNodeJSON["nodeLabel"] = nodeLabel;
-    routeNodeJSON["x"] = x;
-    routeNodeJSON["y"] = y;
-    routeNodeJSON["differentStyleFromRoute"] = differentStyleFromRoute;
-    routeNodeJSON["nameChanged"] = nameChanged;
-    routeNodeJSON["invisible"] = invisible;
+    routeNodeJSON[NODE_NAME_KEY] = name;
+    routeNodeJSON[NODE_LABEL_KEY] = nodeLabel;
+    routeNodeJSON[NODE_X_KEY] = x;
+    routeNodeJSON[NODE_Y_KEY] = y;
+    routeNodeJSON[NODE_DIFFERENT_STYLE_KEY] = differentStyleFromRoute;
+    routeNodeJSON[NODE_NAME_CHANGED_KEY] = nameChanged;
+    routeNodeJSON[NODE_INVISIBLE_KEY] = invisible;
 
     if (differentStyleFromRoute) {
-        routeNodeJSON["color"] = QJsonArray({currentColor.red(), currentColor.green(), currentColor.blue()});
-        routeNodeJSON["nodeSize"] = elementSize;
+        routeNodeJSON[NODE_COLOR_KEY] = QJsonArray({currentColor.red(), currentColor.green(), currentColor.blue()});
+        routeNodeJSON[NODE_SIZE_KEY] = elementSize;
+        routeNodeJSON[NODE_SHAPE_KEY] = shapeKey;
     }
 
     return routeNodeJSON;

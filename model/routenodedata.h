@@ -15,6 +15,18 @@ class RouteNodeData : public Data
     bool differentStyleFromRoute;
     bool nameChanged;
     bool invisible;
+    char shapeKey;
+
+    static const char* NODE_NAME_KEY;
+    static const char* NODE_LABEL_KEY;
+    static const char* NODE_X_KEY;
+    static const char* NODE_Y_KEY;
+    static const char* NODE_DIFFERENT_STYLE_KEY;
+    static const char* NODE_NAME_CHANGED_KEY;
+    static const char* NODE_INVISIBLE_KEY;
+    static const char* NODE_COLOR_KEY;
+    static const char* NODE_SIZE_KEY;
+    static const char* NODE_SHAPE_KEY;
 
 public:
     RouteNodeData();

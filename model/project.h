@@ -19,6 +19,11 @@ class Project : public Via::Interfaces::Serializable
     int totalCreatedRoutes;    
     Via::Structures::IndexList<RouteData> routes;
 
+    static const char* PROJECT_IMAGE_KEY;
+    static const char* PROJECT_FILENAME_KEY;
+    static const char* PROJECT_TOTAL_CREATED_ROUTES_KEY;
+    static const char* PROJECT_ROUTES_KEY;
+
     QByteArray pixMapToBytes() const;
     void pixMapFromBytes(const QJsonValue &bytes);
 

@@ -8,6 +8,11 @@ using namespace Via::Model;
 using namespace Via::Structures;
 using namespace Via::UI;
 
+const char* Project::PROJECT_IMAGE_KEY = "i";
+const char* Project::PROJECT_FILENAME_KEY = "n";
+const char* Project::PROJECT_TOTAL_CREATED_ROUTES_KEY = "t";
+const char* Project::PROJECT_ROUTES_KEY = "r";
+
 Project::Project(const QString &newFileName, const QPixmap &map)
     : fileName(newFileName), imagePixMap(map), hasbeenModified(false), totalCreatedRoutes(0)
 {
@@ -21,11 +26,11 @@ Project::Project(const QJsonObject &object) : hasbeenModified(false)
 
 void Project::fromJSON(const QJsonObject &object) {
 
-    pixMapFromBytes(object["image"]);
-    fileName = object["fileName"].toString();
-    totalCreatedRoutes = object["totalCreatedRoutes"].toInt();
+    pixMapFromBytes(object[PROJECT_IMAGE_KEY]);
+    fileName = object[PROJECT_FILENAME_KEY].toString();
+    totalCreatedRoutes = object[PROJECT_TOTAL_CREATED_ROUTES_KEY].toInt();
 
-    auto routesJSON = object["routes"].toArray();
+    auto routesJSON = object[PROJECT_ROUTES_KEY].toArray();
 
     for (const auto routeJSON : routesJSON) {
         RouteData currentRoute(routeJSON.toObject());
@@ -80,16 +85,16 @@ void Project::pixMapFromBytes(const QJsonValue &bytes) {
 QJsonObject Project::toJSON() const {
     QJsonObject projectJSON;
 
-    projectJSON["image"] = QString(pixMapToBytes());
-    projectJSON["fileName"] = fileName;
-    projectJSON["totalCreatedRoutes"] = totalCreatedRoutes;
+    projectJSON[PROJECT_IMAGE_KEY] = QString(pixMapToBytes());
+    projectJSON[PROJECT_FILENAME_KEY] = fileName;
+    projectJSON[PROJECT_TOTAL_CREATED_ROUTES_KEY] = totalCreatedRoutes;
 
     QJsonArray routesJSON;
 
     for (const auto &route : routes) {
         routesJSON.append(route.toJSON());
     }
-    projectJSON["routes"] = routesJSON;
+    projectJSON[PROJECT_ROUTES_KEY] = routesJSON;
 
     return projectJSON;
 }

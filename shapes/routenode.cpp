@@ -202,10 +202,12 @@ QPointF RouteNode::getCenter() {
 
 void RouteNode::updateRouteConnections() {
     auto thisPos = this->getCenter();
+
     if (auto fromConn = this->getFromConnection()) {
         auto fromNodePos = fromConn->p1();
         fromConn->setNewPosition(fromNodePos, thisPos);
     }
+
     if (auto toConn = this->getToConnection()) {
         auto toNodePos = toConn->p2();
         toConn->setNewPosition(thisPos, toNodePos);

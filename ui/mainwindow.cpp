@@ -138,6 +138,7 @@ void MainWindow::initializeShapeSelections() {
                                  LocalizedUIStrings::getUIString("TRIANGLE_UP"),
                                  LocalizedUIStrings::getUIString("TRIANGLE_DOWN"),
                                  LocalizedUIStrings::getUIString("DIAMOND"),
+                                 LocalizedUIStrings::getUIString("OCTAGON"),
                                  LocalizedUIStrings::getUIString("HEXAGON"),
                                 });
     ui->nodeStyleComboBox->addItems(availableStyles);

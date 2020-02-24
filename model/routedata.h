@@ -16,6 +16,13 @@ class RouteData : public Data
 {
     static constexpr bool DEFAULT_SHOW_ORDER = true;
 
+    static const char* ROUTE_NAME_KEY;
+    static const char* ROUTE_SIZE_KEY;
+    static const char* ROUTE_COLOR_KEY;
+    static const char* ROUTE_SHOW_ORDER_KEY;
+    static const char* ROUTE_SHAPE_KEY;
+    static const char* ROUTE_NODES_KEY;
+
     bool showOrder;
     Via::Structures::IndexList<RouteNodeData> nodes;
 
