@@ -32,6 +32,7 @@ void RouteData::fromJSON(const QJsonObject &object) {
     elementSize = object[ROUTE_SIZE_KEY].toInt();
     currentColor = QColor(object[ROUTE_COLOR_KEY][0].toInt(), object[ROUTE_COLOR_KEY][1].toInt(), object[ROUTE_COLOR_KEY][2].toInt());
     showOrder = object[ROUTE_SHOW_ORDER_KEY].toBool();
+    style = object[ROUTE_SHAPE_KEY].toString();
 
     auto nodesArray = object[ROUTE_NODES_KEY].toArray();
 
@@ -40,6 +41,7 @@ void RouteData::fromJSON(const QJsonObject &object) {
         if (!node.isStyleDifferentFromRoute()) {
             node.setColors(this->currentColor);
             node.setElementSize(this->elementSize);
+            node.setStyle(this->style);
         }
         addNode(node);
     }
@@ -55,6 +57,7 @@ QJsonObject RouteData::toJSON() const {
     routeJSON[ROUTE_SIZE_KEY] = elementSize;
     routeJSON[ROUTE_COLOR_KEY] = QJsonArray({currentColor.red(), currentColor.green(), currentColor.blue()});
     routeJSON[ROUTE_SHOW_ORDER_KEY] = showOrder;
+    routeJSON[ROUTE_SHAPE_KEY] = style;
 
     QJsonArray nodesJSON;
     for (const auto &node : nodes) {
@@ -69,6 +72,11 @@ QJsonObject RouteData::toJSON() const {
 IndexList<RouteNodeData> RouteData::getNodes() const
 {
     return nodes;
+}
+
+QString RouteData::getStyle() const
+{
+    return style;
 }
 
 RouteNodeData RouteData::generateNewNode(int x, int y) {

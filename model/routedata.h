@@ -24,6 +24,7 @@ class RouteData : public Data
     static const char* ROUTE_NODES_KEY;
 
     bool showOrder;
+    QString style;
     Via::Structures::IndexList<RouteNodeData> nodes;
 
     RouteNodeData generateNewNode(int x, int y);
@@ -56,6 +57,7 @@ public:
     RouteNodeData& operator[](int index);
 
     bool operator==(const RouteData &other) const;
+    QString getStyle() const;
 };
 
 }
