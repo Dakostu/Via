@@ -3,6 +3,7 @@
 #include "./ui_mainwindow.h"
 #include <QBrush>
 #include <QColorDialog>
+#include <QComboBox>
 #include <QFileDialog>
 #include <QGraphicsRectItem>
 #include <QGraphicsView>
@@ -187,7 +188,7 @@ void MainWindow::initializeRouteSettingsUI() {
         colorChangeEvent(&(*controller.getCurrentProject())[selectedRouteIndex]);
     });
     connect(ui->routeNameLineEdit, &QLineEdit::textEdited, this, &MainWindow::routeNameChangeEvent);
-    // change shape
+    connect(ui->routeStyleComboBox, &QComboBox::currentTextChanged, this, &MainWindow::routeStyleChangeEvent);
     connect(ui->routeNodeOrderCheckBox, &QCheckBox::toggled, this, &MainWindow::routeShowOrderChangeEvent);
 }
 
@@ -205,7 +206,7 @@ void MainWindow::addRoute() {
     ui->routeColorButton->setFlat(false);
 
     auto color = colorGenerator();
-    ui->picture->addRoute(color, controller.getCurrentRouteNodeState());
+    ui->picture->addRoute(color, ui->routeStyleComboBox->currentText(), controller.getCurrentRouteNodeState());
     controller.addNewRouteToCurrentProject(color);
 
     ui->routeBoxRouteList->moveSelectionTo(ui->routeBoxRouteList->model()->rowCount() - 1);
@@ -375,6 +376,10 @@ void MainWindow::routeNameChangeEvent(const QString &newName) {
     (*controller.getCurrentProject())[selectedRouteIndex].setName(newName);
     updateRouteList();
     ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex);
+}
+
+void MainWindow::routeStyleChangeEvent(const QString &newStyle) {
+    ui->picture->getCurrentRoute()->setStyle(newStyle);
 }
 
 void MainWindow::routeShowOrderChangeEvent(bool value) {

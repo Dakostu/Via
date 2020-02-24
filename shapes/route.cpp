@@ -7,9 +7,19 @@ using namespace Via::Shapes;
 using namespace Via::Control;
 using namespace Via::Model;
 
-Route::Route(const QColor &color, QGraphicsScene *scene, std::unique_ptr<RouteNodeState> &state)
-    : routeColor(color), currentScene(scene), currentState(state)
+Route::Route(const QColor &color, const QString &selectedStyle, QGraphicsScene *scene, std::unique_ptr<RouteNodeState> &state)
+    : routeColor(color), style(selectedStyle), currentScene(scene), currentState(state)
 {
+}
+
+QString Route::getStyle() const
+{
+    return style;
+}
+
+void Route::setStyle(const QString &value)
+{
+    style = value;
 }
 
 QColor Route::getColors() const {
@@ -40,7 +50,7 @@ void Route::addNode(const RouteNodeData &node) {
         newNode->setElementSize(node.getElementSize());        
         // shape?
     }
-    newNode->setShape<Square>();
+    //newNode->setShape<Square>();
 
 }
 
@@ -61,7 +71,7 @@ void Route::addNode(qreal x, qreal y) {
     removeTemporaryPreviewNode();
 
     auto previousNode = nodes.back();
-    nodes.emplace_back(new RouteNode(new Hexagon(x,y, routeColor),
+    nodes.emplace_back(new RouteNode(nodeShapeFactory.generateNodeShape(style, x, y, routeColor),
                        QString::number(nodes.size() + 1), currentState));
 
     nodes.back()->setElementSize(getElementSize());

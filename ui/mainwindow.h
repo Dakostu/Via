@@ -79,6 +79,7 @@ public slots:
     void routeNodeSelectionEvent();
     void colorChangeEvent(Via::Model::Data *data);
     void routeNameChangeEvent(const QString &newName);
+    void routeStyleChangeEvent(const QString &newStyle);
     void routeShowOrderChangeEvent(bool value);
     void moveRouteEvent(int by);
     void getDataFromCurrentProject();

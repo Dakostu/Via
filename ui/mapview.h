@@ -6,7 +6,6 @@
 #include "../controller/states/routenodestate.h"
 #include "../shapes/route.h"
 #include "../shapes/routenodeshape.h"
-#include "../shapes/routenodeshapefactory.h"
 #include "../model/routedata.h"
 #include <list>
 #include <memory>
@@ -27,8 +26,7 @@ class MapView : public QGraphicsView
     static constexpr qreal DETAIL_LEVEL_MAX = 17;
     std::unique_ptr<Via::Control::MapViewState> *currentState;
     Via::Structures::IndexList<std::unique_ptr<Via::Shapes::Route>> drawnRoutes;
-    Via::Shapes::Route* currentRoute;
-    Via::Shapes::RouteNodeShapeFactory shapeFactory;
+    Via::Shapes::Route* currentRoute;    
 
 public:
 
@@ -48,7 +46,7 @@ public:
     void triggerParentMouseReleaseEvent(QMouseEvent* event);
 
     void addRoute(const Via::Model::RouteData &route, std::unique_ptr<Via::Control::RouteNodeState> &routeNodeState);
-    void addRoute(const QColor &color, std::unique_ptr<Via::Control::RouteNodeState> &routeNodeState);
+    void addRoute(const QColor &color, const QString &selectedStyle, std::unique_ptr<Via::Control::RouteNodeState> &routeNodeState);
     void addNodeToCurrentRoute(int x, int y);
     void removeTemporaryNode();
 

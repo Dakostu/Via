@@ -7,14 +7,16 @@
 #include "../model/routenodedata.h"
 #include "routenode.h"
 #include "routeconnection.h"
+#include "routenodeshapefactory.h"
 #include <QLinkedList>
 #include <QGraphicsScene>
 
-namespace Via::Control { class UIState; }
+namespace Via::Control {
+class UIState;
+}
 
 namespace Via::Shapes {
 
-class RouteNode;
 
 class Route : public Via::Interfaces::ViewCustomizable
 {
@@ -23,12 +25,14 @@ protected:
 
     bool showDirection;
     QColor routeColor;
+    QString style;
+    RouteNodeShapeFactory nodeShapeFactory;
     QGraphicsScene *currentScene;
     std::unique_ptr<Via::Control::RouteNodeState> &currentState;
 
     Via::Structures::IndexList<RouteNode*> nodes;
 public:
-    Route(const QColor &color, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);
+    Route(const QColor &color, const QString &selectedStyle, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);
 
     virtual QColor getColors() const;
 
@@ -44,6 +48,8 @@ public:
     virtual void eraseAllNodes();
     virtual void swapNodes(int x, int y);
     virtual void setElementSize(int newSize) override;
+    QString getStyle() const;
+    void setStyle(const QString &value);
 };
 
 }

@@ -17,7 +17,7 @@ using namespace Via::UI;
 RouteNodeShapeFactory::RouteNodeShapeFactory()
 {
 
-    shapeKeyTable = std::unordered_map<char, std::function<RouteNodeShape*(int, int, QColor)>>{
+    shapeKeyTable = std::unordered_map<char, std::function<RouteNodeShape*(qreal, qreal, QColor)>>{
         {DIAMOND_KEY, [&](auto x, auto y, auto color) {return generateShape<Diamond>(x,y,color); }},
         {HEXAGON_KEY, [&](auto x, auto y, auto color) {return generateShape<Hexagon>(x,y,color); }},
         {OCTAGON_KEY, [&](auto x, auto y, auto color) {return generateShape<Octagon>(x,y,color); }},
@@ -38,7 +38,7 @@ RouteNodeShapeFactory::RouteNodeShapeFactory()
 }
 
 
-RouteNodeShape* RouteNodeShapeFactory::generateNodeShape(QString key, int x, int y, const QColor &color) {
+RouteNodeShape* RouteNodeShapeFactory::generateNodeShape(QString key, qreal x, qreal y, const QColor &color) {
     if (key.length() > 1) {
         key = shapeStringKeyTable[key];
     }
