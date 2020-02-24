@@ -6,6 +6,7 @@
 #include "../controller/states/routenodestate.h"
 #include "../shapes/route.h"
 #include "../shapes/routenodeshape.h"
+#include "../shapes/routenodeshapefactory.h"
 #include "../model/routedata.h"
 #include <list>
 #include <memory>
@@ -13,10 +14,6 @@
 
 namespace Via::Control {
     class UIState;
-}
-namespace Via::Shapes {
-    class RouteNode;
-    class Route;
 }
 
 namespace Via::UI {
@@ -31,6 +28,7 @@ class MapView : public QGraphicsView
     std::unique_ptr<Via::Control::MapViewState> *currentState;
     Via::Structures::IndexList<std::unique_ptr<Via::Shapes::Route>> drawnRoutes;
     Via::Shapes::Route* currentRoute;
+    Via::Shapes::RouteNodeShapeFactory shapeFactory;
 
 public:
 

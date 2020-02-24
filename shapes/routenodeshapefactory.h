@@ -8,10 +8,11 @@
 
 namespace Via::Shapes {
 
-class ShapeFactory
+class RouteNodeShapeFactory
 {
 
-    std::unordered_map<QString, std::function<RouteNodeShape*(int, int, QColor)>> shapeKeyTable;
+    std::unordered_map<char, std::function<RouteNodeShape*(int, int, QColor)>> shapeKeyTable;
+    std::unordered_map<QString, char> shapeStringKeyTable;
 
     template<typename Shape>
     RouteNodeShape* generateShape(int x, int y, const QColor &color) {
@@ -19,9 +20,8 @@ class ShapeFactory
     }
 
 public:
-    ShapeFactory();
-    RouteNodeShape* generateNodeShape(char key, int x, int y, const QColor &color);
-    RouteNodeShape* generateNodeShape(const QString &key, int x, int y, const QColor &color);
+    RouteNodeShapeFactory();
+    RouteNodeShape* generateNodeShape(QString key, int x, int y, const QColor &color);
 };
 
 }
