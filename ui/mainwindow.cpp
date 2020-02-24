@@ -100,12 +100,10 @@ void MainWindow::initializeQuickButtons() {
     connect(ui->quickButtonMove, &QAbstractButton::clicked, this, [&]() {
         ui->picture->removeTemporaryNode();
         controller.changeUIStates<MainWindowMoveNodeState, MapViewMoveNodeState, RouteNodeMoveNodeState>();
-        //controller.changeUIState<UIMoveNodesState>();
     });
     connect(ui->quickButtonSelect, &QAbstractButton::clicked, this, [&]() {
         ui->picture->removeTemporaryNode();
         controller.changeUIStates<MainWindowSelectNodeState, MapViewSelectNodeState, RouteNodeSelectNodeState>();
-        //controller.changeUIState<UISelectNodeState>();
     });
 }
 
