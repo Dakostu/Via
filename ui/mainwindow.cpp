@@ -363,7 +363,10 @@ void MainWindow::colorChangeEvent(Data *data) {
     }
     data->setColors(newColor);
     ui->picture->getCurrentRoute()->setColors(newColor);
-    ui->routeColorButton->changeColor(newColor);
+    ui->routeColorButton->changeColor(newColor);    
+    if (!ui->nodeColorButton->isFlat()) {
+        ui->nodeColorButton->changeColor(newColor);
+    }
 }
 
 void MainWindow::routeNameChangeEvent(const QString &newName) {
