@@ -12,6 +12,7 @@ class ShapeFactory
 {
 
     std::unordered_map<char, std::function<RouteNodeShape*(int, int, QColor)>> shapeKeyTable;
+    std::unordered_map<QString, std::function<RouteNodeShape*(int, int, QColor)>> shapeUIStringTable;
 
     template<typename Shape>
     RouteNodeShape* generateShape(int x, int y, const QColor &color) {
@@ -20,7 +21,8 @@ class ShapeFactory
 
 public:
     ShapeFactory();
-    RouteNodeShape* generateNodeShapeFromKey(char key, int x, int y, const QColor &color);
+    RouteNodeShape* generateNodeShape(char key, int x, int y, const QColor &color);
+    RouteNodeShape* generateNodeShape(const QString &key, int x, int y, const QColor &color);
 };
 
 }
