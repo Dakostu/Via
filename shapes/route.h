@@ -46,7 +46,7 @@ public:
     virtual bool hasTemporaryPreviewNode();
     virtual void eraseNode(int index);
     virtual void eraseAllNodes();
-    virtual void swapNodes(int x, int y);
+    virtual void swapNodes(int node1, int node2);
     virtual void setElementSize(int newSize) override;
     QString getStyle() const;
     void setStyle(const QString &value);

@@ -56,14 +56,13 @@ void Route::addNode(const RouteNodeData &node) {
     if (node.isStyleDifferentFromRoute()) {
         newNode->setColors(node.getColor());
         newNode->setElementSize(node.getElementSize());        
-        // shape?
+        newNode->setShape(nodeShapeFactory.generateNodeShape(node.getStyle(), node.getX(), node.getY(), node.getColor()));
     }
-    //newNode->setShape<Square>();
 
 }
 
 bool Route::hasTemporaryPreviewNode() {
-    return nodes.back() && nodes.back()->opacity() == TEMPORARY_NODE_OPACITY;
+    return nodes.back() && nodes.back()->opacity() <= TEMPORARY_NODE_OPACITY;
 }
 
 void Route::removeTemporaryPreviewNode() {
@@ -137,8 +136,8 @@ void Route::eraseAllNodes() {
     }
 }
 
-void Route::swapNodes(int x, int y) {
-    (*nodes[x])->swap(*nodes[y]);
+void Route::swapNodes(int node1, int node2) {
+    (*nodes[node1])->swap(*nodes[node2]);
 }
 
 void Route::setElementSize(int newSize) {
