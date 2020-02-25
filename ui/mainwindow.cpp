@@ -369,7 +369,8 @@ void MainWindow::colorChangeEvent(Data *data) {
     ui->picture->getCurrentRoute()->setColors(newColor);
     ui->routeColorButton->changeColor(newColor);    
     if (!ui->nodeColorButton->isFlat()) {
-        ui->nodeColorButton->changeColor(newColor);
+        auto currentSelectedNode = (*controller.getCurrentProject())[selectedRouteIndex][selectedRouteNodeIndex];
+        ui->nodeColorButton->changeColor(currentSelectedNode.getColor());
     }
 }
 
