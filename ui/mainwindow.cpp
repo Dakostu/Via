@@ -168,6 +168,7 @@ void MainWindow::initializeNodeBoxUI() {
 
 void MainWindow::initializeNodeSettingsUI() {
 
+    connect(ui->nodeStyleComboBox, &QComboBox::currentTextChanged, this, &MainWindow::routeNodeStyleChangeEvent);
 
 
 }

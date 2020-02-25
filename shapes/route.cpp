@@ -20,12 +20,10 @@ QString Route::getStyle() const
 void Route::setStyle(const QString &value)
 {
     style = value;
-    for (auto &node : nodes) {
-        if (!node->getStyleDiffersFromRoute()) {
-            node->removeFromGroup(node->getNodeShape());
-            auto newShape = nodeShapeFactory.generateNodeShape(style, node->getCenter().x(), node->getCenter().y(), routeColor);
-            node->setShape(newShape, this->style);
-            node->addToGroup(newShape);
+
+    for (auto i = 0; i < nodes.size(); ++i) {
+        if (!(*nodes[i])->getStyleDiffersFromRoute()) {
+            setStyleOfNode(i, this->style);
         }
     }
 }
@@ -149,6 +147,7 @@ void Route::setElementSize(int newSize) {
 
 void Route::setStyleOfNode(int routeNodeIndex, const QString &newStyle) {
     auto selectedNode = *nodes[routeNodeIndex];
-    selectedNode->setShape(nodeShapeFactory.generateNodeShape(newStyle, selectedNode->getCenter().x(), selectedNode->getCenter().y(), selectedNode->getColor()), newStyle);
+    auto newShape = nodeShapeFactory.generateNodeShape(newStyle, selectedNode->getCenter().x(), selectedNode->getCenter().y(), selectedNode->getColor());
+    selectedNode->setShape(newShape, newStyle);
 }
 

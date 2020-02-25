@@ -130,7 +130,9 @@ void RouteNode::setNodeLabelText(const QString &newText) {
 
 void RouteNode::setShape(RouteNodeShape* newShape, const QString &newStyle) {
     style = newStyle;
+    removeFromGroup(this->node.get());
     node.reset(newShape);
+    addToGroup(newShape);
 }
 
 void RouteNode::resetFromConnection() {
