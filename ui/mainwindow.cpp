@@ -168,6 +168,8 @@ void MainWindow::initializeNodeBoxUI() {
 
 void MainWindow::initializeNodeSettingsUI() {
 
+
+
 }
 
 void MainWindow::refreshSelectedRouteIndex() {
@@ -371,17 +373,18 @@ void MainWindow::colorChangeEvent(Data *data) {
 }
 
 void MainWindow::routeNameChangeEvent(const QString &newName) {
-    refreshSelectedRouteIndex();
-
     (*controller.getCurrentProject())[selectedRouteIndex].setName(newName);
     updateRouteList();
     ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex);
 }
 
 void MainWindow::routeStyleChangeEvent(const QString &newStyle) {
-    refreshSelectedRouteIndex();
-
     ui->picture->getCurrentRoute()->setStyle(newStyle);    
+    (*controller.getCurrentProject())[selectedRouteIndex].setStyle(newStyle);
+}
+
+void MainWindow::routeNodeStyleChangeEvent(const QString &newStyle) {
+    ui->picture->getCurrentRoute()->setStyleOfNode(selectedRouteNodeIndex, newStyle);
     (*controller.getCurrentProject())[selectedRouteIndex].setStyle(newStyle);
 }
 

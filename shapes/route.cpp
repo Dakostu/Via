@@ -147,3 +147,8 @@ void Route::setElementSize(int newSize) {
     ViewCustomizable::setElementSize(newSize);
 }
 
+void Route::setStyleOfNode(int routeNodeIndex, const QString &newStyle) {
+    auto selectedNode = *nodes[routeNodeIndex];
+    selectedNode->setShape(nodeShapeFactory.generateNodeShape(newStyle, selectedNode->getCenter().x(), selectedNode->getCenter().y(), selectedNode->getColor()), newStyle);
+}
+

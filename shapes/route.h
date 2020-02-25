@@ -39,15 +39,16 @@ public:
     void setColors(const QColor &color) override;
     void activateColors() override;
 
-    virtual void addNode(const Via::Model::RouteNodeData &node);
-    virtual void addNode(qreal x, qreal y);
-    virtual void addTemporaryPreviewNode(qreal x, qreal y);
-    virtual void removeTemporaryPreviewNode();
-    virtual bool hasTemporaryPreviewNode();
-    virtual void eraseNode(int index);
-    virtual void eraseAllNodes();
-    virtual void swapNodes(int node1, int node2);
-    virtual void setElementSize(int newSize) override;
+    void addNode(const Via::Model::RouteNodeData &node);
+    void addNode(qreal x, qreal y);
+    void addTemporaryPreviewNode(qreal x, qreal y);
+    void removeTemporaryPreviewNode();
+    bool hasTemporaryPreviewNode();
+    void eraseNode(int index);
+    void eraseAllNodes();
+    void swapNodes(int node1, int node2);
+    void setElementSize(int newSize) override;
+    void setStyleOfNode(int routeNodeIndex, const QString &newStyle);
     QString getStyle() const;
     void setStyle(const QString &value);
 };
