@@ -207,7 +207,7 @@ void MainWindow::addRoute() {
 
     auto color = colorGenerator();
     ui->picture->addRoute(color, ui->routeStyleComboBox->currentText(), controller.getCurrentRouteNodeState());
-    controller.addNewRouteToCurrentProject(color);
+    controller.addNewRouteToCurrentProject(color, ui->routeStyleComboBox->currentText());
 
     ui->routeBoxRouteList->moveSelectionTo(ui->routeBoxRouteList->model()->rowCount() - 1);
 
@@ -379,7 +379,10 @@ void MainWindow::routeNameChangeEvent(const QString &newName) {
 }
 
 void MainWindow::routeStyleChangeEvent(const QString &newStyle) {
-    ui->picture->getCurrentRoute()->setStyle(newStyle);
+    refreshSelectedRouteIndex();
+
+    ui->picture->getCurrentRoute()->setStyle(newStyle);    
+    (*controller.getCurrentProject())[selectedRouteIndex].setStyle(newStyle);
 }
 
 void MainWindow::routeShowOrderChangeEvent(bool value) {

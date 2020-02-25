@@ -32,7 +32,7 @@ class RouteData : public Data
 
 public:
     RouteData();
-    RouteData(const QColor &color);
+    RouteData(const QColor &color, const QString &newStyle);
     RouteData(const QJsonObject &object);
 
     void fromJSON(const QJsonObject &object) override;
@@ -58,6 +58,7 @@ public:
 
     bool operator==(const RouteData &other) const;
     QString getStyle() const;
+    void setStyle(const QString &value);
 };
 
 }

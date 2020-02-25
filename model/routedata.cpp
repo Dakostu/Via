@@ -19,8 +19,9 @@ RouteData::RouteData() : Data(), showOrder(DEFAULT_SHOW_ORDER)
 
 }
 
-RouteData::RouteData(const QColor &color) : RouteData() {
+RouteData::RouteData(const QColor &color, const QString &newStyle) : RouteData() {
     setColors(color);
+    style = newStyle;
 }
 
 RouteData::RouteData(const QJsonObject &object) : RouteData() {
@@ -77,6 +78,11 @@ IndexList<RouteNodeData> RouteData::getNodes() const
 QString RouteData::getStyle() const
 {
     return style;
+}
+
+void RouteData::setStyle(const QString &value)
+{
+    style = value;
 }
 
 RouteNodeData RouteData::generateNewNode(int x, int y) {
@@ -180,9 +186,5 @@ bool RouteData::operator==(const RouteData &other) const {
         return false;
     }
 
-    return (this->name == other.name
-            && this->elementSize == other.elementSize
-            && this->currentColor == other.currentColor
-            && this->showOrder == other.showOrder
-            && this->nodes == other.nodes);
+    return (this->toJSON() == other.toJSON());
 }

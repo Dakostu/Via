@@ -8,6 +8,7 @@
 #include "routeconnection.h"
 #include "routenodeshape.h"
 #include <QObject>
+#include <QString>
 #include <QGraphicsItemGroup>
 #include <memory>
 
@@ -24,6 +25,7 @@ protected:
     std::unique_ptr<RouteNodeShape> node;
     Via::UI::RouteNodeLabel nodeLabel;
     Via::UI::RouteExtraTextLabel extraTextLabel;
+    QString style;
     bool styleDiffersFromRoute;
     RouteConnection* fromConnection;
     std::unique_ptr<RouteConnection> toConnection;
@@ -52,7 +54,7 @@ public:
     virtual void setOpacity(qreal opacity);
     virtual void setNodeLabelOpacity(qreal opacity);
     virtual void setNodeLabelText(const QString &newText);
-    virtual void setShape(RouteNodeShape* newShape);
+    virtual void setShape(RouteNodeShape* newShape, const QString &newStyle);
     void setStyleDiffersFromRoute(bool value);
 
     virtual void resetFromConnection();

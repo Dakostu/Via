@@ -128,7 +128,8 @@ void RouteNode::setNodeLabelText(const QString &newText) {
     nodeLabel.setText(newText);
 }
 
-void RouteNode::setShape(RouteNodeShape* newShape) {
+void RouteNode::setShape(RouteNodeShape* newShape, const QString &newStyle) {
+    style = newStyle;
     node.reset(newShape);
 }
 

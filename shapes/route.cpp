@@ -24,7 +24,7 @@ void Route::setStyle(const QString &value)
         if (!node->getStyleDiffersFromRoute()) {
             node->removeFromGroup(node->getNodeShape());
             auto newShape = nodeShapeFactory.generateNodeShape(style, node->getCenter().x(), node->getCenter().y(), routeColor);
-            node->setShape(newShape);
+            node->setShape(newShape, this->style);
             node->addToGroup(newShape);
         }
     }
@@ -56,7 +56,7 @@ void Route::addNode(const RouteNodeData &node) {
     if (node.isStyleDifferentFromRoute()) {
         newNode->setColors(node.getColor());
         newNode->setElementSize(node.getElementSize());        
-        newNode->setShape(nodeShapeFactory.generateNodeShape(node.getStyle(), node.getX(), node.getY(), node.getColor()));
+        newNode->setShape(nodeShapeFactory.generateNodeShape(node.getStyle(), node.getX(), node.getY(), node.getColor()), node.getStyle());
     }
 
 }

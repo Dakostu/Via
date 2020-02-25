@@ -51,7 +51,7 @@ public:
         currentMapViewState.reset(new NewMapViewState);
         currentRouteNodeState.reset(new NewRouteNodeState);
     }
-    void addNewRouteToCurrentProject(const QColor &newColor);
+    void addNewRouteToCurrentProject(const QColor &newColor, const QString &newStyle);
     void addNewNodeToRoute(int x, int y, const QColor &newColor, int routeIndex);
     size_t amountOfOpenProjects();
     void deleteRouteofCurrentProject(int index);
