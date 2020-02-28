@@ -210,7 +210,7 @@ void MainWindow::addRoute() {
 
     auto color = colorGenerator();
     ui->picture->addRoute(color, ui->routeStyleComboBox->currentText(), controller.getCurrentRouteNodeState());
-    controller.addNewRouteToCurrentProject(color, ui->routeStyleComboBox->currentText());
+    controller.addNewRouteToCurrentProject(color, ui->picture->getCurrentRoute()->getStyle());
 
     ui->routeBoxRouteList->moveSelectionTo(ui->routeBoxRouteList->model()->rowCount() - 1);
 
@@ -381,13 +381,15 @@ void MainWindow::routeNameChangeEvent(const QString &newName) {
 }
 
 void MainWindow::routeStyleChangeEvent(const QString &newStyle) {
-    ui->picture->getCurrentRoute()->setStyle(newStyle);    
-    (*controller.getCurrentProject())[selectedRouteIndex].setStyle(newStyle);
+    auto currentRoute = ui->picture->getCurrentRoute();
+    currentRoute->setStyle(newStyle);
+    (*controller.getCurrentProject())[selectedRouteIndex].setStyle(currentRoute->getStyle());
 }
 
 void MainWindow::routeNodeStyleChangeEvent(const QString &newStyle) {
-    ui->picture->getCurrentRoute()->setStyleOfNode(selectedRouteNodeIndex, newStyle);
-    (*controller.getCurrentProject())[selectedRouteIndex].setStyle(newStyle);
+    auto currentRoute = ui->picture->getCurrentRoute();
+    currentRoute->setStyleOfNode(selectedRouteNodeIndex, newStyle);
+    (*controller.getCurrentProject())[selectedRouteIndex][selectedRouteNodeIndex].setStyle(currentRoute[selectedRouteNodeIndex].getStyle());
 }
 
 void MainWindow::routeShowOrderChangeEvent(bool value) {

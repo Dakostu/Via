@@ -47,6 +47,7 @@ public:
 
     void addRoute(const Via::Model::RouteData &route, std::unique_ptr<Via::Control::RouteNodeState> &routeNodeState);
     void addRoute(const QColor &color, const QString &selectedStyle, std::unique_ptr<Via::Control::RouteNodeState> &routeNodeState);
+    void addRoute(const QColor &color, char selectedStyle, std::unique_ptr<Via::Control::RouteNodeState> &routeNodeState);
     void addNodeToCurrentRoute(int x, int y);
     void removeTemporaryNode();
 

@@ -1,5 +1,6 @@
 #include "routenode.h"
 #include <QGraphicsSceneMouseEvent>
+#include <QDebug>
 
 using namespace Via::Shapes;
 using namespace Via::Interfaces;
@@ -128,8 +129,8 @@ void RouteNode::setNodeLabelText(const QString &newText) {
     nodeLabel.setText(newText);
 }
 
-void RouteNode::setShape(RouteNodeShape* newShape, const QString &newStyle) {
-    style = newStyle;
+void RouteNode::setShape(RouteNodeShape* newShape) {
+    style = newShape->getShapeKey();
     removeFromGroup(this->node.get());
     node.reset(newShape);
     addToGroup(newShape);
@@ -141,6 +142,11 @@ void RouteNode::resetFromConnection() {
 
 void RouteNode::resetToConnection() {
     toConnection.reset(nullptr);
+}
+
+void RouteNode::checkIfStyleIsDifferent(char routeShape, const QColor &routeColor, int routeSize) {
+    setStyleDiffersFromRoute(routeShape != this->node->getShapeKey() || routeColor != this->getColor() || routeSize != this->elementSize);
+    qDebug() << getStyleDiffersFromRoute();
 }
 
 RouteExtraTextLabel* RouteNode::getExtraText() {

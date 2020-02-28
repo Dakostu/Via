@@ -15,12 +15,12 @@ const char* RouteNodeData::NODE_COLOR_KEY = "c";
 const char* RouteNodeData::NODE_SIZE_KEY = "s";
 const char* RouteNodeData::NODE_SHAPE_KEY = "p";
 
-QString RouteNodeData::getStyle() const
+char RouteNodeData::getStyle() const
 {
     return style;
 }
 
-void RouteNodeData::setStyle(const QString &value)
+void RouteNodeData::setStyle(char value)
 {
     style = value;
 }
@@ -113,7 +113,7 @@ void RouteNodeData::fromJSON(const QJsonObject &object) {
     if (differentStyleFromRoute) {
         currentColor = QColor(object[NODE_COLOR_KEY][0].toInt(), object[NODE_COLOR_KEY][1].toInt(), object[NODE_COLOR_KEY][2].toInt());
         elementSize = object[NODE_SIZE_KEY].toInt();
-        style = object[NODE_SHAPE_KEY].toString();
+        style = object[NODE_SHAPE_KEY].toInt();
     }
 
 }
@@ -152,14 +152,5 @@ void RouteNodeData::activateColors() {
 }
 
 bool RouteNodeData::operator==(const RouteNodeData &other) const {
-    return this->toJSON() == other.toJSON(); /*this->x == other.x
-            && this->y == other.y
-            && this->name == other.name
-            && this->nodeLabel == other.nodeLabel
-            && this->differentStyleFromRoute == other.differentStyleFromRoute
-            && this->invisible == other.invisible
-            && this->nameChanged == other.nameChanged
-            && this->currentColor == other.currentColor
-            && this->elementSize == other.elementSize
-            && this->style == other.style;*/
+    return this->toJSON() == other.toJSON();
 }

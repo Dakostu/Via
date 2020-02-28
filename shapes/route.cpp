@@ -7,19 +7,30 @@ using namespace Via::Shapes;
 using namespace Via::Control;
 using namespace Via::Model;
 
-Route::Route(const QColor &color, const QString &selectedStyle, QGraphicsScene *scene, std::unique_ptr<RouteNodeState> &state)
+Route::Route(const QColor &color, char selectedStyle, QGraphicsScene *scene, std::unique_ptr<RouteNodeState> &state)
     : routeColor(color), style(selectedStyle), currentScene(scene), currentState(state)
 {
 }
 
-QString Route::getStyle() const
+Route::Route(const QColor &color, const QString &selectedStyle, QGraphicsScene *scene, std::unique_ptr<RouteNodeState> &state)
+    : Route(color, ' ', scene, state)
+{
+    setStyle(selectedStyle);
+}
+
+char Route::getStyle() const
 {
     return style;
 }
 
-void Route::setStyle(const QString &value)
+
+void Route::setStyle(const QString &newStyle) {
+    setStyle(nodeShapeFactory.getShapeKeyFromUIString(newStyle));
+}
+
+void Route::setStyle(char newStyle)
 {
-    style = value;
+    style = newStyle;
 
     for (auto i = 0; i < nodes.size(); ++i) {
         if (!(*nodes[i])->getStyleDiffersFromRoute()) {
@@ -54,7 +65,7 @@ void Route::addNode(const RouteNodeData &node) {
     if (node.isStyleDifferentFromRoute()) {
         newNode->setColors(node.getColor());
         newNode->setElementSize(node.getElementSize());        
-        newNode->setShape(nodeShapeFactory.generateNodeShape(node.getStyle(), node.getX(), node.getY(), node.getColor()), node.getStyle());
+        newNode->setShape(nodeShapeFactory.generateNodeShape(node.getStyle(), node.getX(), node.getY(), node.getColor()));
     }
 
 }
@@ -145,9 +156,19 @@ void Route::setElementSize(int newSize) {
     ViewCustomizable::setElementSize(newSize);
 }
 
+
 void Route::setStyleOfNode(int routeNodeIndex, const QString &newStyle) {
-    auto selectedNode = *nodes[routeNodeIndex];
-    auto newShape = nodeShapeFactory.generateNodeShape(newStyle, selectedNode->getCenter().x(), selectedNode->getCenter().y(), selectedNode->getColor());
-    selectedNode->setShape(newShape, newStyle);
+    setStyleOfNode(routeNodeIndex, nodeShapeFactory.getShapeKeyFromUIString(newStyle));
 }
 
+void Route::setStyleOfNode(int routeNodeIndex, char newStyle) {
+    auto selectedNode = *nodes[routeNodeIndex];
+    auto newShape = nodeShapeFactory.generateNodeShape(newStyle, selectedNode->getCenter().x(), selectedNode->getCenter().y(), selectedNode->getColor());
+    selectedNode->setShape(newShape);
+    selectedNode->checkIfStyleIsDifferent(this->style, this->getColors(), this->elementSize);
+}
+
+
+const RouteNode& Route::operator[](int nodeIndex) {
+    return *(*nodes[nodeIndex]);
+}

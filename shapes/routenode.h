@@ -50,15 +50,16 @@ public:
     void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
     void triggerParentMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
 
-    virtual void setNodeOutlineColor(const QColor &color);
-    virtual void setOpacity(qreal opacity);
-    virtual void setNodeLabelOpacity(qreal opacity);
-    virtual void setNodeLabelText(const QString &newText);
-    virtual void setShape(RouteNodeShape* newShape, const QString &newStyle);
+    void setNodeOutlineColor(const QColor &color);
+    void setOpacity(qreal opacity);
+    void setNodeLabelOpacity(qreal opacity);
+    void setNodeLabelText(const QString &newText);
+    void setShape(RouteNodeShape* newShape);
     void setStyleDiffersFromRoute(bool value);
 
-    virtual void resetFromConnection();
-    virtual void resetToConnection();
+    void resetFromConnection();
+    void resetToConnection();
+    void checkIfStyleIsDifferent(char routeShape, const QColor &routeColor, int routeSize);
 
     QColor getColor() const;
     RouteConnection* getFromConnection();

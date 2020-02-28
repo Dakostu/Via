@@ -21,7 +21,8 @@ class RouteNodeShapeFactory
 
 public:
     RouteNodeShapeFactory();
-    RouteNodeShape* generateNodeShape(QString key, qreal x, qreal y, const QColor &color);
+    char getShapeKeyFromUIString(QString key);
+    RouteNodeShape* generateNodeShape(char key, qreal x, qreal y, const QColor &color);
 };
 
 }

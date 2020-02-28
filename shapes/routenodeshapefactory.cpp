@@ -38,13 +38,14 @@ RouteNodeShapeFactory::RouteNodeShapeFactory()
 }
 
 
-RouteNodeShape* RouteNodeShapeFactory::generateNodeShape(QString key, qreal x, qreal y, const QColor &color) {
+char RouteNodeShapeFactory::getShapeKeyFromUIString(QString key) {
     if (key.length() > 1) {
         key = shapeStringKeyTable[key];
     }
+    return key[0].toLatin1();
+}
 
-    auto keyChar = key[0].toLatin1();
-
-    assert(shapeKeyTable.find(keyChar) != shapeKeyTable.end());
-    return shapeKeyTable[keyChar](x,y,color);
+RouteNodeShape* RouteNodeShapeFactory::generateNodeShape(char key, qreal x, qreal y, const QColor &color) {
+    assert(shapeKeyTable.find(key) != shapeKeyTable.end());
+    return shapeKeyTable[key](x,y,color);
 }

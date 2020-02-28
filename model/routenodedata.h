@@ -15,7 +15,7 @@ class RouteNodeData : public Data
     bool differentStyleFromRoute;
     bool nameChanged;
     bool invisible;
-    QString style;
+    char style;
 
     static const char* NODE_NAME_KEY;
     static const char* NODE_LABEL_KEY;
@@ -55,8 +55,8 @@ public:
     void setNameChangedByUser(bool value);
 
     bool operator==(const RouteNodeData &other) const;
-    QString getStyle() const;
-    void setStyle(const QString &value);
+    char getStyle() const;
+    void setStyle(char value);
 };
 
 }

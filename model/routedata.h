@@ -24,7 +24,7 @@ class RouteData : public Data
     static const char* ROUTE_NODES_KEY;
 
     bool showOrder;
-    QString style;
+    char style;
     Via::Structures::IndexList<RouteNodeData> nodes;
 
     RouteNodeData generateNewNode(int x, int y);
@@ -32,7 +32,7 @@ class RouteData : public Data
 
 public:
     RouteData();
-    RouteData(const QColor &color, const QString &newStyle);
+    RouteData(const QColor &color, char newStyle);
     RouteData(const QJsonObject &object);
 
     void fromJSON(const QJsonObject &object) override;
@@ -57,8 +57,8 @@ public:
     RouteNodeData& operator[](int index);
 
     bool operator==(const RouteData &other) const;
-    QString getStyle() const;
-    void setStyle(const QString &value);
+    char getStyle() const;
+    void setStyle(char newStyle);
 };
 
 }

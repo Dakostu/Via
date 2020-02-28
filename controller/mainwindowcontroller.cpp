@@ -134,7 +134,7 @@ void MainWindowController::printCurrentProject() {
 }
 
 
-void MainWindowController::addNewRouteToCurrentProject(const QColor &newColor, const QString &newStyle) {
+void MainWindowController::addNewRouteToCurrentProject(const QColor &newColor, char newStyle) {
     RouteData newRoute(newColor, newStyle);
     currentProject->addRoute(newRoute);
     emit routeListChanged();

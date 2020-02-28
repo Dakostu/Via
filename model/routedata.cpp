@@ -19,7 +19,7 @@ RouteData::RouteData() : Data(), showOrder(DEFAULT_SHOW_ORDER)
 
 }
 
-RouteData::RouteData(const QColor &color, const QString &newStyle) : RouteData() {
+RouteData::RouteData(const QColor &color, char newStyle) : RouteData() {
     setColors(color);
     style = newStyle;
 }
@@ -33,7 +33,7 @@ void RouteData::fromJSON(const QJsonObject &object) {
     elementSize = object[ROUTE_SIZE_KEY].toInt();
     currentColor = QColor(object[ROUTE_COLOR_KEY][0].toInt(), object[ROUTE_COLOR_KEY][1].toInt(), object[ROUTE_COLOR_KEY][2].toInt());
     showOrder = object[ROUTE_SHOW_ORDER_KEY].toBool();
-    style = object[ROUTE_SHAPE_KEY].toString();
+    style = object[ROUTE_SHAPE_KEY].toInt();
 
     auto nodesArray = object[ROUTE_NODES_KEY].toArray();
 
@@ -75,14 +75,14 @@ IndexList<RouteNodeData> RouteData::getNodes() const
     return nodes;
 }
 
-QString RouteData::getStyle() const
+char RouteData::getStyle() const
 {
     return style;
 }
 
-void RouteData::setStyle(const QString &value)
+void RouteData::setStyle(char newStyle)
 {
-    style = value;
+    style = newStyle;
 }
 
 RouteNodeData RouteData::generateNewNode(int x, int y) {

@@ -25,7 +25,7 @@ protected:
 
     bool showDirection;
     QColor routeColor;
-    QString style;
+    char style;
     RouteNodeShapeFactory nodeShapeFactory;
     QGraphicsScene *currentScene;
     std::unique_ptr<Via::Control::RouteNodeState> &currentState;
@@ -33,6 +33,7 @@ protected:
     Via::Structures::IndexList<RouteNode*> nodes;
 public:
     Route(const QColor &color, const QString &selectedStyle, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);
+    Route(const QColor &color, char selectedStyle, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);
 
     virtual QColor getColors() const;
 
@@ -48,9 +49,13 @@ public:
     void eraseAllNodes();
     void swapNodes(int node1, int node2);
     void setElementSize(int newSize) override;
+    void setStyleOfNode(int routeNodeIndex, char newStyle);
     void setStyleOfNode(int routeNodeIndex, const QString &newStyle);
-    QString getStyle() const;
-    void setStyle(const QString &value);
+    char getStyle() const;
+    void setStyle(const QString &newStyle);
+    void setStyle(char newStyle);
+
+    const RouteNode& operator[](int nodeIndex);
 };
 
 }
