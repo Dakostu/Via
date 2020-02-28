@@ -146,7 +146,6 @@ void RouteNode::resetToConnection() {
 
 void RouteNode::checkIfStyleIsDifferent(char routeShape, const QColor &routeColor, int routeSize) {
     setStyleDiffersFromRoute(routeShape != this->node->getShapeKey() || routeColor != this->getColor() || routeSize != this->elementSize);
-    qDebug() << getStyleDiffersFromRoute();
 }
 
 RouteExtraTextLabel* RouteNode::getExtraText() {
