@@ -8,10 +8,10 @@ namespace Via::Interfaces {
 class Serializable
 {
 protected:
-    Serializable();
-    virtual ~Serializable() = default;
+    Serializable() = default;
 
 public:
+    virtual ~Serializable() = default;
     virtual void fromJSON(const QJsonObject &object) = 0;
     virtual QJsonObject toJSON() const = 0;
 

@@ -3,9 +3,6 @@
 
 using namespace Via::Interfaces;
 
-ViewCustomizable::ViewCustomizable() : elementSize{1}
-{    
-}
 
 int ViewCustomizable::getElementSize() const {
     return elementSize;
