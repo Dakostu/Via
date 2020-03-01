@@ -25,7 +25,6 @@ protected:
     std::unique_ptr<RouteNodeShape> node;
     Via::UI::RouteNodeLabel nodeLabel;
     Via::UI::RouteExtraTextLabel extraTextLabel;
-    char style;
     bool styleDiffersFromRoute;
     RouteConnection* fromConnection;
     std::unique_ptr<RouteConnection> toConnection;
