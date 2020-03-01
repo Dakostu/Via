@@ -1,6 +1,7 @@
 #ifndef ROUTEDATA_H
 #define ROUTEDATA_H
 
+#include "../interfaces/shapeable.h"
 #include "../data-structures/indexlist.h"
 #include "data.h"
 #include "routenodedata.h"
@@ -12,7 +13,7 @@ namespace Via::Model {
 
 using RouteDataIterator = Via::Structures::IndexList<Via::Model::RouteNodeData>::iterator;
 
-class RouteData : public Data
+class RouteData : public Data, public Via::Interfaces::Shapeable
 {
     static constexpr bool DEFAULT_SHOW_ORDER = true;
 
@@ -42,6 +43,9 @@ public:
     void activateColors() override;
     void setElementSize(int newSize) override;
 
+    char getShapeKey() const override;
+    void setShapeKey(char newStyle) override;
+
     bool getShowOrder() const;
     RouteNodeData& getFirstNode();
     RouteNodeData& getLastNode();
@@ -57,8 +61,6 @@ public:
     RouteNodeData& operator[](int index);
 
     bool operator==(const RouteData &other) const;
-    char getStyle() const;
-    void setStyle(char newStyle);
 };
 
 }

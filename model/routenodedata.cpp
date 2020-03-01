@@ -15,12 +15,12 @@ const char* RouteNodeData::NODE_COLOR_KEY = "c";
 const char* RouteNodeData::NODE_SIZE_KEY = "s";
 const char* RouteNodeData::NODE_SHAPE_KEY = "p";
 
-char RouteNodeData::getStyle() const
+char RouteNodeData::getShapeKey() const
 {
     return style;
 }
 
-void RouteNodeData::setStyle(char value)
+void RouteNodeData::setShapeKey(char value)
 {
     style = value;
 }

@@ -3,6 +3,7 @@
 
 #include "../data-structures/indexlist.h"
 #include "../controller/states/routenodestate.h"
+#include "../interfaces/shapeable.h"
 #include "../interfaces/viewcustomizable.h"
 #include "../model/routenodedata.h"
 #include "routenode.h"
@@ -18,7 +19,7 @@ class UIState;
 namespace Via::Shapes {
 
 
-class Route : public Via::Interfaces::ViewCustomizable
+class Route : public Via::Interfaces::ViewCustomizable, public Via::Interfaces::Shapeable
 {
 protected:
     static constexpr qreal TEMPORARY_NODE_OPACITY = 0.5;
@@ -40,6 +41,9 @@ public:
     void setColors(const QColor &color) override;
     void activateColors() override;
 
+    char getShapeKey() const override;
+    void setShapeKey(char newStyle) override;
+
     void addNode(const Via::Model::RouteNodeData &node);
     void addNode(qreal x, qreal y);
     void addTemporaryPreviewNode(qreal x, qreal y);
@@ -51,9 +55,7 @@ public:
     void setElementSize(int newSize) override;
     void setStyleOfNode(int routeNodeIndex, char newStyle);
     void setStyleOfNode(int routeNodeIndex, const QString &newStyle);
-    char getStyle() const;
-    void setStyle(const QString &newStyle);
-    void setStyle(char newStyle);
+    void setShapeKey(const QString &newStyle);
 
     const RouteNode& operator[](int nodeIndex);
 };

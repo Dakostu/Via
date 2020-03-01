@@ -2,6 +2,7 @@
 #include "routedata.h"
 #include <QJsonArray>
 
+using namespace Via::Interfaces;
 using namespace Via::Model;
 using namespace Via::Structures;
 using namespace Via::UI;
@@ -42,7 +43,7 @@ void RouteData::fromJSON(const QJsonObject &object) {
         if (!node.isStyleDifferentFromRoute()) {
             node.setColors(this->currentColor);
             node.setElementSize(this->elementSize);
-            node.setStyle(this->style);
+            node.setShapeKey(this->style);
         }
         addNode(node);
     }
@@ -75,12 +76,12 @@ IndexList<RouteNodeData> RouteData::getNodes() const
     return nodes;
 }
 
-char RouteData::getStyle() const
+char RouteData::getShapeKey() const
 {
     return style;
 }
 
-void RouteData::setStyle(char newStyle)
+void RouteData::setShapeKey(char newStyle)
 {
     style = newStyle;
 }

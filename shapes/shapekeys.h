@@ -12,4 +12,5 @@ constexpr char TRIANGLE_DOWN_KEY = 'v';
 constexpr char TRIANGLE_UP_KEY = 'u';
 
 }
+
 #endif // SHAPEKEYS_H

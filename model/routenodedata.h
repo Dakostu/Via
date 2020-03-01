@@ -1,13 +1,14 @@
 #ifndef ROUTENODEDATA_H
 #define ROUTENODEDATA_H
 
+#include "../interfaces/shapeable.h"
 #include "data.h"
 #include <QString>
 #include <QColor>
 
 namespace Via::Model {
 
-class RouteNodeData : public Data
+class RouteNodeData : public Data, public Via::Interfaces::Shapeable
 {
     QString nodeLabel;
     int x;
@@ -39,6 +40,9 @@ public:
     void setColors(const QColor &currentColor) override;
     void activateColors() override;
 
+    char getShapeKey() const override;
+    void setShapeKey(char value) override;
+
     bool isStyleDifferentFromRoute() const;
     QString getNodeLabel() const;
     int getX() const;
@@ -55,8 +59,6 @@ public:
     void setNameChangedByUser(bool value);
 
     bool operator==(const RouteNodeData &other) const;
-    char getStyle() const;
-    void setStyle(char value);
 };
 
 }

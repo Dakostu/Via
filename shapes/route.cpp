@@ -15,20 +15,20 @@ Route::Route(const QColor &color, char selectedStyle, QGraphicsScene *scene, std
 Route::Route(const QColor &color, const QString &selectedStyle, QGraphicsScene *scene, std::unique_ptr<RouteNodeState> &state)
     : Route(color, ' ', scene, state)
 {
-    setStyle(selectedStyle);
+    setShapeKey(selectedStyle);
 }
 
-char Route::getStyle() const
+char Route::getShapeKey() const
 {
     return style;
 }
 
 
-void Route::setStyle(const QString &newStyle) {
-    setStyle(nodeShapeFactory.getShapeKeyFromUIString(newStyle));
+void Route::setShapeKey(const QString &newStyle) {
+    setShapeKey(nodeShapeFactory.getShapeKeyFromUIString(newStyle));
 }
 
-void Route::setStyle(char newStyle)
+void Route::setShapeKey(char newStyle)
 {
     style = newStyle;
 
@@ -65,7 +65,7 @@ void Route::addNode(const RouteNodeData &node) {
     if (node.isStyleDifferentFromRoute()) {
         newNode->setColors(node.getColor());
         newNode->setElementSize(node.getElementSize());        
-        newNode->setShape(nodeShapeFactory.generateNodeShape(node.getStyle(), node.getX(), node.getY(), node.getColor()));
+        newNode->setShape(nodeShapeFactory.generateNodeShape(node.getShapeKey(), node.getX(), node.getY(), node.getColor()));
     }
 
 }

@@ -74,7 +74,7 @@ void MapView::triggerParentMouseReleaseEvent(QMouseEvent *event) {
 }
 
 void MapView::addRoute(const RouteData &route, std::unique_ptr<RouteNodeState> &routeNodeState) {
-    addRoute(route.getColor(), route.getStyle(), routeNodeState);
+    addRoute(route.getColor(), route.getShapeKey(), routeNodeState);
     currentRoute->setElementSize(route.getElementSize());
 
     for (const auto &node : route.getNodes()) {
