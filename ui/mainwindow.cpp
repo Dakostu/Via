@@ -178,7 +178,9 @@ void MainWindow::initializeNodeSettingsUI() {
     connect(ui->nodeNameLineEdit, &QLineEdit::textEdited, this, [&](const QString &newName) {
         dataNameChangeEvent((*controller.getCurrentProject())[selectedRouteIndex][selectedRouteNodeIndex], newName, std::bind(&MainWindow::updateNodeList, this));
     });
-    connect(ui->nodeStyleComboBox, &QComboBox::currentTextChanged, this, &MainWindow::routeNodeStyleChangeEvent);
+    connect(ui->nodeStyleComboBox, &QComboBox::currentTextChanged, this, [&](const QString &newStyle) {
+        dataStyleChangeEvent(newStyle, true);
+    });
 
 
 }
@@ -203,7 +205,9 @@ void MainWindow::initializeRouteSettingsUI() {
     connect(ui->routeNameLineEdit, &QLineEdit::textEdited, this, [&](const QString &newName) {
         dataNameChangeEvent((*controller.getCurrentProject())[selectedRouteIndex], newName, std::bind(&MainWindow::updateRouteList, this));
     });
-    connect(ui->routeStyleComboBox, &QComboBox::currentTextChanged, this, &MainWindow::routeStyleChangeEvent);
+    connect(ui->routeStyleComboBox, &QComboBox::currentTextChanged, this, [&](const QString &newStyle) {
+        dataStyleChangeEvent(newStyle, false);
+    });
     connect(ui->routeNodeOrderCheckBox, &QCheckBox::toggled, this, &MainWindow::routeShowOrderChangeEvent);
 }
 
@@ -222,7 +226,7 @@ void MainWindow::addRoute() {
 
     auto color = colorGenerator();
     ui->picture->addRoute(color, ui->routeStyleComboBox->currentText(), controller.getCurrentRouteNodeState());
-    controller.addNewRouteToCurrentProject(color, ui->picture->getCurrentRoute()->getStyle());
+    controller.addNewRouteToCurrentProject(color, ui->picture->getCurrentRoute()->getShapeKey());
 
     ui->routeBoxRouteList->moveSelectionTo(ui->routeBoxRouteList->model()->rowCount() - 1);
 
@@ -399,17 +403,23 @@ void MainWindow::dataNameChangeEvent(Data &data, const QString &newName, std::fu
     }
 }
 
-void MainWindow::routeStyleChangeEvent(const QString &newStyle) {
+void MainWindow::dataStyleChangeEvent(const QString &newStyle, bool onlyNode) {
     auto currentRoute = ui->picture->getCurrentRoute();
-    currentRoute->setStyle(newStyle);
-    (*controller.getCurrentProject())[selectedRouteIndex].setStyle(currentRoute->getStyle());
+
+    if (onlyNode) {
+        currentRoute->setStyleOfNode(selectedRouteNodeIndex, newStyle);
+        auto& currentNodeData = (*controller.getCurrentProject())[selectedRouteIndex][selectedRouteNodeIndex];
+        const auto &currentNode = currentRoute->operator[](selectedRouteNodeIndex);
+
+        currentNodeData.setShapeKey(currentNode.getNodeShape()->getShapeKey());
+        currentNodeData.setDifferentStyleFromRoute(currentNode.getStyleDiffersFromRoute());
+
+    } else {
+        currentRoute->setShapeKey(newStyle);
+        (*controller.getCurrentProject())[selectedRouteIndex].setShapeKey(currentRoute->getShapeKey());
+    }
 }
 
-void MainWindow::routeNodeStyleChangeEvent(const QString &newStyle) {
-    auto currentRoute = ui->picture->getCurrentRoute();
-    currentRoute->setStyleOfNode(selectedRouteNodeIndex, newStyle);
-    (*controller.getCurrentProject())[selectedRouteIndex][selectedRouteNodeIndex].setStyle(currentRoute[selectedRouteNodeIndex].getStyle());
-}
 
 void MainWindow::routeShowOrderChangeEvent(bool value) {
     auto selectedRows = ui->routeBoxRouteList->getSelectedRows();
