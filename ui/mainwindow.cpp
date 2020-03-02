@@ -179,7 +179,7 @@ void MainWindow::initializeNodeSettingsUI() {
         dataNameChangeEvent((*controller.getCurrentProject())[selectedRouteIndex][selectedRouteNodeIndex], newName, std::bind(&MainWindow::updateNodeList, this));
     });
     connect(ui->nodeStyleComboBox, &QComboBox::currentTextChanged, this, [&](const QString &newStyle) {
-        dataStyleChangeEvent(newStyle, true);
+        dataStyleChangeEvent<NodeAction>(newStyle);
     });
 
 
@@ -206,7 +206,7 @@ void MainWindow::initializeRouteSettingsUI() {
         dataNameChangeEvent((*controller.getCurrentProject())[selectedRouteIndex], newName, std::bind(&MainWindow::updateRouteList, this));
     });
     connect(ui->routeStyleComboBox, &QComboBox::currentTextChanged, this, [&](const QString &newStyle) {
-        dataStyleChangeEvent(newStyle, false);
+        dataStyleChangeEvent<RouteAction>(newStyle);
     });
     connect(ui->routeNodeOrderCheckBox, &QCheckBox::toggled, this, &MainWindow::routeShowOrderChangeEvent);
 }
@@ -400,23 +400,6 @@ void MainWindow::dataNameChangeEvent(Data &data, const QString &newName, std::fu
         if (ui->nodeBoxNodeList->selectionModel()->hasSelection()) {
             ui->nodeBoxNodeList->moveSelectionTo(selectedRouteNodeIndex);
         }
-    }
-}
-
-void MainWindow::dataStyleChangeEvent(const QString &newStyle, bool onlyNode) {
-    auto currentRoute = ui->picture->getCurrentRoute();
-
-    if (onlyNode) {
-        currentRoute->setStyleOfNode(selectedRouteNodeIndex, newStyle);
-        auto& currentNodeData = (*controller.getCurrentProject())[selectedRouteIndex][selectedRouteNodeIndex];
-        const auto &currentNode = currentRoute->operator[](selectedRouteNodeIndex);
-
-        currentNodeData.setShapeKey(currentNode.getNodeShape()->getShapeKey());
-        currentNodeData.setDifferentStyleFromRoute(currentNode.getStyleDiffersFromRoute());
-
-    } else {
-        currentRoute->setShapeKey(newStyle);
-        (*controller.getCurrentProject())[selectedRouteIndex].setShapeKey(currentRoute->getShapeKey());
     }
 }
 

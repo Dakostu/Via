@@ -51,6 +51,7 @@ public:
         currentMapViewState.reset(new NewMapViewState);
         currentRouteNodeState.reset(new NewRouteNodeState);
     }
+
     void addNewRouteToCurrentProject(const QColor &newColor, char newStyle);
     void addNewNodeToRoute(int x, int y, const QColor &newColor, int routeIndex);
     size_t amountOfOpenProjects();
@@ -72,6 +73,8 @@ public slots:
     void saveCurrentProjectAs(const QString &fileName);
     void loadCurrentProjectFromFile(const QString &fileName);
     void printCurrentProject();
+    void setStyleOfCurrentRoute(int routeIndex, char newStyle);
+    void setStyleOfCurrentRouteNode(int routeIndex, int nodeIndex, char newStyle, bool isDifferentNow);
 
 
 signals:

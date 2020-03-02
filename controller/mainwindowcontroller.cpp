@@ -133,6 +133,17 @@ void MainWindowController::printCurrentProject() {
     #endif
 }
 
+void MainWindowController::setStyleOfCurrentRouteNode(int routeIndex, int nodeIndex, char newStyle, bool isDifferentNow) {
+    auto &currentNodeData = (*currentProject->getRoutes()[routeIndex])[nodeIndex];
+    currentNodeData.setShapeKey(newStyle);
+    currentNodeData.setDifferentStyleFromRoute(isDifferentNow);
+}
+
+void MainWindowController::setStyleOfCurrentRoute(int routeIndex, char newStyle) {
+    auto &currentNodeData = (*currentProject->getRoutes()[routeIndex]);
+    currentNodeData.setShapeKey(newStyle);
+}
+
 
 void MainWindowController::addNewRouteToCurrentProject(const QColor &newColor, char newStyle) {
     RouteData newRoute(newColor, newStyle);

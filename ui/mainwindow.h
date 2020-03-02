@@ -12,8 +12,8 @@
 #include <QGraphicsScene>
 #include <QMainWindow>
 #include <QToolButton>
+#include <type_traits>
 
-#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 using namespace Via::UI;
@@ -31,6 +31,10 @@ namespace Via::UI {
 
 class MainWindow : public QMainWindow
 {
+
+    struct NodeAction : std::integral_constant<bool, true> {};
+    struct RouteAction : std::integral_constant<bool, false> {};
+
     Q_OBJECT
 
     Via::Control::MainWindowController &controller;
@@ -65,6 +69,21 @@ public:
     QAbstractButton* getQuickButtonAutoAdd();
     QAbstractButton* getQuickButtonSelect();
 
+    template <typename OnlyNode>
+    void dataStyleChangeEvent(const QString &newStyle) {
+        auto &currentRoute = *ui->picture->getCurrentRoute();
+
+        if constexpr (OnlyNode::value == true) {
+            currentRoute.setStyleOfNode(selectedRouteNodeIndex, newStyle);
+
+            auto &currentNode = currentRoute[selectedRouteIndex];
+            controller.setStyleOfCurrentRouteNode(selectedRouteIndex, selectedRouteNodeIndex, currentNode.getNodeShape()->getShapeKey(), currentNode.getStyleDiffersFromRoute());
+        } else {
+            currentRoute.setShapeKey(newStyle);
+            (*controller.getCurrentProject())[selectedRouteIndex].setShapeKey(currentRoute.getShapeKey());
+        }
+    }
+
 public slots:
     void addRoute();    
     void deleteSelectedRoute();
@@ -79,7 +98,6 @@ public slots:
     void routeNodeSelectionEvent();
     void colorChangeEvent(Via::Model::Data *data);
     void dataNameChangeEvent(Via::Model::Data &data, const QString &newName, std::function<void(void)> listUpdateFunc);
-    void dataStyleChangeEvent(const QString &newStyle, bool onlyNode);
     void routeShowOrderChangeEvent(bool value);
     void moveRouteEvent(int by);
     void getDataFromCurrentProject();
