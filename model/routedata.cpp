@@ -8,13 +8,6 @@ using namespace Via::Structures;
 using namespace Via::UI;
 
 
-const char* RouteData::ROUTE_NAME_KEY = "n";
-const char* RouteData::ROUTE_SIZE_KEY = "s";
-const char* RouteData::ROUTE_COLOR_KEY = "c";
-const char* RouteData::ROUTE_SHOW_ORDER_KEY = "o";
-const char* RouteData::ROUTE_SHAPE_KEY = "p";
-const char* RouteData::ROUTE_NODES_KEY = "a";
-
 RouteData::RouteData() : Data(), showOrder(DEFAULT_SHOW_ORDER)
 {
 

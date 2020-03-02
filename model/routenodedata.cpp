@@ -4,17 +4,6 @@
 
 using namespace Via::Model;
 
-const char* RouteNodeData::NODE_NAME_KEY = "n";
-const char* RouteNodeData::NODE_LABEL_KEY = "l";
-const char* RouteNodeData::NODE_X_KEY = "x";
-const char* RouteNodeData::NODE_Y_KEY = "y";
-const char* RouteNodeData::NODE_DIFFERENT_STYLE_KEY = "f";
-const char* RouteNodeData::NODE_NAME_CHANGED_KEY = "c";
-const char* RouteNodeData::NODE_INVISIBLE_KEY = "i";
-const char* RouteNodeData::NODE_COLOR_KEY = "c";
-const char* RouteNodeData::NODE_SIZE_KEY = "s";
-const char* RouteNodeData::NODE_SHAPE_KEY = "p";
-
 char RouteNodeData::getShapeKey() const
 {
     return style;

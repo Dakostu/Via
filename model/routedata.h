@@ -17,12 +17,12 @@ class RouteData : public Data, public Via::Interfaces::Shapeable
 {
     static constexpr bool DEFAULT_SHOW_ORDER = true;
 
-    static const char* ROUTE_NAME_KEY;
-    static const char* ROUTE_SIZE_KEY;
-    static const char* ROUTE_COLOR_KEY;
-    static const char* ROUTE_SHOW_ORDER_KEY;
-    static const char* ROUTE_SHAPE_KEY;
-    static const char* ROUTE_NODES_KEY;
+    static inline const char* ROUTE_NAME_KEY = "n";
+    static inline const char* ROUTE_SIZE_KEY = "s";
+    static inline const char* ROUTE_COLOR_KEY = "c";
+    static inline const char* ROUTE_SHOW_ORDER_KEY = "o";
+    static inline const char* ROUTE_SHAPE_KEY = "p";
+    static inline const char* ROUTE_NODES_KEY = "a";
 
     bool showOrder;
     char style;
