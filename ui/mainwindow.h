@@ -74,7 +74,7 @@ public:
         if constexpr (OnlyNode::value == true) {
             currentRoute.setStyleOfNode(selectedRouteNodeIndex, newStyle);
 
-            auto &currentNode = currentRoute[selectedRouteIndex];
+            auto &currentNode = currentRoute[selectedRouteNodeIndex];
             controller.setStyleOfCurrentRouteNode(selectedRouteIndex, selectedRouteNodeIndex, currentNode.getNodeShape()->getShapeKey(), currentNode.getStyleDiffersFromRoute());
         } else {
             currentRoute.setShapeKey(newStyle);
