@@ -20,6 +20,8 @@ class MainWindowController : public QObject
     Q_OBJECT
 
     static constexpr size_t MAX_LIST_SIZE = 10;
+    static inline const char* PROGRAM_VER_KEY = "v";
+
     QUndoStack undoCommandStack;
     std::unordered_map<QString, Via::Model::Project> openProjects;
     Via::Model::Project *currentProject;
