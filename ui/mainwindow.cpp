@@ -54,7 +54,6 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     connect(ui->picture, &MapView::routeNodeAdded, this, &MainWindow::addRouteNode);
 
     initializeQuickButtons();
-    initializeMenus();
     initializeShapeSelections();
     initializeRouteBoxUI();
     initializeRouteSettingsUI();
@@ -106,30 +105,6 @@ void MainWindow::initializeQuickButtons() {
         ui->picture->removeTemporaryNode();
         controller.changeUIStates<MainWindowSelectNodeState, MapViewSelectNodeState, RouteNodeSelectNodeState>();
     });
-}
-
-void MainWindow::initializeMenus() {
-
-    menus.emplace_back(std::make_unique<QMenu>(LocalizedUIStrings::getUIString("FILE")));
-    menus[0]->addAction(LocalizedUIStrings::getUIString("OPEN"));
-    menus[0]->addAction(LocalizedUIStrings::getUIString("SAVE"));
-    menus[0]->addAction(LocalizedUIStrings::getUIString("SAVE_AS"));
-    menus[0]->addAction(LocalizedUIStrings::getUIString("PRINT"));
-    menus[0]->addAction(LocalizedUIStrings::getUIString("EXPORT"));
-    menus[0]->addSeparator();
-    menus[0]->addAction(LocalizedUIStrings::getUIString("QUIT"));
-
-    menus.emplace_back(std::make_unique<QMenu>(LocalizedUIStrings::getUIString("EDIT")));
-    menus[1]->addAction(LocalizedUIStrings::getUIString("UNDO"));
-    menus[1]->addAction(LocalizedUIStrings::getUIString("REDO"));
-    menus[1]->addSeparator();
-    menus[1]->addAction(LocalizedUIStrings::getUIString("CUT"));
-    menus[1]->addAction(LocalizedUIStrings::getUIString("COPY"));
-    menus[1]->addAction(LocalizedUIStrings::getUIString("PASTE"));
-
-    for (const auto &menu : menus) {
-        this->menuBar()->addMenu(menu.get());
-    }
 }
 
 void MainWindow::initializeShapeSelections() {

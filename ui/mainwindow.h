@@ -45,13 +45,11 @@ class MainWindow : public QMainWindow
     std::unique_ptr<QButtonGroup> quickButtonGroup;
 
     std::vector<std::unique_ptr<QAction>> actions;
-    std::vector<std::unique_ptr<QMenu>> menus;
 
     int selectedRouteIndex;
     int selectedRouteNodeIndex;
 
     void initializeQuickButtons();
-    void initializeMenus();
     void initializeShapeSelections();
     void initializeRouteBoxUI();
     void initializeRouteSettingsUI();
