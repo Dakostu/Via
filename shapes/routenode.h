@@ -39,7 +39,7 @@ public:
 
 
     void setElementSize(int newSize) override;
-    void setColors(const QColor &color) override;
+    void setColors(const QColor &color) override;    
     void activateColors() override;
 
     void hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
@@ -55,6 +55,7 @@ public:
     void setNodeLabelText(const QString &newText);
     void setShape(RouteNodeShape* newShape);
     void setStyleDiffersFromRoute(bool value);
+    void setToConnectionColor(const QColor &color);
 
     void resetFromConnection();
     void resetToConnection();

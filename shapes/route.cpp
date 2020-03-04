@@ -50,6 +50,7 @@ void Route::setColors(const QColor &color) {
         if (!currentNode->getStyleDiffersFromRoute()) {
             currentNode->setColors(routeColor);
         }
+        currentNode->setToConnectionColor(routeColor);
     }
 }
 
@@ -68,6 +69,7 @@ void Route::addNode(const RouteNodeData &node) {
         newNode->setColors(node.getColor());
         newNode->setElementSize(node.getElementSize());        
         newNode->setShape(nodeShapeFactory.generateNodeShape(node.getShapeKey(), node.getX(), node.getY(), node.getColor()));
+        newNode->setStyleDiffersFromRoute(true);
     }
 
 }

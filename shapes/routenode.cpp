@@ -54,11 +54,14 @@ void RouteNode::setElementSize(int newSize) {
 void RouteNode::setColors(const QColor &color) {
     node->setColors(color);
     extraTextLabel.setColors(color);
+
+    activateColors();
+}
+
+void RouteNode::setToConnectionColor(const QColor &color) {
     if (toConnection) {
         toConnection->setColors(color);
     }
-
-    activateColors();
 }
 
 QColor RouteNode::getColors() const {

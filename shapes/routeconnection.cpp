@@ -15,7 +15,7 @@ RouteConnection::RouteConnection(QPointF from, QPointF to, QColor color)
 
 void RouteConnection::setColors(const QColor &color) {
     elementColor = color;
-
+    activateColors();
 }
 
 void RouteConnection::activateColors() {
