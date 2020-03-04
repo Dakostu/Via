@@ -55,6 +55,7 @@ public:
     void setElementSize(int newSize) override;
     void setStyleOfNode(int routeNodeIndex, char newStyle);
     void setStyleOfNode(int routeNodeIndex, const QString &newStyle);
+    void setColorsOfNode(int routeNodeIndex, const QColor &newColor);
     void setShapeKey(const QString &newStyle);
 
     const RouteNode& operator[](int nodeIndex);

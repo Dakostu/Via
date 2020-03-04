@@ -1,8 +1,6 @@
-#include "../ui/localizeduistrings.h"
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include <QBrush>
-#include <QColorDialog>
 #include <QComboBox>
 #include <QFileDialog>
 #include <QGraphicsRectItem>
@@ -32,6 +30,8 @@
 #include "../controller/states/routenodeaddnodestate.h"
 #include "../controller/states/routenodemovenodestate.h"
 #include "../controller/states/routenodeselectnodestate.h"
+
+#include "../ui/localizeduistrings.h"
 
 using namespace Via::UI;
 using namespace Via::Control;
@@ -150,6 +150,11 @@ void MainWindow::initializeNodeBoxUI() {
 
 void MainWindow::initializeNodeSettingsUI() {
 
+    connect(ui->nodeColorButton, &QPushButton::pressed, this, [&]() {
+        auto currentRoute = ui->picture->getCurrentRoute();
+        auto oldColor = (*currentRoute)[selectedRouteNodeIndex].getNodeShape()->getColors();
+        colorChangeEvent<NodeAction>(oldColor);
+    });
     connect(ui->nodeNameLineEdit, &QLineEdit::textEdited, this, [&](const QString &newName) {
         dataNameChangeEvent((*controller.getCurrentProject())[selectedRouteIndex][selectedRouteNodeIndex], newName, std::bind(&MainWindow::updateNodeList, this));
     });
@@ -174,8 +179,8 @@ void MainWindow::refreshSelectedRouteNodeIndex() {
 
 void MainWindow::initializeRouteSettingsUI() {
     connect(ui->routeColorButton, &QPushButton::pressed, this, [&]() {
-        refreshSelectedRouteIndex();
-        colorChangeEvent(&(*controller.getCurrentProject())[selectedRouteIndex]);
+        auto oldColor = ui->picture->getCurrentRoute()->getColors();
+        colorChangeEvent<RouteAction>(oldColor);
     });
     connect(ui->routeNameLineEdit, &QLineEdit::textEdited, this, [&](const QString &newName) {
         dataNameChangeEvent((*controller.getCurrentProject())[selectedRouteIndex], newName, std::bind(&MainWindow::updateRouteList, this));
@@ -348,21 +353,6 @@ void MainWindow::routeNodeSelectionEvent() {
     //shape
     ui->nodeColorButton->changeColor(routeNodeData.getColor());
 
-}
-
-void MainWindow::colorChangeEvent(Data *data) {
-    auto color = data->getColor();
-    auto newColor = QColorDialog::getColor(color, this);
-    if (!newColor.isValid()) {
-        return;
-    }
-    data->setColors(newColor);
-    ui->picture->getCurrentRoute()->setColors(newColor);
-    ui->routeColorButton->changeColor(newColor);    
-    if (!ui->nodeColorButton->isFlat()) {
-        auto currentSelectedNode = (*controller.getCurrentProject())[selectedRouteIndex][selectedRouteNodeIndex];
-        ui->nodeColorButton->changeColor(currentSelectedNode.getColor());
-    }
 }
 
 

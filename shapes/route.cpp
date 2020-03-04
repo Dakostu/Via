@@ -47,7 +47,9 @@ void Route::setColors(const QColor &color) {
     routeColor = color;    
 
     for (auto &currentNode : nodes) {
-        currentNode->setColors(routeColor);
+        if (currentNode->getStyleDiffersFromRoute()) {
+            currentNode->setColors(routeColor);
+        }
     }
 }
 
@@ -168,6 +170,11 @@ void Route::setStyleOfNode(int routeNodeIndex, char newStyle) {
     selectedNode->checkIfStyleIsDifferent(this->style, this->getColors(), this->elementSize);
 }
 
+void Route::setColorsOfNode(int routeNodeIndex, const QColor &newColor) {
+    auto selectedNode = *nodes[routeNodeIndex];
+    selectedNode->setColors(newColor);
+    selectedNode->checkIfStyleIsDifferent(this->style, this->getColors(), this->elementSize);
+}
 
 const RouteNode& Route::operator[](int nodeIndex) {
     return *(*nodes[nodeIndex]);

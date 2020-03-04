@@ -5,11 +5,13 @@
 #include "colorgenerator.h"
 #include "./ui_mainwindow.h"
 #include "../controller/mainwindowcontroller.h"
+#include "../model/data.h"
 #include <vector>
 #include <memory>
 #include <QButtonGroup>
-#include <QListView>
+#include <QColorDialog>
 #include <QGraphicsScene>
+#include <QListView>
 #include <QMainWindow>
 #include <QToolButton>
 #include <type_traits>
@@ -75,12 +77,43 @@ public:
             currentRoute.setStyleOfNode(selectedRouteNodeIndex, newStyle);
 
             auto &currentNode = currentRoute[selectedRouteNodeIndex];
-            controller.setStyleOfCurrentRouteNode(selectedRouteIndex, selectedRouteNodeIndex, currentNode.getNodeShape()->getShapeKey(), currentNode.getStyleDiffersFromRoute());
+            auto newShapeKey = currentNode.getNodeShape()->getShapeKey();
+            auto isDifferentNow = currentNode.getStyleDiffersFromRoute();
+            controller.setStyleOfCurrentRouteNode(selectedRouteIndex, selectedRouteNodeIndex, newShapeKey, isDifferentNow);
         } else {
             currentRoute.setShapeKey(newStyle);
             (*controller.getCurrentProject())[selectedRouteIndex].setShapeKey(currentRoute.getShapeKey());
         }
     }
+
+
+    template <typename OnlyNode>
+    void colorChangeEvent(const QColor &oldColor) {
+        auto newColor = QColorDialog::getColor(oldColor, this);
+        if (!newColor.isValid()) {
+            return;
+        }
+        auto &currentRoute = *ui->picture->getCurrentRoute();
+
+        if constexpr (OnlyNode::value == true) {
+            currentRoute.setColorsOfNode(selectedRouteNodeIndex, newColor);
+            ui->nodeColorButton->changeColor(newColor);
+
+            auto &currentNode = currentRoute[selectedRouteNodeIndex];
+            auto isDifferentNow = currentNode.getStyleDiffersFromRoute();
+            controller.setColorOfCurrentRouteNode(selectedRouteIndex, selectedRouteNodeIndex, newColor, isDifferentNow);
+        } else {
+            currentRoute.setColors(newColor);
+            ui->routeColorButton->changeColor(newColor);
+            controller.setColorOfCurrentRoute(selectedRouteIndex, newColor);
+        }
+        if (!ui->nodeColorButton->isFlat()) {
+            auto currentSelectedNode = (*controller.getCurrentProject())[selectedRouteIndex][selectedRouteNodeIndex];
+            ui->nodeColorButton->changeColor(currentSelectedNode.getColor());
+        }
+    }
+
+
 
 public slots:
     void addRoute();    
@@ -93,8 +126,7 @@ public slots:
     void updateRouteList();
     void updateNodeList();
     void routeSelectionEvent();
-    void routeNodeSelectionEvent();
-    void colorChangeEvent(Via::Model::Data *data);
+    void routeNodeSelectionEvent();    
     void dataNameChangeEvent(Via::Model::Data &data, const QString &newName, std::function<void(void)> listUpdateFunc);
     void routeShowOrderChangeEvent(bool value);
     void moveRouteEvent(int by);
