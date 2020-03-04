@@ -135,6 +135,9 @@ void Route::eraseNode(int index) {
         currentNode->connect(previousNode);
         currentScene->addItem(previousNode.getToConnection());
         currentNode->updateRouteConnections();
+        if (currentNode->getStyleDiffersFromRoute()) {
+            previousNode.setToConnectionColor(routeColor);
+        }
     }
 
     for (; currentNodePos != nodes.end(); ++currentNodePos) {
