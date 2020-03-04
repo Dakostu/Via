@@ -3,8 +3,8 @@
 
 using namespace Via::Shapes;
 
-TriangleDown::TriangleDown(qreal x, qreal y, const QColor &color)
-    : RouteNodeShape(x, y, color)
+TriangleDown::TriangleDown(const QPointF &point, const QColor &color)
+    : RouteNodeShape(point, color)
 
 {
     this->drawShape();

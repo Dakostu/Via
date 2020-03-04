@@ -3,8 +3,8 @@
 
 using namespace Via::Shapes;
 
-Square::Square(qreal x, qreal y, const QColor &color)
-    : RouteNodeShape(x, y, color)
+Square::Square(const QPointF &point, const QColor &color)
+    : RouteNodeShape(point, color)
 
 {
     this->drawShape();

@@ -8,7 +8,7 @@ namespace Via::Shapes {
 class TriangleUp : public RouteNodeShape
 {
 public:
-    TriangleUp(qreal x, qreal y, const QColor &color);
+    TriangleUp(const QPointF &point, const QColor &color);
 
     void drawShape() override;
     char getShapeKey() override;

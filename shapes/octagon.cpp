@@ -3,8 +3,8 @@
 
 using namespace Via::Shapes;
 
-Octagon::Octagon(qreal x, qreal y, const QColor &color)
-    : RouteNodeShape(x, y, color)
+Octagon::Octagon(const QPointF &point, const QColor &color)
+    : RouteNodeShape(point, color)
 
 {
     this->drawShape();

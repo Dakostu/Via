@@ -9,7 +9,7 @@ class Hexagon : public RouteNodeShape
 {
     static constexpr qreal SIZE_QUOTIENT = 2.0;
 public:
-    Hexagon(qreal x, qreal y, const QColor &color);
+    Hexagon(const QPointF &point, const QColor &color);
 
     void drawShape() override;
     char getShapeKey() override;

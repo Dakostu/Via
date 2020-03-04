@@ -47,6 +47,7 @@ public:
     QString getNodeLabel() const;
     int getX() const;
     int getY() const;
+    QPointF getCenter() const;
     bool getInvisible() const;
     bool isNameChangedByUser() const;
 

@@ -11,8 +11,8 @@ void RouteNodeShape::setElementSize(int newSize) {
     this->drawShape();
 }
 
-RouteNodeShape::RouteNodeShape(qreal x, qreal y, const QColor &color)
-    : QGraphicsPolygonItem({}, nullptr), originX(x), originY(y)
+RouteNodeShape::RouteNodeShape(const QPointF point, const QColor &color)
+    : QGraphicsPolygonItem({}, nullptr), originX(point.x()), originY(point.y())
 {
     this->setBrush(QBrush(color));
 

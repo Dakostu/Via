@@ -17,13 +17,13 @@ using namespace Via::UI;
 RouteNodeShapeFactory::RouteNodeShapeFactory()
 {
 
-    shapeKeyTable = std::unordered_map<char, std::function<RouteNodeShape*(qreal, qreal, QColor)>>{
-        {DIAMOND_KEY, [&](auto x, auto y, auto color) {return generateShape<Diamond>(x,y,color); }},
-        {HEXAGON_KEY, [&](auto x, auto y, auto color) {return generateShape<Hexagon>(x,y,color); }},
-        {OCTAGON_KEY, [&](auto x, auto y, auto color) {return generateShape<Octagon>(x,y,color); }},
-        {SQUARE_KEY, [&](auto x, auto y, auto color) {return generateShape<Square>(x,y,color); }},
-        {TRIANGLE_UP_KEY, [&](auto x, auto y, auto color) {return generateShape<TriangleUp>(x,y,color); }},
-        {TRIANGLE_DOWN_KEY, [&](auto x, auto y, auto color) {return generateShape<TriangleDown>(x,y,color); }}
+    shapeKeyTable = std::unordered_map<char, std::function<RouteNodeShape*(QPointF, QColor)>>{
+        {DIAMOND_KEY, [&](auto point, auto color) {return generateShape<Diamond>(point, color); }},
+        {HEXAGON_KEY, [&](auto point, auto color) {return generateShape<Hexagon>(point, color); }},
+        {OCTAGON_KEY, [&](auto point, auto color) {return generateShape<Octagon>(point, color); }},
+        {SQUARE_KEY, [&](auto point, auto color) {return generateShape<Square>(point, color); }},
+        {TRIANGLE_UP_KEY, [&](auto point, auto color) {return generateShape<TriangleUp>(point, color); }},
+        {TRIANGLE_DOWN_KEY, [&](auto point, auto color) {return generateShape<TriangleDown>(point, color); }}
     };
 
     shapeStringKeyTable = std::unordered_map<QString, char> {
@@ -45,7 +45,7 @@ char RouteNodeShapeFactory::getShapeKeyFromUIString(QString key) {
     return key[0].toLatin1();
 }
 
-RouteNodeShape* RouteNodeShapeFactory::generateNodeShape(char key, qreal x, qreal y, const QColor &color) {
+RouteNodeShape* RouteNodeShapeFactory::generateNodeShape(char key, const QPointF &point, const QColor &color) {
     assert(shapeKeyTable.find(key) != shapeKeyTable.end());
-    return shapeKeyTable[key](x,y,color);
+    return shapeKeyTable[key](point,color);
 }

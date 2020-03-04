@@ -9,7 +9,7 @@ class Octagon : public RouteNodeShape
 {
     static constexpr qreal SIZE_QUOTIENT = 2.0;
 public:
-    Octagon(qreal x, qreal y, const QColor &color);
+    Octagon(const QPointF &point, const QColor &color);
 
     void drawShape() override;
     char getShapeKey() override;

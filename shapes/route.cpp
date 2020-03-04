@@ -68,7 +68,7 @@ void Route::addNode(const RouteNodeData &node) {
     if (node.isStyleDifferentFromRoute()) {
         newNode->setColors(node.getColor());
         newNode->setElementSize(node.getElementSize());        
-        newNode->setShape(nodeShapeFactory.generateNodeShape(node.getShapeKey(), node.getX(), node.getY(), node.getColor()));
+        newNode->setShape(nodeShapeFactory.generateNodeShape(node.getShapeKey(), node.getCenter(), node.getColor()));
         newNode->setStyleDiffersFromRoute(true);
     }
 
@@ -91,7 +91,7 @@ void Route::addNode(qreal x, qreal y) {
     removeTemporaryPreviewNode();
 
     auto previousNode = nodes.back();
-    nodes.emplace_back(new RouteNode(nodeShapeFactory.generateNodeShape(style, x, y, routeColor),
+    nodes.emplace_back(new RouteNode(nodeShapeFactory.generateNodeShape(style, {x, y}, routeColor),
                        QString::number(nodes.size() + 1), currentState));
 
     nodes.back()->setElementSize(getElementSize());
@@ -166,16 +166,16 @@ void Route::swapNodes(int node1, int node2) {
     withNode->getExtraText()->setText(fromNode->getExtraText()->text());
     withNode->setStyleDiffersFromRoute(fromNode->getStyleDiffersFromRoute());
     withNode->moveBy(fromNodeCenter.x() - withNodeCenter.x(), fromNodeCenter.y() - withNodeCenter.y());
+    //withNode->setShape(nodeShapeFactory.generateNodeShape(fromNode->getShapeKey(), withNode->getCenter().x(), withNode->getCenter().y(), fromNode->getColors()));
     withNode->setColors(fromNode->getColors());
     withNode->setElementSize(fromNode->getElementSize());
-    //withNode->setShape(nodeShapeFactory.generateNodeShape(fromNode->getShapeKey(), fromNodeCenter.x(), fromNodeCenter.y(), fromNode->getColors()));
 
     fromNode->getExtraText()->setText(tempExtraLabelText);
     fromNode->setStyleDiffersFromRoute(tempStyleIsDifferent);
     fromNode->moveBy(tempCenter.x() - fromNodeCenter.x(), tempCenter.y() - fromNodeCenter.y());
+    //fromNode->setShape(nodeShapeFactory.generateNodeShape(tempShape, fromNode->getCenter().x(), fromNode->getCenter().y(), tempColor));
     fromNode->setColors(tempColor);
     fromNode->setElementSize(tempSize);
-    //fromNode->setShape(nodeShapeFactory.generateNodeShape(tempShape, tempCenter.x(), tempCenter.y(), tempColor));
 
 }
 
@@ -193,7 +193,7 @@ void Route::setStyleOfNode(int routeNodeIndex, const QString &newStyle) {
 
 void Route::setStyleOfNode(int routeNodeIndex, char newStyle) {
     auto selectedNode = *nodes[routeNodeIndex];
-    auto newShape = nodeShapeFactory.generateNodeShape(newStyle, selectedNode->getCenter().x(), selectedNode->getCenter().y(), selectedNode->getColors());
+    auto newShape = nodeShapeFactory.generateNodeShape(newStyle, selectedNode->getCenter(), selectedNode->getColors());
     selectedNode->setShape(newShape);
     selectedNode->checkIfStyleIsDifferent(this->style, this->getColors(), this->elementSize);
 }

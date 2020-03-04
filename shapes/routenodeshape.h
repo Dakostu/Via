@@ -20,7 +20,7 @@ protected:
     qreal originY;
 
 public:
-    RouteNodeShape(qreal x, qreal y, const QColor &color);
+    RouteNodeShape(const QPointF point, const QColor &color);
 
     QColor getColors();
 

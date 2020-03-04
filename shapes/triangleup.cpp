@@ -3,8 +3,8 @@
 
 using namespace Via::Shapes;
 
-TriangleUp::TriangleUp(qreal x, qreal y, const QColor &color)
-    : RouteNodeShape(x, y, color)
+TriangleUp::TriangleUp(const QPointF &point, const QColor &color)
+    : RouteNodeShape(point, color)
 
 {
     this->drawShape();

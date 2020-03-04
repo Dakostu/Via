@@ -3,8 +3,8 @@
 
 using namespace Via::Shapes;
 
-Diamond::Diamond(qreal x, qreal y, const QColor &color)
-    : RouteNodeShape(x, y, color)
+Diamond::Diamond(const QPointF &point, const QColor &color)
+    : RouteNodeShape(point, color)
 
 {
     this->drawShape();

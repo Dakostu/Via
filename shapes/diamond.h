@@ -9,7 +9,7 @@ class Diamond : public RouteNodeShape
 {
     static constexpr qreal SIZE_QUOTIENT = 1.2;
 public:
-    Diamond(qreal x, qreal y, const QColor &color);
+    Diamond(const QPointF &point, const QColor &color);
 
     void drawShape() override;
     char getShapeKey() override;

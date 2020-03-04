@@ -3,8 +3,8 @@
 
 using namespace Via::Shapes;
 
-Hexagon::Hexagon(qreal x, qreal y, const QColor &color)
-    : RouteNodeShape(x, y, color)
+Hexagon::Hexagon(const QPointF &point, const QColor &color)
+    : RouteNodeShape(point, color)
 
 {
     this->drawShape();

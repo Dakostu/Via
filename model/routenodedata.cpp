@@ -49,6 +49,10 @@ void RouteNodeData::setY(int value)
     y = value;
 }
 
+QPointF RouteNodeData::getCenter() const {
+    return {qreal(x),qreal(y)};
+}
+
 void RouteNodeData::setDifferentStyleFromRoute(bool value)
 {
     differentStyleFromRoute = value;
