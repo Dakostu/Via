@@ -150,7 +150,33 @@ void Route::eraseAllNodes() {
 }
 
 void Route::swapNodes(int node1, int node2) {
-    (*nodes[node1])->swap(*nodes[node2]);
+    auto &fromNode = *nodes[node1];
+    auto &withNode = *nodes[node2];
+
+    auto tempCenter = withNode->getCenter();
+    auto tempColor = withNode->getColors();
+    auto tempSize = withNode->getElementSize();
+    auto tempShape = withNode->getShapeKey();
+    auto tempExtraLabelText = withNode->getExtraText()->text();
+    auto tempStyleIsDifferent = withNode->getStyleDiffersFromRoute();
+
+    auto fromNodeCenter = fromNode->getCenter();
+    auto withNodeCenter = withNode->getCenter();
+
+    withNode->getExtraText()->setText(fromNode->getExtraText()->text());
+    withNode->setStyleDiffersFromRoute(fromNode->getStyleDiffersFromRoute());
+    withNode->moveBy(fromNodeCenter.x() - withNodeCenter.x(), fromNodeCenter.y() - withNodeCenter.y());
+    withNode->setColors(fromNode->getColors());
+    withNode->setElementSize(fromNode->getElementSize());
+    //withNode->setShape(nodeShapeFactory.generateNodeShape(fromNode->getShapeKey(), fromNodeCenter.x(), fromNodeCenter.y(), fromNode->getColors()));
+
+    fromNode->getExtraText()->setText(tempExtraLabelText);
+    fromNode->setStyleDiffersFromRoute(tempStyleIsDifferent);
+    fromNode->moveBy(tempCenter.x() - fromNodeCenter.x(), tempCenter.y() - fromNodeCenter.y());
+    fromNode->setColors(tempColor);
+    fromNode->setElementSize(tempSize);
+    //fromNode->setShape(nodeShapeFactory.generateNodeShape(tempShape, tempCenter.x(), tempCenter.y(), tempColor));
+
 }
 
 void Route::setElementSize(int newSize) {

@@ -67,10 +67,10 @@ public:
     Via::UI::RouteExtraTextLabel* getExtraText();
     Via::UI::RouteNodeLabel* getNodeLabel();
     RouteNodeShape* getNodeShape() const;
+    char getShapeKey() const;
     bool getStyleDiffersFromRoute() const;
 
     void connect(RouteNode &from);
-    void swap(RouteNode *with);
     void moveBy(qreal dx, qreal dy);
     QPointF getCenter();
     void updateRouteConnections();

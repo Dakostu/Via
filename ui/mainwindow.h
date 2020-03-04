@@ -77,7 +77,7 @@ public:
             currentRoute.setStyleOfNode(selectedRouteNodeIndex, newStyle);
 
             auto &currentNode = currentRoute[selectedRouteNodeIndex];
-            auto newShapeKey = currentNode.getNodeShape()->getShapeKey();
+            auto newShapeKey = currentNode.getShapeKey();
             auto isDifferentNow = currentNode.getStyleDiffersFromRoute();
             controller.setStyleOfCurrentRouteNode(selectedRouteIndex, selectedRouteNodeIndex, newShapeKey, isDifferentNow);
         } else {

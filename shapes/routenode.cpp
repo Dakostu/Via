@@ -97,6 +97,10 @@ RouteNodeShape* RouteNode::getNodeShape() const
     return node.get();
 }
 
+char RouteNode::getShapeKey() const {
+    return node->getShapeKey();
+}
+
 void RouteNode::centerNodeLabelBox() {
     auto center = node->boundingRect().center();
     auto nodeLabelBox = nodeLabel.boundingRect();
@@ -188,32 +192,6 @@ void RouteNode::connect(RouteNode &from) {
     fromConnection = connection;
 }
 
-void RouteNode::swap(RouteNode *with) {
-    auto tempCenter = with->getCenter();
-    auto tempColor = with->getColors();
-    auto tempSize = with->getElementSize();
-    auto tempExtraLabelText = with->getExtraText()->text();
-    auto tempStyleIsDifferent = with->getStyleDiffersFromRoute();
-
-
-    with->getExtraText()->setText(this->getExtraText()->text());
-    with->setStyleDiffersFromRoute(this->styleDiffersFromRoute);
-    with->moveBy(this->getCenter().x() - with->getCenter().x(), this->getCenter().y() - with->getCenter().y());
-    if (this->styleDiffersFromRoute) {
-        with->setColors(this->getColors());
-        with->setElementSize(this->elementSize);
-        //shape
-    }
-
-    this->getExtraText()->setText(tempExtraLabelText);
-    this->setStyleDiffersFromRoute(tempStyleIsDifferent);
-    this->moveBy(tempCenter.x() - this->getCenter().x(), tempCenter.y() - this->getCenter().y());
-    if (tempStyleIsDifferent) {
-        this->setColors(tempColor);
-        this->setElementSize(tempSize);
-        // shape
-    }
-}
 
 QPointF RouteNode::getCenter() {
     return this->boundingRect().center() + this->pos();
