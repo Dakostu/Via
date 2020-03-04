@@ -152,7 +152,7 @@ void MainWindow::initializeNodeSettingsUI() {
 
     connect(ui->nodeColorButton, &QPushButton::pressed, this, [&]() {
         auto currentRoute = ui->picture->getCurrentRoute();
-        auto oldColor = (*currentRoute)[selectedRouteNodeIndex].getNodeShape()->getColors();
+        auto oldColor = (*currentRoute)[selectedRouteNodeIndex].getColors();
         colorChangeEvent<NodeAction>(oldColor);
     });
     connect(ui->nodeNameLineEdit, &QLineEdit::textEdited, this, [&](const QString &newName) {

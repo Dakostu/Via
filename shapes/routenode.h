@@ -60,7 +60,7 @@ public:
     void resetToConnection();
     void checkIfStyleIsDifferent(char routeShape, const QColor &routeColor, int routeSize);
 
-    QColor getColor() const;
+    QColor getColors() const;
     RouteConnection* getFromConnection();
     RouteConnection* getToConnection();
     Via::UI::RouteExtraTextLabel* getExtraText();

@@ -12,7 +12,7 @@ RouteNodeMoveNodeState::RouteNodeMoveNodeState()
 
 
 void RouteNodeMoveNodeState::mouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {
-    auto nodeColorInverted = ~(node->getColor().rgb());
+    auto nodeColorInverted = ~(node->getColors().rgb());
     node->setNodeOutlineColor(nodeColorInverted);
 }
 

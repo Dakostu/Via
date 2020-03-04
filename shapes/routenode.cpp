@@ -61,7 +61,7 @@ void RouteNode::setColors(const QColor &color) {
     activateColors();
 }
 
-QColor RouteNode::getColor() const {
+QColor RouteNode::getColors() const {
     return node->brush().color();
 }
 
@@ -144,7 +144,7 @@ void RouteNode::resetToConnection() {
 }
 
 void RouteNode::checkIfStyleIsDifferent(char routeShape, const QColor &routeColor, int routeSize) {
-    setStyleDiffersFromRoute(routeShape != this->node->getShapeKey() || routeColor != this->getColor() || routeSize != this->elementSize);
+    setStyleDiffersFromRoute(routeShape != this->node->getShapeKey() || routeColor != this->getColors() || routeSize != this->elementSize);
 }
 
 RouteExtraTextLabel* RouteNode::getExtraText() {
@@ -187,7 +187,7 @@ void RouteNode::connect(RouteNode &from) {
 
 void RouteNode::swap(RouteNode *with) {
     auto tempCenter = with->getCenter();
-    auto tempColor = with->getColor();
+    auto tempColor = with->getColors();
     auto tempSize = with->getElementSize();
     auto tempExtraLabelText = with->getExtraText()->text();
     auto tempStyleIsDifferent = with->getStyleDiffersFromRoute();
@@ -197,7 +197,7 @@ void RouteNode::swap(RouteNode *with) {
     with->setStyleDiffersFromRoute(this->styleDiffersFromRoute);
     with->moveBy(this->getCenter().x() - with->getCenter().x(), this->getCenter().y() - with->getCenter().y());
     if (this->styleDiffersFromRoute) {
-        with->setColors(this->getColor());
+        with->setColors(this->getColors());
         with->setElementSize(this->elementSize);
         //shape
     }
