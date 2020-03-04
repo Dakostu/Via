@@ -77,6 +77,8 @@ public slots:
     void printCurrentProject();
     void setStyleOfCurrentRoute(int routeIndex, char newStyle);
     void setStyleOfCurrentRouteNode(int routeIndex, int nodeIndex, char newStyle, bool isDifferentNow);
+    void setColorOfCurrentRoute(int routeIndex, const QColor &newColor);
+    void setColorOfCurrentRouteNode(int routeIndex, int nodeIndex, const QColor &newColor, bool isDifferentNow);
 
 
 signals:
