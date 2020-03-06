@@ -12,8 +12,12 @@ void RouteNodeShape::setElementSize(int newSize) {
 }
 
 RouteNodeShape::RouteNodeShape(const QPointF point, const QColor &color)
-    : QGraphicsPolygonItem({}, nullptr), originX(point.x()), originY(point.y())
+    : QGraphicsPolygonItem({}, nullptr)
 {
+    auto roundedPoint = point.toPoint();
+    originX = roundedPoint.x();
+    originY = roundedPoint.y();
+
     this->setBrush(QBrush(color));
 
     this->setFlag(ItemIsFocusable);
