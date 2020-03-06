@@ -151,6 +151,11 @@ void RouteNode::resetToConnection() {
     toConnection.reset(nullptr);
 }
 
+void RouteNode::resetConnections() {
+    resetFromConnection();
+    resetToConnection();
+}
+
 void RouteNode::checkIfStyleIsDifferent(char routeShape, const QColor &routeColor, int routeSize) {
     setStyleDiffersFromRoute(routeShape != this->node->getShapeKey() || routeColor != this->getColors() || routeSize != this->elementSize);
 }

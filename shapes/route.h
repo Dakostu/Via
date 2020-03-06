@@ -32,6 +32,9 @@ protected:
     std::unique_ptr<Via::Control::RouteNodeState> &currentState;
 
     Via::Structures::IndexList<RouteNode*> nodes;
+
+    void connectNodes(Via::Shapes::RouteNode &from, Via::Shapes::RouteNode &to);
+
 public:
     Route(const QColor &color, const QString &selectedStyle, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);
     Route(const QColor &color, char selectedStyle, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);

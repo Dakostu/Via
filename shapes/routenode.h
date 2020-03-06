@@ -59,6 +59,7 @@ public:
 
     void resetFromConnection();
     void resetToConnection();
+    void resetConnections();
     void checkIfStyleIsDifferent(char routeShape, const QColor &routeColor, int routeSize);
 
     QColor getColors() const;

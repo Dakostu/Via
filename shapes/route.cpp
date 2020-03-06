@@ -132,12 +132,7 @@ void Route::eraseNode(int index) {
         nodes.back()->resetToConnection();
     } else if (index > 0 && index < nodes.size()) {
         auto &previousNode = **nodes[index - 1];
-        currentNode->connect(previousNode);
-        currentScene->addItem(previousNode.getToConnection());
-        currentNode->updateRouteConnections();
-        if (currentNode->getStyleDiffersFromRoute()) {
-            previousNode.setToConnectionColor(routeColor);
-        }
+        connectNodes(previousNode, *currentNode);
     }
 
     for (; currentNodePos != nodes.end(); ++currentNodePos) {
@@ -152,33 +147,69 @@ void Route::eraseAllNodes() {
     }
 }
 
+void Route::connectNodes(Via::Shapes::RouteNode &from, Via::Shapes::RouteNode &to) {
+    currentScene->removeItem(from.getToConnection());
+    to.connect(from);
+    currentScene->addItem(from.getToConnection());
+    to.updateRouteConnections();
+    if (to.getStyleDiffersFromRoute()) {
+        from.setToConnectionColor(routeColor);
+    }
+}
+
 void Route::swapNodes(int node1, int node2) {
     auto &fromNode = *nodes[node1];
     auto &withNode = *nodes[node2];
 
+    auto tempNodeLabel = withNode->getNodeLabel()->text();
     auto tempCenter = withNode->getCenter();
-    auto tempColor = withNode->getColors();
-    auto tempSize = withNode->getElementSize();
-    auto tempShape = withNode->getShapeKey();
     auto tempExtraLabelText = withNode->getExtraText()->text();
-    auto tempStyleIsDifferent = withNode->getStyleDiffersFromRoute();
 
     auto fromNodeCenter = fromNode->getCenter();
     auto withNodeCenter = withNode->getCenter();
 
-    withNode->getExtraText()->setText(fromNode->getExtraText()->text());
-    withNode->setStyleDiffersFromRoute(fromNode->getStyleDiffersFromRoute());
     withNode->moveBy(fromNodeCenter.x() - withNodeCenter.x(), fromNodeCenter.y() - withNodeCenter.y());
-    //withNode->setShape(nodeShapeFactory.generateNodeShape(fromNode->getShapeKey(), withNode->getCenter().x(), withNode->getCenter().y(), fromNode->getColors()));
-    withNode->setColors(fromNode->getColors());
-    withNode->setElementSize(fromNode->getElementSize());
+    withNode->getNodeLabel()->setText(fromNode->getNodeLabel()->text());
 
-    fromNode->getExtraText()->setText(tempExtraLabelText);
-    fromNode->setStyleDiffersFromRoute(tempStyleIsDifferent);
     fromNode->moveBy(tempCenter.x() - fromNodeCenter.x(), tempCenter.y() - fromNodeCenter.y());
-    //fromNode->setShape(nodeShapeFactory.generateNodeShape(tempShape, fromNode->getCenter().x(), fromNode->getCenter().y(), tempColor));
-    fromNode->setColors(tempColor);
-    fromNode->setElementSize(tempSize);
+    fromNode->getNodeLabel()->setText(tempNodeLabel);
+
+    withNode->resetConnections();
+    fromNode->resetConnections();
+
+    if (node1 > node2) {
+        nodes.splice(nodes[node2], nodes, nodes[node1]);
+
+        connectNodes(*withNode, *fromNode);
+
+        /*if (node1 > 0) {
+            auto &previousNode = **nodes[node1 - 1];
+            connectNodes(*fromNode, previousNode);
+        }
+        if (node2 < nodes.size()) {
+            auto &nextNode = **nodes[node2 + 1];
+            withNode->connect(nextNode);
+            currentScene->addItem(withNode->getToConnection());
+            withNode->updateRouteConnections();
+        }*/
+
+    } else {
+        nodes.splice(nodes[node1], nodes, nodes[node2]);
+
+        connectNodes(*fromNode, *withNode);
+
+        /*if (node2 > 0) {
+            auto &previousNode = **nodes[node2 - 1];
+            connectNodes(previousNode, *fromNode);
+        }
+        /*if (node1 < nodes.size()) {
+            auto &nextNode = **nodes[node1 + 1];
+            withNode->connect(nextNode);
+            currentScene->addItem(withNode->getToConnection());
+            withNode->updateRouteConnections();
+        }*/
+    }
+
 
 }
 
