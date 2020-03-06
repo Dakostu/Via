@@ -140,6 +140,7 @@ void RouteNode::setShape(RouteNodeShape* newShape) {
     removeFromGroup(this->node.get());
     node.reset(newShape);
     addToGroup(newShape);
+    centerNodeLabelBox();
 }
 
 void RouteNode::resetFromConnection() {
