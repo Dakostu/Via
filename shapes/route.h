@@ -34,6 +34,7 @@ protected:
     Via::Structures::IndexList<RouteNode*> nodes;
 
     void connectNodes(Via::Shapes::RouteNode &from, Via::Shapes::RouteNode &to);
+    void swapConnections(int firstNodeIndex, int secondNodeIndex);
 
 public:
     Route(const QColor &color, const QString &selectedStyle, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);
@@ -54,7 +55,7 @@ public:
     bool hasTemporaryPreviewNode();
     void eraseNode(int index);
     void eraseAllNodes();
-    void swapNodes(int node1, int node2);
+    void swapNodes(int firstNodeIndex, int secondNodeIndex);
     void setElementSize(int newSize) override;
     void setStyleOfNode(int routeNodeIndex, char newStyle);
     void setStyleOfNode(int routeNodeIndex, const QString &newStyle);

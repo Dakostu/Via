@@ -147,8 +147,7 @@ void Route::eraseAllNodes() {
     }
 }
 
-void Route::connectNodes(Via::Shapes::RouteNode &from, Via::Shapes::RouteNode &to) {
-    currentScene->removeItem(from.getToConnection());
+void Route::connectNodes(RouteNode &from, RouteNode &to) {
     to.connect(from);
     currentScene->addItem(from.getToConnection());
     to.updateRouteConnections();
@@ -157,9 +156,27 @@ void Route::connectNodes(Via::Shapes::RouteNode &from, Via::Shapes::RouteNode &t
     }
 }
 
-void Route::swapNodes(int node1, int node2) {
-    auto &fromNode = *nodes[node1];
-    auto &withNode = *nodes[node2];
+void Route::swapConnections(int firstNodeIndex, int secondNodeIndex) {
+    nodes.splice(nodes[firstNodeIndex], nodes, nodes[secondNodeIndex]);
+
+    auto &firstNode = **nodes[firstNodeIndex];
+    auto &secondNode = **nodes[secondNodeIndex];
+
+    connectNodes(firstNode, secondNode);
+
+    if (firstNodeIndex > 0) {
+        auto &previousNode = **nodes[firstNodeIndex - 1];
+        connectNodes(previousNode, firstNode);
+    }
+    if (secondNodeIndex < nodes.size() - 1) {
+        auto &nextNode = **nodes[secondNodeIndex + 1];
+        connectNodes(secondNode, nextNode);
+    }
+}
+
+void Route::swapNodes(int firstNodeIndex, int secondNodeIndex) {
+    auto &fromNode = *nodes[firstNodeIndex];
+    auto &withNode = *nodes[secondNodeIndex];
 
     auto tempNodeLabel = withNode->getNodeLabel()->text();
     auto tempCenter = withNode->getCenter();
@@ -177,39 +194,11 @@ void Route::swapNodes(int node1, int node2) {
     withNode->resetConnections();
     fromNode->resetConnections();
 
-    if (node1 > node2) {
-        nodes.splice(nodes[node2], nodes, nodes[node1]);
-
-        connectNodes(*withNode, *fromNode);
-
-        /*if (node1 > 0) {
-            auto &previousNode = **nodes[node1 - 1];
-            connectNodes(*fromNode, previousNode);
-        }
-        if (node2 < nodes.size()) {
-            auto &nextNode = **nodes[node2 + 1];
-            withNode->connect(nextNode);
-            currentScene->addItem(withNode->getToConnection());
-            withNode->updateRouteConnections();
-        }*/
-
+    if (firstNodeIndex < secondNodeIndex) {
+        swapConnections(firstNodeIndex, secondNodeIndex);
     } else {
-        nodes.splice(nodes[node1], nodes, nodes[node2]);
-
-        connectNodes(*fromNode, *withNode);
-
-        /*if (node2 > 0) {
-            auto &previousNode = **nodes[node2 - 1];
-            connectNodes(previousNode, *fromNode);
-        }
-        /*if (node1 < nodes.size()) {
-            auto &nextNode = **nodes[node1 + 1];
-            withNode->connect(nextNode);
-            currentScene->addItem(withNode->getToConnection());
-            withNode->updateRouteConnections();
-        }*/
+        swapConnections(secondNodeIndex, firstNodeIndex);
     }
-
 
 }
 
