@@ -8,7 +8,9 @@ QColor ColorGenerator::operator()() {
     if (!lastColor.isValid()) {
         lastColor = QColor::fromRgb(QRandomGenerator::global()->generate());
     } else {
-        qreal h, s, v;
+        qreal h;
+        qreal s;
+        qreal v;
         lastColor.getHsvF(&h, &s, &v);
 
         h += GOLDEN_RATIO + (QRandomGenerator::global()->bounded(100)/1000.0 - 0.5);
