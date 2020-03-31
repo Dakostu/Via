@@ -16,7 +16,7 @@ class RouteConnection : public QGraphicsLineItem, public Via::Interfaces::ViewCu
     std::unique_ptr<QLineF> cartesianLine;
 
 public:
-    RouteConnection(QPointF from, QPointF to, QColor color);
+    RouteConnection(QPointF from, QPointF to, const QColor &color);
 
     void setColors(const QColor &color) override;
     void activateColors() override;

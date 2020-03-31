@@ -15,7 +15,7 @@ protected:
     Via::Shapes::RouteNodeShape *parentNode;
 
 public:
-    RouteExtraTextLabel(QString text, Via::Shapes::RouteNodeShape *parent);
+    RouteExtraTextLabel(const QString &text, Via::Shapes::RouteNodeShape *parent);
 
     void setElementSize(int newSize) override;
     void setColors(const QColor &color) override;

@@ -2,7 +2,7 @@
 
 using namespace Via::UI;
 
-QString LocalizedUIStrings::getUIString(MapKey key) {
+QString LocalizedUIStrings::getUIString(const MapKey &key) {
 
     static const StringMap map = {
         {"YES", tr("&Yes")},

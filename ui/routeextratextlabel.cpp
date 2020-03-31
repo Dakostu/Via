@@ -6,7 +6,7 @@
 using namespace Via::UI;
 using namespace Via::Shapes;
 
-RouteExtraTextLabel::RouteExtraTextLabel(QString text, RouteNodeShape *parent)
+RouteExtraTextLabel::RouteExtraTextLabel(const QString &text, RouteNodeShape *parent)
     : QGraphicsSimpleTextItem(text), parentNode(parent)
 {
    setFlag(ItemIsMovable);

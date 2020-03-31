@@ -4,7 +4,7 @@
 
 using namespace Via::UI;
 
-RouteNodeLabel::RouteNodeLabel(QString text)
+RouteNodeLabel::RouteNodeLabel(const QString &text)
     : QGraphicsSimpleTextItem(text)
 {
     activateColors();
@@ -13,7 +13,7 @@ RouteNodeLabel::RouteNodeLabel(QString text)
 void RouteNodeLabel::setElementSize(int newSize) {
     ViewCustomizable::setElementSize(newSize);
     auto font = this->font();
-    font.setPointSizeF(elementSize / 2 + 7);
+    font.setPointSizeF(elementSize / 2.0 + 7);
     this->setFont(font);
 }
 
