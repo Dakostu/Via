@@ -36,6 +36,8 @@ class MainWindow : public QMainWindow
 
     struct NodeAction : std::integral_constant<bool, true> {};
     struct RouteAction : std::integral_constant<bool, false> {};
+    struct RouteIndex : std::integral_constant<bool, true> {};
+    struct RouteNodeIndex : std::integral_constant<bool, false> {};
 
     Q_OBJECT
 
@@ -58,8 +60,25 @@ class MainWindow : public QMainWindow
     void initializeNodeBoxUI();
     void initializeNodeSettingsUI();
 
-    void refreshSelectedRouteIndex();
-    void refreshSelectedRouteNodeIndex();
+    template <typename SelectedIndex>
+    void refreshIndex() {
+        Via::UI::RouteDataView *dataView;
+        size_t *index;
+
+        ui->picture->removeTemporaryNode();
+
+        if constexpr (SelectedIndex::value == RouteIndex::value) {
+            dataView = ui->routeBoxRouteList;
+            index = &selectedRouteIndex;
+        } else {
+            dataView = ui->nodeBoxNodeList;
+            index = &selectedRouteNodeIndex;
+        }
+
+        if (dataView->selectionModel() && dataView->selectionModel()->hasSelection()) {
+            *index = static_cast<size_t>(dataView->getSelectedRows()[0].row());
+        }
+    }
 
 public:
     MainWindow(QWidget *parent, Via::Control::MainWindowController &newController);
@@ -107,13 +126,12 @@ public:
             ui->routeColorButton->changeColor(newColor);
             controller.setColorOfCurrentRoute(selectedRouteIndex, newColor);
         }
+
         if (!ui->nodeColorButton->isFlat()) {
             auto currentSelectedNode = (*controller.getCurrentProject())[selectedRouteIndex][selectedRouteNodeIndex];
             ui->nodeColorButton->changeColor(currentSelectedNode.getColor());
         }
     }
-
-
 
 public slots:
     void addRoute();    
