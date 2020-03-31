@@ -9,7 +9,7 @@ namespace Via::Structures {
 template <typename T>
 class IndexList : public std::list<T>
 {
-    typename std::list<T>::iterator iterateToPosition(int index) {
+    typename std::list<T>::iterator iterateToPosition(size_t index) {
         auto nodesSize = this->size();
 
         if (index >= nodesSize) {
@@ -23,15 +23,15 @@ class IndexList : public std::list<T>
         }
 
         typename std::list<T>::iterator currentIterator;
-        int distance;
+        size_t distance;
         auto indexIsInLeftHalf = index < nodesSize/2;
 
         if (indexIsInLeftHalf) {
             currentIterator = ++this->begin();
-            distance = static_cast<int>(index - 1);
+            distance = index - 1;
         } else {
             currentIterator = this->end();
-            distance = static_cast<int>(-nodesSize + index);
+            distance = -nodesSize + index;
         }
 
         std::advance(currentIterator, distance);

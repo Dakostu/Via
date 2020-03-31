@@ -83,7 +83,7 @@ void Route::removeTemporaryPreviewNode() {
         auto tempNode = nodes.back();
         currentScene->removeItem(tempNode->getFromConnection());
         currentScene->removeItem(tempNode);
-        nodes.erase(nodes[nodes.size() - 1]);
+        nodes.pop_back();
     }
 }
 
