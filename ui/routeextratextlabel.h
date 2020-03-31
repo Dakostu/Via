@@ -13,6 +13,8 @@ class RouteExtraTextLabel : public QGraphicsSimpleTextItem, public Via::Interfac
 
 protected:
     Via::Shapes::RouteNodeShape *parentNode;
+    static constexpr auto FONT_SIZE_SHRINKAGE_FACTOR = 2.0;
+    static constexpr auto FONT_SIZE_OFFSET = 7;
 
 public:
     RouteExtraTextLabel(const QString &text, Via::Shapes::RouteNodeShape *parent);

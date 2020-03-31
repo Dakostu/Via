@@ -18,7 +18,7 @@ RouteExtraTextLabel::RouteExtraTextLabel(const QString &text, RouteNodeShape *pa
 void RouteExtraTextLabel::setElementSize(int newSize) {
     ViewCustomizable::setElementSize(newSize);
     auto font = this->font();
-    font.setPointSizeF(elementSize / 2 + 7);
+    font.setPointSizeF(elementSize / FONT_SIZE_SHRINKAGE_FACTOR + FONT_SIZE_OFFSET);
     this->setFont(font);
 }
 

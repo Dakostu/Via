@@ -13,7 +13,7 @@ RouteNodeLabel::RouteNodeLabel(const QString &text)
 void RouteNodeLabel::setElementSize(int newSize) {
     ViewCustomizable::setElementSize(newSize);
     auto font = this->font();
-    font.setPointSizeF(elementSize / 2.0 + 7);
+    font.setPointSizeF(elementSize / FONT_SIZE_SHRINKAGE_FACTOR + FONT_SIZE_OFFSET);
     this->setFont(font);
 }
 
