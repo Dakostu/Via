@@ -125,7 +125,7 @@ void MainWindow::initializeRouteBoxUI() {
     connect(ui->routeBoxButtonUp, &QPushButton::clicked, this, [&]() { moveRouteEvent(-1); });
     connect(ui->routeBoxButtonDown, &QPushButton::clicked, this, [&]() { moveRouteEvent(1); });
     connect(ui->routeBoxRouteList->itemDelegate(), &QAbstractItemDelegate::commitData, this, [&](QWidget* lineEdit){
-        auto lineEditText = (static_cast<QLineEdit*>(lineEdit))->text();
+        auto lineEditText = (dynamic_cast<QLineEdit*>(lineEdit))->text();
         auto &currentRoute = (*controller.getCurrentProject())[selectedRouteIndex];
         dataNameChangeEvent(currentRoute, lineEditText, std::bind(&MainWindow::updateRouteList, this));
     });
@@ -141,7 +141,7 @@ void MainWindow::initializeNodeBoxUI() {
     connect(ui->nodeBoxButtonUp, &QPushButton::clicked, this, [&]() { moveNodeEvent(-1); });
     connect(ui->nodeBoxButtonDown, &QPushButton::clicked, this, [&]() { moveNodeEvent(1); });
     connect(ui->nodeBoxNodeList->itemDelegate(), &QAbstractItemDelegate::commitData, this, [&](QWidget* lineEdit){
-        auto lineEditText = (static_cast<QLineEdit*>(lineEdit))->text();
+        auto lineEditText = (dynamic_cast<QLineEdit*>(lineEdit))->text();
         auto &currentRouteNote = (*controller.getCurrentProject())[selectedRouteIndex][selectedRouteNodeIndex];
         dataNameChangeEvent(currentRouteNote, lineEditText, std::bind(&MainWindow::updateNodeList, this));
     });
