@@ -7,10 +7,10 @@ namespace Via::Control {
 class UIState
 {
 protected:
-    UIState();
+    UIState() = default;
 
 public:   
-    virtual ~UIState();
+    virtual ~UIState() = default;
 };
 
 }

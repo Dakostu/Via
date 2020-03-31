@@ -13,10 +13,10 @@ namespace Via::Control {
 class MapViewState : public UIState
 {
 protected:
-    MapViewState();
+    MapViewState() = default;
 
 public:
-    virtual ~MapViewState();
+    virtual ~MapViewState() = default;
 
     virtual void mouseMoveEvent(Via::UI::MapView *view, QMouseEvent *mouseEvent);
     virtual void mousePressEvent(Via::UI::MapView *view, QMouseEvent *mouseEvent);

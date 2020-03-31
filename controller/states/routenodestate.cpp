@@ -3,14 +3,6 @@
 using namespace Via::Control;
 using namespace Via::Shapes;
 
-RouteNodeState::RouteNodeState() {
-
-}
-
-RouteNodeState::~RouteNodeState() {
-
-}
-
 void RouteNodeState::mouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {
 
 }

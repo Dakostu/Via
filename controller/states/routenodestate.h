@@ -13,10 +13,10 @@ namespace Via::Control {
 class RouteNodeState : public UIState
 {
 protected:    
-    RouteNodeState();
+    RouteNodeState() = default;
 
 public:
-    virtual ~RouteNodeState();
+    virtual ~RouteNodeState() = default;
 
     virtual void mouseHoverEnterEvent(Via::Shapes::RouteNode* node, QGraphicsSceneHoverEvent *hoverEvent);
     virtual void mouseHoverLeaveEvent(Via::Shapes::RouteNode* node, QGraphicsSceneHoverEvent *hoverEvent);

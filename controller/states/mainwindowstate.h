@@ -14,9 +14,9 @@ namespace Via::Control {
 class MainWindowState : public UIState
 {
 protected:
-    MainWindowState();
+    MainWindowState() = default;
 public:    
-    virtual ~MainWindowState();
+    virtual ~MainWindowState() = default;
 
     virtual void setToggleButtons(Via::UI::MainWindow *window);
 

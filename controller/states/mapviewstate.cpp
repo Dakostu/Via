@@ -3,14 +3,6 @@
 using namespace Via::Control;
 using namespace Via::UI;
 
-MapViewState::MapViewState() {
-
-}
-
-MapViewState::~MapViewState() {
-
-}
-
 void MapViewState::mouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
 
 }
