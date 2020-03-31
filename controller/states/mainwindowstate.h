@@ -18,7 +18,7 @@ protected:
 public:    
     virtual ~MainWindowState() = default;
 
-    virtual void setToggleButtons(Via::UI::MainWindow *window);
+    virtual void setToggleButtons(Via::UI::MainWindow *window) = 0;
 
 };
 
