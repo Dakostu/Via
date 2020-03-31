@@ -4,8 +4,6 @@
 
 using namespace Via::Control;
 
-const QString ProgramVersion::DELIMITER = QString(".");
-
 ProgramVersion::ProgramVersion(unsigned majorNum, unsigned minorNum) {
 
     if (minorNum >= 100) {

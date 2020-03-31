@@ -12,7 +12,7 @@ class ProgramVersion
 
     static const auto CURRENT_MAJOR_VERSION = 1;
     static const auto CURRENT_MINOR_VERSION = 0;
-    static const QString DELIMITER;
+    static inline const QString DELIMITER = QString(".");
 
 public:
 
