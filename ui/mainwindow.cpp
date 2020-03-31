@@ -167,13 +167,13 @@ void MainWindow::initializeNodeSettingsUI() {
 
 void MainWindow::refreshSelectedRouteIndex() {
     if (ui->routeBoxRouteList->selectionModel() && ui->routeBoxRouteList->selectionModel()->hasSelection()) {
-        selectedRouteIndex = ui->routeBoxRouteList->getSelectedRows()[0].row();
+        selectedRouteIndex = static_cast<size_t>(ui->routeBoxRouteList->getSelectedRows()[0].row());
     }
 }
 
 void MainWindow::refreshSelectedRouteNodeIndex() {
     if (ui->nodeBoxNodeList->selectionModel() && ui->nodeBoxNodeList->selectionModel()->hasSelection()) {
-        selectedRouteNodeIndex = ui->nodeBoxNodeList->getSelectedRows()[0].row();
+        selectedRouteNodeIndex = static_cast<size_t>(ui->nodeBoxNodeList->getSelectedRows()[0].row());
     }
 }
 
@@ -208,7 +208,8 @@ void MainWindow::addRoute() {
     ui->picture->addRoute(color, ui->routeStyleComboBox->currentText(), controller.getCurrentRouteNodeState());
     controller.addNewRouteToCurrentProject(color, ui->picture->getCurrentRoute()->getShapeKey());
 
-    ui->routeBoxRouteList->moveSelectionTo(ui->routeBoxRouteList->model()->rowCount() - 1);
+    auto newSelectedRow = static_cast<size_t>(ui->routeBoxRouteList->model()->rowCount() - 1);
+    ui->routeBoxRouteList->moveSelectionTo(newSelectedRow);
 
     auto vBar = ui->routeBoxRouteList->verticalScrollBar();
     vBar->setValue(vBar->maximum());
@@ -225,7 +226,7 @@ void MainWindow::deleteSelectedRoute() {
 
     auto newRowCount = ui->routeBoxRouteList->model()->rowCount();
     if (newRowCount != 0) {
-        ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex - (selectedRouteIndex == newRowCount));
+        ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex - (selectedRouteIndex == static_cast<size_t>(newRowCount)));
     }
 }
 
@@ -322,9 +323,10 @@ void MainWindow::updateNodeList() {
 void MainWindow::routeSelectionEvent() {
     refreshSelectedRouteIndex();
 
+    auto lastRow = static_cast<size_t>(ui->routeBoxRouteList->model()->rowCount() - 1);
     ui->routeBoxButtonDeleteRoute->setEnabled(true);
     ui->routeBoxButtonUp->setEnabled(selectedRouteIndex != 0);
-    ui->routeBoxButtonDown->setEnabled(selectedRouteIndex != ui->routeBoxRouteList->model()->rowCount() - 1);
+    ui->routeBoxButtonDown->setEnabled(selectedRouteIndex != lastRow);
     ui->currentRouteBox->setEnabled(true);
     ui->routeColorButton->setFlat(false);
 
@@ -342,9 +344,10 @@ void MainWindow::routeSelectionEvent() {
 void MainWindow::routeNodeSelectionEvent() {
     refreshSelectedRouteNodeIndex();
 
+    auto lastRow = static_cast<size_t>(ui->nodeBoxNodeList->model()->rowCount() - 1);
     ui->nodeBoxButtonDeleteNode->setEnabled(true);
     ui->nodeBoxButtonUp->setEnabled(selectedRouteNodeIndex != 0);
-    ui->nodeBoxButtonDown->setEnabled(selectedRouteNodeIndex != ui->nodeBoxNodeList->model()->rowCount() - 1);
+    ui->nodeBoxButtonDown->setEnabled(selectedRouteNodeIndex != lastRow);
     setNodeSettingsEnabled(true);
 
     auto routeNodeData = (*(controller.getCurrentProject()->getRoutes()[selectedRouteIndex]))[selectedRouteNodeIndex];
@@ -375,15 +378,16 @@ void MainWindow::routeShowOrderChangeEvent(bool value) {
         return;
     }
 
-    auto selectedRouteIndex = selectedRows[0].row();
+    auto selectedRouteIndex = static_cast<size_t>(selectedRows[0].row());
     (*controller.getCurrentProject())[selectedRouteIndex].setShowOrder(value);
 }
 
 void MainWindow::moveRouteEvent(int by) {
     refreshSelectedRouteIndex();
 
-    controller.swapCurrentProjectRoutes(selectedRouteIndex, selectedRouteIndex + by);
-    ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex + by);
+    auto newRouteIndex = selectedRouteIndex + by;
+    controller.swapCurrentProjectRoutes(selectedRouteIndex, newRouteIndex);
+    ui->routeBoxRouteList->moveSelectionTo(newRouteIndex);
 }
 
 void MainWindow::resetSettingsBox() {
@@ -409,7 +413,7 @@ void MainWindow::addRouteNode(int x, int y) {
     refreshSelectedRouteIndex();
     controller.addNewNodeToRoute(x, y, ui->picture->getCurrentRoute()->getColors(), selectedRouteIndex);
 
-    ui->nodeBoxNodeList->moveSelectionTo(ui->nodeBoxNodeList->model()->rowCount() - 1);    
+    ui->nodeBoxNodeList->moveSelectionTo(static_cast<size_t>(ui->nodeBoxNodeList->model()->rowCount() - 1));
 
     auto vBar = ui->nodeBoxNodeList->verticalScrollBar();
     vBar->setValue(vBar->maximum());
@@ -423,7 +427,7 @@ void MainWindow::deleteSelectedRouteNode() {
     ui->picture->getCurrentRoute()->eraseNode(selectedRouteNodeIndex);
     controller.deleteNodeofRoute(selectedRouteIndex, selectedRouteNodeIndex);
 
-    auto newRowCount = ui->nodeBoxNodeList->model()->rowCount();
+    auto newRowCount = static_cast<size_t>(ui->nodeBoxNodeList->model()->rowCount());
     if (newRowCount != 0) {
         ui->nodeBoxNodeList->moveSelectionTo(selectedRouteNodeIndex - (selectedRouteNodeIndex == newRowCount));
     }

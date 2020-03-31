@@ -98,21 +98,21 @@ void Project::addRoute(RouteData &route) {
     routes.emplace_back(route);
 }
 
-void Project::addRouteNode(RouteNodeData &node, int routeIndex) {
+void Project::addRouteNode(RouteNodeData &node, size_t routeIndex) {
     auto &selectedRoute = *routes[routeIndex];
     node.setName(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(selectedRoute.length() + 1));
     selectedRoute.addNode(node);
 }
 
-void Project::deleteRoute(int index) {
+void Project::deleteRoute(size_t index) {
     routes.erase(routes[index]);
 }
 
-void Project::swapRoutes(int i, int j) {
+void Project::swapRoutes(size_t i, size_t j) {
     std::swap(*routes[i], *routes[j]);
 }
 
-void Project::swapNodes(int routeIndex, int i, int j) {
+void Project::swapNodes(size_t routeIndex, size_t i, size_t j) {
     auto &firstNode = (*routes[routeIndex])[i];
     auto &secondNode = (*routes[routeIndex])[j];
 
@@ -130,6 +130,6 @@ bool Project::operator==(const Project &other) const {
             && this->routes == other.routes;
 }
 
-RouteData& Project::operator[](int index) {
+RouteData& Project::operator[](size_t index) {
     return *routes[index];
 }

@@ -42,7 +42,7 @@ class IndexList : public std::list<T>
 public:
     IndexList() : std::list<T>() {}
 
-    typename std::list<T>::iterator operator[](int index) {
+    typename std::list<T>::iterator operator[](size_t index) {
         return iterateToPosition(index);
     }
 

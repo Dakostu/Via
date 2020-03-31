@@ -48,8 +48,8 @@ class MainWindow : public QMainWindow
 
     std::vector<std::unique_ptr<QAction>> actions;
 
-    int selectedRouteIndex;
-    int selectedRouteNodeIndex;
+    size_t selectedRouteIndex;
+    size_t selectedRouteNodeIndex;
 
     void initializeQuickButtons();
     void initializeShapeSelections();

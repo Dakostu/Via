@@ -106,6 +106,6 @@ Route *MapView::getCurrentRoute() const
     return currentRoute;
 }
 
-void MapView::setCurrentRoute(int routeIndex) {
+void MapView::setCurrentRoute(size_t routeIndex) {
     currentRoute = (*drawnRoutes[routeIndex]).get();
 }

@@ -105,7 +105,7 @@ void RouteNodeData::fromJSON(const QJsonObject &object) {
     if (differentStyleFromRoute) {
         currentColor = QColor(object[NODE_COLOR_KEY][0].toInt(), object[NODE_COLOR_KEY][1].toInt(), object[NODE_COLOR_KEY][2].toInt());
         elementSize = object[NODE_SIZE_KEY].toInt();
-        style = object[NODE_SHAPE_KEY].toInt();
+        style = static_cast<char>(object[NODE_SHAPE_KEY].toInt());
     }
 
 }

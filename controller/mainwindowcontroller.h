@@ -39,7 +39,7 @@ public:
 
     Via::Model::Project* getCurrentProject();    
     QStringListModel& getCurrentRouteTitles();
-    QStringListModel& getNodeTitlesOfRoute(int index);
+    QStringListModel& getNodeTitlesOfRoute(size_t index);
 
     template <typename NewMainWindowState, typename NewMapViewState, typename NewRouteNodeState>
     void changeUIStates() {
@@ -49,12 +49,12 @@ public:
     }
 
     void addNewRouteToCurrentProject(const QColor &newColor, char newStyle);
-    void addNewNodeToRoute(int x, int y, const QColor &newColor, int routeIndex);
+    void addNewNodeToRoute(int x, int y, const QColor &newColor, size_t routeIndex);
     size_t amountOfOpenProjects();
-    void deleteRouteofCurrentProject(int index);
-    void deleteNodeofRoute(int routeIndex, int nodeIndex);
-    void swapCurrentProjectRoutes(int x, int y);
-    void swapNodesOfRoute(int routeIndex, int x, int y);
+    void deleteRouteofCurrentProject(size_t index);
+    void deleteNodeofRoute(size_t routeIndex, size_t nodeIndex);
+    void swapCurrentProjectRoutes(size_t firstRoute, size_t secondRoute);
+    void swapNodesOfRoute(size_t routeIndex, size_t firstNode, size_t secondNode);
 
     std::unique_ptr<MainWindowState>& getCurrentMainWindowState();
     std::unique_ptr<MapViewState>& getCurrentMapViewState();
@@ -68,10 +68,10 @@ public slots:
     void saveCurrentProject();
     void saveCurrentProjectAs(const QString &fileName);
     void loadCurrentProjectFromFile(const QString &fileName);
-    void setStyleOfCurrentRoute(int routeIndex, char newStyle);
-    void setStyleOfCurrentRouteNode(int routeIndex, int nodeIndex, char newStyle, bool isDifferentNow);
-    void setColorOfCurrentRoute(int routeIndex, const QColor &newColor);
-    void setColorOfCurrentRouteNode(int routeIndex, int nodeIndex, const QColor &newColor, bool isDifferentNow);
+    void setStyleOfCurrentRoute(size_t routeIndex, char newStyle);
+    void setStyleOfCurrentRouteNode(size_t routeIndex, size_t nodeIndex, char newStyle, bool isDifferentNow);
+    void setColorOfCurrentRoute(size_t routeIndex, const QColor &newColor);
+    void setColorOfCurrentRouteNode(size_t routeIndex, size_t nodeIndex, const QColor &newColor, bool isDifferentNow);
 
 
 signals:

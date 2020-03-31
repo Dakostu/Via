@@ -34,7 +34,7 @@ protected:
     Via::Structures::IndexList<RouteNode*> nodes;
 
     void connectNodes(Via::Shapes::RouteNode &from, Via::Shapes::RouteNode &to);
-    void swapConnections(int firstNodeIndex, int secondNodeIndex);
+    void swapConnections(size_t firstNodeIndex, size_t secondNodeIndex);
 
 public:
     Route(const QColor &color, const QString &selectedStyle, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);
@@ -53,16 +53,16 @@ public:
     void addTemporaryPreviewNode(qreal x, qreal y);
     void removeTemporaryPreviewNode();
     bool hasTemporaryPreviewNode();
-    void eraseNode(int index);
+    void eraseNode(size_t index);
     void eraseAllNodes();
-    void swapNodes(int firstNodeIndex, int secondNodeIndex);
+    void swapNodes(size_t firstNodeIndex, size_t secondNodeIndex);
     void setElementSize(int newSize) override;
-    void setStyleOfNode(int routeNodeIndex, char newStyle);
-    void setStyleOfNode(int routeNodeIndex, const QString &newStyle);
-    void setColorsOfNode(int routeNodeIndex, const QColor &newColor);
+    void setStyleOfNode(size_t routeNodeIndex, char newStyle);
+    void setStyleOfNode(size_t routeNodeIndex, const QString &newStyle);
+    void setColorsOfNode(size_t routeNodeIndex, const QColor &newColor);
     void setShapeKey(const QString &newStyle);
 
-    const RouteNode& operator[](int nodeIndex);
+    const RouteNode& operator[](size_t nodeIndex);
 };
 
 }
