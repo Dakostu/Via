@@ -359,7 +359,7 @@ void MainWindow::routeNodeSelectionEvent() {
 }
 
 
-void MainWindow::dataNameChangeEvent(Data &data, const QString &newName, std::function<void(void)> listUpdateFunc) {
+void MainWindow::dataNameChangeEvent(Data &data, const QString &newName, const std::function<void(void)> &listUpdateFunc) {
     data.setName(newName);
     listUpdateFunc();
 
