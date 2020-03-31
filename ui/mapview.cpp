@@ -11,7 +11,7 @@ using namespace Via::Control;
 using namespace Via::Model;
 using namespace Via::Shapes;
 
-MapView::MapView(QWidget* parent) : QGraphicsView(parent) {
+MapView::MapView(QWidget* parent) : QGraphicsView(parent), currentState{}, currentRoute{} {
     currentDetailLevel = QStyleOptionGraphicsItem::levelOfDetailFromTransform(transform());
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     setDragMode(QGraphicsView::ScrollHandDrag);   

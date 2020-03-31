@@ -8,7 +8,7 @@ using namespace Via::Control;
 using namespace Via::Model;
 
 Route::Route(const QColor &color, char selectedStyle, QGraphicsScene *scene, std::unique_ptr<RouteNodeState> &state)
-    : routeColor(color), style(selectedStyle), currentScene(scene), currentState(state)
+    : showDirection(true), routeColor(color), style(selectedStyle), currentScene(scene), currentState(state)
 {
 }
 

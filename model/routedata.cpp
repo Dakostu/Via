@@ -8,7 +8,7 @@ using namespace Via::Structures;
 using namespace Via::UI;
 
 
-RouteData::RouteData() : showOrder(DEFAULT_SHOW_ORDER)
+RouteData::RouteData() : showOrder(DEFAULT_SHOW_ORDER), style(0)
 {
 
 }

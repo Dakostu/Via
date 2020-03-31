@@ -14,7 +14,7 @@ Project::Project(const QString &newFileName, const QPixmap &map)
 
 }
 
-Project::Project(const QJsonObject &object) : hasbeenModified(false)
+Project::Project(const QJsonObject &object) : hasbeenModified(false), totalCreatedRoutes(object[PROJECT_TOTAL_CREATED_ROUTES_KEY].toInt())
 {
     fromJSON(object);
 }
@@ -23,7 +23,6 @@ void Project::fromJSON(const QJsonObject &object) {
 
     pixMapFromBytes(object[PROJECT_IMAGE_KEY]);
     fileName = object[PROJECT_FILENAME_KEY].toString();
-    totalCreatedRoutes = object[PROJECT_TOTAL_CREATED_ROUTES_KEY].toInt();
 
     auto routesJSON = object[PROJECT_ROUTES_KEY].toArray();
 

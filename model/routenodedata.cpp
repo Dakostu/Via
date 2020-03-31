@@ -14,8 +14,7 @@ void RouteNodeData::setShapeKey(char value)
     style = value;
 }
 
-RouteNodeData::RouteNodeData() : Data(),
-    differentStyleFromRoute(false), nameChanged(false), invisible(false)
+RouteNodeData::RouteNodeData() : x(0), y(0), differentStyleFromRoute(false), nameChanged(false), invisible(false), style(0)
 {
 
 }
@@ -24,7 +23,7 @@ RouteNodeData::RouteNodeData(const QColor &color) : RouteNodeData() {
     setColors(color);
 }
 
-RouteNodeData::RouteNodeData(const QJsonObject &object) {
+RouteNodeData::RouteNodeData(const QJsonObject &object) : RouteNodeData() {
     fromJSON(object);
 }
 

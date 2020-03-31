@@ -10,7 +10,8 @@ using namespace Via::Control;
 using namespace Via::Model;
 
 MainWindowController::MainWindowController()
-    : currentMainWindowState(new MainWindowMoveNodeState),
+    : currentProject{},
+      currentMainWindowState(new MainWindowMoveNodeState),
       currentMapViewState(new MapViewMoveNodeState),
       currentRouteNodeState(new RouteNodeMoveNodeState)
 {
