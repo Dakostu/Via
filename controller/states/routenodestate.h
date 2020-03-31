@@ -18,11 +18,11 @@ protected:
 public:
     virtual ~RouteNodeState() = default;
 
-    virtual void mouseHoverEnterEvent(Via::Shapes::RouteNode* node, QGraphicsSceneHoverEvent *hoverEvent);
-    virtual void mouseHoverLeaveEvent(Via::Shapes::RouteNode* node, QGraphicsSceneHoverEvent *hoverEvent);
-    virtual void mouseMoveEvent(Via::Shapes::RouteNode* node, QGraphicsSceneMouseEvent *mouseEvent);
-    virtual void mousePressEvent(Via::Shapes::RouteNode* node, QGraphicsSceneMouseEvent *mouseEvent);
-    virtual void mouseReleaseEvent(Via::Shapes::RouteNode* node, QGraphicsSceneMouseEvent *mouseEvent);
+    virtual void mouseHoverEnterEvent(Via::Shapes::RouteNode* node, QGraphicsSceneHoverEvent *hoverEvent) {}
+    virtual void mouseHoverLeaveEvent(Via::Shapes::RouteNode* node, QGraphicsSceneHoverEvent *hoverEvent) {}
+    virtual void mouseMoveEvent(Via::Shapes::RouteNode* node, QGraphicsSceneMouseEvent *mouseEvent) {}
+    virtual void mousePressEvent(Via::Shapes::RouteNode* node, QGraphicsSceneMouseEvent *mouseEvent) {}
+    virtual void mouseReleaseEvent(Via::Shapes::RouteNode* node, QGraphicsSceneMouseEvent *mouseEvent) {}
 
 };
 
