@@ -126,13 +126,6 @@ std::unique_ptr<RouteNodeState>& MainWindowController::getCurrentRouteNodeState(
 }
 
 
-void MainWindowController::printCurrentProject() {
-    #ifndef QT_NO_PRINTER
-
-
-    #endif
-}
-
 void MainWindowController::setStyleOfCurrentRoute(int routeIndex, char newStyle) {
     auto &currentNodeData = (*currentProject->getRoutes()[routeIndex]);
     currentNodeData.setShapeKey(newStyle);

@@ -31,12 +31,6 @@ class MainWindowController : public QObject
     std::unique_ptr<RouteNodeState> currentRouteNodeState;
     QStringListModel currentRouteTitles;
     QStringListModel routeNodeTitles;
-
-#ifndef QT_NO_PRINTER
-    //QPrinter printer;
-#endif
-
-
     void addFileToRecentlyOpenedProjects(const QString &fileName);
 
 public:
@@ -74,7 +68,6 @@ public slots:
     void saveCurrentProject();
     void saveCurrentProjectAs(const QString &fileName);
     void loadCurrentProjectFromFile(const QString &fileName);
-    void printCurrentProject();
     void setStyleOfCurrentRoute(int routeIndex, char newStyle);
     void setStyleOfCurrentRouteNode(int routeIndex, int nodeIndex, char newStyle, bool isDifferentNow);
     void setColorOfCurrentRoute(int routeIndex, const QColor &newColor);
