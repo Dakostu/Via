@@ -28,15 +28,15 @@ void MapView::wheelEvent(QWheelEvent *event) {
     if (QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier)) {
         QGraphicsView::wheelEvent(event);
     } else {
-        auto factor = std::pow(2.0, verticalWheelMovement / 240.0);
-        auto tryingToZoomOutOfLimit = (currentDetailLevel <= DETAIL_LEVEL_MIN && (factor - 1) < 0);
-        auto tryingToZoomInToLimit = (currentDetailLevel >= DETAIL_LEVEL_MAX && factor-1 >= 0);
+        auto zoomFactor = std::pow(2.0, verticalWheelMovement / 240.0);
+        auto tryingToZoomOutOfLimit = (currentDetailLevel <= DETAIL_LEVEL_MIN && (zoomFactor - 1) < 0);
+        auto tryingToZoomInToLimit = (currentDetailLevel >= DETAIL_LEVEL_MAX && zoomFactor -1 >= 0);
 
         if (tryingToZoomOutOfLimit || tryingToZoomInToLimit) {
             return;
         }
 
-        scale(factor, factor);
+        scale(zoomFactor, zoomFactor);
         currentDetailLevel = QStyleOptionGraphicsItem::levelOfDetailFromTransform(transform());
     }
 }

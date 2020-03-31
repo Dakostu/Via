@@ -180,7 +180,7 @@ void Route::swapNodes(int firstNodeIndex, int secondNodeIndex) {
 
     auto tempNodeLabel = withNode->getNodeLabel()->text();
     auto tempCenter = withNode->getCenter();
-    auto tempExtraLabelText = withNode->getExtraText()->text();
+    //auto tempExtraLabelText = withNode->getExtraText()->text();
 
     auto fromNodeCenter = fromNode->getCenter();
     auto withNodeCenter = withNode->getCenter();

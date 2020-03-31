@@ -73,7 +73,6 @@ QByteArray Project::pixMapToBytes() const {
 
 void Project::pixMapFromBytes(const QJsonValue &bytes) {
     auto decodedBytes = bytes.toString().toLatin1();
-    auto fromBase = QByteArray::fromBase64(decodedBytes);
     imagePixMap.loadFromData(QByteArray::fromBase64(decodedBytes));
 }
 

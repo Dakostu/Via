@@ -44,7 +44,7 @@ QString LocalizedUIStrings::getUIString(const MapKey &key) {
 
     try {
         result = map.at(key);
-    }  catch (std::out_of_range) {
+    }  catch (std::out_of_range&) {
         result = QString("!!INVALID KEY \"%1\"!!").arg(key);
     }
 
