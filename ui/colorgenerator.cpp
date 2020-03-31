@@ -8,20 +8,22 @@ QColor ColorGenerator::operator()() {
     if (!lastColor.isValid()) {
         lastColor = QColor::fromRgb(QRandomGenerator::global()->generate());
     } else {
-        qreal h, s, v;
+        qreal h;
+        qreal s;
+        qreal v;
         lastColor.getHsvF(&h, &s, &v);
 
         h += GOLDEN_RATIO + (QRandomGenerator::global()->bounded(100)/1000.0 - 0.5);
 
-        if (h > 1.0) {
-            h -= 1.0;
+        if (h > H_MAX) {
+            h -= H_MAX;
         }
         if (QRandomGenerator::global()->bounded(256) & 1) {
-            s = std::min(0.65, s + 0.05);
-            v = std::max(0.35, v - 0.05);
+            s = std::min(HSV_MAX, s + HSV_STEP);
+            v = std::max(HSV_MIN, v - HSV_STEP);
         } else {
-            s = std::max(0.35, s - 0.05);
-            v = std::min(0.65, v + 0.05);
+            s = std::max(HSV_MIN, s - HSV_STEP);
+            v = std::min(HSV_MAX, v + HSV_STEP);
         }
 
 

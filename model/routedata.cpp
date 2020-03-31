@@ -8,7 +8,7 @@ using namespace Via::Structures;
 using namespace Via::UI;
 
 
-RouteData::RouteData() : Data(), showOrder(DEFAULT_SHOW_ORDER)
+RouteData::RouteData() : showOrder(DEFAULT_SHOW_ORDER), style(0)
 {
 
 }
@@ -27,7 +27,7 @@ void RouteData::fromJSON(const QJsonObject &object) {
     elementSize = object[ROUTE_SIZE_KEY].toInt();
     currentColor = QColor(object[ROUTE_COLOR_KEY][0].toInt(), object[ROUTE_COLOR_KEY][1].toInt(), object[ROUTE_COLOR_KEY][2].toInt());
     showOrder = object[ROUTE_SHOW_ORDER_KEY].toBool();
-    style = object[ROUTE_SHAPE_KEY].toInt();
+    style = static_cast<char>(object[ROUTE_SHAPE_KEY].toInt());
 
     auto nodesArray = object[ROUTE_NODES_KEY].toArray();
 
@@ -107,7 +107,7 @@ QStringList RouteData::getNodeTitles() {
     return nodeTitleList;
 }
 
-void RouteData::refreshNames(RouteDataIterator&& it, int index) {
+void RouteData::refreshNames(RouteDataIterator&& it, size_t index) {
     if (it == nodes.end()) {
         return;
     }
@@ -125,7 +125,7 @@ void RouteData::addNode(const RouteNodeData &node) {
     nodes.emplace_back(node);
 }
 
-void RouteData::eraseNode(int index) {
+void RouteData::eraseNode(size_t index) {
     auto iterator = nodes[index];
     refreshNames(nodes.erase(iterator), index);
 }
@@ -171,7 +171,7 @@ size_t RouteData::length() const {
     return nodes.size();
 }
 
-RouteNodeData& RouteData::operator[](int index) {
+RouteNodeData& RouteData::operator[](size_t index) {
     return *nodes[index];
 }
 

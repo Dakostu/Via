@@ -6,7 +6,7 @@
 using namespace Via::UI;
 using namespace Via::Shapes;
 
-RouteExtraTextLabel::RouteExtraTextLabel(QString text, RouteNodeShape *parent)
+RouteExtraTextLabel::RouteExtraTextLabel(const QString &text, RouteNodeShape *parent)
     : QGraphicsSimpleTextItem(text), parentNode(parent)
 {
    setFlag(ItemIsMovable);
@@ -18,7 +18,7 @@ RouteExtraTextLabel::RouteExtraTextLabel(QString text, RouteNodeShape *parent)
 void RouteExtraTextLabel::setElementSize(int newSize) {
     ViewCustomizable::setElementSize(newSize);
     auto font = this->font();
-    font.setPointSizeF(elementSize / 2 + 7);
+    font.setPointSizeF(elementSize / FONT_SIZE_SHRINKAGE_FACTOR + FONT_SIZE_OFFSET);
     this->setFont(font);
 }
 

@@ -10,7 +10,8 @@ using namespace Via::Control;
 using namespace Via::Model;
 
 MainWindowController::MainWindowController()
-    : currentMainWindowState(new MainWindowMoveNodeState),
+    : currentProject{},
+      currentMainWindowState(new MainWindowMoveNodeState),
       currentMapViewState(new MapViewMoveNodeState),
       currentRouteNodeState(new RouteNodeMoveNodeState)
 {
@@ -87,28 +88,28 @@ QStringListModel& MainWindowController::getCurrentRouteTitles() {
     return currentRouteTitles;
 }
 
-QStringListModel& MainWindowController::getNodeTitlesOfRoute(int index) {
+QStringListModel& MainWindowController::getNodeTitlesOfRoute(size_t index) {
     routeNodeTitles.setStringList(getCurrentProject()->getRoutes()[index]->getNodeTitles());
     return routeNodeTitles;
 }
 
-void MainWindowController::deleteRouteofCurrentProject(int index) {
+void MainWindowController::deleteRouteofCurrentProject(size_t index) {
     currentProject->deleteRoute(index);
     emit routeListChanged();
 }
 
-void MainWindowController::deleteNodeofRoute(int routeIndex, int nodeIndex) {
+void MainWindowController::deleteNodeofRoute(size_t routeIndex, size_t nodeIndex) {
     currentProject->getRoutes()[routeIndex]->eraseNode(nodeIndex);
     emit routeNodeListChanged();
 }
 
-void MainWindowController::swapCurrentProjectRoutes(int x, int y) {
-    currentProject->swapRoutes(x,y);
+void MainWindowController::swapCurrentProjectRoutes(size_t firstRoute, size_t secondRoute) {
+    currentProject->swapRoutes(firstRoute, secondRoute);
     emit routeListChanged();
 }
 
-void MainWindowController::swapNodesOfRoute(int routeIndex, int x, int y)  {
-    currentProject->swapNodes(routeIndex, x, y);
+void MainWindowController::swapNodesOfRoute(size_t routeIndex, size_t firstNode, size_t secondNode)  {
+    currentProject->swapNodes(routeIndex, firstNode, secondNode);
     emit routeNodeListChanged();
 }
 
@@ -126,23 +127,23 @@ std::unique_ptr<RouteNodeState>& MainWindowController::getCurrentRouteNodeState(
 }
 
 
-void MainWindowController::setStyleOfCurrentRoute(int routeIndex, char newStyle) {
+void MainWindowController::setStyleOfCurrentRoute(size_t routeIndex, char newStyle) {
     auto &currentNodeData = (*currentProject->getRoutes()[routeIndex]);
     currentNodeData.setShapeKey(newStyle);
 }
 
-void MainWindowController::setStyleOfCurrentRouteNode(int routeIndex, int nodeIndex, char newStyle, bool isDifferentNow) {
+void MainWindowController::setStyleOfCurrentRouteNode(size_t routeIndex, size_t nodeIndex, char newStyle, bool isDifferentNow) {
     auto &currentNodeData = (*currentProject->getRoutes()[routeIndex])[nodeIndex];
     currentNodeData.setShapeKey(newStyle);
     currentNodeData.setDifferentStyleFromRoute(isDifferentNow);
 }
 
-void MainWindowController::setColorOfCurrentRoute(int routeIndex, const QColor &newColor) {
+void MainWindowController::setColorOfCurrentRoute(size_t routeIndex, const QColor &newColor) {
     auto &currentNodeData = (*currentProject->getRoutes()[routeIndex]);
     currentNodeData.setColors(newColor);
 }
 
-void MainWindowController::setColorOfCurrentRouteNode(int routeIndex, int nodeIndex, const QColor &newColor, bool isDifferentNow) {
+void MainWindowController::setColorOfCurrentRouteNode(size_t routeIndex, size_t nodeIndex, const QColor &newColor, bool isDifferentNow) {
     auto &currentNodeData = (*currentProject->getRoutes()[routeIndex])[nodeIndex];
     currentNodeData.setColors(newColor);
     currentNodeData.setDifferentStyleFromRoute(isDifferentNow);
@@ -154,7 +155,7 @@ void MainWindowController::addNewRouteToCurrentProject(const QColor &newColor, c
     emit routeListChanged();
 }
 
-void MainWindowController::addNewNodeToRoute(int x, int y, const QColor &newColor, int routeIndex) {
+void MainWindowController::addNewNodeToRoute(int x, int y, const QColor &newColor, size_t routeIndex) {
     RouteNodeData newRouteNode(newColor);
     newRouteNode.setX(x);
     newRouteNode.setY(y);

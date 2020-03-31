@@ -52,7 +52,7 @@ public:
     void removeTemporaryNode();
 
     Via::Shapes::Route *getCurrentRoute() const;
-    void setCurrentRoute(int routeIndex);
+    void setCurrentRoute(size_t routeIndex);
 
 signals:
     void routeNodeAdded(int x, int y);

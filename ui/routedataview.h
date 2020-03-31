@@ -13,7 +13,7 @@ public:
     RouteDataView(QWidget *widget);
 
     QModelIndexList getSelectedRows();
-    void moveSelectionTo(int index);
+    void moveSelectionTo(size_t index);
 
     void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) override;
 

@@ -7,7 +7,8 @@ using namespace Via::Interfaces;
 using namespace Via::Control;
 using namespace Via::UI;
 
-RouteNode::RouteNode(RouteNodeShape *newNode, QString nodeLabelText, QString extraTextLabelText, std::unique_ptr<RouteNodeState> &state)
+RouteNode::RouteNode(RouteNodeShape *newNode, const QString &nodeLabelText,
+                     const QString &extraTextLabelText, std::unique_ptr<RouteNodeState> &state)
     : node(newNode),
       nodeLabel(nodeLabelText),
       extraTextLabel(extraTextLabelText, node.get()),
@@ -37,7 +38,7 @@ RouteNode::RouteNode(RouteNodeShape *newNode, QString nodeLabelText, QString ext
     this->setZValue(std::numeric_limits<qreal>::max());
 }
 
-RouteNode::RouteNode(RouteNodeShape *newNode, QString nodeLabelText, std::unique_ptr<RouteNodeState> &state) :
+RouteNode::RouteNode(RouteNodeShape *newNode, const QString &nodeLabelText, std::unique_ptr<RouteNodeState> &state) :
     RouteNode(newNode, nodeLabelText, "", state) {}
 
 void RouteNode::setElementSize(int newSize) {

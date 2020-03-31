@@ -3,7 +3,7 @@
 
 using namespace Via::Shapes;
 
-RouteConnection::RouteConnection(QPointF from, QPointF to, QColor color)
+RouteConnection::RouteConnection(QPointF from, QPointF to, const QColor &color)
     : elementColor(color),
       cartesianLine(new QLineF(from, to))
 {    

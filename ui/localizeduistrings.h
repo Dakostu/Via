@@ -16,7 +16,7 @@ class LocalizedUIStrings
     Q_DECLARE_TR_FUNCTIONS(Localizable)
 
 public:
-    static QString getUIString(MapKey key);
+    static QString getUIString(const MapKey &key);
 };
 
 }

@@ -29,7 +29,7 @@ class RouteData : public Data, public Via::Interfaces::Shapeable
     Via::Structures::IndexList<RouteNodeData> nodes;
 
     RouteNodeData generateNewNode(int x, int y);
-    void refreshNames(RouteDataIterator&& it, int index);
+    void refreshNames(RouteDataIterator&& it, size_t index);
 
 public:
     RouteData();
@@ -55,10 +55,10 @@ public:
     void setShowOrder(bool value);
 
     void addNode(const RouteNodeData &node);
-    void eraseNode(int index);
+    void eraseNode(size_t index);
 
     size_t length() const;
-    RouteNodeData& operator[](int index);
+    RouteNodeData& operator[](size_t index);
 
     bool operator==(const RouteData &other) const;
 };

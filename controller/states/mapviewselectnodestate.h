@@ -8,7 +8,7 @@ namespace Via::Control {
 class MapViewSelectNodeState : public MapViewState
 {
 public:
-    MapViewSelectNodeState();
+    MapViewSelectNodeState() = default;
 
     void mouseMoveEvent(Via::UI::MapView *view, QMouseEvent *mouseEvent) override;
     void mousePressEvent(Via::UI::MapView *view, QMouseEvent *mouseEvent) override;

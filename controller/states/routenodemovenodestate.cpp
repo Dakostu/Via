@@ -5,12 +5,6 @@
 using namespace Via::Control;
 using namespace Via::Shapes;
 
-RouteNodeMoveNodeState::RouteNodeMoveNodeState()
-{
-
-}
-
-
 void RouteNodeMoveNodeState::mouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {
     auto nodeColorInverted = ~(node->getColors().rgb());
     node->setNodeOutlineColor(nodeColorInverted);

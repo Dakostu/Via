@@ -8,7 +8,7 @@ namespace Via::Control {
 class RouteNodeMoveNodeState : public RouteNodeState
 {
 public:
-    RouteNodeMoveNodeState();
+    RouteNodeMoveNodeState() = default;
 
     void mouseHoverEnterEvent(Via::Shapes::RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) override;
     void mouseHoverLeaveEvent(Via::Shapes::RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) override;

@@ -8,11 +8,6 @@
 using namespace Via::Control;
 using namespace Via::UI;
 
-MapViewMoveNodeState::MapViewMoveNodeState()
-{
-
-}
-
 void MapViewMoveNodeState::mouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
     view->setDragMode(QGraphicsView::ScrollHandDrag);
     view->triggerParentMouseMoveEvent(mouseEvent);
@@ -34,11 +29,7 @@ void MapViewMoveNodeState::mouseMoveEvent(MapView *view, QMouseEvent *mouseEvent
         eventPos.setX(reEnterBoundaries(eventPos.x(), screenRect.left(), screenRect.right(), hBar));
         eventPos.setY(reEnterBoundaries(eventPos.y(), screenRect.top(), screenRect.bottom(), vBar));
 
-        if (mouseEvent->globalX() != eventPos.x()) {
-            view->setDragMode(QGraphicsView::NoDrag);
-            QCursor::setPos(eventPos);
-            view->setDragMode(QGraphicsView::ScrollHandDrag);
-        } else if (mouseEvent->globalY() != eventPos.y()) {
+        if (mouseEvent->globalX() != eventPos.x() || mouseEvent->globalY() != eventPos.y()) {
             view->setDragMode(QGraphicsView::NoDrag);
             QCursor::setPos(eventPos);
             view->setDragMode(QGraphicsView::ScrollHandDrag);

@@ -8,7 +8,7 @@ using namespace Via::Control;
 using namespace Via::Model;
 
 Route::Route(const QColor &color, char selectedStyle, QGraphicsScene *scene, std::unique_ptr<RouteNodeState> &state)
-    : routeColor(color), style(selectedStyle), currentScene(scene), currentState(state)
+    : showDirection(true), routeColor(color), style(selectedStyle), currentScene(scene), currentState(state)
 {
 }
 
@@ -32,7 +32,7 @@ void Route::setShapeKey(char newStyle)
 {
     style = newStyle;
 
-    for (auto i = 0; i < nodes.size(); ++i) {
+    for (size_t i = 0; i < nodes.size(); ++i) {
         if (!(*nodes[i])->getStyleDiffersFromRoute()) {
             setStyleOfNode(i, this->style);
         }
@@ -83,7 +83,7 @@ void Route::removeTemporaryPreviewNode() {
         auto tempNode = nodes.back();
         currentScene->removeItem(tempNode->getFromConnection());
         currentScene->removeItem(tempNode);
-        nodes.erase(nodes[nodes.size() - 1]);
+        nodes.pop_back();
     }
 }
 
@@ -111,7 +111,7 @@ void Route::addTemporaryPreviewNode(qreal x, qreal y) {
     tempNode->setOpacity(TEMPORARY_NODE_OPACITY);
 }
 
-void Route::eraseNode(int index) {
+void Route::eraseNode(size_t index) {
     auto currentNodePos = nodes[index];
     auto currentNode = *currentNodePos;
     currentScene->removeItem(currentNode->getFromConnection());
@@ -156,7 +156,7 @@ void Route::connectNodes(RouteNode &from, RouteNode &to) {
     }
 }
 
-void Route::swapConnections(int firstNodeIndex, int secondNodeIndex) {
+void Route::swapConnections(size_t firstNodeIndex, size_t secondNodeIndex) {
     nodes.splice(nodes[firstNodeIndex], nodes, nodes[secondNodeIndex]);
 
     auto &firstNode = **nodes[firstNodeIndex];
@@ -174,13 +174,13 @@ void Route::swapConnections(int firstNodeIndex, int secondNodeIndex) {
     }
 }
 
-void Route::swapNodes(int firstNodeIndex, int secondNodeIndex) {
+void Route::swapNodes(size_t firstNodeIndex, size_t secondNodeIndex) {
     auto &fromNode = *nodes[firstNodeIndex];
     auto &withNode = *nodes[secondNodeIndex];
 
     auto tempNodeLabel = withNode->getNodeLabel()->text();
     auto tempCenter = withNode->getCenter();
-    auto tempExtraLabelText = withNode->getExtraText()->text();
+    //auto tempExtraLabelText = withNode->getExtraText()->text();
 
     auto fromNodeCenter = fromNode->getCenter();
     auto withNodeCenter = withNode->getCenter();
@@ -210,23 +210,23 @@ void Route::setElementSize(int newSize) {
 }
 
 
-void Route::setStyleOfNode(int routeNodeIndex, const QString &newStyle) {
+void Route::setStyleOfNode(size_t routeNodeIndex, const QString &newStyle) {
     setStyleOfNode(routeNodeIndex, nodeShapeFactory.getShapeKeyFromUIString(newStyle));
 }
 
-void Route::setStyleOfNode(int routeNodeIndex, char newStyle) {
+void Route::setStyleOfNode(size_t routeNodeIndex, char newStyle) {
     auto selectedNode = *nodes[routeNodeIndex];
     auto newShape = nodeShapeFactory.generateNodeShape(newStyle, selectedNode->getCenter(), selectedNode->getColors());
     selectedNode->setShape(newShape);
     selectedNode->checkIfStyleIsDifferent(this->style, this->getColors(), this->elementSize);
 }
 
-void Route::setColorsOfNode(int routeNodeIndex, const QColor &newColor) {
+void Route::setColorsOfNode(size_t routeNodeIndex, const QColor &newColor) {
     auto selectedNode = *nodes[routeNodeIndex];
     selectedNode->setColors(newColor);
     selectedNode->checkIfStyleIsDifferent(this->style, this->getColors(), this->elementSize);
 }
 
-const RouteNode& Route::operator[](int nodeIndex) {
+const RouteNode& Route::operator[](size_t nodeIndex) {
     return *(*nodes[nodeIndex]);
 }

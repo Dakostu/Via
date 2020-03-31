@@ -48,8 +48,8 @@ class MainWindow : public QMainWindow
 
     std::vector<std::unique_ptr<QAction>> actions;
 
-    int selectedRouteIndex;
-    int selectedRouteNodeIndex;
+    size_t selectedRouteIndex;
+    size_t selectedRouteNodeIndex;
 
     void initializeQuickButtons();
     void initializeShapeSelections();
@@ -127,7 +127,7 @@ public slots:
     void updateNodeList();
     void routeSelectionEvent();
     void routeNodeSelectionEvent();    
-    void dataNameChangeEvent(Via::Model::Data &data, const QString &newName, std::function<void(void)> listUpdateFunc);
+    void dataNameChangeEvent(Via::Model::Data &data, const QString &newName, const std::function<void(void)> &listUpdateFunc);
     void routeShowOrderChangeEvent(bool value);
     void moveRouteEvent(int by);
     void getDataFromCurrentProject();

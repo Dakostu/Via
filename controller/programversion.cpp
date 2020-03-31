@@ -6,7 +6,7 @@ using namespace Via::Control;
 
 ProgramVersion::ProgramVersion(unsigned majorNum, unsigned minorNum) {
 
-    if (minorNum >= 100) {
+    if (minorNum >= MINOR_MAX) {
         throw std::invalid_argument("Minor program version is larger than 100");
     }
 
@@ -19,7 +19,7 @@ ProgramVersion::ProgramVersion(const QString &version) {
     major = splitString[0].toUInt();
     minor = splitString[1].toUInt();
 
-    if (minor >= 100) {
+    if (minor >= MINOR_MAX) {
         throw std::invalid_argument("Minor program version is larger than 100");
     }
 

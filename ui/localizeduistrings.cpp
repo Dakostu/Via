@@ -2,7 +2,7 @@
 
 using namespace Via::UI;
 
-QString LocalizedUIStrings::getUIString(MapKey key) {
+QString LocalizedUIStrings::getUIString(const MapKey &key) {
 
     static const StringMap map = {
         {"YES", tr("&Yes")},
@@ -44,7 +44,7 @@ QString LocalizedUIStrings::getUIString(MapKey key) {
 
     try {
         result = map.at(key);
-    }  catch (std::out_of_range) {
+    }  catch (std::out_of_range&) {
         result = QString("!!INVALID KEY \"%1\"!!").arg(key);
     }
 

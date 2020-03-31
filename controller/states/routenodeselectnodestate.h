@@ -8,7 +8,7 @@ namespace Via::Control {
 class RouteNodeSelectNodeState : public RouteNodeState
 {
 public:
-    RouteNodeSelectNodeState();
+    RouteNodeSelectNodeState() = default;
 };
 
 }

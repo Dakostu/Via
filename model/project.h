@@ -40,15 +40,15 @@ public:
     Via::Structures::IndexList<RouteData>& getRoutes();
 
     void addRoute(RouteData &route);
-    void addRouteNode(RouteNodeData &node, int routeIndex);
-    void deleteRoute(int index);
-    void swapRoutes(int i, int j);
-    void swapNodes(int routeIndex, int i, int j);
+    void addRouteNode(RouteNodeData &node, size_t routeIndex);
+    void deleteRoute(size_t index);
+    void swapRoutes(size_t i, size_t j);
+    void swapNodes(size_t routeIndex, size_t i, size_t j);
 
     void setFileName(const QString &value);
 
     bool operator==(const Project &other) const;
-    RouteData& operator[](int index);
+    RouteData& operator[](size_t index);
     QPixmap getImagePixMap() const;
 };
 

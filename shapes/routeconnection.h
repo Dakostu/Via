@@ -12,11 +12,11 @@ class RouteConnection : public QGraphicsLineItem, public Via::Interfaces::ViewCu
 {
     QColor elementColor;
     static constexpr qreal SIZE_FACTOR = 0.2;
-    static constexpr qreal SIZE_OFFSET = 3;
+    static constexpr qreal SIZE_OFFSET = 3.0;
     std::unique_ptr<QLineF> cartesianLine;
 
 public:
-    RouteConnection(QPointF from, QPointF to, QColor color);
+    RouteConnection(QPointF from, QPointF to, const QColor &color);
 
     void setColors(const QColor &color) override;
     void activateColors() override;

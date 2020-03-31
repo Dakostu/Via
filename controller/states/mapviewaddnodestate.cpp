@@ -4,11 +4,6 @@
 using namespace Via::Control;
 using namespace Via::UI;
 
-MapViewAddNodeState::MapViewAddNodeState()
-{
-
-}
-
 void MapViewAddNodeState::mouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
     if (!mouseEvent->buttons().testFlag(Qt::RightButton)) {
         view->setDragMode(QGraphicsView::NoDrag);

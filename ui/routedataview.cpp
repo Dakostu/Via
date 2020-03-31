@@ -14,8 +14,8 @@ QModelIndexList RouteDataView::getSelectedRows() {
     return this->selectionModel()->selectedRows();
 }
 
-void RouteDataView::moveSelectionTo(int index) {
-    auto modelIndex = model()->index(index, 0);
+void RouteDataView::moveSelectionTo(size_t index) {
+    auto modelIndex = model()->index(static_cast<int>(index), 0);
     selectionModel()->select(modelIndex, QItemSelectionModel::SelectCurrent);
 }
 
