@@ -3,6 +3,7 @@
 
 #include "../data-structures/indexlist.h"
 #include "../controller/states/routenodestate.h"
+#include "../interfaces/serializable.h"
 #include "../interfaces/shapeable.h"
 #include "../interfaces/viewcustomizable.h"
 #include "../model/routenodedata.h"
@@ -19,12 +20,12 @@ class UIState;
 namespace Via::Shapes {
 
 
-class Route : public Via::Interfaces::ViewCustomizable, public Via::Interfaces::Shapeable
+class Route : public Via::Interfaces::ViewCustomizable, public Via::Interfaces::Shapeable, public Via::Interfaces::Serializable
 {
 protected:
     static constexpr qreal TEMPORARY_NODE_OPACITY = 0.5;
 
-    bool showDirection;
+    bool showOrder;
     QColor routeColor;
     char style;
     RouteNodeShapeFactory nodeShapeFactory;
@@ -48,7 +49,9 @@ public:
     char getShapeKey() const override;
     void setShapeKey(char newStyle) override;
 
-    void addNode(const Via::Model::RouteNodeData &node);
+    void fromJSON(const QJsonObject &object) override;
+    QJsonObject toJSON() const override;
+
     void addNode(qreal x, qreal y);
     void addTemporaryPreviewNode(qreal x, qreal y);
     void removeTemporaryPreviewNode();
