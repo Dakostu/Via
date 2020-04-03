@@ -8,19 +8,13 @@
 
 namespace Via::Model {
 
-class Data : public Via::Interfaces::Serializable, public Via::Interfaces::ViewCustomizable
+class Data : public Via::Interfaces::Serializable
 {
 protected:
-    virtual ~Data() = default;
-
-    QString name;
-    QColor currentColor;
+    Data() = default;
 
 public:
-
-    QColor getColor() const;
-    QString getName() const;
-    void setName(const QString &value);
+    virtual ~Data() = default;
 
 };
 
