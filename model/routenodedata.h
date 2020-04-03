@@ -8,7 +8,7 @@
 
 namespace Via::Model {
 
-class RouteNodeData : public Data, public Via::Interfaces::Shapeable
+struct RouteNodeData : public Data, public Via::Interfaces::Shapeable
 {
     QString nodeLabel;
     int x;

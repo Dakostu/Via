@@ -13,7 +13,7 @@ namespace Via::Model {
 
 using RouteDataIterator = Via::Structures::IndexList<Via::Model::RouteNodeData>::iterator;
 
-class RouteData : public Data, public Via::Interfaces::Shapeable
+struct RouteData : public Data, public Via::Interfaces::Shapeable
 {
     static constexpr bool DEFAULT_SHOW_ORDER = true;
 
