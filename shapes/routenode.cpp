@@ -1,11 +1,14 @@
+#include "../model/routedata.h"
 #include "routenode.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
+#include <QJsonArray>
 
 using namespace Via::Shapes;
 using namespace Via::Interfaces;
 using namespace Via::Control;
 using namespace Via::UI;
+using namespace Via::Model;
 
 RouteNode::RouteNode(RouteNodeShape *newNode, const QString &nodeLabelText,
                      const QString &extraTextLabelText, std::unique_ptr<RouteNodeState> &state)
@@ -76,6 +79,48 @@ void RouteNode::activateColors() {
     if (toConnection) {
         toConnection->activateColors();
     }
+}
+
+
+void RouteNode::fromJSON(const QJsonObject &object) {
+    //name = object[RouteNodeData::NODE_NAME_KEY].toString();
+    nodeLabel.setText(object[RouteNodeData::NODE_LABEL_KEY].toString());
+
+    setPos(object[RouteNodeData::NODE_X_KEY].toInt(), object[RouteNodeData::NODE_Y_KEY].toInt());
+    styleDiffersFromRoute = object[RouteNodeData::NODE_DIFFERENT_STYLE_KEY].toBool();
+    //nameChanged = object[RouteNodeData::NODE_NAME_CHANGED_KEY].toBool();
+    //invisible = object[RouteNodeData::NODE_INVISIBLE_KEY].toBool();
+
+    if (styleDiffersFromRoute) {
+        setColors(QColor(object[RouteNodeData::NODE_COLOR_KEY][0].toInt(), object[RouteNodeData::NODE_COLOR_KEY][1].toInt(), object[RouteNodeData::NODE_COLOR_KEY][2].toInt()));
+        elementSize = object[RouteNodeData::NODE_SIZE_KEY].toInt();
+        //setShape = static_cast<char>(object[RouteNodeData::NODE_SHAPE_KEY].toInt());
+    }
+}
+
+QJsonObject RouteNode::toJSON() const {
+    QJsonObject routeNodeJSON;
+
+    const auto pos = getCenter();
+
+    //routeNodeJSON[RouteNodeData::NODE_NAME_KEY] = name;
+    routeNodeJSON[RouteNodeData::NODE_LABEL_KEY] = nodeLabel.text();
+    routeNodeJSON[RouteNodeData::NODE_X_KEY] = pos.x();
+    routeNodeJSON[RouteNodeData::NODE_Y_KEY] = pos.y();
+    routeNodeJSON[RouteNodeData::NODE_DIFFERENT_STYLE_KEY] = styleDiffersFromRoute;
+    // for later
+    //routeNodeJSON[RouteNodeData::NODE_NAME_CHANGED_KEY] = false;
+    //routeNodeJSON[RouteNodeData::NODE_INVISIBLE_KEY] = false;
+
+    if (styleDiffersFromRoute) {
+        auto currentColor = getColors();
+        routeNodeJSON[RouteNodeData::NODE_COLOR_KEY] = QJsonArray({currentColor.red(), currentColor.green(), currentColor.blue()});
+        routeNodeJSON[RouteNodeData::NODE_SIZE_KEY] = elementSize;
+        routeNodeJSON[RouteNodeData::NODE_SHAPE_KEY] = getShapeKey();
+    }
+
+    return routeNodeJSON;
+
 }
 
 RouteNodeLabel* RouteNode::getNodeLabel()
@@ -200,7 +245,7 @@ void RouteNode::connect(RouteNode &from) {
 }
 
 
-QPointF RouteNode::getCenter() {
+QPointF RouteNode::getCenter() const {
     return this->boundingRect().center() + this->pos();
 }
 

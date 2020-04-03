@@ -2,6 +2,7 @@
 #define ROUTENODE_H
 
 #include "../controller/states/routenodestate.h"
+#include "../interfaces/serializable.h"
 #include "../interfaces/viewcustomizable.h"
 #include "../ui/routenodelabel.h"
 #include "../ui/routeextratextlabel.h"
@@ -18,7 +19,7 @@ namespace Via::Control {
 
 namespace Via::Shapes {
 
-class RouteNode : public QGraphicsItemGroup, public Via::Interfaces::ViewCustomizable
+class RouteNode : public QGraphicsItemGroup, public Via::Interfaces::ViewCustomizable, public Via::Interfaces::Serializable
 {
 
 protected:
@@ -41,6 +42,9 @@ public:
     void setElementSize(int newSize) override;
     void setColors(const QColor &color) override;    
     void activateColors() override;
+
+    void fromJSON(const QJsonObject &object) override;
+    QJsonObject toJSON() const override;
 
     void hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
@@ -73,7 +77,7 @@ public:
 
     void connect(RouteNode &from);
     void moveBy(qreal dx, qreal dy);
-    QPointF getCenter();
+    QPointF getCenter() const;
     void updateRouteConnections();
 
 };
