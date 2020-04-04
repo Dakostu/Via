@@ -2,9 +2,6 @@
 #define DATA_H
 
 #include "../interfaces/serializable.h"
-#include "../interfaces/viewcustomizable.h"
-#include <QString>
-#include <QColor>
 
 namespace Via::Model {
 

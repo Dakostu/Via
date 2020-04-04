@@ -1,17 +1,10 @@
 #ifndef ROUTEDATA_H
 #define ROUTEDATA_H
 
-#include "../interfaces/shapeable.h"
 #include "../data-structures/indexlist.h"
 #include "data.h"
-#include "routenodedata.h"
-#include <list>
-#include <QStringList>
-
 
 namespace Via::Model {
-
-using RouteDataIterator = Via::Structures::IndexList<Via::Model::RouteNodeData>::iterator;
 
 struct RouteData : public Data
 {
@@ -23,6 +16,22 @@ struct RouteData : public Data
     static inline const char* ROUTE_NODES_KEY = "a";
 
     //void refreshNames(RouteDataIterator&& it, size_t index);
+
+
+    /*
+    void RouteData::refreshNames(RouteDataIterator&& it, size_t index) {
+        if (it == nodes.end()) {
+            return;
+        }
+
+        for (; it != nodes.end(); ++it, ++index) {
+            auto &node = *it;
+            QString newNumber = QString::number(index + 1);
+            if (!node.isNameChangedByUser() && node.getName() != newNumber) {
+                node.setName(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(newNumber));
+            }
+        }
+    } */
 };
 
 }

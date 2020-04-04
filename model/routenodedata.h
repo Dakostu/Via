@@ -1,10 +1,7 @@
 #ifndef ROUTENODEDATA_H
 #define ROUTENODEDATA_H
 
-#include "../interfaces/shapeable.h"
 #include "data.h"
-#include <QString>
-#include <QColor>
 
 namespace Via::Model {
 
