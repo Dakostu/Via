@@ -146,16 +146,6 @@ char RouteNode::getShapeKey() const {
     return node->getShapeKey();
 }
 
-QString RouteNode::getName() const
-{
-    return name;
-}
-
-void RouteNode::setName(const QString &value)
-{
-    name = value;
-}
-
 bool RouteNode::getNameChangedByUser() const
 {
     return nameChangedByUser;

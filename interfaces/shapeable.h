@@ -1,8 +1,6 @@
 #ifndef SHAPEABLE_H
 #define SHAPEABLE_H
 
-#include <QString>
-
 namespace Via::Interfaces {
 
 class Shapeable {

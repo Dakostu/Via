@@ -2,6 +2,7 @@
 #define ROUTENODE_H
 
 #include "../controller/states/routenodestate.h"
+#include "../interfaces/nameable.h"
 #include "../interfaces/serializable.h"
 #include "../interfaces/viewcustomizable.h"
 #include "../ui/routenodelabel.h"
@@ -19,7 +20,10 @@ namespace Via::Control {
 
 namespace Via::Shapes {
 
-class RouteNode : public QGraphicsItemGroup, public Via::Interfaces::ViewCustomizable, public Via::Interfaces::Serializable
+class RouteNode : public QGraphicsItemGroup,
+        public Via::Interfaces::ViewCustomizable,
+        public Via::Interfaces::Serializable,
+        public Via::Interfaces::Nameable
 {
 
 protected:
@@ -27,7 +31,6 @@ protected:
     Via::UI::RouteNodeLabel nodeLabel;
     Via::UI::RouteExtraTextLabel extraTextLabel;
 
-    QString name;
     bool nameChangedByUser;
     bool styleDiffersFromRoute;
     RouteConnection* fromConnection;
@@ -82,8 +85,6 @@ public:
     QPointF getCenter() const;
     void updateRouteConnections();
 
-    QString getName() const;
-    void setName(const QString &value);
     bool getNameChangedByUser() const;
     void setNameChangedByUser(bool value);
 };

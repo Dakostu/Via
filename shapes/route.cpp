@@ -199,16 +199,6 @@ void Route::eraseAllNodes() {
     }
 }
 
-QString Route::getName() const
-{
-    return name;
-}
-
-void Route::setName(const QString &value)
-{
-    name = value;
-}
-
 void Route::connectNodes(RouteNode &from, RouteNode &to) {
     to.connect(from);
     currentScene->addItem(from.getToConnection());

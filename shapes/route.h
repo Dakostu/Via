@@ -20,12 +20,14 @@ class UIState;
 namespace Via::Shapes {
 
 
-class Route : public Via::Interfaces::ViewCustomizable, public Via::Interfaces::Shapeable, public Via::Interfaces::Serializable
+class Route : public Via::Interfaces::ViewCustomizable,
+        public Via::Interfaces::Shapeable,
+        public Via::Interfaces::Serializable,
+        public Via::Interfaces::Nameable
 {
 protected:
     static constexpr qreal TEMPORARY_NODE_OPACITY = 0.5;
 
-    QString name;
     bool showOrder;
     QColor routeColor;
     char style;
@@ -67,8 +69,6 @@ public:
     void setShapeKey(const QString &newStyle);
 
     const RouteNode& operator[](size_t nodeIndex);
-    QString getName() const;
-    void setName(const QString &value);
 };
 
 }
