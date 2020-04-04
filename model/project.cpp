@@ -7,6 +7,7 @@
 using namespace Via::Model;
 using namespace Via::Structures;
 using namespace Via::UI;
+using namespace Via::Shapes;
 
 Project::Project(const QString &newFileName, const QPixmap &map)
     : fileName(newFileName), imagePixMap(map), hasbeenModified(false), totalCreatedRoutes(0)
@@ -27,8 +28,8 @@ void Project::fromJSON(const QJsonObject &object) {
     auto routesJSON = object[PROJECT_ROUTES_KEY].toArray();
 
     for (const auto routeJSON : routesJSON) {
-        RouteData currentRoute(routeJSON.toObject());
-        routes.emplace_back(currentRoute);
+        //RouteData currentRoute(routeJSON.toObject());
+        //routes.emplace_back(currentRoute);
     }
 }
 
@@ -47,7 +48,7 @@ QString Project::getFileName() const
     return fileName;
 }
 
-IndexList<RouteData>& Project::getRoutes()
+IndexList<Route&>& Project::getRoutes()
 {
     return routes;
 }
@@ -92,16 +93,10 @@ QJsonObject Project::toJSON() const {
     return projectJSON;
 }
 
-void Project::addRoute(RouteData &route) {
+void Project::addRoute(Route &route) {
     ++totalCreatedRoutes;
     route.setName(LocalizedUIStrings::getUIString("ROUTE_DEFAULT_NAME").arg(totalCreatedRoutes));
     routes.emplace_back(route);
-}
-
-void Project::addRouteNode(RouteNodeData &node, size_t routeIndex) {
-    auto &selectedRoute = *routes[routeIndex];
-    node.setName(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(selectedRoute.length() + 1));
-    selectedRoute.addNode(node);
 }
 
 void Project::deleteRoute(size_t index) {
@@ -112,24 +107,12 @@ void Project::swapRoutes(size_t i, size_t j) {
     std::swap(*routes[i], *routes[j]);
 }
 
-void Project::swapNodes(size_t routeIndex, size_t i, size_t j) {
-    auto &firstNode = (*routes[routeIndex])[i];
-    auto &secondNode = (*routes[routeIndex])[j];
-
-    std::swap(firstNode, secondNode);
-
-    auto tempName = firstNode.getName();
-    firstNode.setName(secondNode.getName());
-    secondNode.setName(tempName);
-}
-
 bool Project::operator==(const Project &other) const {
     return this->fileName == other.fileName
             && this->pixMapToBytes() == other.pixMapToBytes()
-            && this->totalCreatedRoutes == other.totalCreatedRoutes
-            && this->routes == other.routes;
+            && this->totalCreatedRoutes == other.totalCreatedRoutes;
 }
 
-RouteData& Project::operator[](size_t index) {
+Route& Project::operator[](size_t index) {
     return *routes[index];
 }

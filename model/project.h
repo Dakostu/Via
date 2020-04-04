@@ -3,7 +3,7 @@
 
 #include "../data-structures/indexlist.h"
 #include "../interfaces/serializable.h"
-#include "routedata.h"
+#include "../shapes/route.h"
 #include <QPixmap>
 #include <QLatin1String>
 #include <QString>
@@ -17,7 +17,7 @@ class Project : public Via::Interfaces::Serializable
     QPixmap imagePixMap;
     bool hasbeenModified;
     int totalCreatedRoutes;    
-    Via::Structures::IndexList<RouteData> routes;
+    Via::Structures::IndexList<Via::Shapes::Route&> routes;
 
     static inline const char* PROJECT_IMAGE_KEY = "i";
     static inline const char* PROJECT_FILENAME_KEY = "n";
@@ -37,18 +37,16 @@ public:
     bool getHasbeenModified() const;
     void setHasbeenModified(bool value);
     QString getFileName() const;
-    Via::Structures::IndexList<RouteData>& getRoutes();
+    Via::Structures::IndexList<Via::Shapes::Route&>& getRoutes();
 
-    void addRoute(RouteData &route);
-    void addRouteNode(RouteNodeData &node, size_t routeIndex);
+    void addRoute(Via::Shapes::Route &route);
     void deleteRoute(size_t index);
     void swapRoutes(size_t i, size_t j);
-    void swapNodes(size_t routeIndex, size_t i, size_t j);
 
     void setFileName(const QString &value);
 
     bool operator==(const Project &other) const;
-    RouteData& operator[](size_t index);
+    Via::Shapes::Route& operator[](size_t index);
     QPixmap getImagePixMap() const;
 };
 
