@@ -1,4 +1,5 @@
 #include "../model/routedata.h"
+#include "../model/routenodedata.h"
 #include "routenode.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
@@ -83,12 +84,12 @@ void RouteNode::activateColors() {
 
 
 void RouteNode::fromJSON(const QJsonObject &object) {
-    //name = object[RouteNodeData::NODE_NAME_KEY].toString();
+    name = object[RouteNodeData::NODE_NAME_KEY].toString();
     nodeLabel.setText(object[RouteNodeData::NODE_LABEL_KEY].toString());
 
     setPos(object[RouteNodeData::NODE_X_KEY].toInt(), object[RouteNodeData::NODE_Y_KEY].toInt());
     styleDiffersFromRoute = object[RouteNodeData::NODE_DIFFERENT_STYLE_KEY].toBool();
-    //nameChanged = object[RouteNodeData::NODE_NAME_CHANGED_KEY].toBool();
+    nameChangedByUser = object[RouteNodeData::NODE_NAME_CHANGED_KEY].toBool();
     //invisible = object[RouteNodeData::NODE_INVISIBLE_KEY].toBool();
 
     if (styleDiffersFromRoute) {
@@ -103,11 +104,12 @@ QJsonObject RouteNode::toJSON() const {
 
     const auto pos = getCenter();
 
-    //routeNodeJSON[RouteNodeData::NODE_NAME_KEY] = name;
+    routeNodeJSON[RouteNodeData::NODE_NAME_KEY] = name;
     routeNodeJSON[RouteNodeData::NODE_LABEL_KEY] = nodeLabel.text();
     routeNodeJSON[RouteNodeData::NODE_X_KEY] = pos.x();
     routeNodeJSON[RouteNodeData::NODE_Y_KEY] = pos.y();
     routeNodeJSON[RouteNodeData::NODE_DIFFERENT_STYLE_KEY] = styleDiffersFromRoute;
+    routeNodeJSON[RouteNodeData::NODE_NAME_CHANGED_KEY] = nameChangedByUser;
     // for later
     //routeNodeJSON[RouteNodeData::NODE_NAME_CHANGED_KEY] = false;
     //routeNodeJSON[RouteNodeData::NODE_INVISIBLE_KEY] = false;
@@ -145,6 +147,26 @@ RouteNodeShape* RouteNode::getNodeShape() const
 
 char RouteNode::getShapeKey() const {
     return node->getShapeKey();
+}
+
+QString RouteNode::getName() const
+{
+    return name;
+}
+
+void RouteNode::setName(const QString &value)
+{
+    name = value;
+}
+
+bool RouteNode::getNameChangedByUser() const
+{
+    return nameChangedByUser;
+}
+
+void RouteNode::setNameChangedByUser(bool value)
+{
+    nameChangedByUser = value;
 }
 
 void RouteNode::centerNodeLabelBox() {

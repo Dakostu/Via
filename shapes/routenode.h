@@ -26,6 +26,9 @@ protected:
     std::unique_ptr<RouteNodeShape> node;
     Via::UI::RouteNodeLabel nodeLabel;
     Via::UI::RouteExtraTextLabel extraTextLabel;
+
+    QString name;
+    bool nameChangedByUser;
     bool styleDiffersFromRoute;
     RouteConnection* fromConnection;
     std::unique_ptr<RouteConnection> toConnection;
@@ -80,6 +83,10 @@ public:
     QPointF getCenter() const;
     void updateRouteConnections();
 
+    QString getName() const;
+    void setName(const QString &value);
+    bool getNameChangedByUser() const;
+    void setNameChangedByUser(bool value);
 };
 
 }
