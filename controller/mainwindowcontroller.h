@@ -27,9 +27,10 @@ class MainWindowController : public QObject
     std::unique_ptr<MapViewState> currentMapViewState;
     std::unique_ptr<RouteNodeState> currentRouteNodeState;
     QStringListModel currentRouteTitles;
-    QStringListModel routeNodeTitles;
+    QStringListModel currentRouteNodeTitles;
 
     void addFileToRecentlyOpenedProjects(const QString &fileName);
+    void updateStringListModel(QStringListModel &model, const Via::Structures::IndexList<Via::Interfaces::Nameable*> &nameables);
 
 public:
 

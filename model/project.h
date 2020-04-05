@@ -17,7 +17,7 @@ class Project : public Via::Interfaces::Serializable
     QPixmap imagePixMap;
     bool hasbeenModified;
     int totalCreatedRoutes;    
-    Via::Structures::IndexList<Via::Shapes::Route&> routes;
+    Via::Structures::IndexList<Via::Shapes::Route*> routes;
 
     static inline const char* PROJECT_IMAGE_KEY = "i";
     static inline const char* PROJECT_FILENAME_KEY = "n";
@@ -37,7 +37,7 @@ public:
     bool getHasbeenModified() const;
     void setHasbeenModified(bool value);
     QString getFileName() const;
-    Via::Structures::IndexList<Via::Shapes::Route&>& getRoutes();
+    Via::Structures::IndexList<Via::Shapes::Route*>& getRoutes();
 
     void addRoute(Via::Shapes::Route &route);
     void deleteRoute(size_t index);

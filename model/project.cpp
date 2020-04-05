@@ -48,7 +48,7 @@ QString Project::getFileName() const
     return fileName;
 }
 
-IndexList<Route&>& Project::getRoutes()
+IndexList<Route*>& Project::getRoutes()
 {
     return routes;
 }
@@ -86,7 +86,7 @@ QJsonObject Project::toJSON() const {
     QJsonArray routesJSON;
 
     for (const auto &route : routes) {
-        routesJSON.append(route.toJSON());
+        routesJSON.append(route->toJSON());
     }
     projectJSON[PROJECT_ROUTES_KEY] = routesJSON;
 
@@ -114,5 +114,5 @@ bool Project::operator==(const Project &other) const {
 }
 
 Route& Project::operator[](size_t index) {
-    return *routes[index];
+    return **routes[index];
 }

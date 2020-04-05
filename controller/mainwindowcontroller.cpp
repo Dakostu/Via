@@ -9,6 +9,8 @@
 using namespace Via::Control;
 using namespace Via::Model;
 using namespace Via::Shapes;
+using namespace Via::Interfaces;
+using namespace Via::Structures;
 
 MainWindowController::MainWindowController()
     : currentProject{},
@@ -69,6 +71,16 @@ void MainWindowController::addFileToRecentlyOpenedProjects(const QString &fileNa
 
 }
 
+void MainWindowController::updateStringListModel(QStringListModel &model, const IndexList<Nameable*> &nameables) {
+    QStringList currentList;
+
+    for (const auto &nameable : nameables) {
+        currentList << nameable->getName();
+    }
+
+    model.setStringList(currentList);
+}
+
 Project* MainWindowController::getCurrentProject() {
     return currentProject;
 }
@@ -79,21 +91,24 @@ void MainWindowController::setCurrentProject(const QString &fileName) {
 }
 
 QStringListModel& MainWindowController::getCurrentRouteTitles() {
-    QStringList currentRouteList;
-
-    for (const auto &route : currentProject->getRoutes()) {
-        currentRouteList << route.getName();
+    auto &routes = currentProject->getRoutes();
+    IndexList<Nameable*> nameables;
+    for (const auto route : routes) {
+        nameables.emplace_back(route);
     }
-
-    currentRouteTitles.setStringList(currentRouteList);
+    updateStringListModel(currentRouteTitles, nameables);
     return currentRouteTitles;
 }
 
 QStringListModel& MainWindowController::getNodeTitlesOfRoute(size_t index) {
-    routeNodeTitles.setStringList(getCurrentProject()->getRoutes()[index]->getNodeTitles());
-    return routeNodeTitles;
+    auto &routeNodes = (*currentProject->getRoutes()[index])->getNodes();
+    IndexList<Nameable*> nameables;
+    for (const auto routeNode : routeNodes) {
+        nameables.emplace_back(routeNode);
+    }
+    updateStringListModel(currentRouteNodeTitles, nameables);
+    return currentRouteNodeTitles;
 }
-
 
 std::unique_ptr<MainWindowState>& MainWindowController::getCurrentMainWindowState() {
     return currentMainWindowState;
