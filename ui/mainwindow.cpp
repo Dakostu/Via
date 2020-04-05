@@ -193,7 +193,11 @@ void MainWindow::addRoute() {
     ui->routeColorButton->setFlat(false);
 
     auto color = colorGenerator();
+
     ui->picture->addRoute(color, ui->routeStyleComboBox->currentText(), controller.getCurrentRouteNodeState());
+    controller.getCurrentProject()->addRoute(*ui->picture->getCurrentRoute());
+
+    emit routeListChanged();
 
     auto newSelectedRow = static_cast<size_t>(ui->routeBoxRouteList->model()->rowCount() - 1);
     ui->routeBoxRouteList->moveSelectionTo(newSelectedRow);
@@ -201,7 +205,6 @@ void MainWindow::addRoute() {
     auto vBar = ui->routeBoxRouteList->verticalScrollBar();
     vBar->setValue(vBar->maximum());
 
-    emit routeListChanged();
 }
 
 void MainWindow::deleteSelectedRoute() {
@@ -209,10 +212,9 @@ void MainWindow::deleteSelectedRoute() {
         return;
     }
 
-    emit routeListChanged();
-
     ui->picture->getCurrentRoute()->eraseAllNodes();
-    refreshIndex<RouteIndex>();
+
+    emit routeListChanged();
 
     auto newRowCount = ui->routeBoxRouteList->model()->rowCount();
     if (newRowCount != 0) {
