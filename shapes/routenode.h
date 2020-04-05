@@ -31,7 +31,6 @@ protected:
     Via::UI::RouteNodeLabel nodeLabel;
     Via::UI::RouteExtraTextLabel extraTextLabel;
 
-    bool nameChangedByUser;
     bool styleDiffersFromRoute;
     RouteConnection* fromConnection;
     std::unique_ptr<RouteConnection> toConnection;
@@ -84,9 +83,6 @@ public:
     void moveBy(qreal dx, qreal dy);
     QPointF getCenter() const;
     void updateRouteConnections();
-
-    bool getNameChangedByUser() const;
-    void setNameChangedByUser(bool value);
 };
 
 }

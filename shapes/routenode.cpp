@@ -16,7 +16,6 @@ RouteNode::RouteNode(RouteNodeShape *newNode, const QString &nodeLabelText,
     : node(newNode),
       nodeLabel(nodeLabelText),
       extraTextLabel(extraTextLabelText, node.get()),
-      nameChangedByUser(false),
       styleDiffersFromRoute(false),
       fromConnection(nullptr),
       toConnection(nullptr),
@@ -145,16 +144,6 @@ RouteNodeShape* RouteNode::getNodeShape() const
 
 char RouteNode::getShapeKey() const {
     return node->getShapeKey();
-}
-
-bool RouteNode::getNameChangedByUser() const
-{
-    return nameChangedByUser;
-}
-
-void RouteNode::setNameChangedByUser(bool value)
-{
-    nameChangedByUser = value;
 }
 
 void RouteNode::centerNodeLabelBox() {
