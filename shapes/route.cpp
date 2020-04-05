@@ -22,6 +22,11 @@ Route::Route(const QColor &color, const QString &selectedStyle, QGraphicsScene *
     setShapeKey(selectedStyle);
 }
 
+Route::Route(const QJsonObject &object, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state)
+    : currentScene(scene), currentState(state) {
+    fromJSON(object);
+}
+
 char Route::getShapeKey() const
 {
     return style;
