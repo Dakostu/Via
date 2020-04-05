@@ -143,7 +143,7 @@ void Route::addNode(qreal x, qreal y) {
     nodes.emplace_back(new RouteNode(nodeShapeFactory.generateNodeShape(style, {x, y}, routeColor),
                        QString::number(nodes.size() + 1), currentState));
 
-    nodes.back()->setElementSize(getElementSize());
+    nodes.back()->setElementSize(getElementSize());    
     if (previousNode) {
         nodes.back()->connect(*previousNode);
         currentScene->addItem(previousNode->getToConnection());
@@ -299,6 +299,10 @@ void Route::setColorsOfNode(size_t routeNodeIndex, const QColor &newColor) {
     auto selectedNode = *nodes[routeNodeIndex];
     selectedNode->setColors(newColor);
     selectedNode->checkIfStyleIsDifferent(this->style, this->getColors(), this->elementSize);
+}
+
+size_t Route::size() {
+    return nodes.size();
 }
 
 RouteNode& Route::operator[](size_t nodeIndex) {

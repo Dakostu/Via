@@ -147,10 +147,14 @@ public slots:
     void getDataFromCurrentProject();
     void resetSettingsBox();
     void activateAutoAddMode();
-    void addRouteNode(int x, int y);
+    void addRouteNode();
     void deleteSelectedRouteNode();
     void setNodeSettingsEnabled(bool enabled);
     void moveNodeEvent(int by);
+
+signals:
+    void routeListChanged();
+    void routeNodeListChanged();
 
 };
 

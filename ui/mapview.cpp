@@ -77,6 +77,7 @@ void MapView::addRoute(Route *route, std::unique_ptr<RouteNodeState> &routeNodeS
     route->setCurrentState(routeNodeState);
     route->setCurrentScene(this->scene());
     drawnRoutes.emplace_back(route);
+    currentRoute = drawnRoutes.back().get();
 }
 
 void MapView::addRoute(const QColor &color, const QString &selectedStyle, std::unique_ptr<RouteNodeState> &routeNodeState) {
@@ -90,8 +91,8 @@ void MapView::addRoute(const QColor &color, char selectedStyle, std::unique_ptr<
 }
 
 void MapView::addNodeToCurrentRoute(int x, int y) {
-    currentRoute->addNode(x,y);
-    emit routeNodeAdded(x, y);
+    currentRoute->addNode(x,y);    
+    emit routeNodeAdded();
 }
 
 void MapView::removeTemporaryNode() {

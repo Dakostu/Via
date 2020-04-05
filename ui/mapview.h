@@ -55,7 +55,7 @@ public:
     void setCurrentRoute(size_t routeIndex);
 
 signals:
-    void routeNodeAdded(int x, int y);
+    void routeNodeAdded();
 };
 
 }

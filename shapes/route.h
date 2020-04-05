@@ -75,6 +75,7 @@ public:
     void setStyleOfNode(size_t routeNodeIndex, const QString &newStyle);
     void setColorsOfNode(size_t routeNodeIndex, const QColor &newColor);
     void setShapeKey(const QString &newStyle);
+    size_t size();
 
     RouteNode& operator[](size_t nodeIndex);
 };
