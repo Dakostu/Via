@@ -252,8 +252,10 @@ void MainWindow::loadProject() {
     if (!newFileName.isEmpty()) {
         controller.loadCurrentProjectFromFile(newFileName);
         setNoProjectsOpenMode(false);
-        for (auto &route : controller.getCurrentProject()->getRoutes()) {
-            ui->picture->addRoute(route, controller.getCurrentRouteNodeState());
+        for (const auto JSONRouteRef : controller.getCurrentProject()->getRoutesJSON()) {
+            auto JSONRoute = JSONRouteRef.toObject();
+            auto &currentNodeState = controller.getCurrentRouteNodeState();
+            ui->picture->addRoute(new Route(JSONRoute, currentScene.get(), currentNodeState), currentNodeState);
         }
     }
 
