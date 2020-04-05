@@ -65,19 +65,11 @@ void Route::fromJSON(const QJsonObject &object) {
         addNode(nodeX, nodeY);
 
         auto newNode = nodes.back();
-        auto nodeHasDifferentStyle = nodeJSONObject[RouteNodeData::NODE_DIFFERENT_STYLE_KEY].toBool();
+        newNode->fromJSON(nodeJSONObject);
 
-        if (nodeHasDifferentStyle) {
-            auto nodeRGBArray = nodeJSONObject[RouteNodeData::NODE_COLOR_KEY].toArray();
-            auto nodeColor = (QColor(nodeRGBArray[0].toInt(), nodeRGBArray[1].toInt(), nodeRGBArray[2].toInt()));
-
-            auto nodeSize = nodeJSONObject[RouteNodeData::NODE_SIZE_KEY].toInt();
+        if (newNode->getStyleDiffersFromRoute()) {
             auto shapeKey = nodeJSONObject[RouteNodeData::NODE_SHAPE_KEY].toInt();
-
-            newNode->setColors(nodeColor);
-            newNode->setElementSize(nodeSize);
-            newNode->setShape(nodeShapeFactory.generateNodeShape(static_cast<char>(shapeKey), {qreal(nodeX), qreal(nodeY)}, nodeColor));
-            newNode->setStyleDiffersFromRoute(true);
+            newNode->setShape(nodeShapeFactory.generateNodeShape(static_cast<char>(shapeKey), newNode->getCenter(), newNode->getColors()));
         }
     }
 
@@ -197,6 +189,11 @@ void Route::eraseAllNodes() {
     while (!nodes.empty()) {
         eraseNode(0);
     }
+}
+
+Via::Structures::IndexList<RouteNode*>& Route::getNodes()
+{
+    return nodes;
 }
 
 void Route::connectNodes(RouteNode &from, RouteNode &to) {

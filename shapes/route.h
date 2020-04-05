@@ -49,6 +49,7 @@ public:
     void setColors(const QColor &color) override;
     void activateColors() override;
 
+    Via::Structures::IndexList<RouteNode*>& getNodes();
     char getShapeKey() const override;
     void setShapeKey(char newStyle) override;
 
