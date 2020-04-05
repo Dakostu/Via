@@ -172,7 +172,7 @@ void MainWindow::initializeRouteSettingsUI() {
         colorChangeEvent<RouteAction>(oldColor);
     });
     connect(ui->routeNameLineEdit, &QLineEdit::textEdited, this, [&](const QString &newName) {
-        dataNameChangeEvent(controller.getRouteOfCurrentProject(selectedRouteIndex), newName, std::bind(&MainWindow::updateRouteList, this);
+        dataNameChangeEvent(&controller.getRouteOfCurrentProject(selectedRouteIndex), newName, std::bind(&MainWindow::updateRouteList, this));
     });
     connect(ui->routeStyleComboBox, &QComboBox::currentTextChanged, this, [&](const QString &newStyle) {
         dataStyleChangeEvent<RouteAction>(newStyle);
