@@ -103,7 +103,13 @@ void Project::deleteRoute(size_t index) {
 }
 
 void Project::swapRoutes(size_t i, size_t j) {
-    std::swap(*routes[i], *routes[j]);
+    auto &firstRoute = *routes[i];
+    auto &secondRoute = *routes[j];
+
+    std::swap(firstRoute, secondRoute);
+
+    // swap back
+    firstRoute->swapNamesWith(secondRoute);
 }
 
 bool Project::operator==(const Project &other) const {

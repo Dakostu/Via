@@ -268,11 +268,8 @@ void Route::swapNodes(size_t firstNodeIndex, size_t secondNodeIndex) {
     withNode->resetConnections();
     fromNode->resetConnections();
 
-    if (!withNode->getNameChangedByUser() && !fromNode->getNameChangedByUser()) {
-        auto tempName = withNode->getName();
-        withNode->setName(fromNode->getName());
-        fromNode->setName(tempName);
-    }
+    // swap names back
+    withNode->swapNamesWith(fromNode);
 
     if (firstNodeIndex < secondNodeIndex) {
         swapConnections(firstNodeIndex, secondNodeIndex);
