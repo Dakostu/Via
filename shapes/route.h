@@ -54,7 +54,7 @@ public:
     void setShapeKey(char newStyle) override;
 
     void fromJSON(const QJsonObject &object) override;
-    QJsonObject toJSON() const override;
+    QJsonObject toJSON() override;
 
     void addNode(qreal x, qreal y);
     void addTemporaryPreviewNode(qreal x, qreal y);

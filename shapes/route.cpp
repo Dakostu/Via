@@ -77,7 +77,7 @@ void Route::fromJSON(const QJsonObject &object) {
 
 }
 
-QJsonObject Route::toJSON() const {
+QJsonObject Route::toJSON() {
     QJsonObject routeJSON;
 
     auto currentColor = getColors();

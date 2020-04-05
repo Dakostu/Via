@@ -49,7 +49,7 @@ public:
     void activateColors() override;
 
     void fromJSON(const QJsonObject &object) override;
-    QJsonObject toJSON() const override;
+    QJsonObject toJSON() override;
 
     void hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) override;

@@ -21,16 +21,10 @@ Project::Project(const QJsonObject &object) : hasbeenModified(false), totalCreat
 }
 
 void Project::fromJSON(const QJsonObject &object) {
-
     pixMapFromBytes(object[PROJECT_IMAGE_KEY]);
     fileName = object[PROJECT_FILENAME_KEY].toString();
 
-    auto routesJSON = object[PROJECT_ROUTES_KEY].toArray();
-
-    for (const auto routeJSON : routesJSON) {
-        //RouteData currentRoute(routeJSON.toObject());
-        //routes.emplace_back(currentRoute);
-    }
+    routesJSON = object[PROJECT_ROUTES_KEY].toArray();
 }
 
 bool Project::getHasbeenModified() const
@@ -63,6 +57,11 @@ QPixmap Project::getImagePixMap() const
     return imagePixMap;
 }
 
+QJsonArray Project::getRoutesJSON() const
+{
+    return routesJSON;
+}
+
 QByteArray Project::pixMapToBytes() const {
     QBuffer buffer;
     buffer.open(QIODevice::WriteOnly);
@@ -76,14 +75,14 @@ void Project::pixMapFromBytes(const QJsonValue &bytes) {
     imagePixMap.loadFromData(QByteArray::fromBase64(decodedBytes));
 }
 
-QJsonObject Project::toJSON() const {
+QJsonObject Project::toJSON() {
     QJsonObject projectJSON;
 
     projectJSON[PROJECT_IMAGE_KEY] = QString(pixMapToBytes());
     projectJSON[PROJECT_FILENAME_KEY] = fileName;
     projectJSON[PROJECT_TOTAL_CREATED_ROUTES_KEY] = totalCreatedRoutes;
 
-    QJsonArray routesJSON;
+    routesJSON = QJsonArray();
 
     for (const auto &route : routes) {
         routesJSON.append(route->toJSON());

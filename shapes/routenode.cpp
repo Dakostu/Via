@@ -98,7 +98,7 @@ void RouteNode::fromJSON(const QJsonObject &object) {
     }
 }
 
-QJsonObject RouteNode::toJSON() const {
+QJsonObject RouteNode::toJSON() {
     QJsonObject routeNodeJSON;
 
     const auto pos = getCenter();

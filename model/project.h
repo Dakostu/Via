@@ -4,8 +4,9 @@
 #include "../data-structures/indexlist.h"
 #include "../interfaces/serializable.h"
 #include "../shapes/route.h"
-#include <QPixmap>
+#include <QJsonArray>
 #include <QLatin1String>
+#include <QPixmap>
 #include <QString>
 #include <vector>
 
@@ -15,6 +16,7 @@ class Project : public Via::Interfaces::Serializable
 {    
     QString fileName;
     QPixmap imagePixMap;
+    QJsonArray routesJSON;
     bool hasbeenModified;
     int totalCreatedRoutes;    
     Via::Structures::IndexList<Via::Shapes::Route*> routes;
@@ -32,12 +34,15 @@ public:
     Project(const QJsonObject &object);
 
     void fromJSON(const QJsonObject &object) override;
-    QJsonObject toJSON() const override;
+    QJsonObject toJSON() override;
 
     bool getHasbeenModified() const;
-    void setHasbeenModified(bool value);
+    QPixmap getImagePixMap() const;
+    QJsonArray getRoutesJSON() const;
     QString getFileName() const;
     Via::Structures::IndexList<Via::Shapes::Route*>& getRoutes();
+
+    void setHasbeenModified(bool value);
 
     void addRoute(Via::Shapes::Route &route);
     void deleteRoute(size_t index);
@@ -47,7 +52,6 @@ public:
 
     bool operator==(const Project &other) const;
     Via::Shapes::Route& operator[](size_t index);
-    QPixmap getImagePixMap() const;
 };
 
 }
