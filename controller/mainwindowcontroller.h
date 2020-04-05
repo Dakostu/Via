@@ -54,6 +54,9 @@ public:
     std::unique_ptr<MapViewState>& getCurrentMapViewState();
     std::unique_ptr<RouteNodeState>& getCurrentRouteNodeState();
 
+    Via::Shapes::Route& getRouteOfCurrentProject(size_t routeIndex);
+    Via::Shapes::RouteNode& getRouteNodeofCurrentProject(size_t routeIndex, size_t routeNodeIndex);
+
 
 public slots:
 

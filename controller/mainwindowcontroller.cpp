@@ -122,6 +122,14 @@ std::unique_ptr<RouteNodeState>& MainWindowController::getCurrentRouteNodeState(
     return currentRouteNodeState;
 }
 
+Route& MainWindowController::getRouteOfCurrentProject(size_t routeIndex) {
+    return (*currentProject)[routeIndex];
+}
+
+RouteNode& MainWindowController::getRouteNodeofCurrentProject(size_t routeIndex, size_t routeNodeIndex) {
+    return getRouteOfCurrentProject(routeIndex)[routeNodeIndex];
+}
+
 void MainWindowController::addNewRouteToCurrentProject(Route &newRoute) {
     currentProject->addRoute(newRoute);
 }
