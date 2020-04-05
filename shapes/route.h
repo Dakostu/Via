@@ -63,7 +63,11 @@ public:
     void eraseNode(size_t index);
     void eraseAllNodes();
     void swapNodes(size_t firstNodeIndex, size_t secondNodeIndex);
+
+    bool getShowOrder() const;
+
     void setElementSize(int newSize) override;
+    void setShowOrder(bool value);
     void setCurrentScene(QGraphicsScene *value);
     void setCurrentState(std::unique_ptr<Via::Control::RouteNodeState> &value);
     void setStyleOfNode(size_t routeNodeIndex, char newStyle);

@@ -206,6 +206,16 @@ void Route::setCurrentState(std::unique_ptr<Via::Control::RouteNodeState> &value
     currentState.swap(value);
 }
 
+bool Route::getShowOrder() const
+{
+    return showOrder;
+}
+
+void Route::setShowOrder(bool value)
+{
+    showOrder = value;
+}
+
 void Route::connectNodes(RouteNode &from, RouteNode &to) {
     to.connect(from);
     currentScene->addItem(from.getToConnection());
