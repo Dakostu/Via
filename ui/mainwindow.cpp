@@ -326,6 +326,8 @@ void MainWindow::routeSelectionEvent() {
     ui->currentRouteBox->setEnabled(true);
     ui->routeColorButton->setFlat(false);
 
+    ui->nodeBox->setEnabled(true);
+
     auto &currentRoute = controller.getRouteOfCurrentProject(selectedRouteIndex);
     ui->routeNameLineEdit->setText(currentRoute.getName());
     ui->routeColorButton->changeColor(currentRoute.getColors());
