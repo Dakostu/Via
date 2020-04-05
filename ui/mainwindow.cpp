@@ -49,8 +49,8 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     ui->setupUi(this);
 
     connect(&controller, &MainWindowController::currentProjectChanged, this, &MainWindow::getDataFromCurrentProject);
-    connect(&controller, &MainWindowController::routeListChanged, this, &MainWindow::updateRouteList);
-    connect(&controller, &MainWindowController::routeNodeListChanged, this, &MainWindow::updateNodeList);
+    //connect(&controller, &MainWindowController::routeListChanged, this, &MainWindow::updateRouteList);
+    //connect(&controller, &MainWindowController::routeNodeListChanged, this, &MainWindow::updateNodeList);
     connect(ui->picture, &MapView::routeNodeAdded, this, &MainWindow::addRouteNode);
 
     initializeQuickButtons();
@@ -126,8 +126,8 @@ void MainWindow::initializeRouteBoxUI() {
     connect(ui->routeBoxButtonDown, &QPushButton::clicked, this, [&]() { moveRouteEvent(1); });
     connect(ui->routeBoxRouteList->itemDelegate(), &QAbstractItemDelegate::commitData, this, [&](QWidget* lineEdit){
         auto lineEditText = (dynamic_cast<QLineEdit*>(lineEdit))->text();
-        auto &currentRoute = (*controller.getCurrentProject())[selectedRouteIndex];
-        dataNameChangeEvent(currentRoute, lineEditText, std::bind(&MainWindow::updateRouteList, this));
+        auto &currentRoute = controller.getRouteOfCurrentProject(selectedRouteIndex);
+        dataNameChangeEvent(&currentRoute, lineEditText, std::bind(&MainWindow::updateRouteList, this));
     });
     connect(ui->routeBoxRouteList, &RouteDataView::changedSelection, this, &MainWindow::routeSelectionEvent);
 }
@@ -142,8 +142,8 @@ void MainWindow::initializeNodeBoxUI() {
     connect(ui->nodeBoxButtonDown, &QPushButton::clicked, this, [&]() { moveNodeEvent(1); });
     connect(ui->nodeBoxNodeList->itemDelegate(), &QAbstractItemDelegate::commitData, this, [&](QWidget* lineEdit){
         auto lineEditText = (dynamic_cast<QLineEdit*>(lineEdit))->text();
-        auto &currentRouteNote = (*controller.getCurrentProject())[selectedRouteIndex][selectedRouteNodeIndex];
-        dataNameChangeEvent(currentRouteNote, lineEditText, std::bind(&MainWindow::updateNodeList, this));
+        auto &currentRouteNode = controller.getRouteNodeofCurrentProject(selectedRouteIndex, selectedRouteNodeIndex);
+        dataNameChangeEvent(&currentRouteNode, lineEditText, std::bind(&MainWindow::updateNodeList, this));
     });
     connect(ui->nodeBoxNodeList, &RouteDataView::changedSelection, this, &MainWindow::routeNodeSelectionEvent);
 }
@@ -156,7 +156,8 @@ void MainWindow::initializeNodeSettingsUI() {
         colorChangeEvent<NodeAction>(oldColor);
     });
     connect(ui->nodeNameLineEdit, &QLineEdit::textEdited, this, [&](const QString &newName) {
-        dataNameChangeEvent((*controller.getCurrentProject())[selectedRouteIndex][selectedRouteNodeIndex], newName, std::bind(&MainWindow::updateNodeList, this));
+        dataNameChangeEvent(&(controller.getRouteNodeofCurrentProject(selectedRouteIndex, selectedRouteNodeIndex)),
+                            newName, std::bind(&MainWindow::updateNodeList, this));
     });
     connect(ui->nodeStyleComboBox, &QComboBox::currentTextChanged, this, [&](const QString &newStyle) {
         dataStyleChangeEvent<NodeAction>(newStyle);
@@ -171,7 +172,7 @@ void MainWindow::initializeRouteSettingsUI() {
         colorChangeEvent<RouteAction>(oldColor);
     });
     connect(ui->routeNameLineEdit, &QLineEdit::textEdited, this, [&](const QString &newName) {
-        dataNameChangeEvent((*controller.getCurrentProject())[selectedRouteIndex], newName, std::bind(&MainWindow::updateRouteList, this));
+        dataNameChangeEvent(controller.getRouteOfCurrentProject(selectedRouteIndex), newName, std::bind(&MainWindow::updateRouteList, this);
     });
     connect(ui->routeStyleComboBox, &QComboBox::currentTextChanged, this, [&](const QString &newStyle) {
         dataStyleChangeEvent<RouteAction>(newStyle);
@@ -194,7 +195,6 @@ void MainWindow::addRoute() {
 
     auto color = colorGenerator();
     ui->picture->addRoute(color, ui->routeStyleComboBox->currentText(), controller.getCurrentRouteNodeState());
-    controller.addNewRouteToCurrentProject(color, ui->picture->getCurrentRoute()->getShapeKey());
 
     auto newSelectedRow = static_cast<size_t>(ui->routeBoxRouteList->model()->rowCount() - 1);
     ui->routeBoxRouteList->moveSelectionTo(newSelectedRow);
@@ -210,7 +210,6 @@ void MainWindow::deleteSelectedRoute() {
 
     ui->picture->getCurrentRoute()->eraseAllNodes();
     refreshIndex<RouteIndex>();
-    controller.deleteRouteofCurrentProject(selectedRouteIndex);
 
     auto newRowCount = ui->routeBoxRouteList->model()->rowCount();
     if (newRowCount != 0) {
@@ -253,7 +252,7 @@ void MainWindow::loadProject() {
     if (!newFileName.isEmpty()) {
         controller.loadCurrentProjectFromFile(newFileName);
         setNoProjectsOpenMode(false);
-        for (const auto &route : controller.getCurrentProject()->getRoutes()) {
+        for (auto &route : controller.getCurrentProject()->getRoutes()) {
             ui->picture->addRoute(route, controller.getCurrentRouteNodeState());
         }
     }
@@ -316,11 +315,11 @@ void MainWindow::routeSelectionEvent() {
     ui->currentRouteBox->setEnabled(true);
     ui->routeColorButton->setFlat(false);
 
-    auto routeData = *(controller.getCurrentProject()->getRoutes()[selectedRouteIndex]);
-    ui->routeNameLineEdit->setText(routeData.getName());
-    ui->routeColorButton->changeColor(routeData.getColor());
+    auto &currentRoute = controller.getRouteOfCurrentProject(selectedRouteIndex);
+    ui->routeNameLineEdit->setText(currentRoute.getName());
+    ui->routeColorButton->changeColor(currentRoute.getColors());
     //shape
-    ui->routeNodeOrderCheckBox->setChecked(routeData.getShowOrder());
+    ui->routeNodeOrderCheckBox->setChecked(currentRoute.getShowOrder());
 
     ui->picture->setCurrentRoute(selectedRouteIndex);
 
@@ -334,17 +333,17 @@ void MainWindow::routeNodeSelectionEvent() {
     ui->nodeBoxButtonDown->setEnabled(selectedRouteNodeIndex != lastRow);
     setNodeSettingsEnabled(true);
 
-    auto routeNodeData = (*(controller.getCurrentProject()->getRoutes()[selectedRouteIndex]))[selectedRouteNodeIndex];
-    ui->nodeNameLineEdit->setText(routeNodeData.getName());
-    ui->nodeLabelLineEdit->setText(routeNodeData.getNodeLabel());
+    auto &currentRouteNode = controller.getRouteNodeofCurrentProject(selectedRouteIndex, selectedRouteNodeIndex);
+    ui->nodeNameLineEdit->setText(currentRouteNode.getName());
+    ui->nodeLabelLineEdit->setText(currentRouteNode.getNodeLabel()->text());
     //shape
-    ui->nodeColorButton->changeColor(routeNodeData.getColor());
+    ui->nodeColorButton->changeColor(currentRouteNode.getColors());
 
 }
 
 
-void MainWindow::dataNameChangeEvent(Data &data, const QString &newName, const std::function<void(void)> &listUpdateFunc) {
-    data.setName(newName);
+void MainWindow::dataNameChangeEvent(Nameable *data, const QString &newName, const std::function<void(void)> &listUpdateFunc) {
+    data->setName(newName);
     listUpdateFunc();
 
     if (ui->routeBoxRouteList->selectionModel()->hasSelection()) {
@@ -363,12 +362,10 @@ void MainWindow::routeShowOrderChangeEvent(bool value) {
     }
 
     auto selectedRouteIndex = static_cast<size_t>(selectedRows[0].row());
-    (*controller.getCurrentProject())[selectedRouteIndex].setShowOrder(value);
 }
 
 void MainWindow::moveRouteEvent(int by) {
     auto newRouteIndex = selectedRouteIndex + by;
-    controller.swapCurrentProjectRoutes(selectedRouteIndex, newRouteIndex);
     ui->routeBoxRouteList->moveSelectionTo(newRouteIndex);
 }
 
@@ -393,7 +390,6 @@ void MainWindow::activateAutoAddMode() {
 
 void MainWindow::addRouteNode(int x, int y) {
     refreshIndex<RouteIndex>();
-    controller.addNewNodeToRoute(x, y, ui->picture->getCurrentRoute()->getColors(), selectedRouteIndex);
 
     ui->nodeBoxNodeList->moveSelectionTo(static_cast<size_t>(ui->nodeBoxNodeList->model()->rowCount() - 1));
 
@@ -407,7 +403,6 @@ void MainWindow::deleteSelectedRouteNode() {
     }
 
     ui->picture->getCurrentRoute()->eraseNode(selectedRouteNodeIndex);
-    controller.deleteNodeofRoute(selectedRouteIndex, selectedRouteNodeIndex);
 
     auto newRowCount = static_cast<size_t>(ui->nodeBoxNodeList->model()->rowCount());
     if (newRowCount != 0) {
@@ -425,7 +420,6 @@ void MainWindow::setNodeSettingsEnabled(bool enabled) {
 }
 
 void MainWindow::moveNodeEvent(int by) {
-    controller.swapNodesOfRoute(selectedRouteIndex, selectedRouteNodeIndex, selectedRouteNodeIndex + by);
     ui->nodeBoxNodeList->moveSelectionTo(selectedRouteNodeIndex + by);
     ui->picture->getCurrentRoute()->swapNodes(selectedRouteNodeIndex, selectedRouteNodeIndex - by);
 }

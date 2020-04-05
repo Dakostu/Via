@@ -73,9 +73,9 @@ void MapView::triggerParentMouseReleaseEvent(QMouseEvent *event) {
     QGraphicsView::mouseReleaseEvent(event);
 }
 
-void MapView::addRoute(Route &route, std::unique_ptr<RouteNodeState> &routeNodeState) {
-    route.setCurrentState(routeNodeState);
-    route.setCurrentScene(this->scene());
+void MapView::addRoute(Route *route, std::unique_ptr<RouteNodeState> &routeNodeState) {
+    route->setCurrentState(routeNodeState);
+    route->setCurrentScene(this->scene());
     drawnRoutes.emplace_back(route);
 }
 

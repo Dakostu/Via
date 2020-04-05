@@ -98,10 +98,8 @@ public:
             auto &currentNode = currentRoute[selectedRouteNodeIndex];
             auto newShapeKey = currentNode.getShapeKey();
             auto isDifferentNow = currentNode.getStyleDiffersFromRoute();
-            controller.setStyleOfCurrentRouteNode(selectedRouteIndex, selectedRouteNodeIndex, newShapeKey, isDifferentNow);
         } else {
             currentRoute.setShapeKey(newStyle);
-            (*controller.getCurrentProject())[selectedRouteIndex].setShapeKey(currentRoute.getShapeKey());
         }
     }
 
@@ -120,16 +118,14 @@ public:
 
             auto &currentNode = currentRoute[selectedRouteNodeIndex];
             auto isDifferentNow = currentNode.getStyleDiffersFromRoute();
-            controller.setColorOfCurrentRouteNode(selectedRouteIndex, selectedRouteNodeIndex, newColor, isDifferentNow);
         } else {
             currentRoute.setColors(newColor);
             ui->routeColorButton->changeColor(newColor);
-            controller.setColorOfCurrentRoute(selectedRouteIndex, newColor);
         }
 
         if (!ui->nodeColorButton->isFlat()) {
-            auto currentSelectedNode = (*controller.getCurrentProject())[selectedRouteIndex][selectedRouteNodeIndex];
-            ui->nodeColorButton->changeColor(currentSelectedNode.getColor());
+            auto &currentSelectedNode = (*controller.getCurrentProject())[selectedRouteIndex][selectedRouteNodeIndex];
+            ui->nodeColorButton->changeColor(currentSelectedNode.getColors());
         }
     }
 
@@ -145,7 +141,7 @@ public slots:
     void updateNodeList();
     void routeSelectionEvent();
     void routeNodeSelectionEvent();    
-    void dataNameChangeEvent(Via::Model::Data &data, const QString &newName, const std::function<void(void)> &listUpdateFunc);
+    void dataNameChangeEvent(Via::Interfaces::Nameable *data, const QString &newName, const std::function<void(void)> &listUpdateFunc);
     void routeShowOrderChangeEvent(bool value);
     void moveRouteEvent(int by);
     void getDataFromCurrentProject();
