@@ -196,6 +196,16 @@ Via::Structures::IndexList<RouteNode*>& Route::getNodes()
     return nodes;
 }
 
+void Route::setCurrentScene(QGraphicsScene *value)
+{
+    currentScene = value;
+}
+
+void Route::setCurrentState(std::unique_ptr<Via::Control::RouteNodeState> &value)
+{
+    currentState.swap(value);
+}
+
 void Route::connectNodes(RouteNode &from, RouteNode &to) {
     to.connect(from);
     currentScene->addItem(from.getToConnection());
@@ -276,6 +286,6 @@ void Route::setColorsOfNode(size_t routeNodeIndex, const QColor &newColor) {
     selectedNode->checkIfStyleIsDifferent(this->style, this->getColors(), this->elementSize);
 }
 
-const RouteNode& Route::operator[](size_t nodeIndex) {
+RouteNode& Route::operator[](size_t nodeIndex) {
     return *(*nodes[nodeIndex]);
 }

@@ -64,12 +64,14 @@ public:
     void eraseAllNodes();
     void swapNodes(size_t firstNodeIndex, size_t secondNodeIndex);
     void setElementSize(int newSize) override;
+    void setCurrentScene(QGraphicsScene *value);
+    void setCurrentState(std::unique_ptr<Via::Control::RouteNodeState> &value);
     void setStyleOfNode(size_t routeNodeIndex, char newStyle);
     void setStyleOfNode(size_t routeNodeIndex, const QString &newStyle);
     void setColorsOfNode(size_t routeNodeIndex, const QColor &newColor);
     void setShapeKey(const QString &newStyle);
 
-    const RouteNode& operator[](size_t nodeIndex);
+    RouteNode& operator[](size_t nodeIndex);
 };
 
 }
