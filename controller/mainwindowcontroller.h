@@ -56,6 +56,7 @@ public:
 
     Via::Shapes::Route& getRouteOfCurrentProject(size_t routeIndex);
     Via::Shapes::RouteNode& getRouteNodeofCurrentProject(size_t routeIndex, size_t routeNodeIndex);
+    void swapRoutesOfCurrentProject(size_t firstRoute, size_t secondRoute);
 
 
 public slots:

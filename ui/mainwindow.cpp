@@ -380,8 +380,12 @@ void MainWindow::routeShowOrderChangeEvent(bool value) {
 }
 
 void MainWindow::moveRouteEvent(int by) {
-    emit routeListChanged();
     auto newRouteIndex = selectedRouteIndex + by;
+
+    controller.swapRoutesOfCurrentProject(selectedRouteIndex, newRouteIndex);
+
+    emit routeListChanged();
+
     ui->routeBoxRouteList->moveSelectionTo(newRouteIndex);
 }
 
@@ -444,7 +448,9 @@ void MainWindow::setNodeSettingsEnabled(bool enabled) {
 }
 
 void MainWindow::moveNodeEvent(int by) {
+    ui->picture->getCurrentRoute()->swapNodes(selectedRouteNodeIndex, selectedRouteNodeIndex + by);
+
     emit routeNodeListChanged();
+
     ui->nodeBoxNodeList->moveSelectionTo(selectedRouteNodeIndex + by);
-    ui->picture->getCurrentRoute()->swapNodes(selectedRouteNodeIndex, selectedRouteNodeIndex - by);
 }

@@ -130,6 +130,10 @@ RouteNode& MainWindowController::getRouteNodeofCurrentProject(size_t routeIndex,
     return getRouteOfCurrentProject(routeIndex)[routeNodeIndex];
 }
 
+void MainWindowController::swapRoutesOfCurrentProject(size_t firstRoute, size_t secondRoute) {
+    currentProject->swapRoutes(firstRoute, secondRoute);
+}
+
 void MainWindowController::addNewRouteToCurrentProject(Route &newRoute) {
     currentProject->addRoute(newRoute);
 }
