@@ -31,8 +31,6 @@
 #include "../controller/states/routenodemovenodestate.h"
 #include "../controller/states/routenodeselectnodestate.h"
 
-#include "../ui/localizeduistrings.h"
-
 using namespace Via::UI;
 using namespace Via::Control;
 using namespace Via::Model;
@@ -127,7 +125,7 @@ void MainWindow::initializeRouteBoxUI() {
     connect(ui->routeBoxRouteList->itemDelegate(), &QAbstractItemDelegate::commitData, this, [&](QWidget* lineEdit){
         auto lineEditText = (dynamic_cast<QLineEdit*>(lineEdit))->text();
         auto &currentRoute = controller.getRouteOfCurrentProject(selectedRouteIndex);
-        nameChangeEvent(&currentRoute, lineEditText, std::bind(&MainWindow::updateRouteList, this));
+        nameChangeEvent<RouteAction>(&currentRoute, lineEditText, std::bind(&MainWindow::updateRouteList, this));
     });
     connect(ui->routeBoxRouteList, &RouteDataView::changedSelection, this, &MainWindow::routeSelectionEvent);
 }
@@ -143,7 +141,7 @@ void MainWindow::initializeNodeBoxUI() {
     connect(ui->nodeBoxNodeList->itemDelegate(), &QAbstractItemDelegate::commitData, this, [&](QWidget* lineEdit){
         auto lineEditText = (dynamic_cast<QLineEdit*>(lineEdit))->text();
         auto &currentRouteNode = controller.getRouteNodeofCurrentProject(selectedRouteIndex, selectedRouteNodeIndex);
-        nameChangeEvent(&currentRouteNode, lineEditText, std::bind(&MainWindow::updateNodeList, this));
+        nameChangeEvent<NodeAction>(&currentRouteNode, lineEditText, std::bind(&MainWindow::updateNodeList, this));
     });
     connect(ui->nodeBoxNodeList, &RouteDataView::changedSelection, this, &MainWindow::routeNodeSelectionEvent);
 }
@@ -156,7 +154,7 @@ void MainWindow::initializeNodeSettingsUI() {
         colorChangeEvent<NodeAction>(oldColor);
     });
     connect(ui->nodeNameLineEdit, &QLineEdit::textEdited, this, [&](const QString &newName) {
-        nameChangeEvent(&(controller.getRouteNodeofCurrentProject(selectedRouteIndex, selectedRouteNodeIndex)),
+        nameChangeEvent<NodeAction>(&(controller.getRouteNodeofCurrentProject(selectedRouteIndex, selectedRouteNodeIndex)),
                             newName, std::bind(&MainWindow::updateNodeList, this));
     });
     connect(ui->nodeStyleComboBox, &QComboBox::currentTextChanged, this, [&](const QString &newStyle) {
@@ -172,7 +170,8 @@ void MainWindow::initializeRouteSettingsUI() {
         colorChangeEvent<RouteAction>(oldColor);
     });
     connect(ui->routeNameLineEdit, &QLineEdit::textEdited, this, [&](const QString &newName) {
-        nameChangeEvent(&controller.getRouteOfCurrentProject(selectedRouteIndex), newName, std::bind(&MainWindow::updateRouteList, this));
+        nameChangeEvent<RouteAction>(&controller.getRouteOfCurrentProject(selectedRouteIndex),
+                                     newName, std::bind(&MainWindow::updateRouteList, this));
     });
     connect(ui->routeStyleComboBox, &QComboBox::currentTextChanged, this, [&](const QString &newStyle) {
         styleChangeEvent<RouteAction>(newStyle);
@@ -354,19 +353,6 @@ void MainWindow::routeNodeSelectionEvent() {
     //shape
     ui->nodeColorButton->changeColor(currentRouteNode.getColors());
 
-}
-
-
-void MainWindow::nameChangeEvent(Nameable *data, const QString &newName, const std::function<void(void)> &listUpdateFunc) {
-    data->setName(newName);
-    listUpdateFunc();
-
-    if (ui->routeBoxRouteList->selectionModel()->hasSelection()) {
-        ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex);
-        if (ui->nodeBoxNodeList->selectionModel()->hasSelection()) {
-            ui->nodeBoxNodeList->moveSelectionTo(selectedRouteNodeIndex);
-        }
-    }
 }
 
 

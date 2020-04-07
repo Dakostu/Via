@@ -4,8 +4,13 @@
 
 #include "colorgenerator.h"
 #include "./ui_mainwindow.h"
+
 #include "../controller/mainwindowcontroller.h"
+
 #include "../model/data.h"
+
+#include "../ui/localizeduistrings.h"
+
 #include <vector>
 #include <memory>
 #include <QButtonGroup>
@@ -129,6 +134,30 @@ public:
         }
     }
 
+    template <typename OnlyNode>
+    void nameChangeEvent(Nameable *data, const QString &newName, const std::function<void(void)> &listUpdateFunc) {
+        data->setName(newName);
+
+        listUpdateFunc();
+
+        if constexpr (OnlyNode::value == true) {
+            auto nodeHasDefaultName = (data->getName() == (LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(selectedRouteNodeIndex + 1)));
+            data->setNameChangedByUser(nodeHasDefaultName);
+
+            if (ui->nodeBoxNodeList->selectionModel()->hasSelection()) {
+                ui->nodeBoxNodeList->moveSelectionTo(selectedRouteNodeIndex);
+            }
+        } else {
+            auto routeHasDefaultName = (data->getName() == (LocalizedUIStrings::getUIString("ROUTE_DEFAULT_NAME").arg(selectedRouteIndex + 1)));
+            data->setNameChangedByUser(routeHasDefaultName);
+        }
+
+        if (ui->routeBoxRouteList->selectionModel()->hasSelection()) {
+            ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex);
+        }
+    }
+
+
 public slots:
     void addRoute();    
     void deleteSelectedRoute();
@@ -141,7 +170,6 @@ public slots:
     void updateNodeList();
     void routeSelectionEvent();
     void routeNodeSelectionEvent();    
-    void nameChangeEvent(Via::Interfaces::Nameable *data, const QString &newName, const std::function<void(void)> &listUpdateFunc);
     void routeShowOrderChangeEvent(bool value);
     void moveRouteEvent(int by);
     void getDataFromCurrentProject();
