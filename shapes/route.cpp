@@ -1,5 +1,8 @@
 #include "../model/routedata.h"
 #include "../model/routenodedata.h"
+
+#include "../ui/localizeduistrings.h"
+
 #include "route.h"
 #include "hexagon.h"
 #include "diamond.h"
@@ -10,6 +13,7 @@
 using namespace Via::Shapes;
 using namespace Via::Control;
 using namespace Via::Model;
+using namespace Via::UI;
 
 Route::Route(const QColor &color, char selectedStyle, QGraphicsScene *scene, std::unique_ptr<RouteNodeState> &state)
     : showOrder(true), routeColor(color), style(selectedStyle), currentScene(scene), currentState(state)
@@ -265,14 +269,23 @@ void Route::swapNodes(size_t firstNodeIndex, size_t secondNodeIndex) {
     withNode->resetConnections();
     fromNode->resetConnections();
 
-    if (!fromNode->isNameChangedByUser() && !withNode->isNameChangedByUser()) {
-        fromNode->swapNamesWith(withNode);
-    }
 
     if (firstNodeIndex < secondNodeIndex) {
         swapConnections(firstNodeIndex, secondNodeIndex);
+
+        if (fromNode->isNameChangedByUser() && !withNode->isNameChangedByUser()) {
+            withNode->setName(QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(secondNodeIndex)));
+        } else if (!fromNode->isNameChangedByUser() && withNode->isNameChangedByUser()) {
+            fromNode->setName(QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(secondNodeIndex + 1)));
+        }
+
     } else {
         swapConnections(secondNodeIndex, firstNodeIndex);
+        if (fromNode->isNameChangedByUser() && !withNode->isNameChangedByUser()) {
+            withNode->setName(QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(firstNodeIndex + 1)));
+        } else if (!fromNode->isNameChangedByUser() && withNode->isNameChangedByUser()) {
+            fromNode->setName(QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(firstNodeIndex)));
+        }
     }
 
 }
