@@ -39,6 +39,7 @@ protected:
 
     void connectNodes(Via::Shapes::RouteNode &from, Via::Shapes::RouteNode &to);
     void swapConnections(size_t firstNodeIndex, size_t secondNodeIndex);
+    void swapNodeNamesConsideringUserChanges(Via::Shapes::RouteNode &fromNode, Via::Shapes::RouteNode &withNode, size_t index);
 
 public:
     Route(const QColor &color, const QString &selectedStyle, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);

@@ -249,6 +249,16 @@ void Route::swapConnections(size_t firstNodeIndex, size_t secondNodeIndex) {
     }
 }
 
+void Route::swapNodeNamesConsideringUserChanges(RouteNode &fromNode, RouteNode &withNode, size_t index) {
+    if (fromNode.isNameChangedByUser() && !withNode.isNameChangedByUser()) {
+        withNode.setName(QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(index + 1)));
+    } else if (!fromNode.isNameChangedByUser() && withNode.isNameChangedByUser()) {
+        fromNode.setName(QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(index)));
+    } else {
+        fromNode.swapNamesWith(&withNode);
+    }
+}
+
 void Route::swapNodes(size_t firstNodeIndex, size_t secondNodeIndex) {
     auto &fromNode = *nodes[firstNodeIndex];
     auto &withNode = *nodes[secondNodeIndex];
@@ -269,23 +279,13 @@ void Route::swapNodes(size_t firstNodeIndex, size_t secondNodeIndex) {
     withNode->resetConnections();
     fromNode->resetConnections();
 
-
     if (firstNodeIndex < secondNodeIndex) {
         swapConnections(firstNodeIndex, secondNodeIndex);
-
-        if (fromNode->isNameChangedByUser() && !withNode->isNameChangedByUser()) {
-            withNode->setName(QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(secondNodeIndex)));
-        } else if (!fromNode->isNameChangedByUser() && withNode->isNameChangedByUser()) {
-            fromNode->setName(QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(secondNodeIndex + 1)));
-        }
+        swapNodeNamesConsideringUserChanges(*withNode, *fromNode, secondNodeIndex);
 
     } else {
         swapConnections(secondNodeIndex, firstNodeIndex);
-        if (fromNode->isNameChangedByUser() && !withNode->isNameChangedByUser()) {
-            withNode->setName(QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(firstNodeIndex + 1)));
-        } else if (!fromNode->isNameChangedByUser() && withNode->isNameChangedByUser()) {
-            fromNode->setName(QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(firstNodeIndex)));
-        }
+        swapNodeNamesConsideringUserChanges(*fromNode, *withNode, firstNodeIndex);
     }
 
 }
