@@ -77,9 +77,6 @@ void Route::fromJSON(const QJsonObject &object) {
             newNode->setShape(nodeShapeFactory.generateNodeShape(static_cast<char>(shapeKey), newNode->getCenter(), newNode->getColors()));
         }
     }
-
-    //refreshNames(nodes.begin(), 0);
-
 }
 
 QJsonObject Route::toJSON() {
@@ -268,8 +265,9 @@ void Route::swapNodes(size_t firstNodeIndex, size_t secondNodeIndex) {
     withNode->resetConnections();
     fromNode->resetConnections();
 
-    // swap names back
-    withNode->swapNamesWith(fromNode);
+    if (!fromNode->isNameChangedByUser() && !withNode->isNameChangedByUser()) {
+        fromNode->swapNamesWith(withNode);
+    }
 
     if (firstNodeIndex < secondNodeIndex) {
         swapConnections(firstNodeIndex, secondNodeIndex);

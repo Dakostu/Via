@@ -29,9 +29,5 @@ void Nameable::setName(const QString &value)
 }
 
 void Nameable::swapNamesWith(Nameable *other) {
-    if (!this->isNameChangedByUser() && !other->isNameChangedByUser()) {
-        auto tempName = other->getName();
-        other->setName(this->getName());
-        this->setName(tempName);
-    }
+    std::swap(this->name, other->name);
 }
