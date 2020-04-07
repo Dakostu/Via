@@ -260,10 +260,10 @@ void Route::swapNodes(size_t firstNodeIndex, size_t secondNodeIndex) {
     auto withNodeCenter = withNode->getCenter();
 
     withNode->moveBy(fromNodeCenter.x() - withNodeCenter.x(), fromNodeCenter.y() - withNodeCenter.y());
-    withNode->getNodeLabel()->setText(fromNode->getNodeLabel()->text());
+    withNode->setNodeLabelText(fromNode->getNodeLabel()->text());
 
     fromNode->moveBy(tempCenter.x() - fromNodeCenter.x(), tempCenter.y() - fromNodeCenter.y());
-    fromNode->getNodeLabel()->setText(tempNodeLabel);
+    fromNode->setNodeLabelText(tempNodeLabel);
 
     withNode->resetConnections();
     fromNode->resetConnections();

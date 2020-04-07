@@ -179,6 +179,7 @@ void RouteNode::setNodeLabelOpacity(qreal opacity) {
 
 void RouteNode::setNodeLabelText(const QString &newText) {
     nodeLabel.setText(newText);
+    centerNodeLabelBox();
 }
 
 void RouteNode::setShape(RouteNodeShape* newShape) {
