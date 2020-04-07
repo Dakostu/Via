@@ -15,7 +15,7 @@ Project::Project(const QString &newFileName, const QPixmap &map)
 
 }
 
-Project::Project(const QJsonObject &object) : hasbeenModified(false), totalCreatedRoutes(object[PROJECT_TOTAL_CREATED_ROUTES_KEY].toInt())
+Project::Project(const QJsonObject &object) : hasbeenModified(false), totalCreatedRoutes(0)
 {
     fromJSON(object);
 }
@@ -94,7 +94,9 @@ QJsonObject Project::toJSON() {
 
 void Project::addRoute(Route &route) {
     ++totalCreatedRoutes;
-    route.setName(LocalizedUIStrings::getUIString("ROUTE_DEFAULT_NAME").arg(totalCreatedRoutes));
+    if (route.isNameChangedByUser()) {
+        route.setName(LocalizedUIStrings::getUIString("ROUTE_DEFAULT_NAME").arg(totalCreatedRoutes));
+    }
     routes.emplace_back(&route);
 }
 

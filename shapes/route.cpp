@@ -56,7 +56,7 @@ void Route::fromJSON(const QJsonObject &object) {
             object[RouteData::ROUTE_COLOR_KEY][1].toInt(),
             object[RouteData::ROUTE_COLOR_KEY][2].toInt()));
     showOrder = object[RouteData::ROUTE_SHOW_ORDER_KEY].toBool();
-    style = static_cast<char>(object[RouteData::ROUTE_SHAPE_KEY].toInt());
+    style = static_cast<char>(object[RouteData::ROUTE_SHAPE_KEY].toInt());    
 
     auto nodesArray = object[RouteData::ROUTE_NODES_KEY].toArray();
 
