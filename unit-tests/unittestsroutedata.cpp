@@ -6,7 +6,7 @@
 
 using namespace Via::UnitTest;
 using namespace Via::Model;
-
+/*
 void RouteDataUnitTests::checkRouteInsertion(int size) {
     auto route = generateRoute(size);
 
@@ -92,3 +92,4 @@ void RouteDataUnitTests::removalTestWithCustomNode() {
 
 
 #include "unittestsroutedata.moc"
+*/

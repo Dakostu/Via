@@ -19,8 +19,8 @@ int runTest(int argc, char **argv) {
 int main(int argc, char **argv) {
     int status = 0;
 
-    status += runTest<JSONUnitTests>(argc, argv);
-    status += runTest<RouteDataUnitTests>(argc, argv);
+    //status += runTest<JSONUnitTests>(argc, argv);
+    //status += runTest<RouteDataUnitTests>(argc, argv);
     status += runTest<ProgramVersionUnitTests>(argc, argv);
 
 

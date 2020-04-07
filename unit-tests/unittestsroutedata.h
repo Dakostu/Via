@@ -5,7 +5,7 @@
 #include "../model/routedata.h"
 
 namespace Via::UnitTest {
-
+/*
 class RouteDataUnitTests : public QObject {
 
     Q_OBJECT
@@ -19,7 +19,7 @@ private slots:
     void removalTest();
     void removalTestWithCustomNode();
 };
-
+*/
 }
 
 #endif // UNITTESTSROUTEDATA_H

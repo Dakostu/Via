@@ -13,7 +13,7 @@ protected:
 public:
     virtual ~Serializable() = default;
     virtual void fromJSON(const QJsonObject &object) = 0;
-    virtual QJsonObject toJSON() const = 0;
+    virtual QJsonObject toJSON() = 0;
 
 };
 

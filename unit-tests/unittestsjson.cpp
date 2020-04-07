@@ -12,7 +12,7 @@
 using namespace Via::UnitTest;
 using namespace Via::Model;
 using namespace Via::Control;
-
+/*
 void JSONUnitTests::testRouteNodeDataSerialization() {
     RouteNodeData data;
 
@@ -43,7 +43,7 @@ void JSONUnitTests::testRouteNodeDataSerialization() {
 
 
 void JSONUnitTests::testJSONFileInterface() {
-    /*QVector<Project> projects;
+    QVector<Project> projects;
 
     projects.append(Project("Project1", QPixmap(200,500)));
     for (int i = 0; i < 3; ++i) {
@@ -78,8 +78,8 @@ void JSONUnitTests::testJSONFileInterface() {
         auto loadedProj = Project(savedProjects[i].toObject());
         QCOMPARE(originalProj, loadedProj);
     }
-*/
-}
 
+}
+*/
 #include "unittestsjson.moc"
 

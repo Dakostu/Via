@@ -73,13 +73,11 @@ void MapView::triggerParentMouseReleaseEvent(QMouseEvent *event) {
     QGraphicsView::mouseReleaseEvent(event);
 }
 
-void MapView::addRoute(const RouteData &route, std::unique_ptr<RouteNodeState> &routeNodeState) {
-    addRoute(route.getColor(), route.getShapeKey(), routeNodeState);
-    currentRoute->setElementSize(route.getElementSize());
-
-    for (const auto &node : route.getNodes()) {
-        currentRoute->addNode(node);        
-    }
+void MapView::addRoute(Route *route, std::unique_ptr<RouteNodeState> &routeNodeState) {
+    route->setCurrentState(routeNodeState);
+    route->setCurrentScene(this->scene());
+    drawnRoutes.emplace_back(route);
+    currentRoute = drawnRoutes.back().get();
 }
 
 void MapView::addRoute(const QColor &color, const QString &selectedStyle, std::unique_ptr<RouteNodeState> &routeNodeState) {
@@ -93,8 +91,8 @@ void MapView::addRoute(const QColor &color, char selectedStyle, std::unique_ptr<
 }
 
 void MapView::addNodeToCurrentRoute(int x, int y) {
-    currentRoute->addNode(x,y);
-    emit routeNodeAdded(x, y);
+    currentRoute->addNode(x,y);    
+    emit routeNodeAdded();
 }
 
 void MapView::removeTemporaryNode() {

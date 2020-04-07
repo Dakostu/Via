@@ -2,6 +2,8 @@
 #define ROUTENODE_H
 
 #include "../controller/states/routenodestate.h"
+#include "../interfaces/nameable.h"
+#include "../interfaces/serializable.h"
 #include "../interfaces/viewcustomizable.h"
 #include "../ui/routenodelabel.h"
 #include "../ui/routeextratextlabel.h"
@@ -18,13 +20,17 @@ namespace Via::Control {
 
 namespace Via::Shapes {
 
-class RouteNode : public QGraphicsItemGroup, public Via::Interfaces::ViewCustomizable
+class RouteNode : public QGraphicsItemGroup,
+        public Via::Interfaces::ViewCustomizable,
+        public Via::Interfaces::Serializable,
+        public Via::Interfaces::Nameable
 {
 
 protected:
     std::unique_ptr<RouteNodeShape> node;
     Via::UI::RouteNodeLabel nodeLabel;
     Via::UI::RouteExtraTextLabel extraTextLabel;
+
     bool styleDiffersFromRoute;
     RouteConnection* fromConnection;
     std::unique_ptr<RouteConnection> toConnection;
@@ -37,10 +43,12 @@ public:
     RouteNode(RouteNodeShape *newNode, const QString &nodeLabelText, const QString &extraTextLabelText, std::unique_ptr<Via::Control::RouteNodeState> &state);
     RouteNode(RouteNodeShape *newNode, const QString &nodeLabelText, std::unique_ptr<Via::Control::RouteNodeState> &state);
 
-
     void setElementSize(int newSize) override;
     void setColors(const QColor &color) override;    
     void activateColors() override;
+
+    void fromJSON(const QJsonObject &object) override;
+    QJsonObject toJSON() override;
 
     void hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
@@ -73,9 +81,8 @@ public:
 
     void connect(RouteNode &from);
     void moveBy(qreal dx, qreal dy);
-    QPointF getCenter();
+    QPointF getCenter() const;
     void updateRouteConnections();
-
 };
 
 }

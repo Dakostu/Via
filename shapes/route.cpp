@@ -1,14 +1,22 @@
+#include "../model/routedata.h"
+#include "../model/routenodedata.h"
+
+#include "../ui/localizeduistrings.h"
+
 #include "route.h"
 #include "hexagon.h"
 #include "diamond.h"
 #include "square.h"
+#include <QJsonArray>
+#include <QJsonObject>
 
 using namespace Via::Shapes;
 using namespace Via::Control;
 using namespace Via::Model;
+using namespace Via::UI;
 
 Route::Route(const QColor &color, char selectedStyle, QGraphicsScene *scene, std::unique_ptr<RouteNodeState> &state)
-    : showDirection(true), routeColor(color), style(selectedStyle), currentScene(scene), currentState(state)
+    : showOrder(true), routeColor(color), style(selectedStyle), currentScene(scene), currentState(state)
 {
 }
 
@@ -16,6 +24,11 @@ Route::Route(const QColor &color, const QString &selectedStyle, QGraphicsScene *
     : Route(color, ' ', scene, state)
 {
     setShapeKey(selectedStyle);
+}
+
+Route::Route(const QJsonObject &object, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state)
+    : currentScene(scene), currentState(state) {
+    fromJSON(object);
 }
 
 char Route::getShapeKey() const
@@ -39,6 +52,57 @@ void Route::setShapeKey(char newStyle)
     }
 }
 
+void Route::fromJSON(const QJsonObject &object) {
+
+    name = object[RouteData::ROUTE_NAME_KEY].toString();
+    elementSize = object[RouteData::ROUTE_SIZE_KEY].toInt();
+    setColors(QColor(object[RouteData::ROUTE_COLOR_KEY][0].toInt(),
+            object[RouteData::ROUTE_COLOR_KEY][1].toInt(),
+            object[RouteData::ROUTE_COLOR_KEY][2].toInt()));
+    showOrder = object[RouteData::ROUTE_SHOW_ORDER_KEY].toBool();
+    style = static_cast<char>(object[RouteData::ROUTE_SHAPE_KEY].toInt());    
+
+    auto nodesArray = object[RouteData::ROUTE_NODES_KEY].toArray();
+
+    for (const auto nodeJSONRef : nodesArray) {
+
+        auto nodeJSONObject = nodeJSONRef.toObject();
+
+        auto nodeX = nodeJSONObject[RouteNodeData::NODE_X_KEY].toInt();
+        auto nodeY = nodeJSONObject[RouteNodeData::NODE_Y_KEY].toInt();
+
+        addNode(nodeX, nodeY);
+
+        auto newNode = nodes.back();
+        newNode->fromJSON(nodeJSONObject);
+
+        if (newNode->getStyleDiffersFromRoute()) {
+            auto shapeKey = nodeJSONObject[RouteNodeData::NODE_SHAPE_KEY].toInt();
+            newNode->setShape(nodeShapeFactory.generateNodeShape(static_cast<char>(shapeKey), newNode->getCenter(), newNode->getColors()));
+        }
+    }
+}
+
+QJsonObject Route::toJSON() {
+    QJsonObject routeJSON;
+
+    auto currentColor = getColors();
+    routeJSON[RouteData::ROUTE_NAME_KEY] = name;
+    routeJSON[RouteData::ROUTE_SIZE_KEY] = elementSize;
+    routeJSON[RouteData::ROUTE_COLOR_KEY] = QJsonArray({currentColor.red(), currentColor.green(), currentColor.blue()});
+    routeJSON[RouteData::ROUTE_SHOW_ORDER_KEY] = showOrder;
+    routeJSON[RouteData::ROUTE_SHAPE_KEY] = style;
+
+    QJsonArray nodesJSON;
+    for (const auto &node : nodes) {
+        nodesJSON << node->toJSON();
+    }
+
+    routeJSON[RouteData::ROUTE_NODES_KEY] = nodesJSON;
+
+    return routeJSON;
+}
+
 QColor Route::getColors() const {
     return routeColor;
 }
@@ -58,20 +122,6 @@ void Route::activateColors() {
     for (auto &currentNode : nodes) {
         currentNode->activateColors();
     }
-}
-
-void Route::addNode(const RouteNodeData &node) {
-    addNode(node.getX(), node.getY());
-
-    auto newNode = nodes.back();
-
-    if (node.isStyleDifferentFromRoute()) {
-        newNode->setColors(node.getColor());
-        newNode->setElementSize(node.getElementSize());        
-        newNode->setShape(nodeShapeFactory.generateNodeShape(node.getShapeKey(), node.getCenter(), node.getColor()));
-        newNode->setStyleDiffersFromRoute(true);
-    }
-
 }
 
 bool Route::hasTemporaryPreviewNode() {
@@ -94,7 +144,7 @@ void Route::addNode(qreal x, qreal y) {
     nodes.emplace_back(new RouteNode(nodeShapeFactory.generateNodeShape(style, {x, y}, routeColor),
                        QString::number(nodes.size() + 1), currentState));
 
-    nodes.back()->setElementSize(getElementSize());
+    nodes.back()->setElementSize(getElementSize());    
     if (previousNode) {
         nodes.back()->connect(*previousNode);
         currentScene->addItem(previousNode->getToConnection());
@@ -147,6 +197,31 @@ void Route::eraseAllNodes() {
     }
 }
 
+Via::Structures::IndexList<RouteNode*>& Route::getNodes()
+{
+    return nodes;
+}
+
+void Route::setCurrentScene(QGraphicsScene *value)
+{
+    currentScene = value;
+}
+
+void Route::setCurrentState(std::unique_ptr<Via::Control::RouteNodeState> &value)
+{
+    currentState.swap(value);
+}
+
+bool Route::getShowOrder() const
+{
+    return showOrder;
+}
+
+void Route::setShowOrder(bool value)
+{
+    showOrder = value;
+}
+
 void Route::connectNodes(RouteNode &from, RouteNode &to) {
     to.connect(from);
     currentScene->addItem(from.getToConnection());
@@ -174,6 +249,16 @@ void Route::swapConnections(size_t firstNodeIndex, size_t secondNodeIndex) {
     }
 }
 
+void Route::swapNodeNamesConsideringUserChanges(RouteNode &fromNode, RouteNode &withNode, size_t index) {
+    if (fromNode.isNameChangedByUser() && !withNode.isNameChangedByUser()) {
+        withNode.setName(QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(index + 1)));
+    } else if (!fromNode.isNameChangedByUser() && withNode.isNameChangedByUser()) {
+        fromNode.setName(QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(index)));
+    } else {
+        fromNode.swapNamesWith(&withNode);
+    }
+}
+
 void Route::swapNodes(size_t firstNodeIndex, size_t secondNodeIndex) {
     auto &fromNode = *nodes[firstNodeIndex];
     auto &withNode = *nodes[secondNodeIndex];
@@ -186,18 +271,21 @@ void Route::swapNodes(size_t firstNodeIndex, size_t secondNodeIndex) {
     auto withNodeCenter = withNode->getCenter();
 
     withNode->moveBy(fromNodeCenter.x() - withNodeCenter.x(), fromNodeCenter.y() - withNodeCenter.y());
-    withNode->getNodeLabel()->setText(fromNode->getNodeLabel()->text());
+    withNode->setNodeLabelText(fromNode->getNodeLabel()->text());
 
     fromNode->moveBy(tempCenter.x() - fromNodeCenter.x(), tempCenter.y() - fromNodeCenter.y());
-    fromNode->getNodeLabel()->setText(tempNodeLabel);
+    fromNode->setNodeLabelText(tempNodeLabel);
 
     withNode->resetConnections();
     fromNode->resetConnections();
 
     if (firstNodeIndex < secondNodeIndex) {
         swapConnections(firstNodeIndex, secondNodeIndex);
+        swapNodeNamesConsideringUserChanges(*withNode, *fromNode, secondNodeIndex);
+
     } else {
         swapConnections(secondNodeIndex, firstNodeIndex);
+        swapNodeNamesConsideringUserChanges(*fromNode, *withNode, firstNodeIndex);
     }
 
 }
@@ -227,6 +315,10 @@ void Route::setColorsOfNode(size_t routeNodeIndex, const QColor &newColor) {
     selectedNode->checkIfStyleIsDifferent(this->style, this->getColors(), this->elementSize);
 }
 
-const RouteNode& Route::operator[](size_t nodeIndex) {
+size_t Route::size() {
+    return nodes.size();
+}
+
+RouteNode& Route::operator[](size_t nodeIndex) {
     return *(*nodes[nodeIndex]);
 }

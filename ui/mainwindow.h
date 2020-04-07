@@ -4,8 +4,13 @@
 
 #include "colorgenerator.h"
 #include "./ui_mainwindow.h"
+
 #include "../controller/mainwindowcontroller.h"
+
 #include "../model/data.h"
+
+#include "../ui/localizeduistrings.h"
+
 #include <vector>
 #include <memory>
 #include <QButtonGroup>
@@ -89,7 +94,7 @@ public:
     QAbstractButton* getQuickButtonSelect();
 
     template <typename OnlyNode>
-    void dataStyleChangeEvent(const QString &newStyle) {
+    void styleChangeEvent(const QString &newStyle) {
         auto &currentRoute = *ui->picture->getCurrentRoute();
 
         if constexpr (OnlyNode::value == true) {
@@ -98,10 +103,8 @@ public:
             auto &currentNode = currentRoute[selectedRouteNodeIndex];
             auto newShapeKey = currentNode.getShapeKey();
             auto isDifferentNow = currentNode.getStyleDiffersFromRoute();
-            controller.setStyleOfCurrentRouteNode(selectedRouteIndex, selectedRouteNodeIndex, newShapeKey, isDifferentNow);
         } else {
             currentRoute.setShapeKey(newStyle);
-            (*controller.getCurrentProject())[selectedRouteIndex].setShapeKey(currentRoute.getShapeKey());
         }
     }
 
@@ -120,18 +123,40 @@ public:
 
             auto &currentNode = currentRoute[selectedRouteNodeIndex];
             auto isDifferentNow = currentNode.getStyleDiffersFromRoute();
-            controller.setColorOfCurrentRouteNode(selectedRouteIndex, selectedRouteNodeIndex, newColor, isDifferentNow);
         } else {
             currentRoute.setColors(newColor);
             ui->routeColorButton->changeColor(newColor);
-            controller.setColorOfCurrentRoute(selectedRouteIndex, newColor);
         }
 
         if (!ui->nodeColorButton->isFlat()) {
-            auto currentSelectedNode = (*controller.getCurrentProject())[selectedRouteIndex][selectedRouteNodeIndex];
-            ui->nodeColorButton->changeColor(currentSelectedNode.getColor());
+            auto &currentSelectedNode = (*controller.getCurrentProject())[selectedRouteIndex][selectedRouteNodeIndex];
+            ui->nodeColorButton->changeColor(currentSelectedNode.getColors());
         }
     }
+
+    template <typename OnlyNode>
+    void nameChangeEvent(Nameable *data, const QString &newName, const std::function<void(void)> &listUpdateFunc) {
+        data->setName(newName);
+
+        listUpdateFunc();
+
+        if constexpr (OnlyNode::value == true) {
+            auto nodeHasDefaultName = (data->getName() == (LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(selectedRouteNodeIndex + 1)));
+            data->setNameChangedByUser(!nodeHasDefaultName);
+
+            if (ui->nodeBoxNodeList->selectionModel()->hasSelection()) {
+                ui->nodeBoxNodeList->moveSelectionTo(selectedRouteNodeIndex);
+            }
+        } else {
+            auto routeHasDefaultName = (data->getName() == (LocalizedUIStrings::getUIString("ROUTE_DEFAULT_NAME").arg(selectedRouteIndex + 1)));
+            data->setNameChangedByUser(!routeHasDefaultName);
+        }
+
+        if (ui->routeBoxRouteList->selectionModel()->hasSelection()) {
+            ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex);
+        }
+    }
+
 
 public slots:
     void addRoute();    
@@ -145,16 +170,19 @@ public slots:
     void updateNodeList();
     void routeSelectionEvent();
     void routeNodeSelectionEvent();    
-    void dataNameChangeEvent(Via::Model::Data &data, const QString &newName, const std::function<void(void)> &listUpdateFunc);
     void routeShowOrderChangeEvent(bool value);
     void moveRouteEvent(int by);
     void getDataFromCurrentProject();
     void resetSettingsBox();
     void activateAutoAddMode();
-    void addRouteNode(int x, int y);
+    void addRouteNode();
     void deleteSelectedRouteNode();
     void setNodeSettingsEnabled(bool enabled);
     void moveNodeEvent(int by);
+
+signals:
+    void routeListChanged();
+    void routeNodeListChanged();
 
 };
 
