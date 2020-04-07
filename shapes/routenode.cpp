@@ -87,7 +87,7 @@ void RouteNode::fromJSON(const QJsonObject &object) {
     name = object[RouteNodeData::NODE_NAME_KEY].toString();
     nodeLabel.setText(object[RouteNodeData::NODE_LABEL_KEY].toString());
 
-    setPos(object[RouteNodeData::NODE_X_KEY].toInt(), object[RouteNodeData::NODE_Y_KEY].toInt());
+    //setPos(object[RouteNodeData::NODE_X_KEY].toInt(), object[RouteNodeData::NODE_Y_KEY].toInt());
     styleDiffersFromRoute = object[RouteNodeData::NODE_DIFFERENT_STYLE_KEY].toBool();
     nameChangedByUser = object[RouteNodeData::NODE_NAME_CHANGED_KEY].toBool();
     //invisible = object[RouteNodeData::NODE_INVISIBLE_KEY].toBool();
