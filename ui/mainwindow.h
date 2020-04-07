@@ -142,14 +142,14 @@ public:
 
         if constexpr (OnlyNode::value == true) {
             auto nodeHasDefaultName = (data->getName() == (LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(selectedRouteNodeIndex + 1)));
-            data->setNameChangedByUser(nodeHasDefaultName);
+            data->setNameChangedByUser(!nodeHasDefaultName);
 
             if (ui->nodeBoxNodeList->selectionModel()->hasSelection()) {
                 ui->nodeBoxNodeList->moveSelectionTo(selectedRouteNodeIndex);
             }
         } else {
             auto routeHasDefaultName = (data->getName() == (LocalizedUIStrings::getUIString("ROUTE_DEFAULT_NAME").arg(selectedRouteIndex + 1)));
-            data->setNameChangedByUser(routeHasDefaultName);
+            data->setNameChangedByUser(!routeHasDefaultName);
         }
 
         if (ui->routeBoxRouteList->selectionModel()->hasSelection()) {
