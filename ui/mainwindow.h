@@ -89,7 +89,7 @@ public:
     QAbstractButton* getQuickButtonSelect();
 
     template <typename OnlyNode>
-    void dataStyleChangeEvent(const QString &newStyle) {
+    void styleChangeEvent(const QString &newStyle) {
         auto &currentRoute = *ui->picture->getCurrentRoute();
 
         if constexpr (OnlyNode::value == true) {
@@ -141,7 +141,7 @@ public slots:
     void updateNodeList();
     void routeSelectionEvent();
     void routeNodeSelectionEvent();    
-    void dataNameChangeEvent(Via::Interfaces::Nameable *data, const QString &newName, const std::function<void(void)> &listUpdateFunc);
+    void nameChangeEvent(Via::Interfaces::Nameable *data, const QString &newName, const std::function<void(void)> &listUpdateFunc);
     void routeShowOrderChangeEvent(bool value);
     void moveRouteEvent(int by);
     void getDataFromCurrentProject();
