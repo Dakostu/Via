@@ -1,6 +1,7 @@
 #include "../model/routedata.h"
 #include "../model/routenodedata.h"
 #include "routenode.h"
+#include <cmath>
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
 #include <QJsonArray>
@@ -105,8 +106,8 @@ QJsonObject RouteNode::toJSON() {
 
     routeNodeJSON[RouteNodeData::NODE_NAME_KEY] = name;
     routeNodeJSON[RouteNodeData::NODE_LABEL_KEY] = nodeLabel.text();
-    routeNodeJSON[RouteNodeData::NODE_X_KEY] = pos.x();
-    routeNodeJSON[RouteNodeData::NODE_Y_KEY] = pos.y();
+    routeNodeJSON[RouteNodeData::NODE_X_KEY] = std::round(pos.x());
+    routeNodeJSON[RouteNodeData::NODE_Y_KEY] = std::round(pos.y());
     routeNodeJSON[RouteNodeData::NODE_DIFFERENT_STYLE_KEY] = styleDiffersFromRoute;
     routeNodeJSON[RouteNodeData::NODE_NAME_CHANGED_KEY] = nameChangedByUser;
     //routeNodeJSON[RouteNodeData::NODE_INVISIBLE_KEY] = false;
