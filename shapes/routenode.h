@@ -2,11 +2,14 @@
 #define ROUTENODE_H
 
 #include "../controller/states/routenodestate.h"
+
 #include "../interfaces/nameable.h"
 #include "../interfaces/serializable.h"
 #include "../interfaces/viewcustomizable.h"
+
 #include "../ui/routenodelabel.h"
 #include "../ui/routeextratextlabel.h"
+
 #include "routeconnection.h"
 #include "routenodeshape.h"
 #include <QObject>
@@ -49,6 +52,8 @@ public:
 
     void fromJSON(const QJsonObject &object) override;
     QJsonObject toJSON() override;
+
+    QString getDefaultName() const override;
 
     void hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) override;

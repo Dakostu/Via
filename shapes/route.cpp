@@ -103,6 +103,10 @@ QJsonObject Route::toJSON() {
     return routeJSON;
 }
 
+QString Route::getDefaultName() const {
+    return LocalizedUIStrings::getUIString("ROUTE_DEFAULT_NAME");
+}
+
 QColor Route::getColors() const {
     return routeColor;
 }

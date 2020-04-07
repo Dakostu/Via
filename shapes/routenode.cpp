@@ -1,5 +1,8 @@
 #include "../model/routedata.h"
 #include "../model/routenodedata.h"
+
+#include "../ui/localizeduistrings.h"
+
 #include "routenode.h"
 #include <cmath>
 #include <QGraphicsSceneMouseEvent>
@@ -120,7 +123,10 @@ QJsonObject RouteNode::toJSON() {
     }
 
     return routeNodeJSON;
+}
 
+QString RouteNode::getDefaultName() const {
+    return LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME");
 }
 
 RouteNodeLabel* RouteNode::getNodeLabel()
