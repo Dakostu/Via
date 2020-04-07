@@ -254,7 +254,7 @@ void Route::swapNodeNamesConsideringUserChanges(RouteNode &fromNode, RouteNode &
         withNode.setName(QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(index + 1)));
     } else if (!fromNode.isNameChangedByUser() && withNode.isNameChangedByUser()) {
         fromNode.setName(QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(index)));
-    } else {
+    } else if (!fromNode.isNameChangedByUser() && !withNode.isNameChangedByUser()) {
         fromNode.swapNamesWith(&withNode);
     }
 }
@@ -282,7 +282,6 @@ void Route::swapNodes(size_t firstNodeIndex, size_t secondNodeIndex) {
     if (firstNodeIndex < secondNodeIndex) {
         swapConnections(firstNodeIndex, secondNodeIndex);
         swapNodeNamesConsideringUserChanges(*withNode, *fromNode, secondNodeIndex);
-
     } else {
         swapConnections(secondNodeIndex, firstNodeIndex);
         swapNodeNamesConsideringUserChanges(*fromNode, *withNode, firstNodeIndex);
