@@ -25,6 +25,8 @@ public:
 
     virtual void swapNamesWith(Nameable* other);
 
+    virtual QString getDefaultName() const = 0;
+
 };
 
 }
