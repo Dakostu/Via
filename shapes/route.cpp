@@ -17,8 +17,9 @@ using namespace Via::Shapes;
 using namespace Via::UI;
 
 Route::Route(const QColor &color, char selectedStyle, QGraphicsScene *scene, std::unique_ptr<RouteNodeState> &state)
-    : showOrder(true), routeColor(color), style(selectedStyle), currentScene(scene), currentState(state)
+    : showOrder(true), routeColor(color), currentScene(scene), currentState(state)
 {
+    setShapeKey(selectedStyle);
 }
 
 Route::Route(const QColor &color, const QString &selectedStyle, QGraphicsScene *scene, std::unique_ptr<RouteNodeState> &state)
@@ -32,11 +33,6 @@ Route::Route(const QJsonObject &object, QGraphicsScene *scene, std::unique_ptr<V
     fromJSON(object);
 }
 
-char Route::getShapeKey() const
-{
-    return style;
-}
-
 
 void Route::setShapeKey(const QString &newStyle) {
     setShapeKey(nodeShapeFactory.getShapeKeyFromUIString(newStyle));
@@ -44,11 +40,11 @@ void Route::setShapeKey(const QString &newStyle) {
 
 void Route::setShapeKey(char newStyle)
 {
-    style = newStyle;
+    ShapeKeyModifiable::setShapeKey(newStyle);
 
     for (size_t i = 0; i < nodes.size(); ++i) {
         if (!(*nodes[i])->getStyleDiffersFromRoute()) {
-            setStyleOfNode(i, this->style);
+            setStyleOfNode(i, this->shapeKey);
         }
     }
 }
@@ -61,7 +57,7 @@ void Route::fromJSON(const QJsonObject &object) {
             object[RouteData::ROUTE_COLOR_KEY][1].toInt(),
             object[RouteData::ROUTE_COLOR_KEY][2].toInt()));
     setShowOrder(object[RouteData::ROUTE_SHOW_ORDER_KEY].toBool());
-    style = static_cast<char>(object[RouteData::ROUTE_SHAPE_KEY].toInt());    
+    shapeKey = static_cast<char>(object[RouteData::ROUTE_SHAPE_KEY].toInt());
 
     auto nodesArray = object[RouteData::ROUTE_NODES_KEY].toArray();
 
@@ -92,7 +88,7 @@ QJsonObject Route::toJSON() {
     routeJSON[RouteData::ROUTE_SIZE_KEY] = elementSize;
     routeJSON[RouteData::ROUTE_COLOR_KEY] = QJsonArray({currentColor.red(), currentColor.green(), currentColor.blue()});
     routeJSON[RouteData::ROUTE_SHOW_ORDER_KEY] = showOrder;
-    routeJSON[RouteData::ROUTE_SHAPE_KEY] = style;
+    routeJSON[RouteData::ROUTE_SHAPE_KEY] = shapeKey;
 
     QJsonArray nodesJSON;
     for (const auto &node : nodes) {
@@ -142,7 +138,7 @@ void Route::addNode(qreal x, qreal y) {
     removeTemporaryPreviewNode();
 
     auto previousNode = nodes.back();
-    nodes.emplace_back(new RouteNode(nodeShapeFactory.generateNodeShape(style, {x, y}, routeColor),
+    nodes.emplace_back(new RouteNode(nodeShapeFactory.generateNodeShape(shapeKey, {x, y}, routeColor),
                        QString::number(nodes.size() + 1), currentState));
 
     auto newNode = nodes.back();
@@ -320,13 +316,13 @@ void Route::setStyleOfNode(size_t routeNodeIndex, char newStyle) {
     auto selectedNode = *nodes[routeNodeIndex];
     auto newShape = nodeShapeFactory.generateNodeShape(newStyle, selectedNode->getCenter(), selectedNode->getColors());
     selectedNode->setShape(newShape);
-    selectedNode->checkIfStyleIsDifferent(this->style, this->getColors(), this->elementSize);
+    selectedNode->checkIfStyleIsDifferent(this->shapeKey, this->getColors(), this->elementSize);
 }
 
 void Route::setColorsOfNode(size_t routeNodeIndex, const QColor &newColor) {
     auto selectedNode = *nodes[routeNodeIndex];
     selectedNode->setColors(newColor);
-    selectedNode->checkIfStyleIsDifferent(this->style, this->getColors(), this->elementSize);
+    selectedNode->checkIfStyleIsDifferent(this->shapeKey, this->getColors(), this->elementSize);
 }
 
 size_t Route::size() {

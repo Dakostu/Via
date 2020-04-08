@@ -4,7 +4,7 @@
 #include "../data-structures/indexlist.h"
 #include "../controller/states/routenodestate.h"
 #include "../interfaces/serializable.h"
-#include "../interfaces/shapekeyable.h"
+#include "../interfaces/shapekeymodifiable.h"
 #include "../interfaces/viewcustomizable.h"
 #include "../model/routenodedata.h"
 #include "routenode.h"
@@ -21,7 +21,7 @@ namespace Via::Shapes {
 
 
 class Route : public Via::Interfaces::ViewCustomizable,
-        public Via::Interfaces::ShapeKeyable,
+        public Via::Interfaces::ShapeKeyModifiable,
         public Via::Interfaces::Serializable,
         public Via::Interfaces::Nameable
 {
@@ -30,7 +30,6 @@ protected:
 
     bool showOrder;
     QColor routeColor;
-    char style;
     RouteNodeShapeFactory nodeShapeFactory;
     QGraphicsScene *currentScene;
     std::unique_ptr<Via::Control::RouteNodeState> &currentState;
@@ -52,7 +51,6 @@ public:
     void activateColors() override;
 
     Via::Structures::IndexList<RouteNode*>& getNodes();
-    char getShapeKey() const override;
     void setShapeKey(char newStyle) override;
 
     void fromJSON(const QJsonObject &object) override;
