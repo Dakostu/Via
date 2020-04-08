@@ -11,8 +11,7 @@ protected:
 public:
     virtual ~ShapeKeyable() = default;
 
-    virtual char getShapeKey() const = 0;
-    virtual void setShapeKey(char newStyle) = 0;
+    virtual char getShapeKey() const = 0;    
 
 };
 
