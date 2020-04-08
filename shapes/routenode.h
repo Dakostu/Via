@@ -2,11 +2,15 @@
 #define ROUTENODE_H
 
 #include "../controller/states/routenodestate.h"
+
 #include "../interfaces/nameable.h"
 #include "../interfaces/serializable.h"
+#include "../interfaces/shapekeyable.h"
 #include "../interfaces/viewcustomizable.h"
+
 #include "../ui/routenodelabel.h"
 #include "../ui/routeextratextlabel.h"
+
 #include "routeconnection.h"
 #include "routenodeshape.h"
 #include <QObject>
@@ -23,6 +27,7 @@ namespace Via::Shapes {
 class RouteNode : public QGraphicsItemGroup,
         public Via::Interfaces::ViewCustomizable,
         public Via::Interfaces::Serializable,
+        public Via::Interfaces::ShapeKeyable,
         public Via::Interfaces::Nameable
 {
 
@@ -50,6 +55,8 @@ public:
     void fromJSON(const QJsonObject &object) override;
     QJsonObject toJSON() override;
 
+    char getShapeKey() const override;
+
     void hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
     void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
@@ -76,7 +83,6 @@ public:
     Via::UI::RouteExtraTextLabel* getExtraText();
     Via::UI::RouteNodeLabel* getNodeLabel();
     RouteNodeShape* getNodeShape() const;
-    char getShapeKey() const;
     bool getStyleDiffersFromRoute() const;
 
     void connect(RouteNode &from);
