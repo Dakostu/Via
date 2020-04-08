@@ -33,6 +33,6 @@ void Octagon::drawShape() {
 
 }
 
-char Octagon::getShapeKey() {
+char Octagon::getShapeKey() const {
     return OCTAGON_KEY;
 }

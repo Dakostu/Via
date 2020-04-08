@@ -22,6 +22,6 @@ void TriangleDown::drawShape() {
 
 }
 
-char TriangleDown::getShapeKey() {
+char TriangleDown::getShapeKey() const {
     return TRIANGLE_DOWN_KEY;
 }
