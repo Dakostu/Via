@@ -357,12 +357,7 @@ void MainWindow::routeNodeSelectionEvent() {
 
 
 void MainWindow::routeShowOrderChangeEvent(bool value) {
-    auto selectedRows = ui->routeBoxRouteList->getSelectedRows();
-    if (selectedRows.empty()) {
-        return;
-    }
-
-    auto selectedRouteIndex = static_cast<size_t>(selectedRows[0].row());
+    ui->picture->getCurrentRoute()->setShowOrder(value);
 }
 
 void MainWindow::moveRouteEvent(int by) {

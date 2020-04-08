@@ -55,12 +55,12 @@ void Route::setShapeKey(char newStyle)
 
 void Route::fromJSON(const QJsonObject &object) {
 
-    name = object[RouteData::ROUTE_NAME_KEY].toString();
-    elementSize = object[RouteData::ROUTE_SIZE_KEY].toInt();
+    setName(object[RouteData::ROUTE_NAME_KEY].toString());
+    setElementSize(object[RouteData::ROUTE_SIZE_KEY].toInt());
     setColors(QColor(object[RouteData::ROUTE_COLOR_KEY][0].toInt(),
             object[RouteData::ROUTE_COLOR_KEY][1].toInt(),
             object[RouteData::ROUTE_COLOR_KEY][2].toInt()));
-    showOrder = object[RouteData::ROUTE_SHOW_ORDER_KEY].toBool();
+    setShowOrder(object[RouteData::ROUTE_SHOW_ORDER_KEY].toBool());
     style = static_cast<char>(object[RouteData::ROUTE_SHAPE_KEY].toInt());    
 
     auto nodesArray = object[RouteData::ROUTE_NODES_KEY].toArray();
@@ -145,12 +145,14 @@ void Route::addNode(qreal x, qreal y) {
     nodes.emplace_back(new RouteNode(nodeShapeFactory.generateNodeShape(style, {x, y}, routeColor),
                        QString::number(nodes.size() + 1), currentState));
 
-    nodes.back()->setElementSize(getElementSize());    
+    auto newNode = nodes.back();
+    newNode->setElementSize(getElementSize());
+    newNode->setNodeLabelOpacity(showOrder);
     if (previousNode) {
-        nodes.back()->connect(*previousNode);
+        newNode->connect(*previousNode);
         currentScene->addItem(previousNode->getToConnection());
     }
-    currentScene->addItem(nodes.back());
+    currentScene->addItem(newNode);
 }
 
 void Route::addTemporaryPreviewNode(qreal x, qreal y) {
@@ -221,6 +223,10 @@ bool Route::getShowOrder() const
 void Route::setShowOrder(bool value)
 {
     showOrder = value;
+
+    for (auto &node : nodes) {
+        node->setNodeLabelOpacity(value);
+    }
 }
 
 QString Route::getRouteStyleAsUIString() {

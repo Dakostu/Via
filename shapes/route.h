@@ -64,7 +64,7 @@ public:
     bool hasTemporaryPreviewNode();
     void eraseNode(size_t index);
     void eraseAllNodes();
-    void swapNodes(size_t firstNodeIndex, size_t secondNodeIndex);
+    void swapNodes(size_t firstNodeIndex, size_t secondNodeIndex);    
 
     bool getShowOrder() const;
     QString getRouteStyleAsUIString();
