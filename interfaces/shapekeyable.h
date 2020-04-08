@@ -3,13 +3,13 @@
 
 namespace Via::Interfaces {
 
-class Shapeable {
+class ShapeKeyable {
 
 protected:
-    Shapeable() = default;
+    ShapeKeyable() = default;
 
 public:
-    virtual ~Shapeable() = default;
+    virtual ~ShapeKeyable() = default;
 
     virtual char getShapeKey() const = 0;
     virtual void setShapeKey(char newStyle) = 0;

@@ -4,7 +4,7 @@
 #include "../data-structures/indexlist.h"
 #include "../controller/states/routenodestate.h"
 #include "../interfaces/serializable.h"
-#include "../interfaces/shapeable.h"
+#include "../interfaces/shapekeyable.h"
 #include "../interfaces/viewcustomizable.h"
 #include "../model/routenodedata.h"
 #include "routenode.h"
@@ -21,7 +21,7 @@ namespace Via::Shapes {
 
 
 class Route : public Via::Interfaces::ViewCustomizable,
-        public Via::Interfaces::Shapeable,
+        public Via::Interfaces::ShapeKeyable,
         public Via::Interfaces::Serializable,
         public Via::Interfaces::Nameable
 {
