@@ -330,7 +330,7 @@ void MainWindow::routeSelectionEvent() {
     auto &currentRoute = controller.getRouteOfCurrentProject(selectedRouteIndex);
     ui->routeNameLineEdit->setText(currentRoute.getName());
     ui->routeColorButton->changeColor(currentRoute.getColors());
-    //shape
+    ui->routeStyleComboBox->setCurrentText(currentRoute.getRouteStyleAsUIString());
     ui->routeNodeOrderCheckBox->setChecked(currentRoute.getShowOrder());
 
     ui->picture->setCurrentRoute(selectedRouteIndex);
@@ -350,7 +350,7 @@ void MainWindow::routeNodeSelectionEvent() {
     auto &currentRouteNode = controller.getRouteNodeofCurrentProject(selectedRouteIndex, selectedRouteNodeIndex);
     ui->nodeNameLineEdit->setText(currentRouteNode.getName());
     ui->nodeLabelLineEdit->setText(currentRouteNode.getExtraText()->text());
-    //shape
+    ui->nodeStyleComboBox->setCurrentText(ui->picture->getCurrentRoute()->getRouteNodeStyleAsUIString(selectedRouteNodeIndex));
     ui->nodeColorButton->changeColor(currentRouteNode.getColors());
 
 }
