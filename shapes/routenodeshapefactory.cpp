@@ -27,12 +27,21 @@ RouteNodeShapeFactory::RouteNodeShapeFactory()
     };
 
     shapeStringKeyTable = std::unordered_map<QString, char> {
-        {LocalizedUIStrings::getUIString("DIAMOND"), DIAMOND_KEY},
-        {LocalizedUIStrings::getUIString("HEXAGON"), HEXAGON_KEY},
-        {LocalizedUIStrings::getUIString("OCTAGON"), OCTAGON_KEY},
-        {LocalizedUIStrings::getUIString("SQUARE"), SQUARE_KEY},
-        {LocalizedUIStrings::getUIString("TRIANGLE_UP"), TRIANGLE_UP_KEY},
+        {LocalizedUIStrings::getUIString("DIAMOND"),       DIAMOND_KEY},
+        {LocalizedUIStrings::getUIString("HEXAGON"),       HEXAGON_KEY},
+        {LocalizedUIStrings::getUIString("OCTAGON"),       OCTAGON_KEY},
+        {LocalizedUIStrings::getUIString("SQUARE"),        SQUARE_KEY},
+        {LocalizedUIStrings::getUIString("TRIANGLE_UP"),   TRIANGLE_UP_KEY},
         {LocalizedUIStrings::getUIString("TRIANGLE_DOWN"), TRIANGLE_DOWN_KEY}
+    };
+
+    shapeKeyStringTable = std::unordered_map<char, QString> {
+        {DIAMOND_KEY,       LocalizedUIStrings::getUIString("DIAMOND")},
+        {HEXAGON_KEY,       LocalizedUIStrings::getUIString("HEXAGON")},
+        {OCTAGON_KEY,       LocalizedUIStrings::getUIString("OCTAGON")},
+        {SQUARE_KEY,        LocalizedUIStrings::getUIString("SQUARE")},
+        {TRIANGLE_UP_KEY,   LocalizedUIStrings::getUIString("TRIANGLE_UP")},
+        {TRIANGLE_DOWN_KEY, LocalizedUIStrings::getUIString("TRIANGLE_DOWN")}
     };
 
 }
@@ -43,6 +52,11 @@ char RouteNodeShapeFactory::getShapeKeyFromUIString(QString key) {
         key = shapeStringKeyTable[key];
     }
     return key[0].toLatin1();
+}
+
+QString RouteNodeShapeFactory::getUIStringFromShapeKey(char key) {
+    assert(shapeKeyStringTable.find(key) != shapeKeyStringTable.end());
+    return shapeKeyStringTable[key];
 }
 
 RouteNodeShape* RouteNodeShapeFactory::generateNodeShape(char key, const QPointF &point, const QColor &color) {
