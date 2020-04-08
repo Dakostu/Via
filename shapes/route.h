@@ -67,6 +67,8 @@ public:
     void swapNodes(size_t firstNodeIndex, size_t secondNodeIndex);
 
     bool getShowOrder() const;
+    QString getRouteStyleAsUIString();
+    QString getRouteNodeStyleAsUIString(size_t nodeIndex);
 
     void setElementSize(int newSize) override;
     void setShowOrder(bool value);

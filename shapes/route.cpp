@@ -223,6 +223,14 @@ void Route::setShowOrder(bool value)
     showOrder = value;
 }
 
+QString Route::getRouteStyleAsUIString() {
+    return nodeShapeFactory.getUIStringFromShapeKey(this->getShapeKey());
+}
+
+QString Route::getRouteNodeStyleAsUIString(size_t nodeIndex) {
+    return nodeShapeFactory.getUIStringFromShapeKey((*nodes[nodeIndex])->getShapeKey());
+}
+
 void Route::connectNodes(RouteNode &from, RouteNode &to) {
     to.connect(from);
     currentScene->addItem(from.getToConnection());
