@@ -7,11 +7,11 @@
 #include "triangledown.h"
 #include "triangleup.h"
 
-#include "../ui/localizeduistrings.h"
+#include "../l10n/localizeduistrings.h"
 
 using namespace Via::Interfaces;
+using namespace Via::L10n;
 using namespace Via::Shapes;
-using namespace Via::UI;
 
 
 RouteNodeShapeFactory::RouteNodeShapeFactory()

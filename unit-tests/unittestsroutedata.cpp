@@ -2,7 +2,7 @@
 
 #include "unittestsroutedata.h"
 #include "../model/routedata.h"
-#include "../ui/localizeduistrings.h"
+#include "../l10n/localizeduistrings.h"
 
 using namespace Via::UnitTest;
 using namespace Via::Model;

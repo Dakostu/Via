@@ -4,7 +4,6 @@
 #include "mainwindowcontroller.h"
 #include "programversion.h"
 #include "jsonfile.h"
-#include "../ui/localizeduistrings.h"
 
 using namespace Via::Control;
 using namespace Via::Model;

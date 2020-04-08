@@ -1,6 +1,6 @@
 #include "localizeduistrings.h"
 
-using namespace Via::UI;
+using namespace Via::L10n;
 
 QString LocalizedUIStrings::getUIString(const MapKey &key) {
 

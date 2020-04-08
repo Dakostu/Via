@@ -9,7 +9,7 @@
 
 #include "../model/data.h"
 
-#include "../ui/localizeduistrings.h"
+#include "../l10n/localizeduistrings.h"
 
 #include <vector>
 #include <memory>
@@ -24,6 +24,7 @@
 
 QT_BEGIN_NAMESPACE
 using namespace Via::UI;
+using namespace Via::L10n;
 using namespace Via::Model;
 using namespace Via::Shapes;
 using namespace Via::Control;
@@ -141,14 +142,14 @@ public:
         listUpdateFunc();
 
         if constexpr (OnlyNode::value == true) {
-            auto nodeHasDefaultName = (data->getName() == (LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(selectedRouteNodeIndex + 1)));
+            auto nodeHasDefaultName = (data->getName() == (Via::L10n::LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(selectedRouteNodeIndex + 1)));
             data->setNameChangedByUser(!nodeHasDefaultName);
 
             if (ui->nodeBoxNodeList->selectionModel()->hasSelection()) {
                 ui->nodeBoxNodeList->moveSelectionTo(selectedRouteNodeIndex);
             }
         } else {
-            auto routeHasDefaultName = (data->getName() == (LocalizedUIStrings::getUIString("ROUTE_DEFAULT_NAME").arg(selectedRouteIndex + 1)));
+            auto routeHasDefaultName = (data->getName() == (Via::L10n::LocalizedUIStrings::getUIString("ROUTE_DEFAULT_NAME").arg(selectedRouteIndex + 1)));
             data->setNameChangedByUser(!routeHasDefaultName);
         }
 

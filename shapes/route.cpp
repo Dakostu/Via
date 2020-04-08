@@ -1,7 +1,7 @@
 #include "../model/routedata.h"
 #include "../model/routenodedata.h"
 
-#include "../ui/localizeduistrings.h"
+#include "../l10n/localizeduistrings.h"
 
 #include "route.h"
 #include "hexagon.h"
@@ -10,9 +10,10 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-using namespace Via::Shapes;
 using namespace Via::Control;
+using namespace Via::L10n;
 using namespace Via::Model;
+using namespace Via::Shapes;
 using namespace Via::UI;
 
 Route::Route(const QColor &color, char selectedStyle, QGraphicsScene *scene, std::unique_ptr<RouteNodeState> &state)

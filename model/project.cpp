@@ -1,13 +1,14 @@
+#include "../l10n/localizeduistrings.h"
 #include "project.h"
-#include "../ui/localizeduistrings.h"
 #include <QBuffer>
 #include <QByteArray>
 #include <QJsonArray>
 
+using namespace Via::L10n;
 using namespace Via::Model;
+using namespace Via::Shapes;
 using namespace Via::Structures;
 using namespace Via::UI;
-using namespace Via::Shapes;
 
 Project::Project(const QString &newFileName, const QPixmap &map)
     : fileName(newFileName), imagePixMap(map), hasbeenModified(false), totalCreatedRoutes(0)

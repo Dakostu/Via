@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <QApplication>
 
-namespace Via::UI {
+namespace Via::L10n {
 
 using MapKey = QString;
 using MapValue = QString;
