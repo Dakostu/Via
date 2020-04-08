@@ -29,6 +29,6 @@ void Hexagon::drawShape() {
 
 }
 
-char Hexagon::getShapeKey() {
+char Hexagon::getShapeKey() const {
     return HEXAGON_KEY;
 }

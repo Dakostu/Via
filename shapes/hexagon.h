@@ -12,7 +12,7 @@ public:
     Hexagon(const QPointF &point, const QColor &color);
 
     void drawShape() override;
-    char getShapeKey() override;
+    char getShapeKey() const override;
 };
 
 }

@@ -1,8 +1,9 @@
 #ifndef NODESHAPEABLE_H
 #define NODESHAPEABLE_H
 
-
+#include "../interfaces/shapekeyable.h"
 #include "../interfaces/viewcustomizable.h"
+
 #include <QBrush>
 #include <QGraphicsPolygonItem>
 #include <QPen>
@@ -10,7 +11,9 @@
 
 namespace Via::Shapes {
 
-class RouteNodeShape : public QGraphicsPolygonItem, public Via::Interfaces::ViewCustomizable
+class RouteNodeShape : public QGraphicsPolygonItem,
+                       public Via::Interfaces::ViewCustomizable,
+                       public Via::Interfaces::ShapeKeyable
 {
 
 protected:
@@ -29,7 +32,6 @@ public:
     void activateColors() override;
 
     virtual void drawShape() = 0;
-    virtual char getShapeKey() = 0;
 
 };
 

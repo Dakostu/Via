@@ -25,6 +25,6 @@ void Square::drawShape() {
 
 }
 
-char Square::getShapeKey() {
+char Square::getShapeKey() const {
     return SQUARE_KEY;
 }

@@ -25,6 +25,6 @@ void Diamond::drawShape() {
 
 }
 
-char Diamond::getShapeKey() {
+char Diamond::getShapeKey() const {
     return DIAMOND_KEY;
 }

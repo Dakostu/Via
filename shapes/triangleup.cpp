@@ -22,6 +22,6 @@ void TriangleUp::drawShape() {
 
 }
 
-char TriangleUp::getShapeKey() {
+char TriangleUp::getShapeKey() const {
     return TRIANGLE_UP_KEY;
 }
