@@ -14,12 +14,12 @@ void Diamond::drawShape() {
 
     this->setPolygon(QPolygonF(QVector<QPointF>()
                                << QPointF(originX,
-                                          originY + DEFAULT_LENGTH + sizeMultiplier(DEFAULT_EXTRA_LENGTH))
-                               << QPointF(originX + DEFAULT_LENGTH/SIZE_QUOTIENT + sizeMultiplier(DEFAULT_EXTRA_LENGTH)/SIZE_QUOTIENT,
+                                          originY + DEFAULT_LENGTH * HEIGHT_MULTIPLICATOR + sizeMultiplier(DEFAULT_EXTRA_LENGTH) * HEIGHT_MULTIPLICATOR)
+                               << QPointF(originX + DEFAULT_LENGTH * WIDTH_MULTIPLICATOR+ sizeMultiplier(DEFAULT_EXTRA_LENGTH) * WIDTH_MULTIPLICATOR,
                                           originY)
                                << QPointF(originX,
-                                          originY - DEFAULT_LENGTH - sizeMultiplier(DEFAULT_EXTRA_LENGTH))
-                               << QPointF(originX - DEFAULT_LENGTH/SIZE_QUOTIENT - sizeMultiplier(DEFAULT_EXTRA_LENGTH)/SIZE_QUOTIENT,
+                                          originY - DEFAULT_LENGTH * HEIGHT_MULTIPLICATOR - sizeMultiplier(DEFAULT_EXTRA_LENGTH) * HEIGHT_MULTIPLICATOR)
+                               << QPointF(originX - DEFAULT_LENGTH * WIDTH_MULTIPLICATOR - sizeMultiplier(DEFAULT_EXTRA_LENGTH) * WIDTH_MULTIPLICATOR,
                                           originY)
                                ));
 
