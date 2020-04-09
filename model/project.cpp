@@ -95,7 +95,7 @@ QJsonObject Project::toJSON() {
 
 void Project::addRoute(Route &route) {
     ++totalCreatedRoutes;
-    if (route.isNameChangedByUser()) {
+    if (!route.isNameChangedByUser()) {
         route.setName(LocalizedUIStrings::getUIString("ROUTE_DEFAULT_NAME").arg(totalCreatedRoutes));
     }
     routes.emplace_back(&route);
