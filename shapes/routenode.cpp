@@ -149,6 +149,7 @@ char RouteNode::getShapeKey() const {
 
 void RouteNode::centerNodeLabelBox() {
     auto center = node->getCenter();
+    auto blahCenter = getCenter();
     auto nodeLabelBox = nodeLabel.boundingRect();
     nodeLabel.setPos(center.x() - nodeLabelBox.width()/2, center.y() - nodeLabelBox.height()/2);
 }
