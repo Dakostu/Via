@@ -40,3 +40,7 @@ void RouteNodeShape::activateColors() {
         setPen(QPen(Qt::black));
     }
 }
+
+QPointF RouteNodeShape::getCenter() {
+    return boundingRect().center();
+}
