@@ -9,6 +9,7 @@ namespace Via::Model {
 struct RouteData : public Data
 {
     static inline const char* ROUTE_NAME_KEY = "n";
+    static inline const char* ROUTE_NAME_CHANGED_KEY = "g";
     static inline const char* ROUTE_SIZE_KEY = "s";
     static inline const char* ROUTE_COLOR_KEY = "c";
     static inline const char* ROUTE_SHOW_ORDER_KEY = "o";

@@ -52,6 +52,7 @@ void Route::setShapeKey(char newStyle)
 void Route::fromJSON(const QJsonObject &object) {
 
     setName(object[RouteData::ROUTE_NAME_KEY].toString());
+    setNameChangedByUser(object[RouteData::ROUTE_NAME_CHANGED_KEY].toBool());
     setElementSize(object[RouteData::ROUTE_SIZE_KEY].toInt());
     setColors(QColor(object[RouteData::ROUTE_COLOR_KEY][0].toInt(),
             object[RouteData::ROUTE_COLOR_KEY][1].toInt(),
@@ -85,6 +86,7 @@ QJsonObject Route::toJSON() {
 
     auto currentColor = getColors();
     routeJSON[RouteData::ROUTE_NAME_KEY] = name;
+    routeJSON[RouteData::ROUTE_NAME_CHANGED_KEY] = nameChangedByUser;
     routeJSON[RouteData::ROUTE_SIZE_KEY] = elementSize;
     routeJSON[RouteData::ROUTE_COLOR_KEY] = QJsonArray({currentColor.red(), currentColor.green(), currentColor.blue()});
     routeJSON[RouteData::ROUTE_SHOW_ORDER_KEY] = showOrder;
