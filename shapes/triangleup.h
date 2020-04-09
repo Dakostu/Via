@@ -1,11 +1,11 @@
 #ifndef NODESHAPETRIANGLEUP_H
 #define NODESHAPETRIANGLEUP_H
 
-#include "routenodeshape.h"
+#include "triangle.h"
 
 namespace Via::Shapes {
 
-class TriangleUp : public RouteNodeShape
+class TriangleUp : public Triangle
 {
 public:
     TriangleUp(const QPointF &point, const QColor &color);

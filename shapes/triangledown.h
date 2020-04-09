@@ -1,17 +1,17 @@
 #ifndef NODESHAPETRIANGLEDOWN_H
 #define NODESHAPETRIANGLEDOWN_H
 
-#include "routenodeshape.h"
+#include "triangle.h"
 
 namespace Via::Shapes {
 
-class TriangleDown : public RouteNodeShape
+class TriangleDown : public Triangle
 {
 public:
     TriangleDown(const QPointF &point, const QColor &color);
 
     void drawShape() override;
-    char getShapeKey() const override;
+    char getShapeKey() const override;    
 };
 
 }
