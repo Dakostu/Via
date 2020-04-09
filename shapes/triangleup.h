@@ -1,5 +1,5 @@
-#ifndef NODESHAPETRIANGLEUP_H
-#define NODESHAPETRIANGLEUP_H
+#ifndef TRIANGLEUP_H
+#define TRIANGLEUP_H
 
 #include "triangle.h"
 
@@ -15,4 +15,4 @@ public:
 };
 
 }
-#endif // NODESHAPETRIANGLEUP_H
+#endif // TRIANGLEUP_H

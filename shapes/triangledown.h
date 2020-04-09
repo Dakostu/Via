@@ -1,5 +1,5 @@
-#ifndef NODESHAPETRIANGLEDOWN_H
-#define NODESHAPETRIANGLEDOWN_H
+#ifndef TRIANGLEDOWN_H
+#define TRIANGLEDOWN_H
 
 #include "triangle.h"
 
@@ -15,4 +15,4 @@ public:
 };
 
 }
-#endif // NODESHAPETRIANGLEDOWN_H
+#endif // TRIANGLEDOWN_H
