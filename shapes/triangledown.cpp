@@ -4,7 +4,7 @@
 using namespace Via::Shapes;
 
 TriangleDown::TriangleDown(const QPointF &point, const QColor &color)
-    : RouteNodeShape(point, color)
+    : Triangle(point, color, 0.0, -3.5)
 
 {
     this->drawShape();

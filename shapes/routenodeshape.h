@@ -32,6 +32,7 @@ public:
     void activateColors() override;
 
     virtual void drawShape() = 0;
+    virtual QPointF getCenter();
 
 };
 
