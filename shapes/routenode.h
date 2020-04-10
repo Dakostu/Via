@@ -64,10 +64,11 @@ public:
     void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
     void triggerParentMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
 
-    void setNodeOutlineColor(const QColor &color);
+    void setExtraLabelText(const QString &text);
     void setOpacity(qreal opacity);
     void setNodeLabelOpacity(qreal opacity);
     void setNodeLabelText(const QString &newText);
+    void setNodeOutlineColor(const QColor &color);
     void setShape(RouteNodeShape* newShape);
     void setStyleDiffersFromRoute(bool value);
     void setToConnectionColor(const QColor &color);

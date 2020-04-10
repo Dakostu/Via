@@ -35,10 +35,11 @@ RouteNode::RouteNode(RouteNodeShape *newNode, const QString &nodeLabelText,
     centerNodeLabelBox();
 
     addToGroup(node.get());
-    addToGroup(&nodeLabel);        
+    addToGroup(&nodeLabel);
+    addToGroup(&extraLabel);
 
     auto center = node->getCenter();
-    extraLabel.setPos(center.x() + (90 * elementSize - 60), center.y() - extraLabel.boundingRect().height() / 2);
+    extraLabel.setPos(center.x() + (9 * elementSize), center.y());
 
     this->setZValue(std::numeric_limits<qreal>::max());
 }
@@ -163,9 +164,8 @@ void RouteNode::hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) {
     QGraphicsItemGroup::hoverLeaveEvent(hoverEvent);
 }
 
-void RouteNode::setNodeOutlineColor(const QColor &color) {
-    nodeLabel.setColors(color);
-    node->setPen(color);
+void RouteNode::setExtraLabelText(const QString &text) {
+    extraLabel.setText(text);
 }
 
 void RouteNode::setOpacity(qreal opacity) {
@@ -181,6 +181,11 @@ void RouteNode::setNodeLabelOpacity(qreal opacity) {
 void RouteNode::setNodeLabelText(const QString &newText) {
     nodeLabel.setText(newText);
     centerNodeLabelBox();
+}
+
+void RouteNode::setNodeOutlineColor(const QColor &color) {
+    nodeLabel.setColors(color);
+    node->setPen(color);
 }
 
 void RouteNode::setShape(RouteNodeShape* newShape) {
@@ -207,7 +212,7 @@ void RouteNode::checkIfStyleIsDifferent(char routeShape, const QColor &routeColo
     setStyleDiffersFromRoute(routeShape != this->node->getShapeKey() || routeColor != this->getColors() || routeSize != this->elementSize);
 }
 
-RouteExtraTextLabel* RouteNode::getExtraText() {
+RouteExtraTextLabel* RouteNode::getExtraLabel() {
     return &extraLabel;
 }
 

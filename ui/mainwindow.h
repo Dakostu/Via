@@ -180,6 +180,7 @@ public slots:
     void deleteSelectedRouteNode();
     void setNodeSettingsEnabled(bool enabled);
     void moveNodeEvent(int by);
+    void changeNodeExtraLabel(const QString &text);
 
 signals:
     void routeListChanged();
