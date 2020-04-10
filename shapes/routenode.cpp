@@ -87,16 +87,16 @@ void RouteNode::activateColors() {
 
 void RouteNode::fromJSON(const QJsonObject &object) {
     name = object[RouteNodeData::NODE_NAME_KEY].toString();
-    nodeLabel.setText(object[RouteNodeData::NODE_LABEL_KEY].toString());
 
     //setPos(object[RouteNodeData::NODE_X_KEY].toInt(), object[RouteNodeData::NODE_Y_KEY].toInt());
-    styleDiffersFromRoute = object[RouteNodeData::NODE_DIFFERENT_STYLE_KEY].toBool();
-    nameChangedByUser = object[RouteNodeData::NODE_NAME_CHANGED_KEY].toBool();
+    setStyleDiffersFromRoute(object[RouteNodeData::NODE_DIFFERENT_STYLE_KEY].toBool());
+    setNameChangedByUser(object[RouteNodeData::NODE_NAME_CHANGED_KEY].toBool());
+    setExtraLabelText(object[RouteNodeData::NODE_EXTRA_LABEL_TEXT_KEY].toString());
     //invisible = object[RouteNodeData::NODE_INVISIBLE_KEY].toBool();
 
     if (styleDiffersFromRoute) {
         setColors(QColor(object[RouteNodeData::NODE_COLOR_KEY][0].toInt(), object[RouteNodeData::NODE_COLOR_KEY][1].toInt(), object[RouteNodeData::NODE_COLOR_KEY][2].toInt()));
-        elementSize = object[RouteNodeData::NODE_SIZE_KEY].toInt();
+        setElementSize(object[RouteNodeData::NODE_SIZE_KEY].toInt());
     }
 }
 
@@ -106,7 +106,7 @@ QJsonObject RouteNode::toJSON() {
     const auto pos = getCenter();
 
     routeNodeJSON[RouteNodeData::NODE_NAME_KEY] = name;
-    routeNodeJSON[RouteNodeData::NODE_LABEL_KEY] = nodeLabel.text();
+    routeNodeJSON[RouteNodeData::NODE_EXTRA_LABEL_TEXT_KEY] = extraLabel.text();
     routeNodeJSON[RouteNodeData::NODE_X_KEY] = std::round(pos.x());
     routeNodeJSON[RouteNodeData::NODE_Y_KEY] = std::round(pos.y());
     routeNodeJSON[RouteNodeData::NODE_DIFFERENT_STYLE_KEY] = styleDiffersFromRoute;

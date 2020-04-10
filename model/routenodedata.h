@@ -9,7 +9,7 @@ struct RouteNodeData : public Data
 {
     static inline const char* NODE_NAME_KEY = "n";
     static inline const char* NODE_NAME_CHANGED_KEY = "g";
-    static inline const char* NODE_LABEL_KEY = "l";
+    static inline const char* NODE_EXTRA_LABEL_TEXT_KEY = "l";
     static inline const char* NODE_X_KEY = "x";
     static inline const char* NODE_Y_KEY = "y";
     static inline const char* NODE_DIFFERENT_STYLE_KEY = "f";
