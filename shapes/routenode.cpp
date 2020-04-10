@@ -38,8 +38,9 @@ RouteNode::RouteNode(RouteNodeShape *newNode, const QString &nodeLabelText,
     addToGroup(&nodeLabel);
     addToGroup(&extraLabel);
 
-    auto center = node->getCenter();
-    extraLabel.setPos(center.x() + (9 * elementSize), center.y());
+
+    auto center = this->getCenter();
+    extraLabel.setPos(center.x() + (15 * elementSize), center.y() - node->boundingRect().width() / 2.0);
 
     this->setZValue(std::numeric_limits<qreal>::max());
 }
@@ -149,7 +150,7 @@ char RouteNode::getShapeKey() const {
 }
 
 void RouteNode::centerNodeLabelBox() {
-    auto center = node->getCenter();
+    auto center = node->getCenterOfShape();
     auto nodeLabelBox = nodeLabel.boundingRect();
     nodeLabel.setPos(center.x() - nodeLabelBox.width()/2, center.y() - nodeLabelBox.height()/2);
 }
@@ -252,7 +253,7 @@ void RouteNode::connect(RouteNode &from) {
 
 
 QPointF RouteNode::getCenter() const {
-    return this->boundingRect().center() + this->pos();
+    return mapToScene(node->getCenterOfBoundingBox());
 }
 
 void RouteNode::updateRouteConnections() {

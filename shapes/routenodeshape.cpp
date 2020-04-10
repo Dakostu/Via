@@ -41,6 +41,10 @@ void RouteNodeShape::activateColors() {
     }
 }
 
-QPointF RouteNodeShape::getCenter() {
+QPointF RouteNodeShape::getCenterOfBoundingBox() {
     return boundingRect().center() + this->pos();
+}
+
+QPointF RouteNodeShape::getCenterOfShape() {
+    return getCenterOfBoundingBox();
 }
