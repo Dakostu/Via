@@ -8,10 +8,12 @@ using namespace Via::Shapes;
 void RouteNodeMoveNodeState::mouseHoverEnterEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {
     auto nodeColorInverted = ~(node->getColors().rgb());
     node->setNodeOutlineColor(nodeColorInverted);
+    node->getExtraLabel()->setColors(nodeColorInverted);
 }
 
 void RouteNodeMoveNodeState::mouseHoverLeaveEvent(RouteNode *node, QGraphicsSceneHoverEvent *hoverEvent) {
     node->activateColors();
+    node->getExtraLabel()->activateColors();
 }
 
 void RouteNodeMoveNodeState::mouseMoveEvent(RouteNode *node, QGraphicsSceneMouseEvent *mouseEvent) {

@@ -16,7 +16,7 @@ RouteNode::RouteNode(RouteNodeShape *newNode, const QString &nodeLabelText,
                      const QString &extraTextLabelText, std::unique_ptr<RouteNodeState> &state)
     : node(newNode),
       nodeLabel(nodeLabelText),
-      extraTextLabel(extraTextLabelText, node.get()),
+      extraLabel(extraTextLabelText, node.get()),
       styleDiffersFromRoute(false),
       fromConnection(nullptr),
       toConnection(nullptr),
@@ -30,15 +30,17 @@ RouteNode::RouteNode(RouteNodeShape *newNode, const QString &nodeLabelText,
 
     nodeLabel.setColors(node->pen().brush().color());
     nodeLabel.setZValue(std::numeric_limits<qreal>::max());
-    extraTextLabel.setColors(node->pen().brush().color());
+    extraLabel.setColors(node->pen().brush().color());
 
     centerNodeLabelBox();
 
     addToGroup(node.get());
-    addToGroup(&nodeLabel);        
+    addToGroup(&nodeLabel);
+    addToGroup(&extraLabel);
 
-    auto center = node->getCenter();
-    extraTextLabel.setPos(center.x() + (90 * elementSize - 60), center.y() - extraTextLabel.boundingRect().height() / 2);
+
+    auto center = this->getCenter();
+    extraLabel.setPos(center.x() + (15 * elementSize), center.y() - node->boundingRect().width() / 2.0);
 
     this->setZValue(std::numeric_limits<qreal>::max());
 }
@@ -49,7 +51,7 @@ RouteNode::RouteNode(RouteNodeShape *newNode, const QString &nodeLabelText, std:
 void RouteNode::setElementSize(int newSize) {
     elementSize = newSize;
     node->setElementSize(newSize);
-    extraTextLabel.setElementSize(newSize);
+    extraLabel.setElementSize(newSize);
     nodeLabel.setElementSize(newSize);
     centerNodeLabelBox();
     if (toConnection) {
@@ -59,7 +61,7 @@ void RouteNode::setElementSize(int newSize) {
 
 void RouteNode::setColors(const QColor &color) {
     node->setColors(color);
-    extraTextLabel.setColors(color);
+    extraLabel.setColors(color);
 
     activateColors();
 }
@@ -77,7 +79,7 @@ QColor RouteNode::getColors() const {
 void RouteNode::activateColors() {
     node->activateColors();
     nodeLabel.setColors(node->pen().brush().color());
-    extraTextLabel.setColors(node->pen().brush().color());
+    extraLabel.setColors(node->pen().brush().color());
     if (toConnection) {
         toConnection->activateColors();
     }
@@ -86,16 +88,16 @@ void RouteNode::activateColors() {
 
 void RouteNode::fromJSON(const QJsonObject &object) {
     name = object[RouteNodeData::NODE_NAME_KEY].toString();
-    nodeLabel.setText(object[RouteNodeData::NODE_LABEL_KEY].toString());
 
     //setPos(object[RouteNodeData::NODE_X_KEY].toInt(), object[RouteNodeData::NODE_Y_KEY].toInt());
-    styleDiffersFromRoute = object[RouteNodeData::NODE_DIFFERENT_STYLE_KEY].toBool();
-    nameChangedByUser = object[RouteNodeData::NODE_NAME_CHANGED_KEY].toBool();
+    setStyleDiffersFromRoute(object[RouteNodeData::NODE_DIFFERENT_STYLE_KEY].toBool());
+    setNameChangedByUser(object[RouteNodeData::NODE_NAME_CHANGED_KEY].toBool());
+    setExtraLabelText(object[RouteNodeData::NODE_EXTRA_LABEL_TEXT_KEY].toString());
     //invisible = object[RouteNodeData::NODE_INVISIBLE_KEY].toBool();
 
     if (styleDiffersFromRoute) {
         setColors(QColor(object[RouteNodeData::NODE_COLOR_KEY][0].toInt(), object[RouteNodeData::NODE_COLOR_KEY][1].toInt(), object[RouteNodeData::NODE_COLOR_KEY][2].toInt()));
-        elementSize = object[RouteNodeData::NODE_SIZE_KEY].toInt();
+        setElementSize(object[RouteNodeData::NODE_SIZE_KEY].toInt());
     }
 }
 
@@ -105,7 +107,7 @@ QJsonObject RouteNode::toJSON() {
     const auto pos = getCenter();
 
     routeNodeJSON[RouteNodeData::NODE_NAME_KEY] = name;
-    routeNodeJSON[RouteNodeData::NODE_LABEL_KEY] = nodeLabel.text();
+    routeNodeJSON[RouteNodeData::NODE_EXTRA_LABEL_TEXT_KEY] = extraLabel.text();
     routeNodeJSON[RouteNodeData::NODE_X_KEY] = std::round(pos.x());
     routeNodeJSON[RouteNodeData::NODE_Y_KEY] = std::round(pos.y());
     routeNodeJSON[RouteNodeData::NODE_DIFFERENT_STYLE_KEY] = styleDiffersFromRoute;
@@ -148,7 +150,7 @@ char RouteNode::getShapeKey() const {
 }
 
 void RouteNode::centerNodeLabelBox() {
-    auto center = node->getCenter();
+    auto center = node->getCenterOfShape();
     auto nodeLabelBox = nodeLabel.boundingRect();
     nodeLabel.setPos(center.x() - nodeLabelBox.width()/2, center.y() - nodeLabelBox.height()/2);
 }
@@ -163,15 +165,14 @@ void RouteNode::hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) {
     QGraphicsItemGroup::hoverLeaveEvent(hoverEvent);
 }
 
-void RouteNode::setNodeOutlineColor(const QColor &color) {
-    nodeLabel.setColors(color);
-    node->setPen(color);
+void RouteNode::setExtraLabelText(const QString &text) {
+    extraLabel.setText(text);
 }
 
 void RouteNode::setOpacity(qreal opacity) {
     QGraphicsItem::setOpacity(opacity);
     nodeLabel.setOpacity(opacity);
-    extraTextLabel.setOpacity(opacity);
+    extraLabel.setOpacity(opacity);
 }
 
 void RouteNode::setNodeLabelOpacity(qreal opacity) {
@@ -181,6 +182,11 @@ void RouteNode::setNodeLabelOpacity(qreal opacity) {
 void RouteNode::setNodeLabelText(const QString &newText) {
     nodeLabel.setText(newText);
     centerNodeLabelBox();
+}
+
+void RouteNode::setNodeOutlineColor(const QColor &color) {
+    nodeLabel.setColors(color);
+    node->setPen(color);
 }
 
 void RouteNode::setShape(RouteNodeShape* newShape) {
@@ -207,8 +213,8 @@ void RouteNode::checkIfStyleIsDifferent(char routeShape, const QColor &routeColo
     setStyleDiffersFromRoute(routeShape != this->node->getShapeKey() || routeColor != this->getColors() || routeSize != this->elementSize);
 }
 
-RouteExtraTextLabel* RouteNode::getExtraText() {
-    return &extraTextLabel;
+RouteExtraTextLabel* RouteNode::getExtraLabel() {
+    return &extraLabel;
 }
 
 void RouteNode::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
@@ -247,7 +253,7 @@ void RouteNode::connect(RouteNode &from) {
 
 
 QPointF RouteNode::getCenter() const {
-    return this->boundingRect().center() + this->pos();
+    return mapToScene(node->getCenterOfBoundingBox());
 }
 
 void RouteNode::updateRouteConnections() {

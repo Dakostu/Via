@@ -34,7 +34,7 @@ class RouteNode : public QGraphicsItemGroup,
 protected:
     std::unique_ptr<RouteNodeShape> node;
     Via::UI::RouteNodeLabel nodeLabel;
-    Via::UI::RouteExtraTextLabel extraTextLabel;
+    Via::UI::RouteExtraTextLabel extraLabel;
 
     bool styleDiffersFromRoute;
     RouteConnection* fromConnection;
@@ -64,10 +64,11 @@ public:
     void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
     void triggerParentMouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
 
-    void setNodeOutlineColor(const QColor &color);
+    void setExtraLabelText(const QString &text);
     void setOpacity(qreal opacity);
     void setNodeLabelOpacity(qreal opacity);
     void setNodeLabelText(const QString &newText);
+    void setNodeOutlineColor(const QColor &color);
     void setShape(RouteNodeShape* newShape);
     void setStyleDiffersFromRoute(bool value);
     void setToConnectionColor(const QColor &color);
@@ -80,7 +81,7 @@ public:
     QColor getColors() const;
     RouteConnection* getFromConnection();
     RouteConnection* getToConnection();
-    Via::UI::RouteExtraTextLabel* getExtraText();
+    Via::UI::RouteExtraTextLabel* getExtraLabel();
     Via::UI::RouteNodeLabel* getNodeLabel();
     RouteNodeShape* getNodeShape() const;
     bool getStyleDiffersFromRoute() const;

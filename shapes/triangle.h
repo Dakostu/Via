@@ -15,7 +15,7 @@ protected:
 public:
     Triangle(const QPointF point, const QColor &color, qreal offsetX, qreal offsetY);
 
-    QPointF getCenter() override;
+    QPointF getCenterOfShape() override;
 };
 
 }

@@ -157,6 +157,8 @@ void MainWindow::initializeNodeSettingsUI() {
         nameChangeEvent<NodeAction>(&(controller.getRouteNodeofCurrentProject(selectedRouteIndex, selectedRouteNodeIndex)),
                             newName, std::bind(&MainWindow::updateNodeList, this));
     });
+
+    connect(ui->nodeLabelLineEdit, &QLineEdit::textEdited, this, &MainWindow::changeNodeExtraLabel);
     connect(ui->nodeStyleComboBox, &QComboBox::currentTextChanged, this, [&](const QString &newStyle) {
         styleChangeEvent<NodeAction>(newStyle);
     });
@@ -349,7 +351,7 @@ void MainWindow::routeNodeSelectionEvent() {
 
     auto &currentRouteNode = controller.getRouteNodeofCurrentProject(selectedRouteIndex, selectedRouteNodeIndex);
     ui->nodeNameLineEdit->setText(currentRouteNode.getName());
-    ui->nodeLabelLineEdit->setText(currentRouteNode.getExtraText()->text());
+    ui->nodeLabelLineEdit->setText(currentRouteNode.getExtraLabel()->text());
     ui->nodeStyleComboBox->setCurrentText(ui->picture->getCurrentRoute()->getRouteNodeStyleAsUIString(selectedRouteNodeIndex));
     ui->nodeColorButton->changeColor(currentRouteNode.getColors());
 
@@ -434,4 +436,9 @@ void MainWindow::moveNodeEvent(int by) {
     emit routeNodeListChanged();
 
     ui->nodeBoxNodeList->moveSelectionTo(selectedRouteNodeIndex + by);
+}
+
+void MainWindow::changeNodeExtraLabel(const QString &text) {
+    auto &currentRouteNode = controller.getRouteNodeofCurrentProject(selectedRouteIndex, selectedRouteNodeIndex);
+    currentRouteNode.setExtraLabelText(text);
 }

@@ -10,8 +10,8 @@ Triangle::Triangle(const QPointF point, const QColor &color, qreal offsetX, qrea
 }
 
 
-QPointF Triangle::getCenter() {
-    auto center = RouteNodeShape::getCenter();
+QPointF Triangle::getCenterOfShape() {
+    auto center = RouteNodeShape::getCenterOfShape();
     center += {OFFSET_X, OFFSET_Y};
 
     return center;
