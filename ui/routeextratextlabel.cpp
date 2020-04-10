@@ -28,11 +28,10 @@ void RouteExtraTextLabel::setColors(const QColor &color) {
 
 void RouteExtraTextLabel::activateColors() {
     if (this->brush().color().lightnessF() < FILLCOLOR_LIGHTNESS_THRESHOLD) {
-        setColors(Qt::white);
-    } else {
         setColors(Qt::black);
+    } else {
+        setColors(Qt::white);
     }
-
 }
 
 void RouteExtraTextLabel::hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) {
