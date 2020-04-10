@@ -349,7 +349,7 @@ void MainWindow::routeNodeSelectionEvent() {
 
     auto &currentRouteNode = controller.getRouteNodeofCurrentProject(selectedRouteIndex, selectedRouteNodeIndex);
     ui->nodeNameLineEdit->setText(currentRouteNode.getName());
-    ui->nodeLabelLineEdit->setText(currentRouteNode.getExtraText()->text());
+    ui->nodeLabelLineEdit->setText(currentRouteNode.getExtraLabel()->text());
     ui->nodeStyleComboBox->setCurrentText(ui->picture->getCurrentRoute()->getRouteNodeStyleAsUIString(selectedRouteNodeIndex));
     ui->nodeColorButton->changeColor(currentRouteNode.getColors());
 

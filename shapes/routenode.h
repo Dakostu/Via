@@ -34,7 +34,7 @@ class RouteNode : public QGraphicsItemGroup,
 protected:
     std::unique_ptr<RouteNodeShape> node;
     Via::UI::RouteNodeLabel nodeLabel;
-    Via::UI::RouteExtraTextLabel extraTextLabel;
+    Via::UI::RouteExtraTextLabel extraLabel;
 
     bool styleDiffersFromRoute;
     RouteConnection* fromConnection;
@@ -80,7 +80,7 @@ public:
     QColor getColors() const;
     RouteConnection* getFromConnection();
     RouteConnection* getToConnection();
-    Via::UI::RouteExtraTextLabel* getExtraText();
+    Via::UI::RouteExtraTextLabel* getExtraLabel();
     Via::UI::RouteNodeLabel* getNodeLabel();
     RouteNodeShape* getNodeShape() const;
     bool getStyleDiffersFromRoute() const;

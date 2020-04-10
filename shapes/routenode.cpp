@@ -16,7 +16,7 @@ RouteNode::RouteNode(RouteNodeShape *newNode, const QString &nodeLabelText,
                      const QString &extraTextLabelText, std::unique_ptr<RouteNodeState> &state)
     : node(newNode),
       nodeLabel(nodeLabelText),
-      extraTextLabel(extraTextLabelText, node.get()),
+      extraLabel(extraTextLabelText, node.get()),
       styleDiffersFromRoute(false),
       fromConnection(nullptr),
       toConnection(nullptr),
@@ -30,7 +30,7 @@ RouteNode::RouteNode(RouteNodeShape *newNode, const QString &nodeLabelText,
 
     nodeLabel.setColors(node->pen().brush().color());
     nodeLabel.setZValue(std::numeric_limits<qreal>::max());
-    extraTextLabel.setColors(node->pen().brush().color());
+    extraLabel.setColors(node->pen().brush().color());
 
     centerNodeLabelBox();
 
@@ -38,7 +38,7 @@ RouteNode::RouteNode(RouteNodeShape *newNode, const QString &nodeLabelText,
     addToGroup(&nodeLabel);        
 
     auto center = node->getCenter();
-    extraTextLabel.setPos(center.x() + (90 * elementSize - 60), center.y() - extraTextLabel.boundingRect().height() / 2);
+    extraLabel.setPos(center.x() + (90 * elementSize - 60), center.y() - extraLabel.boundingRect().height() / 2);
 
     this->setZValue(std::numeric_limits<qreal>::max());
 }
@@ -49,7 +49,7 @@ RouteNode::RouteNode(RouteNodeShape *newNode, const QString &nodeLabelText, std:
 void RouteNode::setElementSize(int newSize) {
     elementSize = newSize;
     node->setElementSize(newSize);
-    extraTextLabel.setElementSize(newSize);
+    extraLabel.setElementSize(newSize);
     nodeLabel.setElementSize(newSize);
     centerNodeLabelBox();
     if (toConnection) {
@@ -59,7 +59,7 @@ void RouteNode::setElementSize(int newSize) {
 
 void RouteNode::setColors(const QColor &color) {
     node->setColors(color);
-    extraTextLabel.setColors(color);
+    extraLabel.setColors(color);
 
     activateColors();
 }
@@ -77,7 +77,7 @@ QColor RouteNode::getColors() const {
 void RouteNode::activateColors() {
     node->activateColors();
     nodeLabel.setColors(node->pen().brush().color());
-    extraTextLabel.setColors(node->pen().brush().color());
+    extraLabel.setColors(node->pen().brush().color());
     if (toConnection) {
         toConnection->activateColors();
     }
@@ -171,7 +171,7 @@ void RouteNode::setNodeOutlineColor(const QColor &color) {
 void RouteNode::setOpacity(qreal opacity) {
     QGraphicsItem::setOpacity(opacity);
     nodeLabel.setOpacity(opacity);
-    extraTextLabel.setOpacity(opacity);
+    extraLabel.setOpacity(opacity);
 }
 
 void RouteNode::setNodeLabelOpacity(qreal opacity) {
@@ -208,7 +208,7 @@ void RouteNode::checkIfStyleIsDifferent(char routeShape, const QColor &routeColo
 }
 
 RouteExtraTextLabel* RouteNode::getExtraText() {
-    return &extraTextLabel;
+    return &extraLabel;
 }
 
 void RouteNode::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
