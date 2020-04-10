@@ -411,9 +411,9 @@ void MainWindow::deleteSelectedRouteNode() {
         return;
     }
 
-    emit routeNodeListChanged();
-
     ui->picture->getCurrentRoute()->eraseNode(selectedRouteNodeIndex);
+
+    emit routeNodeListChanged();
 
     auto newRowCount = static_cast<size_t>(ui->nodeBoxNodeList->model()->rowCount());
     if (newRowCount != 0) {
