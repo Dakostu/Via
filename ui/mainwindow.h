@@ -71,11 +71,10 @@ class MainWindow : public QMainWindow
         Via::UI::RouteDataView *dataView;
         size_t *index;
 
-        ui->picture->removeTemporaryNode();
-
         if constexpr (SelectedIndex::value == RouteIndex::value) {
+            ui->picture->removeTemporaryNode();
             dataView = ui->routeBoxRouteList;
-            index = &selectedRouteIndex;
+            index = &selectedRouteIndex;            
         } else {
             dataView = ui->nodeBoxNodeList;
             index = &selectedRouteNodeIndex;
@@ -83,6 +82,10 @@ class MainWindow : public QMainWindow
 
         if (dataView->selectionModel() && dataView->selectionModel()->hasSelection()) {
             *index = static_cast<size_t>(dataView->getSelectedRows()[0].row());
+        }
+
+        if constexpr (SelectedIndex::value == RouteIndex::value) {
+            ui->picture->setCurrentRoute(selectedRouteIndex);
         }
     }
 
