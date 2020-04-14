@@ -26,3 +26,6 @@ void RouteDataView::selectionChanged(const QItemSelection &selected, const QItem
     }
 }
 
+void RouteDataView::removeAllRows() {
+    model()->removeRows(0, model()->rowCount());
+}

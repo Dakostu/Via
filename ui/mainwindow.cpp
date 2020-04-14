@@ -267,6 +267,10 @@ void MainWindow::loadProject() {
             controller.getCurrentProject()->addRoute(*newRoute);
         }
         updateRouteList();
+
+        if (ui->nodeBoxNodeList->model() && ui->nodeBoxNodeList->model()->rowCount() > 0) {
+            ui->nodeBoxNodeList->removeAllRows();
+        }
     }
 
 }
