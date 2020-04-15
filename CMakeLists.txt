@@ -4,6 +4,7 @@ set(EXEC_NAME Via)
 
 file(GLOB_RECURSE ALL_SRC_HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*/*.h")
 file(GLOB_RECURSE ALL_SRC_CODE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*/*.cpp")
+file(GLOB_RECURSE ALL_SRC_UI_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*/*.ui")
 
 set (LINK_LIBS PRIVATE Qt5::Widgets)
 set (PACKAGES COMPONENTS Widgets LinguistTools REQUIRED)
@@ -27,6 +28,7 @@ find_package(Qt5Test REQUIRED)
 add_executable(UnitTests
     ${ALL_SRC_HEADER_FILES}
     ${ALL_SRC_CODE_FILES}
+    ${ALL_SRC_UI_FILES}
 )
 
 target_link_libraries(UnitTests ${LINK_LIBS} Qt5::Test)
@@ -43,6 +45,7 @@ add_executable(${EXEC_NAME}
     main.cpp
     ${ALL_SRC_HEADER_FILES}
     ${ALL_SRC_CODE_FILES}
+    ${ALL_SRC_UI_FILES}
 )
 
 target_link_libraries(${EXEC_NAME} ${LINK_LIBS})
