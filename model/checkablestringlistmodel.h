@@ -4,7 +4,7 @@
 #include <QSet>
 #include <QStringListModel>
 
-namespace Via::UI {
+namespace Via::Model {
 
 class CheckableStringListModel : public QStringListModel                
 {

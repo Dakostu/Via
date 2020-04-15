@@ -6,7 +6,6 @@ using namespace Via::UI;
 
 RouteDataView::RouteDataView(QWidget *widget) : QListView(widget)
 {
-
 }
 
 

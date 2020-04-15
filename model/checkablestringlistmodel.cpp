@@ -1,6 +1,6 @@
 #include "checkablestringlistmodel.h"
 
-using namespace Via::UI;
+using namespace Via::Model;
 
 CheckableStringListModel::CheckableStringListModel(QObject *parent)
     : QStringListModel(parent), checkedItems{{}} {
