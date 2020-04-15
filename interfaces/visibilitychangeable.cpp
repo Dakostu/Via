@@ -2,6 +2,10 @@
 
 using namespace Via::Interfaces;
 
+VisibilityChangeable::VisibilityChangeable() : visible(true) {
+
+}
+
 bool VisibilityChangeable::isVisible() const
 {
     return visible;

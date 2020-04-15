@@ -8,8 +8,11 @@ class VisibilityChangeable
 protected:
     bool visible;
 
+    VisibilityChangeable();
+
 public:
-    VisibilityChangeable() = default;
+    virtual ~VisibilityChangeable() = default;
+
     virtual bool isVisible() const;
     virtual void setVisible(bool value);
 };
