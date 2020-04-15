@@ -65,9 +65,7 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     initializeNodeSettingsUI();
 
     ui->picture->setUIState(controller.getCurrentMapViewState());
-    if (controller.amountOfOpenProjects() == 0) {
-        setNoProjectsOpenMode(true);
-    }
+    setNoProjectsOpenMode(true);
 
 
 }
@@ -254,7 +252,7 @@ void MainWindow::createNewProject() {
                 LocalizedUIStrings::getUIString("QPIXMAP_SUPPORTED_FILE_TYPES"));
 
     if (!pictureFileName.isEmpty()) {
-        controller.addProject(Project(newFileName, pictureFileName));
+        controller.setCurrentProject(new Project(newFileName, pictureFileName));
         setNoProjectsOpenMode(false);
     }
 }

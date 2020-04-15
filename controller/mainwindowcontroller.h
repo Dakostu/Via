@@ -20,8 +20,7 @@ class MainWindowController : public QObject
     static constexpr size_t MAX_LIST_SIZE = 10;
     static inline const char* PROGRAM_VER_KEY = "v";
 
-    std::unordered_map<QString, Via::Model::Project> openProjects;
-    Via::Model::Project *currentProject;
+    std::unique_ptr<Via::Model::Project> currentProject;
     std::list<QString> recentlyOpenedProjects;
     std::unique_ptr<MainWindowState> currentMainWindowState;
     std::unique_ptr<MapViewState> currentMapViewState;
@@ -48,7 +47,6 @@ public:
     }
 
     void addNewRouteToCurrentProject(Via::Shapes::Route &newRoute);
-    size_t amountOfOpenProjects();
 
     std::unique_ptr<MainWindowState>& getCurrentMainWindowState();
     std::unique_ptr<MapViewState>& getCurrentMapViewState();
@@ -61,8 +59,7 @@ public:
 
 public slots:
 
-    void addProject(const Via::Model::Project &project);
-    void setCurrentProject(const QString &fileName);
+    void setCurrentProject(Via::Model::Project *project);
     void saveCurrentProject();
     void saveCurrentProjectAs(const QString &fileName);
     void loadCurrentProjectFromFile(const QString &fileName);

@@ -20,11 +20,6 @@ MainWindowController::MainWindowController()
 
 }
 
-void MainWindowController::addProject(const Project &project) {
-    openProjects.emplace(project.getFileName(), project);
-    setCurrentProject(project.getFileName());
-}
-
 void MainWindowController::saveCurrentProjectAs(const QString &fileName) {
     currentProject->setFileName(fileName);
 
@@ -42,14 +37,11 @@ void MainWindowController::saveCurrentProject() {
 
 void MainWindowController::loadCurrentProjectFromFile(const QString &fileName) {
 
-    if (openProjects.find(fileName) == openProjects.end()) {
-        JSONFile readFile(fileName);
-        auto loadedProjects = readFile.load();
-        auto project = Project(loadedProjects[0].toObject());
-        openProjects.insert_or_assign(fileName, project);
-    }
+    JSONFile readFile(fileName);
+    auto loadedProjects = readFile.load();
+    auto project = new Project(loadedProjects[0].toObject());
 
-    setCurrentProject(fileName);
+    setCurrentProject(project);
     addFileToRecentlyOpenedProjects(fileName);
 }
 
@@ -81,11 +73,11 @@ void MainWindowController::updateStringListModel(QStringListModel &model, const 
 }
 
 Project* MainWindowController::getCurrentProject() {
-    return currentProject;
+    return currentProject.get();
 }
 
-void MainWindowController::setCurrentProject(const QString &fileName) {
-    currentProject = &openProjects.at(fileName);
+void MainWindowController::setCurrentProject(Project *project) {
+    currentProject.reset(project);
     emit currentProjectChanged();
 }
 
@@ -135,8 +127,4 @@ void MainWindowController::swapRoutesOfCurrentProject(size_t firstRoute, size_t 
 
 void MainWindowController::addNewRouteToCurrentProject(Route &newRoute) {
     currentProject->addRoute(newRoute);
-}
-
-size_t MainWindowController::amountOfOpenProjects() {
-    return openProjects.size();
 }
