@@ -1,14 +1,15 @@
 #include "checkablestringlistmodel.h"
+#include <QColor>
 
 using namespace Via::Model;
 
 CheckableStringListModel::CheckableStringListModel(QObject *parent)
-    : QStringListModel(parent), checkedItems{{}} {
+    : QStringListModel(parent), checkedItems{} {
 
 }
 
 CheckableStringListModel::CheckableStringListModel(const QStringList &strings, QObject* parent)
-    : QStringListModel(strings, parent), checkedItems{{}} {
+    : QStringListModel(strings, parent), checkedItems{} {
 
 }
 
@@ -29,23 +30,28 @@ QVariant CheckableStringListModel::data(const QModelIndex &index, int role) cons
 
     if (role == Qt::CheckStateRole) {
         return checkedItems.contains(index) ? Qt::Checked : Qt::Unchecked;
-    }
+    } /*else if (role == Qt::DecorationRole) {
+        return QColor("#ffffb2");
+    }*/
 
     return QStringListModel::data(index, role);
 }
 
 
 bool CheckableStringListModel::setData(const QModelIndex &index, const QVariant &value, int role) {
-    if(!index.isValid() || role != Qt::CheckStateRole)
-            return false;
+    if (!index.isValid() || role != Qt::CheckStateRole) {
+        return false;
+    }
 
-        if (value == Qt::Checked)
-            checkedItems.insert(index);
-        else
-            checkedItems.remove(index);
+    if (value == Qt::Checked)  {
+        checkedItems.insert(index);
+    } else {
+        checkedItems.remove(index);
+    }
 
-        emit dataChanged(index, index);
-        return true;
+    emit rowChanged(index.row());
+
+    return true;
 }
 
 
