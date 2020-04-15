@@ -3,6 +3,7 @@
 
 #include "../data-structures/indexlist.h"
 #include "../controller/states/routenodestate.h"
+#include "../interfaces/visibilitychangeable.h"
 #include "../interfaces/serializable.h"
 #include "../interfaces/shapekeymodifiable.h"
 #include "../interfaces/viewcustomizable.h"
@@ -23,7 +24,8 @@ namespace Via::Shapes {
 class Route : public Via::Interfaces::ViewCustomizable,
         public Via::Interfaces::ShapeKeyModifiable,
         public Via::Interfaces::Serializable,
-        public Via::Interfaces::Nameable
+        public Via::Interfaces::Nameable,
+        public Via::Interfaces::VisibilityChangeable
 {
 protected:
     static constexpr qreal TEMPORARY_NODE_OPACITY = 0.5;

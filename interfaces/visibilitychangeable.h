@@ -10,8 +10,8 @@ protected:
 
 public:
     VisibilityChangeable() = default;
-    bool isVisible() const;
-    void setVisible(bool value);
+    virtual bool isVisible() const;
+    virtual void setVisible(bool value);
 };
 
 }

@@ -6,6 +6,7 @@
 #include "../interfaces/nameable.h"
 #include "../interfaces/serializable.h"
 #include "../interfaces/shapekeyable.h"
+#include "../interfaces/visibilitychangeable.h"
 #include "../interfaces/viewcustomizable.h"
 
 #include "../ui/routenodelabel.h"
@@ -28,7 +29,8 @@ class RouteNode : public QGraphicsItemGroup,
         public Via::Interfaces::ViewCustomizable,
         public Via::Interfaces::Serializable,
         public Via::Interfaces::ShapeKeyable,
-        public Via::Interfaces::Nameable
+        public Via::Interfaces::Nameable,
+        public Via::Interfaces::VisibilityChangeable
 {
 
 protected:
