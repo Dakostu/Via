@@ -12,7 +12,7 @@ void MapViewAddNodeState::mouseMoveEvent(MapView *view, QMouseEvent *mouseEvent)
     }
 
     auto coords = view->mapToScene(mouseEvent->pos());
-    view->getCurrentRoute()->addTemporaryPreviewNode(coords.x(), coords.y());
+    view->emit needNewTempPreviewNode(coords.x(), coords.y());
 }
 
 void MapViewAddNodeState::mousePressEvent(MapView *view, QMouseEvent *mouseEvent)  {
@@ -26,12 +26,12 @@ void MapViewAddNodeState::mousePressEvent(MapView *view, QMouseEvent *mouseEvent
 void MapViewAddNodeState::mouseReleaseEvent(MapView *view, QMouseEvent *mouseEvent) {
     if (mouseEvent->button() == Qt::LeftButton) {
         auto coords = view->mapToScene(mouseEvent->pos());
-        view->addNodeToCurrentRoute(coords.x(), coords.y());
+        view->emit needNewRouteNode(coords.x(), coords.y());
     } else if (mouseEvent->button() == Qt::RightButton) {
         view->setDragMode(QGraphicsView::NoDrag);
     }
 }
 
 void MapViewAddNodeState::mouseLeaveEvent(MapView *view, QEvent *mouseEvent) {
-    view->removeTemporaryNode();
+    view->emit needTempPreviewNodeRemoved();
 }
