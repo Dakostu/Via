@@ -71,11 +71,10 @@ class MainWindow : public QMainWindow
         Via::UI::RouteDataView *dataView;
         size_t *index;
 
-        ui->picture->removeTemporaryNode();
-
         if constexpr (SelectedIndex::value == RouteIndex::value) {
+            getCurrentRoute()->removeTemporaryPreviewNode();
             dataView = ui->routeBoxRouteList;
-            index = &selectedRouteIndex;
+            index = &selectedRouteIndex;            
         } else {
             dataView = ui->nodeBoxNodeList;
             index = &selectedRouteNodeIndex;
@@ -84,7 +83,10 @@ class MainWindow : public QMainWindow
         if (dataView->selectionModel() && dataView->selectionModel()->hasSelection()) {
             *index = static_cast<size_t>(dataView->getSelectedRows()[0].row());
         }
+
     }
+
+    Via::Shapes::Route* getCurrentRoute();
 
 public:
     MainWindow(QWidget *parent, Via::Control::MainWindowController &newController);
@@ -96,16 +98,16 @@ public:
 
     template <typename OnlyNode>
     void styleChangeEvent(const QString &newStyle) {
-        auto &currentRoute = *ui->picture->getCurrentRoute();
+        auto currentRoute = getCurrentRoute();
 
         if constexpr (OnlyNode::value == true) {
-            currentRoute.setStyleOfNode(selectedRouteNodeIndex, newStyle);
+            currentRoute->setStyleOfNode(selectedRouteNodeIndex, newStyle);
 
-            auto &currentNode = currentRoute[selectedRouteNodeIndex];
+            auto &currentNode = (*currentRoute)[selectedRouteNodeIndex];
             auto newShapeKey = currentNode.getShapeKey();
             auto isDifferentNow = currentNode.getStyleDiffersFromRoute();
         } else {
-            currentRoute.setShapeKey(newStyle);
+            currentRoute->setShapeKey(newStyle);
         }
     }
 
@@ -116,16 +118,16 @@ public:
         if (!newColor.isValid()) {
             return;
         }
-        auto &currentRoute = *ui->picture->getCurrentRoute();
+        auto currentRoute = getCurrentRoute();
 
         if constexpr (OnlyNode::value == true) {
-            currentRoute.setColorsOfNode(selectedRouteNodeIndex, newColor);
+            currentRoute->setColorsOfNode(selectedRouteNodeIndex, newColor);
             ui->nodeColorButton->changeColor(newColor);
 
-            auto &currentNode = currentRoute[selectedRouteNodeIndex];
+            auto &currentNode = (*currentRoute)[selectedRouteNodeIndex];
             auto isDifferentNow = currentNode.getStyleDiffersFromRoute();
         } else {
-            currentRoute.setColors(newColor);
+            currentRoute->setColors(newColor);
             ui->routeColorButton->changeColor(newColor);
         }
 
@@ -174,9 +176,9 @@ public slots:
     void routeShowOrderChangeEvent(bool value);
     void moveRouteEvent(int by);
     void getDataFromCurrentProject();
-    void resetSettingsBox();
+    void disableSettingsBox();
     void activateAutoAddMode();
-    void addRouteNode();
+    void addRouteNode(qreal x, qreal y);
     void deleteSelectedRouteNode();
     void setNodeSettingsEnabled(bool enabled);
     void moveNodeEvent(int by);

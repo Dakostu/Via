@@ -25,8 +25,6 @@ class MapView : public QGraphicsView
     static constexpr qreal DETAIL_LEVEL_MIN = 0.05;
     static constexpr qreal DETAIL_LEVEL_MAX = 17;
     std::unique_ptr<Via::Control::MapViewState> *currentState;
-    Via::Structures::IndexList<std::unique_ptr<Via::Shapes::Route>> drawnRoutes;
-    Via::Shapes::Route* currentRoute;    
 
 public:
 
@@ -45,17 +43,10 @@ public:
     void triggerParentMouseMoveEvent(QMouseEvent* event);
     void triggerParentMouseReleaseEvent(QMouseEvent* event);
 
-    void addRoute(Via::Shapes::Route *route, std::unique_ptr<Via::Control::RouteNodeState> &routeNodeState);
-    void addRoute(const QColor &color, const QString &selectedStyle, std::unique_ptr<Via::Control::RouteNodeState> &routeNodeState);
-    void addRoute(const QColor &color, char selectedStyle, std::unique_ptr<Via::Control::RouteNodeState> &routeNodeState);
-    void addNodeToCurrentRoute(int x, int y);
-    void removeTemporaryNode();
-
-    Via::Shapes::Route *getCurrentRoute() const;
-    void setCurrentRoute(size_t routeIndex);
-
 signals:
-    void routeNodeAdded();
+    void needNewRouteNode(qreal x, qreal y);
+    void needNewTempPreviewNode(qreal x, qreal y);
+    void needTempPreviewNodeRemoved();
 };
 
 }

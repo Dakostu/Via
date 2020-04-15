@@ -11,7 +11,7 @@ using namespace Via::Control;
 using namespace Via::Model;
 using namespace Via::Shapes;
 
-MapView::MapView(QWidget* parent) : QGraphicsView(parent), currentState{}, currentRoute{} {
+MapView::MapView(QWidget* parent) : QGraphicsView(parent), currentState{} {
     currentDetailLevel = QStyleOptionGraphicsItem::levelOfDetailFromTransform(transform());
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     setDragMode(QGraphicsView::ScrollHandDrag);   
@@ -71,39 +71,4 @@ void MapView::triggerParentMouseMoveEvent(QMouseEvent *event) {
 
 void MapView::triggerParentMouseReleaseEvent(QMouseEvent *event) {
     QGraphicsView::mouseReleaseEvent(event);
-}
-
-void MapView::addRoute(Route *route, std::unique_ptr<RouteNodeState> &routeNodeState) {
-    route->setCurrentState(routeNodeState);
-    route->setCurrentScene(this->scene());
-    drawnRoutes.emplace_back(route);
-    currentRoute = drawnRoutes.back().get();
-}
-
-void MapView::addRoute(const QColor &color, const QString &selectedStyle, std::unique_ptr<RouteNodeState> &routeNodeState) {
-    drawnRoutes.emplace_back(new Route(color, selectedStyle, this->scene(), routeNodeState));
-    currentRoute = drawnRoutes.back().get();
-}
-
-void MapView::addRoute(const QColor &color, char selectedStyle, std::unique_ptr<RouteNodeState> &routeNodeState) {
-    drawnRoutes.emplace_back(new Route(color, selectedStyle, this->scene(), routeNodeState));
-    currentRoute = drawnRoutes.back().get();
-}
-
-void MapView::addNodeToCurrentRoute(int x, int y) {
-    currentRoute->addNode(x,y);    
-    emit routeNodeAdded();
-}
-
-void MapView::removeTemporaryNode() {
-    currentRoute->removeTemporaryPreviewNode();
-}
-
-Route *MapView::getCurrentRoute() const
-{
-    return currentRoute;
-}
-
-void MapView::setCurrentRoute(size_t routeIndex) {
-    currentRoute = (*drawnRoutes[routeIndex]).get();
 }
