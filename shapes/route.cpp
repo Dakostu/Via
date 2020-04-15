@@ -59,6 +59,7 @@ void Route::fromJSON(const QJsonObject &object) {
             object[RouteData::ROUTE_COLOR_KEY][2].toInt()));
     setShowOrder(object[RouteData::ROUTE_SHOW_ORDER_KEY].toBool());
     shapeKey = static_cast<char>(object[RouteData::ROUTE_SHAPE_KEY].toInt());
+    setVisible(object[RouteData::ROUTE_VISIBLE_KEY].toBool());
 
     auto nodesArray = object[RouteData::ROUTE_NODES_KEY].toArray();
 
@@ -91,6 +92,7 @@ QJsonObject Route::toJSON() {
     routeJSON[RouteData::ROUTE_COLOR_KEY] = QJsonArray({currentColor.red(), currentColor.green(), currentColor.blue()});
     routeJSON[RouteData::ROUTE_SHOW_ORDER_KEY] = showOrder;
     routeJSON[RouteData::ROUTE_SHAPE_KEY] = shapeKey;
+    routeJSON[RouteData::ROUTE_VISIBLE_KEY] = visible;
 
     QJsonArray nodesJSON;
     for (const auto &node : nodes) {
@@ -100,6 +102,10 @@ QJsonObject Route::toJSON() {
     routeJSON[RouteData::ROUTE_NODES_KEY] = nodesJSON;
 
     return routeJSON;
+}
+
+void Route::setVisible(bool value) {
+    VisibilityChangeable::setVisible(value);
 }
 
 QColor Route::getColors() const {

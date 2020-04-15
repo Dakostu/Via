@@ -93,7 +93,7 @@ void RouteNode::fromJSON(const QJsonObject &object) {
     setStyleDiffersFromRoute(object[RouteNodeData::NODE_DIFFERENT_STYLE_KEY].toBool());
     setNameChangedByUser(object[RouteNodeData::NODE_NAME_CHANGED_KEY].toBool());
     setExtraLabelText(object[RouteNodeData::NODE_EXTRA_LABEL_TEXT_KEY].toString());
-    //invisible = object[RouteNodeData::NODE_INVISIBLE_KEY].toBool();
+    setVisible(object[RouteNodeData::NODE_VISIBLE_KEY].toBool());
 
     if (styleDiffersFromRoute) {
         setColors(QColor(object[RouteNodeData::NODE_COLOR_KEY][0].toInt(), object[RouteNodeData::NODE_COLOR_KEY][1].toInt(), object[RouteNodeData::NODE_COLOR_KEY][2].toInt()));
@@ -112,7 +112,7 @@ QJsonObject RouteNode::toJSON() {
     routeNodeJSON[RouteNodeData::NODE_Y_KEY] = std::round(pos.y());
     routeNodeJSON[RouteNodeData::NODE_DIFFERENT_STYLE_KEY] = styleDiffersFromRoute;
     routeNodeJSON[RouteNodeData::NODE_NAME_CHANGED_KEY] = nameChangedByUser;
-    //routeNodeJSON[RouteNodeData::NODE_INVISIBLE_KEY] = false;
+    routeNodeJSON[RouteNodeData::NODE_VISIBLE_KEY] = visible;
 
     if (styleDiffersFromRoute) {
         auto currentColor = getColors();
@@ -147,6 +147,10 @@ RouteNodeShape* RouteNode::getNodeShape() const
 
 char RouteNode::getShapeKey() const {
     return node->getShapeKey();
+}
+
+void RouteNode::setVisible(bool value) {
+    VisibilityChangeable::setVisible(value);
 }
 
 void RouteNode::centerNodeLabelBox() {

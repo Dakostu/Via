@@ -59,6 +59,8 @@ public:
 
     char getShapeKey() const override;
 
+    void setVisible(bool value) override;
+
     void hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
     void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) override;

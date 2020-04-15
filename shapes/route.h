@@ -58,6 +58,8 @@ public:
     void fromJSON(const QJsonObject &object) override;
     QJsonObject toJSON() override;
 
+    void setVisible(bool value) override;
+
     void addNode(qreal x, qreal y);
     void addTemporaryPreviewNode(qreal x, qreal y);
     void removeTemporaryPreviewNode();
