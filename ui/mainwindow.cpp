@@ -278,6 +278,8 @@ void MainWindow::loadProject() {
         if (ui->nodeBoxNodeList->model() && ui->nodeBoxNodeList->model()->rowCount() > 0) {
             ui->nodeBoxNodeList->removeAllRows();
         }
+
+        selectedRouteIndex = selectedRouteNodeIndex = 0;
     }
 
 }
