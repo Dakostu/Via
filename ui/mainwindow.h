@@ -176,7 +176,7 @@ public slots:
     void routeShowOrderChangeEvent(bool value);
     void moveRouteEvent(int by);
     void getDataFromCurrentProject();
-    void resetSettingsBox();
+    void disableSettingsBox();
     void activateAutoAddMode();
     void addRouteNode(qreal x, qreal y);
     void deleteSelectedRouteNode();

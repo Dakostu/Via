@@ -320,7 +320,7 @@ void MainWindow::setNoProjectsOpenMode(bool noProjectsOpen) {
 void MainWindow::updateRouteList() {
     ui->routeBoxRouteList->setModel(&controller.getCurrentRouteTitles());
     if (ui->routeBoxRouteList->model()->rowCount() == 0) {
-        resetSettingsBox();
+        disableSettingsBox();
     }
 }
 
@@ -383,11 +383,12 @@ void MainWindow::moveRouteEvent(int by) {
     ui->routeBoxRouteList->moveSelectionTo(newRouteIndex);
 }
 
-void MainWindow::resetSettingsBox() {
+void MainWindow::disableSettingsBox() {
     ui->routeBoxButtonUp->setEnabled(false);
     ui->routeBoxButtonDown->setEnabled(false);
     ui->routeBoxButtonDeleteRoute->setEnabled(false);
     ui->nodeBox->setEnabled(false);
+    ui->nodeColorButton->setFlat(true);
     ui->settingsBox->setEnabled(false);
     ui->routeNameLineEdit->clear();
     ui->routeColorButton->setFlat(true);
