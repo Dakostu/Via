@@ -1,12 +1,16 @@
 #ifndef MAINWINDOWCONTROLLER_H
 #define MAINWINDOWCONTROLLER_H
 
+#include "../model/checkablestringlistmodel.h"
 #include "../model/project.h"
+
 #include "../controller/states/uistate.h"
 #include "../controller/states/mainwindowstate.h"
 #include "../controller/states/mapviewstate.h"
 #include "../controller/states/routenodestate.h"
+
 #include "../shapes/route.h"
+
 #include <memory>
 #include <QObject>
 #include <QStringListModel>
@@ -25,8 +29,8 @@ class MainWindowController : public QObject
     std::unique_ptr<MainWindowState> currentMainWindowState;
     std::unique_ptr<MapViewState> currentMapViewState;
     std::unique_ptr<RouteNodeState> currentRouteNodeState;
-    QStringListModel currentRouteTitles;
-    QStringListModel currentRouteNodeTitles;
+    Via::Model::CheckableStringListModel currentRouteTitles;
+    Via::Model::CheckableStringListModel currentRouteNodeTitles;
 
     void addFileToRecentlyOpenedProjects(const QString &fileName);
     void updateStringListModel(QStringListModel &model, const std::vector<Via::Interfaces::Nameable*> &nameables);
