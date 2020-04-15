@@ -42,6 +42,7 @@ class MainWindow : public QMainWindow
 
     struct NodeAction : std::integral_constant<bool, true> {};
     struct RouteAction : std::integral_constant<bool, false> {};
+
     struct RouteIndex : std::integral_constant<bool, true> {};
     struct RouteNodeIndex : std::integral_constant<bool, false> {};
 

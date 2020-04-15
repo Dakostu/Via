@@ -29,7 +29,7 @@ class MainWindowController : public QObject
     QStringListModel currentRouteNodeTitles;
 
     void addFileToRecentlyOpenedProjects(const QString &fileName);
-    void updateStringListModel(QStringListModel &model, const Via::Structures::IndexList<Via::Interfaces::Nameable*> &nameables);
+    void updateStringListModel(QStringListModel &model, const std::vector<Via::Interfaces::Nameable*> &nameables);
 
 public:
 
@@ -56,14 +56,12 @@ public:
     Via::Shapes::RouteNode& getRouteNodeofCurrentProject(size_t routeIndex, size_t routeNodeIndex);
     void swapRoutesOfCurrentProject(size_t firstRoute, size_t secondRoute);
 
-
 public slots:
 
     void setCurrentProject(Via::Model::Project *project);
     void saveCurrentProject();
     void saveCurrentProjectAs(const QString &fileName);
     void loadCurrentProjectFromFile(const QString &fileName);
-
 
 signals:
     void currentProjectChanged();

@@ -62,7 +62,7 @@ void MainWindowController::addFileToRecentlyOpenedProjects(const QString &fileNa
 
 }
 
-void MainWindowController::updateStringListModel(QStringListModel &model, const IndexList<Nameable*> &nameables) {
+void MainWindowController::updateStringListModel(QStringListModel &model, const std::vector<Nameable*> &nameables) {
     QStringList currentList;
 
     for (const auto &nameable : nameables) {
@@ -83,21 +83,19 @@ void MainWindowController::setCurrentProject(Project *project) {
 
 QStringListModel& MainWindowController::getCurrentRouteTitles() {
     auto &routes = currentProject->getRoutes();
-    IndexList<Nameable*> nameables;
-    for (const auto route : routes) {
-        nameables.emplace_back(route);
-    }
+    std::vector<Nameable*> nameables(routes.begin(), routes.end());
+
     updateStringListModel(currentRouteTitles, nameables);
+
     return currentRouteTitles;
 }
 
 QStringListModel& MainWindowController::getNodeTitlesOfRoute(size_t index) {
     auto &routeNodes = (*currentProject->getRoutes()[index])->getNodes();
-    IndexList<Nameable*> nameables;
-    for (const auto routeNode : routeNodes) {
-        nameables.emplace_back(routeNode);
-    }
+    std::vector<Nameable*> nameables(routeNodes.begin(), routeNodes.end());
+
     updateStringListModel(currentRouteNodeTitles, nameables);
+
     return currentRouteNodeTitles;
 }
 
