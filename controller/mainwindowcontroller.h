@@ -33,7 +33,7 @@ class MainWindowController : public QObject
     Via::Model::CheckableStringListModel currentRouteNodeTitles;
 
     void addFileToRecentlyOpenedProjects(const QString &fileName);
-    void updateStringListModel(QStringListModel &model, const std::vector<Via::Interfaces::Nameable*> &nameables);
+    void updateStringListModel(QStringListModel &model, const std::vector<Via::Interfaces::MapViewPlaceable*> &mapViewPlaceables);
 
 public:
 

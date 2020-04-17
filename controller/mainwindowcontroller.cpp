@@ -62,14 +62,15 @@ void MainWindowController::addFileToRecentlyOpenedProjects(const QString &fileNa
 
 }
 
-void MainWindowController::updateStringListModel(QStringListModel &model, const std::vector<Nameable*> &nameables) {
+void MainWindowController::updateStringListModel(QStringListModel &model,
+                                                 const std::vector<MapViewPlaceable*> &mapViewPlaceables) {
     QStringList currentList;
 
-    for (const auto &nameable : nameables) {
-        currentList << nameable->getName();
+    for (const auto &mapViewPlaceable : mapViewPlaceables) {
+        currentList << mapViewPlaceable->getName();
     }
 
-    model.setStringList(currentList);
+    model.setStringList(currentList);    
 }
 
 Project* MainWindowController::getCurrentProject() {
@@ -83,18 +84,18 @@ void MainWindowController::setCurrentProject(Project *project) {
 
 QStringListModel& MainWindowController::getCurrentRouteTitles() {
     auto &routes = currentProject->getRoutes();
-    std::vector<Nameable*> nameables(routes.begin(), routes.end());
+    std::vector<MapViewPlaceable*> mapViewPlaceables(routes.begin(), routes.end());
 
-    updateStringListModel(currentRouteTitles, nameables);
+    updateStringListModel(currentRouteTitles, mapViewPlaceables);
 
     return currentRouteTitles;
 }
 
 QStringListModel& MainWindowController::getNodeTitlesOfRoute(size_t index) {
     auto &routeNodes = (*currentProject->getRoutes()[index])->getNodes();
-    std::vector<Nameable*> nameables(routeNodes.begin(), routeNodes.end());
+    std::vector<MapViewPlaceable*> mapViewPlaceables(routeNodes.begin(), routeNodes.end());
 
-    updateStringListModel(currentRouteNodeTitles, nameables);
+    updateStringListModel(currentRouteNodeTitles, mapViewPlaceables);
 
     return currentRouteNodeTitles;
 }
