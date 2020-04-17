@@ -64,13 +64,16 @@ void MainWindowController::addFileToRecentlyOpenedProjects(const QString &fileNa
 
 void MainWindowController::updateStringListModel(QStringListModel &model,
                                                  const std::vector<MapViewPlaceable*> &mapViewPlaceables) {
-    QStringList currentList;
+    model.removeRows(0, model.rowCount());
+    model.insertRows(0, mapViewPlaceables.size());
 
-    for (const auto &mapViewPlaceable : mapViewPlaceables) {
-        currentList << mapViewPlaceable->getName();
+    for (size_t i = 0; i < mapViewPlaceables.size(); ++i) {
+        auto modelIndex = model.index(static_cast<int>(i));
+        auto checkState = mapViewPlaceables[i]->isVisible() ? Qt::Checked : Qt::Unchecked;
+
+        model.setData(modelIndex, checkState, Qt::CheckStateRole);
+        model.setData(modelIndex, mapViewPlaceables[i]->getName(), Qt::DisplayRole);
     }
-
-    model.setStringList(currentList);    
 }
 
 Project* MainWindowController::getCurrentProject() {

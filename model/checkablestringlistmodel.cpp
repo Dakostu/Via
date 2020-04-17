@@ -39,8 +39,10 @@ QVariant CheckableStringListModel::data(const QModelIndex &index, int role) cons
 
 
 bool CheckableStringListModel::setData(const QModelIndex &index, const QVariant &value, int role) {
-    if (!index.isValid() || role != Qt::CheckStateRole) {
+    if (!index.isValid()) {
         return false;
+    } else if (role != Qt::CheckStateRole) {
+        return QStringListModel::setData(index, value, role);
     }
 
     if (value == Qt::Checked)  {
