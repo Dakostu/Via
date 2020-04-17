@@ -48,7 +48,18 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
 
     connect(this, &MainWindow::routeListChanged, this, &MainWindow::updateRouteList);
     connect(this, &MainWindow::routeNodeListChanged, this, &MainWindow::updateNodeList);
+
     connect(&controller, &MainWindowController::currentProjectChanged, this, &MainWindow::getDataFromCurrentProject);
+    connect(&controller, &MainWindowController::needToChangeVisibilityOfRoute, this,
+            [&](auto routeIndex, auto visible) {
+        controller.getRouteOfCurrentProject(routeIndex).setVisible(visible);
+    });
+    connect(&controller, &MainWindowController::needToChangeVisibilityOfCurrentRouteNode, this,
+            [&](auto nodeIndex, auto visible) {
+        controller.getRouteNodeofCurrentProject(selectedRouteIndex, nodeIndex).setVisible(visible);
+    });
+
+
     connect(ui->picture, &MapView::needTempPreviewNodeRemoved, this, [&]() {
         getCurrentRoute()->removeTemporaryPreviewNode();
     });
