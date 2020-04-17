@@ -69,6 +69,8 @@ public slots:
 
 signals:
     void currentProjectChanged();
+    void needToChangeVisibilityOfRoute(int routeIndex, bool visible);
+    void needToChangeVisibilityOfCurrentRouteNode(int routeNodeIndex, bool visible);
 
 };
 

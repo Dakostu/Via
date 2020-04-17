@@ -17,7 +17,13 @@ MainWindowController::MainWindowController()
       currentMapViewState(new MapViewMoveNodeState),
       currentRouteNodeState(new RouteNodeMoveNodeState)
 {
+    connect(&currentRouteTitles, &CheckableStringListModel::rowCheckChanged, this, [&](auto row, auto visible) {
+        emit needToChangeVisibilityOfRoute(row, visible);
+    });
 
+    connect(&currentRouteNodeTitles, &CheckableStringListModel::rowCheckChanged, this, [&](auto row, auto visible) {
+        emit needToChangeVisibilityOfCurrentRouteNode(row, visible);
+    });
 }
 
 void MainWindowController::saveCurrentProjectAs(const QString &fileName) {

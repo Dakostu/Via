@@ -45,13 +45,14 @@ bool CheckableStringListModel::setData(const QModelIndex &index, const QVariant 
         return QStringListModel::setData(index, value, role);
     }
 
-    if (value == Qt::Checked)  {
+    auto isChecked = value == Qt::Checked;
+    if (isChecked)  {
         checkedItems.insert(index);
     } else {
         checkedItems.remove(index);
     }
 
-    emit rowChanged(index.row());
+    emit rowCheckChanged(index.row(), isChecked);
 
     return true;
 }

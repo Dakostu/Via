@@ -21,7 +21,7 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role) override;
 
 signals:
-    void rowChanged(int row);
+    void rowCheckChanged(int row, bool newValue);
 };
 
 }
