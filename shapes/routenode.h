@@ -3,11 +3,9 @@
 
 #include "../controller/states/routenodestate.h"
 
-#include "../interfaces/nameable.h"
+#include "../interfaces/mapviewplaceable.h"
 #include "../interfaces/serializable.h"
 #include "../interfaces/shapekeyable.h"
-#include "../interfaces/visibilitychangeable.h"
-#include "../interfaces/viewcustomizable.h"
 
 #include "../ui/routenodelabel.h"
 #include "../ui/routeextratextlabel.h"
@@ -26,11 +24,9 @@ namespace Via::Control {
 namespace Via::Shapes {
 
 class RouteNode : public QGraphicsItemGroup,
-        public Via::Interfaces::ViewCustomizable,
+        public Via::Interfaces::MapViewPlaceable,
         public Via::Interfaces::Serializable,
-        public Via::Interfaces::ShapeKeyable,
-        public Via::Interfaces::Nameable,
-        public Via::Interfaces::VisibilityChangeable
+        public Via::Interfaces::ShapeKeyable
 {
 
 protected:

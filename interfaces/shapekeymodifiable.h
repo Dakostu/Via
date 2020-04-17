@@ -9,6 +9,7 @@ class ShapeKeyModifiable : public ShapeKeyable
 {
 protected:
     ShapeKeyModifiable() = default;
+
     char shapeKey;
 
 public:

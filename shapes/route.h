@@ -3,10 +3,9 @@
 
 #include "../data-structures/indexlist.h"
 #include "../controller/states/routenodestate.h"
-#include "../interfaces/visibilitychangeable.h"
+#include "../interfaces/mapviewplaceable.h"
 #include "../interfaces/serializable.h"
 #include "../interfaces/shapekeymodifiable.h"
-#include "../interfaces/viewcustomizable.h"
 #include "../model/routenodedata.h"
 #include "routenode.h"
 #include "routeconnection.h"
@@ -21,11 +20,9 @@ class UIState;
 namespace Via::Shapes {
 
 
-class Route : public Via::Interfaces::ViewCustomizable,
+class Route : public Via::Interfaces::MapViewPlaceable,
         public Via::Interfaces::ShapeKeyModifiable,
-        public Via::Interfaces::Serializable,
-        public Via::Interfaces::Nameable,
-        public Via::Interfaces::VisibilityChangeable
+        public Via::Interfaces::Serializable
 {
 protected:
     static constexpr qreal TEMPORARY_NODE_OPACITY = 0.5;
