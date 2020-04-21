@@ -56,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     });
     connect(&controller, &MainWindowController::needToChangeVisibilityOfCurrentRouteNode, this,
             [&](auto nodeIndex, auto visible) {
-        controller.getRouteNodeofCurrentProject(selectedRouteIndex, nodeIndex).setVisible(visible);
+        controller.getRouteOfCurrentProject(selectedRouteIndex).setRouteNodeVisibility(nodeIndex, visible);
     });
 
 

@@ -55,7 +55,7 @@ public:
     void fromJSON(const QJsonObject &object) override;
     QJsonObject toJSON() override;
 
-    void setVisible(bool value) override;
+    void setVisible(bool isVisible) override;
 
     void addNode(qreal x, qreal y);
     void addTemporaryPreviewNode(qreal x, qreal y);
@@ -71,12 +71,13 @@ public:
 
     void setElementSize(int newSize) override;
     void setShowOrder(bool value);
+    void setColorsOfNode(size_t routeNodeIndex, const QColor &newColor);
     void setCurrentScene(QGraphicsScene *value);
     void setCurrentState(std::unique_ptr<Via::Control::RouteNodeState> &value);
+    void setRouteNodeVisibility(size_t routeNodeIndex, bool isVisible);
+    void setShapeKey(const QString &newStyle);
     void setStyleOfNode(size_t routeNodeIndex, char newStyle);
     void setStyleOfNode(size_t routeNodeIndex, const QString &newStyle);
-    void setColorsOfNode(size_t routeNodeIndex, const QColor &newColor);
-    void setShapeKey(const QString &newStyle);
     size_t size();
 
     RouteNode& operator[](size_t nodeIndex);

@@ -149,8 +149,10 @@ char RouteNode::getShapeKey() const {
     return node->getShapeKey();
 }
 
-void RouteNode::setVisible(bool value) {
-    VisibilityChangeable::setVisible(value);
+void RouteNode::setVisible(bool isVisible) {
+    VisibilityChangeable::setVisible(isVisible);
+
+    this->setOpacity(isVisible);
 }
 
 void RouteNode::centerNodeLabelBox() {

@@ -11,7 +11,7 @@ bool VisibilityChangeable::isVisible() const
     return visible;
 }
 
-void VisibilityChangeable::setVisible(bool value)
+void VisibilityChangeable::setVisible(bool isVisible)
 {
-    visible = value;
+    visible = isVisible;
 }

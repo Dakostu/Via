@@ -104,8 +104,19 @@ QJsonObject Route::toJSON() {
     return routeJSON;
 }
 
-void Route::setVisible(bool value) {
-    VisibilityChangeable::setVisible(value);
+void Route::setVisible(bool isVisible) {
+    VisibilityChangeable::setVisible(isVisible);
+
+
+    auto changeRouteNodeVisibility = std::function<void(RouteNode)>();
+
+    if (isVisible) {
+
+    } else {
+
+    }
+
+
 }
 
 QColor Route::getColors() const {
@@ -217,6 +228,10 @@ void Route::setCurrentScene(QGraphicsScene *value)
 void Route::setCurrentState(std::unique_ptr<Via::Control::RouteNodeState> &value)
 {
     currentState.swap(value);
+}
+
+void Route::setRouteNodeVisibility(size_t routeNodeIndex, bool isVisible) {
+    (*nodes[routeNodeIndex])->setVisible(isVisible);
 }
 
 bool Route::getShowOrder() const

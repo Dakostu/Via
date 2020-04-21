@@ -14,7 +14,7 @@ public:
     virtual ~VisibilityChangeable() = default;
 
     virtual bool isVisible() const;
-    virtual void setVisible(bool value);
+    virtual void setVisible(bool isVisible);
 };
 
 }
