@@ -227,7 +227,7 @@ void Route::setCurrentState(std::unique_ptr<Via::Control::RouteNodeState> &value
     currentState.swap(value);
 }
 
-void Route::setRouteNodeVisibility(size_t routeNodeIndex, bool isVisible) {
+void Route::setVisibilityOfNode(size_t routeNodeIndex, bool isVisible) {
     auto &currentNode = *nodes[routeNodeIndex];
     currentNode->setVisible(isVisible);
 

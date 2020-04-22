@@ -75,10 +75,10 @@ public:
     void setColorsOfNode(size_t routeNodeIndex, const QColor &newColor);
     void setCurrentScene(QGraphicsScene *value);
     void setCurrentState(std::unique_ptr<Via::Control::RouteNodeState> &value);
-    void setRouteNodeVisibility(size_t routeNodeIndex, bool isVisible);
     void setShapeKey(const QString &newStyle);
     void setStyleOfNode(size_t routeNodeIndex, char newStyle);
     void setStyleOfNode(size_t routeNodeIndex, const QString &newStyle);
+    void setVisibilityOfNode(size_t routeNodeIndex, bool isVisible);
     size_t size();
 
     RouteNode& operator[](size_t nodeIndex);
