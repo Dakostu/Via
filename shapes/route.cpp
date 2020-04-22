@@ -203,10 +203,7 @@ void Route::eraseNode(size_t index) {
         connectNodes(previousNode, *currentNode);
     }
 
-    for (; currentNodePos != nodes.end(); ++currentNodePos) {
-        (*currentNodePos)->setNodeLabelText(QString::number(index + 1));
-        ++index;
-    }
+    refreshNodeLabels(index);
 }
 
 void Route::eraseAllNodes() {
@@ -257,6 +254,7 @@ void Route::setRouteNodeVisibility(size_t routeNodeIndex, bool isVisible) {
         }
     }
 
+    refreshNodeLabels(routeNodeIndex);
 }
 
 bool Route::getShowOrder() const
@@ -315,6 +313,15 @@ void Route::swapNodeNamesConsideringUserChanges(RouteNode &fromNode, RouteNode &
         fromNode.setName(QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(index)));
     } else if (!fromNode.isNameChangedByUser() && !withNode.isNameChangedByUser()) {
         fromNode.swapNamesWith(&withNode);
+    }
+}
+
+void Route::refreshNodeLabels(size_t index) {
+    auto labelText = index + 1;
+    for (; index < nodes.size(); ++index) {
+        if ((*nodes[index])->VisibilityChangeable::isVisible()) {
+            (*nodes[index])->setNodeLabelText(QString::number(labelText++));
+        }
     }
 }
 
