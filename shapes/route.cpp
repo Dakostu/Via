@@ -108,8 +108,6 @@ void Route::setVisible(bool isVisible) {
     VisibilityChangeable::setVisible(isVisible);
 
 
-    auto changeRouteNodeVisibility = std::function<void(RouteNode)>();
-
     if (isVisible) {
 
     } else {
@@ -231,18 +229,7 @@ void Route::setVisibilityOfNode(size_t routeNodeIndex, bool isVisible) {
     auto &currentNode = *nodes[routeNodeIndex];
     currentNode->setVisible(isVisible);
 
-
-    if (!isVisible) {
-        currentNode->resetConnections();
-
-        if (routeNodeIndex > 0 && routeNodeIndex != nodes.size() - 1) {
-            connectNodes(**nodes[routeNodeIndex - 1], **nodes[routeNodeIndex + 1]);
-        } else if (routeNodeIndex == 0) {
-            (**nodes[routeNodeIndex + 1]).resetFromConnection();
-        } else if (routeNodeIndex == nodes.size() - 1) {
-            (**nodes[routeNodeIndex - 1]).resetToConnection();
-        }
-    } else {
+    if (isVisible) {
 
         if (routeNodeIndex > 0 && routeNodeIndex != nodes.size() - 1) {
             connectNodes(**nodes[routeNodeIndex - 1], **nodes[routeNodeIndex]);
@@ -251,6 +238,16 @@ void Route::setVisibilityOfNode(size_t routeNodeIndex, bool isVisible) {
             connectNodes(**nodes[routeNodeIndex], **nodes[routeNodeIndex + 1]);
         } else if (routeNodeIndex == nodes.size() - 1 && nodes.size() > 1) {
             connectNodes(**nodes[routeNodeIndex - 1], **nodes[routeNodeIndex]);
+        }
+    } else {
+        currentNode->resetConnections();
+
+        if (routeNodeIndex > 0 && routeNodeIndex != nodes.size() - 1) {
+            connectNodes(**nodes[routeNodeIndex - 1], **nodes[routeNodeIndex + 1]);
+        } else if (routeNodeIndex == 0) {
+            (**nodes[routeNodeIndex + 1]).resetFromConnection();
+        } else if (routeNodeIndex == nodes.size() - 1) {
+            (**nodes[routeNodeIndex - 1]).resetToConnection();
         }
     }
 
