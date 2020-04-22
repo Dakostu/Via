@@ -231,7 +231,32 @@ void Route::setCurrentState(std::unique_ptr<Via::Control::RouteNodeState> &value
 }
 
 void Route::setRouteNodeVisibility(size_t routeNodeIndex, bool isVisible) {
-    (*nodes[routeNodeIndex])->setVisible(isVisible);
+    auto &currentNode = *nodes[routeNodeIndex];
+    currentNode->setVisible(isVisible);
+
+
+    if (!isVisible) {
+        currentNode->resetConnections();
+
+        if (routeNodeIndex > 0 && routeNodeIndex != nodes.size() - 1) {
+            connectNodes(**nodes[routeNodeIndex - 1], **nodes[routeNodeIndex + 1]);
+        } else if (routeNodeIndex == 0) {
+            (**nodes[routeNodeIndex + 1]).resetFromConnection();
+        } else if (routeNodeIndex == nodes.size() - 1) {
+            (**nodes[routeNodeIndex - 1]).resetToConnection();
+        }
+    } else {
+
+        if (routeNodeIndex > 0 && routeNodeIndex != nodes.size() - 1) {
+            connectNodes(**nodes[routeNodeIndex - 1], **nodes[routeNodeIndex]);
+            connectNodes(**nodes[routeNodeIndex], **nodes[routeNodeIndex + 1]);
+        } else if (routeNodeIndex == 0 && nodes.size() > 1) {
+            connectNodes(**nodes[routeNodeIndex], **nodes[routeNodeIndex + 1]);
+        } else if (routeNodeIndex == nodes.size() - 1 && nodes.size() > 1) {
+            connectNodes(**nodes[routeNodeIndex - 1], **nodes[routeNodeIndex]);
+        }
+    }
+
 }
 
 bool Route::getShowOrder() const
