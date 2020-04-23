@@ -236,9 +236,10 @@ void MainWindow::deleteSelectedRoute() {
 
     emit routeListChanged();
 
-    auto newRowCount = ui->routeBoxRouteList->model()->rowCount();
+    auto newRowCount = static_cast<size_t>(ui->routeBoxRouteList->model()->rowCount());
     if (newRowCount != 0) {
-        ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex - (selectedRouteIndex == static_cast<size_t>(newRowCount)));
+        selectedRouteIndex = std::min(selectedRouteIndex, newRowCount - 1);
+        ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex);
     }
 
 }
@@ -442,7 +443,8 @@ void MainWindow::deleteSelectedRouteNode() {
 
     auto newRowCount = static_cast<size_t>(ui->nodeBoxNodeList->model()->rowCount());
     if (newRowCount != 0) {
-        ui->nodeBoxNodeList->moveSelectionTo(selectedRouteNodeIndex - (selectedRouteNodeIndex == newRowCount));
+        selectedRouteNodeIndex = std::min(selectedRouteNodeIndex, newRowCount - 1);
+        ui->nodeBoxNodeList->moveSelectionTo(selectedRouteNodeIndex);
     }
 }
 
