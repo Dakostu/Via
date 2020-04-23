@@ -62,7 +62,6 @@ void Route::fromJSON(const QJsonObject &object) {
             object[RouteData::ROUTE_COLOR_KEY][2].toInt()));
     setShowOrder(object[RouteData::ROUTE_SHOW_ORDER_KEY].toBool());
     shapeKey = static_cast<char>(object[RouteData::ROUTE_SHAPE_KEY].toInt());
-    setVisible(object[RouteData::ROUTE_VISIBLE_KEY].toBool());
 
     auto nodesArray = object[RouteData::ROUTE_NODES_KEY].toArray();
 
@@ -82,7 +81,11 @@ void Route::fromJSON(const QJsonObject &object) {
             auto shapeKey = nodeJSONObject[RouteNodeData::NODE_SHAPE_KEY].toInt();
             newNode->setShape(nodeShapeFactory.generateNodeShape(static_cast<char>(shapeKey), newNode->getCenter(), newNode->getColors()));
         }
+
+        setVisibilityOfNode(nodes.size() - 1, newNode->isCurrentlyVisible());
     }
+
+    setVisible(object[RouteData::ROUTE_VISIBLE_KEY].toBool());
 }
 
 QJsonObject Route::toJSON() {
@@ -145,7 +148,8 @@ void Route::activateColors() {
 }
 
 bool Route::hasTemporaryPreviewNode() {
-    return nodes.back() && nodes.back()->opacity() <= TEMPORARY_NODE_OPACITY;
+    auto lastNode = nodes.back();
+    return lastNode && 0.0 < lastNode->opacity() && lastNode->opacity() <= TEMPORARY_NODE_OPACITY;
 }
 
 void Route::removeTemporaryPreviewNode() {
@@ -160,9 +164,11 @@ void Route::removeTemporaryPreviewNode() {
 void Route::addNode(qreal x, qreal y) {
     removeTemporaryPreviewNode();
 
-    auto previousNode = nodes.back();
+    auto previousNode = getLastVisibleRouteNode();
+    auto newNodeLabel = (previousNode) ? QString::number(previousNode->getNodeLabel()->text().toInt() + 1) : QString("0");
+
     nodes.emplace_back(new RouteNode(nodeShapeFactory.generateNodeShape(shapeKey, {x, y}, routeColor),
-                       QString::number(nodes.size() + 1), currentState));
+                       newNodeLabel, currentState));
 
     auto newNode = nodes.back();
     newNode->setElementSize(getElementSize());
@@ -331,6 +337,49 @@ void Route::refreshNodeLabels(size_t index) {
         }
     }
 }
+
+RouteNode* Route::getLastVisibleRouteNode() {
+    for (auto reverseIt = nodes.rbegin(); reverseIt != nodes.rend(); ++reverseIt) {
+        if ((*reverseIt)->isCurrentlyVisible()) {
+            return *reverseIt;
+        }
+    }
+
+    return nullptr;
+}
+
+RouteNode* Route::getPreviousVisibleRouteNode(size_t index) {
+    auto previousNodeIndex = index - 1;
+
+    if (previousNodeIndex == std::numeric_limits<size_t>::max()) {
+        return nullptr;
+    }
+
+    for (auto reverseIt = nodes[previousNodeIndex]; reverseIt != nodes.begin(); --reverseIt) {
+        if ((*reverseIt)->isCurrentlyVisible()) {
+            return *reverseIt;
+        }
+    }
+
+    return nullptr;
+}
+
+RouteNode* Route::getNextVisibleRouteNode(size_t index) {
+    auto nextNodeIndex = index + 1;
+
+    if (nextNodeIndex == 0) {
+        return nullptr;
+    }
+
+    for (auto it = nodes[nextNodeIndex]; it != nodes.end(); ++it) {
+        if ((*it)->isCurrentlyVisible()) {
+            return *it;
+        }
+    }
+
+    return nullptr;
+}
+
 
 void Route::swapNodes(size_t firstNodeIndex, size_t secondNodeIndex) {
     auto &fromNode = *nodes[firstNodeIndex];

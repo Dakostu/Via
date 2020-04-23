@@ -93,12 +93,13 @@ void RouteNode::fromJSON(const QJsonObject &object) {
     setStyleDiffersFromRoute(object[RouteNodeData::NODE_DIFFERENT_STYLE_KEY].toBool());
     setNameChangedByUser(object[RouteNodeData::NODE_NAME_CHANGED_KEY].toBool());
     setExtraLabelText(object[RouteNodeData::NODE_EXTRA_LABEL_TEXT_KEY].toString());
-    setVisible(object[RouteNodeData::NODE_VISIBLE_KEY].toBool());
 
     if (styleDiffersFromRoute) {
         setColors(QColor(object[RouteNodeData::NODE_COLOR_KEY][0].toInt(), object[RouteNodeData::NODE_COLOR_KEY][1].toInt(), object[RouteNodeData::NODE_COLOR_KEY][2].toInt()));
         setElementSize(object[RouteNodeData::NODE_SIZE_KEY].toInt());
     }
+
+    setVisible(object[RouteNodeData::NODE_VISIBLE_KEY].toBool());
 }
 
 QJsonObject RouteNode::toJSON() {
