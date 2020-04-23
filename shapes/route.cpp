@@ -232,24 +232,28 @@ void Route::setVisibilityOfNode(size_t routeNodeIndex, bool isVisible) {
     auto &currentNode = *nodes[routeNodeIndex];
     currentNode->setVisible(isVisible);
 
+    auto nodeIsBetweenBeginningAndEnd = 0 < routeNodeIndex && routeNodeIndex < nodes.size() - 1;
+    auto nodeIsFirstAndNotOnlyNode = routeNodeIndex == 0 && nodes.size() > 1;
+    auto nodeIsLastAndNotOnlyNode = routeNodeIndex == nodes.size() - 1 && nodes.size() > 1;
+
     if (isVisible) {
 
-        if (routeNodeIndex > 0 && routeNodeIndex != nodes.size() - 1) {
+        if (nodeIsBetweenBeginningAndEnd) {
             connectNodes(**nodes[routeNodeIndex - 1], **nodes[routeNodeIndex]);
             connectNodes(**nodes[routeNodeIndex], **nodes[routeNodeIndex + 1]);
-        } else if (routeNodeIndex == 0 && nodes.size() > 1) {
+        } else if (nodeIsFirstAndNotOnlyNode) {
             connectNodes(**nodes[routeNodeIndex], **nodes[routeNodeIndex + 1]);
-        } else if (routeNodeIndex == nodes.size() - 1 && nodes.size() > 1) {
+        } else if (nodeIsLastAndNotOnlyNode) {
             connectNodes(**nodes[routeNodeIndex - 1], **nodes[routeNodeIndex]);
         }
     } else {
         currentNode->resetConnections();
 
-        if (routeNodeIndex > 0 && routeNodeIndex != nodes.size() - 1) {
+        if (nodeIsBetweenBeginningAndEnd) {
             connectNodes(**nodes[routeNodeIndex - 1], **nodes[routeNodeIndex + 1]);
-        } else if (routeNodeIndex == 0) {
+        } else if (nodeIsFirstAndNotOnlyNode) {
             (**nodes[routeNodeIndex + 1]).resetFromConnection();
-        } else if (routeNodeIndex == nodes.size() - 1) {
+        } else if (nodeIsLastAndNotOnlyNode) {
             (**nodes[routeNodeIndex - 1]).resetToConnection();
         }
     }
