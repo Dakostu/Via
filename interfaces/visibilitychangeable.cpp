@@ -6,7 +6,7 @@ VisibilityChangeable::VisibilityChangeable() : visible(true) {
 
 }
 
-bool VisibilityChangeable::isVisible() const
+bool VisibilityChangeable::isCurrentlyVisible() const
 {
     return visible;
 }

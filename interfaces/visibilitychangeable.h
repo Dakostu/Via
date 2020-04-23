@@ -13,7 +13,7 @@ protected:
 public:
     virtual ~VisibilityChangeable() = default;
 
-    virtual bool isVisible() const;
+    virtual bool isCurrentlyVisible() const;
     virtual void setVisible(bool isVisible);
 };
 

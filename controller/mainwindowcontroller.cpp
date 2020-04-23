@@ -75,7 +75,7 @@ void MainWindowController::updateStringListModel(QStringListModel &model,
 
     for (size_t i = 0; i < mapViewPlaceables.size(); ++i) {
         auto modelIndex = model.index(static_cast<int>(i));
-        auto checkState = mapViewPlaceables[i]->isVisible() ? Qt::Checked : Qt::Unchecked;
+        auto checkState = mapViewPlaceables[i]->isCurrentlyVisible() ? Qt::Checked : Qt::Unchecked;
 
         model.setData(modelIndex, checkState, Qt::CheckStateRole);
         model.setData(modelIndex, mapViewPlaceables[i]->getName(), Qt::DisplayRole);

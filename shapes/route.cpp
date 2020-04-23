@@ -108,12 +108,13 @@ void Route::setVisible(bool isVisible) {
     VisibilityChangeable::setVisible(isVisible);
 
 
-    if (isVisible) {
+    auto routeNoteVisibilityValue = [&](auto &node) {
+        return node.isVisible();
+    };
 
-    } else {
-
+    for (auto &node : nodes) {
+        routeNoteVisibilityValue(*node);
     }
-
 
 }
 
@@ -316,7 +317,7 @@ void Route::swapNodeNamesConsideringUserChanges(RouteNode &fromNode, RouteNode &
 void Route::refreshNodeLabels(size_t index) {
     auto labelText = index + 1;
     for (; index < nodes.size(); ++index) {
-        if ((*nodes[index])->VisibilityChangeable::isVisible()) {
+        if ((*nodes[index])->isCurrentlyVisible()) {
             (*nodes[index])->setNodeLabelText(QString::number(labelText++));
         }
     }

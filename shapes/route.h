@@ -78,7 +78,7 @@ public:
     void setShapeKey(const QString &newStyle);
     void setStyleOfNode(size_t routeNodeIndex, char newStyle);
     void setStyleOfNode(size_t routeNodeIndex, const QString &newStyle);
-    void setVisibilityOfNode(size_t routeNodeIndex, bool isVisible);
+    void setVisibilityOfNode(size_t routeNodeIndex, bool isCurrentlyVisible);
     size_t size();
 
     RouteNode& operator[](size_t nodeIndex);
