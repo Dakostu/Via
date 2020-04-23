@@ -255,7 +255,7 @@ RouteConnection* RouteNode::getToConnection() {
 void RouteNode::connect(RouteNode &from) {
     auto color = node->brush().color();
     auto connection = new RouteConnection(from.boundingRect().center() + from.pos(), this->boundingRect().center(), color);
-    connection->setElementSize(elementSize);
+    connection->setElementSize(elementSize);    
     from.toConnection.reset(connection);
     fromConnection = connection;
 }

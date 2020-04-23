@@ -40,10 +40,16 @@ protected:
     void swapNodeNamesConsideringUserChanges(Via::Shapes::RouteNode &fromNode, Via::Shapes::RouteNode &withNode, size_t index);
     void refreshNodeLabels(size_t index = 0);
 
+    Via::Shapes::RouteNode* getLastVisibleRouteNode();
+    Via::Shapes::RouteNode* getPreviousVisibleRouteNode(size_t index);
+    Via::Shapes::RouteNode* getNextVisibleRouteNode(size_t index);
+
 public:
     Route(const QColor &color, const QString &selectedStyle, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);
     Route(const QColor &color, char selectedStyle, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);
     Route(const QJsonObject &object, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);
+
+    ~Route();
 
     virtual QColor getColors() const;
 

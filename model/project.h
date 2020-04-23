@@ -19,7 +19,7 @@ class Project : public Via::Interfaces::Serializable
     QJsonArray routesJSON;
     bool hasbeenModified;
     int totalCreatedRoutes;    
-    Via::Structures::IndexList<Via::Shapes::Route*> routes;
+    Via::Structures::IndexList<std::unique_ptr<Via::Shapes::Route>> routes;
 
     static inline const char* PROJECT_IMAGE_KEY = "i";
     static inline const char* PROJECT_FILENAME_KEY = "n";
@@ -40,7 +40,7 @@ public:
     QPixmap getImagePixMap() const;
     QJsonArray getRoutesJSON() const;
     QString getFileName() const;
-    Via::Structures::IndexList<Via::Shapes::Route*>& getRoutes();
+    std::vector<Via::Shapes::Route*> getRoutes();
 
     void setHasbeenModified(bool value);
 

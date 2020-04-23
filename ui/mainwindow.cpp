@@ -232,7 +232,7 @@ void MainWindow::deleteSelectedRoute() {
         return;
     }
 
-    getCurrentRoute()->eraseAllNodes();
+    controller.deleteRoute(selectedRouteIndex);
 
     emit routeListChanged();
 

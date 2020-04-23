@@ -33,6 +33,9 @@ Route::Route(const QJsonObject &object, QGraphicsScene *scene, std::unique_ptr<V
     fromJSON(object);
 }
 
+Route::~Route() {
+    eraseAllNodes();
+}
 
 void Route::setShapeKey(const QString &newStyle) {
     setShapeKey(nodeShapeFactory.getShapeKeyFromUIString(newStyle));

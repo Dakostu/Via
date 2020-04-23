@@ -92,7 +92,7 @@ void MainWindowController::setCurrentProject(Project *project) {
 }
 
 QStringListModel& MainWindowController::getCurrentRouteTitles() {
-    auto &routes = currentProject->getRoutes();
+    auto routes = currentProject->getRoutes();
     std::vector<MapViewPlaceable*> mapViewPlaceables(routes.begin(), routes.end());
 
     updateStringListModel(currentRouteTitles, mapViewPlaceables);
@@ -101,7 +101,7 @@ QStringListModel& MainWindowController::getCurrentRouteTitles() {
 }
 
 QStringListModel& MainWindowController::getNodeTitlesOfRoute(size_t index) {
-    auto &routeNodes = (*currentProject->getRoutes()[index])->getNodes();
+    auto routeNodes = (currentProject->getRoutes()[index])->getNodes();
     std::vector<MapViewPlaceable*> mapViewPlaceables(routeNodes.begin(), routeNodes.end());
 
     updateStringListModel(currentRouteNodeTitles, mapViewPlaceables);
@@ -131,6 +131,10 @@ RouteNode& MainWindowController::getRouteNodeofCurrentProject(size_t routeIndex,
 
 void MainWindowController::swapRoutesOfCurrentProject(size_t firstRoute, size_t secondRoute) {
     currentProject->swapRoutes(firstRoute, secondRoute);
+}
+
+void MainWindowController::deleteRoute(size_t routeIndex) {
+    currentProject->deleteRoute(routeIndex);
 }
 
 void MainWindowController::addNewRouteToCurrentProject(Route &newRoute) {
