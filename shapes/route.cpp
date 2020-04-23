@@ -252,7 +252,7 @@ void Route::setVisibilityOfNode(size_t routeNodeIndex, bool isVisible) {
         }
     }
 
-    refreshNodeLabels(routeNodeIndex);
+    refreshNodeLabels();
 }
 
 bool Route::getShowOrder() const
