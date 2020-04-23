@@ -179,6 +179,9 @@ void RouteNode::setOpacity(qreal opacity) {
     QGraphicsItem::setOpacity(opacity);
     nodeLabel.setOpacity(opacity);
     extraLabel.setOpacity(opacity);
+    if (toConnection) {
+        toConnection->setOpacity(opacity);
+    }
 }
 
 void RouteNode::setNodeLabelOpacity(qreal opacity) {

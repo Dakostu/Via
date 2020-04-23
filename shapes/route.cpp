@@ -107,15 +107,17 @@ QJsonObject Route::toJSON() {
 void Route::setVisible(bool isVisible) {
     VisibilityChangeable::setVisible(isVisible);
 
+    std::function<qreal(RouteNode&)> routeNoteVisibilityValue;
 
-    auto routeNoteVisibilityValue = [&](auto &node) {
-        return node.isVisible();
-    };
-
-    for (auto &node : nodes) {
-        routeNoteVisibilityValue(*node);
+    if (isVisible) {
+        routeNoteVisibilityValue = [](auto &node) { return node.isCurrentlyVisible(); };
+    } else {
+        routeNoteVisibilityValue = [](auto &node) { return 0.0; };
     }
 
+    for (auto &node : nodes) {
+        node->setOpacity(routeNoteVisibilityValue(*node));
+    }
 }
 
 QColor Route::getColors() const {
