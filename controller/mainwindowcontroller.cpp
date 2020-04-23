@@ -68,7 +68,7 @@ void MainWindowController::addFileToRecentlyOpenedProjects(const QString &fileNa
 
 }
 
-void MainWindowController::updateStringListModel(QStringListModel &model,
+void MainWindowController::updateStringListModel(CheckableStringListModel &model,
                                                  const std::vector<MapViewPlaceable*> &mapViewPlaceables) {
     model.removeRows(0, model.rowCount());
     model.insertRows(0, mapViewPlaceables.size());
@@ -77,8 +77,8 @@ void MainWindowController::updateStringListModel(QStringListModel &model,
         auto modelIndex = model.index(static_cast<int>(i));
         auto checkState = mapViewPlaceables[i]->isCurrentlyVisible() ? Qt::Checked : Qt::Unchecked;
 
-        model.setData(modelIndex, checkState, Qt::CheckStateRole);
-        model.setData(modelIndex, mapViewPlaceables[i]->getName(), Qt::DisplayRole);
+        model.setDataWithoutSignalEmissions(modelIndex, checkState, Qt::CheckStateRole);
+        model.setDataWithoutSignalEmissions(modelIndex, mapViewPlaceables[i]->getName(), Qt::DisplayRole);
     }
 }
 

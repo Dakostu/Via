@@ -37,8 +37,7 @@ QVariant CheckableStringListModel::data(const QModelIndex &index, int role) cons
     return QStringListModel::data(index, role);
 }
 
-
-bool CheckableStringListModel::setData(const QModelIndex &index, const QVariant &value, int role) {
+bool CheckableStringListModel::setDataWithoutSignalEmissions(const QModelIndex &index, const QVariant &value, int role) {
     if (!index.isValid()) {
         return false;
     } else if (role != Qt::CheckStateRole) {
@@ -52,7 +51,17 @@ bool CheckableStringListModel::setData(const QModelIndex &index, const QVariant 
         checkedItems.remove(index);
     }
 
-    emit rowCheckChanged(index.row(), isChecked);
+    return true;
+}
+
+bool CheckableStringListModel::setData(const QModelIndex &index, const QVariant &value, int role) {
+    if (setDataWithoutSignalEmissions(index, value, role) == false) {
+        return false;
+    }
+
+    if (role == Qt::CheckStateRole) {
+        emit rowCheckChanged(index.row(), value == Qt::Checked);
+    }
 
     return true;
 }
