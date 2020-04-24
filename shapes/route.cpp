@@ -240,32 +240,36 @@ void Route::setCurrentState(std::unique_ptr<Via::Control::RouteNodeState> &value
 }
 
 void Route::setVisibilityOfNode(size_t routeNodeIndex, bool isVisible) {
-    auto &currentNode = *nodes[routeNodeIndex];
-    currentNode->setVisible(isVisible);
+    auto &currentNode = **nodes[routeNodeIndex];
+    currentNode.setVisible(isVisible);
+
+    auto previousVisibleNode = getPreviousVisibleRouteNode(routeNodeIndex);
+    auto nextVisibleNode = getNextVisibleRouteNode(routeNodeIndex);
 
     auto nodeIsBetweenBeginningAndEnd = 0 < routeNodeIndex && routeNodeIndex < nodes.size() - 1;
-    auto nodeIsFirstAndNotOnlyNode = routeNodeIndex == 0 && nodes.size() > 1;
-    auto nodeIsLastAndNotOnlyNode = routeNodeIndex == nodes.size() - 1 && nodes.size() > 1;
 
     if (isVisible) {
-
         if (nodeIsBetweenBeginningAndEnd) {
-            connectNodes(**nodes[routeNodeIndex - 1], **nodes[routeNodeIndex]);
-            connectNodes(**nodes[routeNodeIndex], **nodes[routeNodeIndex + 1]);
-        } else if (nodeIsFirstAndNotOnlyNode) {
-            connectNodes(**nodes[routeNodeIndex], **nodes[routeNodeIndex + 1]);
-        } else if (nodeIsLastAndNotOnlyNode) {
-            connectNodes(**nodes[routeNodeIndex - 1], **nodes[routeNodeIndex]);
+            if (previousVisibleNode) {
+                connectNodes(*previousVisibleNode, currentNode);
+            }
+            if (nextVisibleNode) {
+                connectNodes(currentNode, *nextVisibleNode);
+            }
+        } else if (nextVisibleNode) {
+            connectNodes(currentNode, *nextVisibleNode);
+        } else if (previousVisibleNode) {
+            connectNodes(*previousVisibleNode, currentNode);
         }
     } else {
-        currentNode->resetConnections();
+        currentNode.resetConnections();
 
-        if (nodeIsBetweenBeginningAndEnd) {
-            connectNodes(**nodes[routeNodeIndex - 1], **nodes[routeNodeIndex + 1]);
-        } else if (nodeIsFirstAndNotOnlyNode) {
-            (**nodes[routeNodeIndex + 1]).resetFromConnection();
-        } else if (nodeIsLastAndNotOnlyNode) {
-            (**nodes[routeNodeIndex - 1]).resetToConnection();
+        if (nodeIsBetweenBeginningAndEnd && previousVisibleNode && nextVisibleNode) {
+            connectNodes(*previousVisibleNode, *nextVisibleNode);
+        } else if (nextVisibleNode) {
+            nextVisibleNode->resetFromConnection();
+        } else if (previousVisibleNode) {
+            previousVisibleNode->resetToConnection();
         }
     }
 
@@ -351,15 +355,9 @@ RouteNode* Route::getLastVisibleRouteNode() {
 }
 
 RouteNode* Route::getPreviousVisibleRouteNode(size_t index) {
-    auto previousNodeIndex = index - 1;
-
-    if (previousNodeIndex == std::numeric_limits<size_t>::max()) {
-        return nullptr;
-    }
-
-    for (auto reverseIt = nodes[previousNodeIndex]; reverseIt != nodes.begin(); --reverseIt) {
-        if ((*reverseIt)->isCurrentlyVisible()) {
-            return *reverseIt;
+    for (auto previousNodeIndex = index - 1; previousNodeIndex != std::numeric_limits<size_t>::max(); --previousNodeIndex) {
+        if ((*nodes[previousNodeIndex])->isCurrentlyVisible()) {
+            return (*nodes[previousNodeIndex]);
         }
     }
 
@@ -369,7 +367,7 @@ RouteNode* Route::getPreviousVisibleRouteNode(size_t index) {
 RouteNode* Route::getNextVisibleRouteNode(size_t index) {
     auto nextNodeIndex = index + 1;
 
-    if (nextNodeIndex == 0) {
+    if (nextNodeIndex == 0 || nextNodeIndex >= nodes.size()) {
         return nullptr;
     }
 
