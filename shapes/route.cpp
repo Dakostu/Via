@@ -315,28 +315,35 @@ void Route::swapConnections(size_t firstNodeIndex, size_t secondNodeIndex) {
 
     if (firstNodeIndex > 0 && !firstNode->isCurrentlyVisible()) {
         firstNodeIndex = getIndexOfPreviousVisibileRouteNode(firstNodeIndex);
-        firstNode = *nodes[firstNodeIndex];
+        if (firstNodeIndex != std::numeric_limits<size_t>::max()) {
+            firstNode = *nodes[firstNodeIndex];
+        }
     }
-    if (secondNodeIndex < nodes.size() - 1 && !secondNode->isCurrentlyVisible()) {
+
+    if (secondNodeIndex < nodes.size() && !secondNode->isCurrentlyVisible()) {
         secondNodeIndex = getIndexOfNextVisibileRouteNode(secondNodeIndex);
-        secondNode = *nodes[secondNodeIndex];
+        if (secondNodeIndex != std::numeric_limits<size_t>::max()) {
+            secondNode = *nodes[secondNodeIndex];
+        }
     }
 
     if (firstNodeIndex > 0) {
-        auto previousNodeIndex = getIndexOfPreviousVisibileRouteNode(firstNodeIndex);
-        if (previousNodeIndex != std::numeric_limits<size_t>::max()) {
-            connectNodes(**nodes[previousNodeIndex], *firstNode);
+        firstNodeIndex = getIndexOfPreviousVisibileRouteNode(firstNodeIndex);
+        if (firstNodeIndex != std::numeric_limits<size_t>::max()) {
+            connectNodes(**nodes[firstNodeIndex], *firstNode);
         }
     }
 
     if (secondNodeIndex < nodes.size() - 1) {
-        auto nextNodeIndex = getIndexOfNextVisibileRouteNode(secondNodeIndex);
-        if (nextNodeIndex != std::numeric_limits<size_t>::max()) {
-            connectNodes(*secondNode, **nodes[nextNodeIndex]);
+        secondNodeIndex = getIndexOfNextVisibileRouteNode(secondNodeIndex);
+        if (secondNodeIndex != std::numeric_limits<size_t>::max()) {
+            connectNodes(*secondNode, **nodes[secondNodeIndex]);
         }
     }
 
-    connectNodes(*firstNode, *secondNode);
+    if (firstNode->isCurrentlyVisible() && secondNode->isCurrentlyVisible()) {
+        connectNodes(*firstNode, *secondNode);
+    }
 }
 
 void Route::swapNodeNamesConsideringUserChanges(RouteNode &fromNode, RouteNode &withNode, size_t index) {
@@ -349,9 +356,8 @@ void Route::swapNodeNamesConsideringUserChanges(RouteNode &fromNode, RouteNode &
     }
 }
 
-void Route::refreshNodeLabels(size_t index) {
-    auto labelText = index + 1;
-    for (; index < nodes.size(); ++index) {
+void Route::refreshNodeLabels(size_t index) {    
+    for (auto labelText = index + 1; index < nodes.size(); ++index) {
         if ((*nodes[index])->isCurrentlyVisible()) {
             (*nodes[index])->setNodeLabelText(QString::number(labelText++));
         }
