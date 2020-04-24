@@ -165,7 +165,8 @@ void Route::addNode(qreal x, qreal y) {
     removeTemporaryPreviewNode();
 
     auto previousNode = getLastVisibleRouteNode();
-    auto newNodeLabel = (previousNode) ? QString::number(previousNode->getNodeLabel()->text().toInt() + 1) : QString("0");
+    auto newNodeLabel = (previousNode) ? QString::number(previousNode->getNodeLabel()->text().toInt() + 1)
+                                       : QString("1");
 
     nodes.emplace_back(new RouteNode(nodeShapeFactory.generateNodeShape(shapeKey, {x, y}, routeColor),
                        newNodeLabel, currentState));
@@ -192,7 +193,6 @@ void Route::addTemporaryPreviewNode(qreal x, qreal y) {
 void Route::eraseNode(size_t index) {
     auto currentNodePos = nodes[index];
     auto currentNode = *currentNodePos;
-    currentScene->removeItem(currentNode->getFromConnection());
     currentScene->removeItem(currentNode->getToConnection());
     currentScene->removeItem(currentNode);
 
@@ -217,8 +217,10 @@ void Route::eraseNode(size_t index) {
 }
 
 void Route::eraseAllNodes() {
-    while (!nodes.empty()) {
-        eraseNode(0);
+    for (auto &currentNode = nodes.back(); !nodes.empty(); currentNode = nodes.back()) {
+        currentScene->removeItem(currentNode);
+        currentScene->removeItem(currentNode->getToConnection());
+        nodes.pop_back();
     }
 }
 

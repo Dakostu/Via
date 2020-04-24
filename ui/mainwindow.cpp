@@ -404,7 +404,7 @@ void MainWindow::disableSettingsBox() {
     ui->settingsBox->setEnabled(false);
     ui->routeNameLineEdit->clear();
     ui->routeColorButton->setFlat(true);
-    ui->routeNodeOrderCheckBox->setChecked(false);
+    ui->routeNodeOrderCheckBox->setEnabled(false);
 }
 
 void MainWindow::activateAutoAddMode() {
