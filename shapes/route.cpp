@@ -316,11 +316,11 @@ void Route::swapConnections(size_t firstNodeIndex, size_t secondNodeIndex) {
     connectNodes(firstNode, secondNode);
 
     if (firstNodeIndex > 0) {
-        auto &previousNode = **nodes[firstNodeIndex - 1];
+        auto &previousNode = *getPreviousVisibleRouteNode(firstNodeIndex);
         connectNodes(previousNode, firstNode);
     }
     if (secondNodeIndex < nodes.size() - 1) {
-        auto &nextNode = **nodes[secondNodeIndex + 1];
+        auto &nextNode = *getNextVisibleRouteNode(secondNodeIndex);
         connectNodes(secondNode, nextNode);
     }
 }
