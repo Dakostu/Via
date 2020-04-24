@@ -310,19 +310,33 @@ void Route::connectNodes(RouteNode &from, RouteNode &to) {
 void Route::swapConnections(size_t firstNodeIndex, size_t secondNodeIndex) {
     nodes.splice(nodes[firstNodeIndex], nodes, nodes[secondNodeIndex]);
 
-    auto &firstNode = **nodes[firstNodeIndex];
-    auto &secondNode = **nodes[secondNodeIndex];
+    auto firstNode = *nodes[firstNodeIndex];
+    auto secondNode = *nodes[secondNodeIndex];
 
-    connectNodes(firstNode, secondNode);
+    if (firstNodeIndex > 0 && !firstNode->isCurrentlyVisible()) {
+        firstNodeIndex = getIndexOfPreviousVisibileRouteNode(firstNodeIndex);
+        firstNode = *nodes[firstNodeIndex];
+    }
+    if (secondNodeIndex < nodes.size() - 1 && !secondNode->isCurrentlyVisible()) {
+        secondNodeIndex = getIndexOfNextVisibileRouteNode(secondNodeIndex);
+        secondNode = *nodes[secondNodeIndex];
+    }
 
     if (firstNodeIndex > 0) {
-        auto &previousNode = *getPreviousVisibleRouteNode(firstNodeIndex);
-        connectNodes(previousNode, firstNode);
+        auto previousNodeIndex = getIndexOfPreviousVisibileRouteNode(firstNodeIndex);
+        if (previousNodeIndex != std::numeric_limits<size_t>::max()) {
+            connectNodes(**nodes[previousNodeIndex], *firstNode);
+        }
     }
+
     if (secondNodeIndex < nodes.size() - 1) {
-        auto &nextNode = *getNextVisibleRouteNode(secondNodeIndex);
-        connectNodes(secondNode, nextNode);
+        auto nextNodeIndex = getIndexOfNextVisibileRouteNode(secondNodeIndex);
+        if (nextNodeIndex != std::numeric_limits<size_t>::max()) {
+            connectNodes(*secondNode, **nodes[nextNodeIndex]);
+        }
     }
+
+    connectNodes(*firstNode, *secondNode);
 }
 
 void Route::swapNodeNamesConsideringUserChanges(RouteNode &fromNode, RouteNode &withNode, size_t index) {
@@ -380,34 +394,48 @@ RouteNode* Route::getNextVisibleRouteNode(size_t index) {
     return nullptr;
 }
 
+size_t Route::getIndexOfPreviousVisibileRouteNode(size_t currentRouteNodeIndex) {
+    for (size_t i = currentRouteNodeIndex - 1; i != std::numeric_limits<size_t>::max(); --i) {
+        if ((*nodes[i])->isCurrentlyVisible()) {
+            return i;
+        }
+    }
+
+    return std::numeric_limits<size_t>::max();
+}
+
+size_t Route::getIndexOfNextVisibileRouteNode(size_t currentRouteNodeIndex) {
+    for (size_t i = currentRouteNodeIndex + 1; i < nodes.size(); ++i) {
+        if ((*nodes[i])->isCurrentlyVisible()) {
+            return i;
+        }
+    }
+
+    return std::numeric_limits<size_t>::max();
+}
 
 void Route::swapNodes(size_t firstNodeIndex, size_t secondNodeIndex) {
     auto &fromNode = *nodes[firstNodeIndex];
     auto &withNode = *nodes[secondNodeIndex];
 
-    auto tempNodeLabel = withNode->getNodeLabel()->text();
-    auto tempCenter = withNode->getCenter();
-    //auto tempExtraLabelText = withNode->getExtraText()->text();
-
     auto fromNodeCenter = fromNode->getCenter();
     auto withNodeCenter = withNode->getCenter();
 
     withNode->moveBy(fromNodeCenter.x() - withNodeCenter.x(), fromNodeCenter.y() - withNodeCenter.y());
-    withNode->setNodeLabelText(fromNode->getNodeLabel()->text());
-
-    fromNode->moveBy(tempCenter.x() - fromNodeCenter.x(), tempCenter.y() - fromNodeCenter.y());
-    fromNode->setNodeLabelText(tempNodeLabel);
+    fromNode->moveBy(withNodeCenter.x() - fromNodeCenter.x(), withNodeCenter.y() - fromNodeCenter.y());
 
     withNode->resetConnections();
     fromNode->resetConnections();
 
     if (firstNodeIndex < secondNodeIndex) {
         swapConnections(firstNodeIndex, secondNodeIndex);
-        swapNodeNamesConsideringUserChanges(*withNode, *fromNode, secondNodeIndex);
+        swapNodeNamesConsideringUserChanges(*withNode, *fromNode, secondNodeIndex);        
     } else {
         swapConnections(secondNodeIndex, firstNodeIndex);
         swapNodeNamesConsideringUserChanges(*fromNode, *withNode, firstNodeIndex);
     }
+
+    refreshNodeLabels();
 
 }
 

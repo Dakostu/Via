@@ -43,6 +43,8 @@ protected:
     Via::Shapes::RouteNode* getLastVisibleRouteNode();
     Via::Shapes::RouteNode* getPreviousVisibleRouteNode(size_t index);
     Via::Shapes::RouteNode* getNextVisibleRouteNode(size_t index);
+    size_t getIndexOfPreviousVisibileRouteNode(size_t currentRouteNodeIndex);
+    size_t getIndexOfNextVisibileRouteNode(size_t currentRouteNodeIndex);
 
 public:
     Route(const QColor &color, const QString &selectedStyle, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);
