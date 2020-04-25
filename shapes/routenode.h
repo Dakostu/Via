@@ -3,10 +3,9 @@
 
 #include "../controller/states/routenodestate.h"
 
-#include "../interfaces/nameable.h"
+#include "../interfaces/mapviewplaceable.h"
 #include "../interfaces/serializable.h"
 #include "../interfaces/shapekeyable.h"
-#include "../interfaces/viewcustomizable.h"
 
 #include "../ui/routenodelabel.h"
 #include "../ui/routeextratextlabel.h"
@@ -25,10 +24,9 @@ namespace Via::Control {
 namespace Via::Shapes {
 
 class RouteNode : public QGraphicsItemGroup,
-        public Via::Interfaces::ViewCustomizable,
+        public Via::Interfaces::MapViewPlaceable,
         public Via::Interfaces::Serializable,
-        public Via::Interfaces::ShapeKeyable,
-        public Via::Interfaces::Nameable
+        public Via::Interfaces::ShapeKeyable
 {
 
 protected:
@@ -56,6 +54,8 @@ public:
     QJsonObject toJSON() override;
 
     char getShapeKey() const override;
+
+    void setVisible(bool isVisible) override;
 
     void hoverEnterEvent(QGraphicsSceneHoverEvent* hoverEvent) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent* hoverEvent) override;

@@ -48,7 +48,18 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
 
     connect(this, &MainWindow::routeListChanged, this, &MainWindow::updateRouteList);
     connect(this, &MainWindow::routeNodeListChanged, this, &MainWindow::updateNodeList);
+
     connect(&controller, &MainWindowController::currentProjectChanged, this, &MainWindow::getDataFromCurrentProject);
+    connect(&controller, &MainWindowController::needToChangeVisibilityOfRoute, this,
+            [&](auto routeIndex, auto visible) {
+        controller.getRouteOfCurrentProject(routeIndex).setVisible(visible);
+    });
+    connect(&controller, &MainWindowController::needToChangeVisibilityOfCurrentRouteNode, this,
+            [&](auto nodeIndex, auto visible) {
+        controller.getRouteOfCurrentProject(selectedRouteIndex).setVisibilityOfNode(nodeIndex, visible);
+    });
+
+
     connect(ui->picture, &MapView::needTempPreviewNodeRemoved, this, [&]() {
         getCurrentRoute()->removeTemporaryPreviewNode();
     });
@@ -221,13 +232,14 @@ void MainWindow::deleteSelectedRoute() {
         return;
     }
 
-    getCurrentRoute()->eraseAllNodes();
+    controller.deleteRoute(selectedRouteIndex);
 
     emit routeListChanged();
 
-    auto newRowCount = ui->routeBoxRouteList->model()->rowCount();
+    auto newRowCount = static_cast<size_t>(ui->routeBoxRouteList->model()->rowCount());
     if (newRowCount != 0) {
-        ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex - (selectedRouteIndex == static_cast<size_t>(newRowCount)));
+        selectedRouteIndex = std::min(selectedRouteIndex, newRowCount - 1);
+        ui->routeBoxRouteList->moveSelectionTo(selectedRouteIndex);
     }
 
 }
@@ -392,7 +404,7 @@ void MainWindow::disableSettingsBox() {
     ui->settingsBox->setEnabled(false);
     ui->routeNameLineEdit->clear();
     ui->routeColorButton->setFlat(true);
-    ui->routeNodeOrderCheckBox->setChecked(false);
+    ui->routeNodeOrderCheckBox->setEnabled(false);
 }
 
 void MainWindow::activateAutoAddMode() {
@@ -431,7 +443,8 @@ void MainWindow::deleteSelectedRouteNode() {
 
     auto newRowCount = static_cast<size_t>(ui->nodeBoxNodeList->model()->rowCount());
     if (newRowCount != 0) {
-        ui->nodeBoxNodeList->moveSelectionTo(selectedRouteNodeIndex - (selectedRouteNodeIndex == newRowCount));
+        selectedRouteNodeIndex = std::min(selectedRouteNodeIndex, newRowCount - 1);
+        ui->nodeBoxNodeList->moveSelectionTo(selectedRouteNodeIndex);
     }
 }
 

@@ -15,6 +15,7 @@ struct RouteData : public Data
     static inline const char* ROUTE_SHOW_ORDER_KEY = "o";
     static inline const char* ROUTE_SHAPE_KEY = "p";
     static inline const char* ROUTE_NODES_KEY = "a";
+    static inline const char* ROUTE_VISIBLE_KEY = "i";
 
 };
 

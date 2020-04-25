@@ -17,7 +17,13 @@ MainWindowController::MainWindowController()
       currentMapViewState(new MapViewMoveNodeState),
       currentRouteNodeState(new RouteNodeMoveNodeState)
 {
+    connect(&currentRouteTitles, &CheckableStringListModel::rowCheckChanged, this, [&](auto row, auto visible) {
+        emit needToChangeVisibilityOfRoute(row, visible);
+    });
 
+    connect(&currentRouteNodeTitles, &CheckableStringListModel::rowCheckChanged, this, [&](auto row, auto visible) {
+        emit needToChangeVisibilityOfCurrentRouteNode(row, visible);
+    });
 }
 
 void MainWindowController::saveCurrentProjectAs(const QString &fileName) {
@@ -62,14 +68,18 @@ void MainWindowController::addFileToRecentlyOpenedProjects(const QString &fileNa
 
 }
 
-void MainWindowController::updateStringListModel(QStringListModel &model, const IndexList<Nameable*> &nameables) {
-    QStringList currentList;
+void MainWindowController::updateStringListModel(CheckableStringListModel &model,
+                                                 const std::vector<MapViewPlaceable*> &mapViewPlaceables) {
+    model.removeRows(0, model.rowCount());
+    model.insertRows(0, mapViewPlaceables.size());
 
-    for (const auto &nameable : nameables) {
-        currentList << nameable->getName();
+    for (size_t i = 0; i < mapViewPlaceables.size(); ++i) {
+        auto modelIndex = model.index(static_cast<int>(i));
+        auto checkState = mapViewPlaceables[i]->isCurrentlyVisible() ? Qt::Checked : Qt::Unchecked;
+
+        model.setDataWithoutSignalEmissions(modelIndex, checkState, Qt::CheckStateRole);
+        model.setDataWithoutSignalEmissions(modelIndex, mapViewPlaceables[i]->getName(), Qt::DisplayRole);
     }
-
-    model.setStringList(currentList);
 }
 
 Project* MainWindowController::getCurrentProject() {
@@ -82,22 +92,20 @@ void MainWindowController::setCurrentProject(Project *project) {
 }
 
 QStringListModel& MainWindowController::getCurrentRouteTitles() {
-    auto &routes = currentProject->getRoutes();
-    IndexList<Nameable*> nameables;
-    for (const auto route : routes) {
-        nameables.emplace_back(route);
-    }
-    updateStringListModel(currentRouteTitles, nameables);
+    auto routes = currentProject->getRoutes();
+    std::vector<MapViewPlaceable*> mapViewPlaceables(routes.begin(), routes.end());
+
+    updateStringListModel(currentRouteTitles, mapViewPlaceables);
+
     return currentRouteTitles;
 }
 
 QStringListModel& MainWindowController::getNodeTitlesOfRoute(size_t index) {
-    auto &routeNodes = (*currentProject->getRoutes()[index])->getNodes();
-    IndexList<Nameable*> nameables;
-    for (const auto routeNode : routeNodes) {
-        nameables.emplace_back(routeNode);
-    }
-    updateStringListModel(currentRouteNodeTitles, nameables);
+    auto routeNodes = (currentProject->getRoutes()[index])->getNodes();
+    std::vector<MapViewPlaceable*> mapViewPlaceables(routeNodes.begin(), routeNodes.end());
+
+    updateStringListModel(currentRouteNodeTitles, mapViewPlaceables);
+
     return currentRouteNodeTitles;
 }
 
@@ -123,6 +131,10 @@ RouteNode& MainWindowController::getRouteNodeofCurrentProject(size_t routeIndex,
 
 void MainWindowController::swapRoutesOfCurrentProject(size_t firstRoute, size_t secondRoute) {
     currentProject->swapRoutes(firstRoute, secondRoute);
+}
+
+void MainWindowController::deleteRoute(size_t routeIndex) {
+    currentProject->deleteRoute(routeIndex);
 }
 
 void MainWindowController::addNewRouteToCurrentProject(Route &newRoute) {

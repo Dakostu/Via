@@ -1,12 +1,16 @@
 #ifndef MAINWINDOWCONTROLLER_H
 #define MAINWINDOWCONTROLLER_H
 
+#include "../model/checkablestringlistmodel.h"
 #include "../model/project.h"
+
 #include "../controller/states/uistate.h"
 #include "../controller/states/mainwindowstate.h"
 #include "../controller/states/mapviewstate.h"
 #include "../controller/states/routenodestate.h"
+
 #include "../shapes/route.h"
+
 #include <memory>
 #include <QObject>
 #include <QStringListModel>
@@ -25,11 +29,12 @@ class MainWindowController : public QObject
     std::unique_ptr<MainWindowState> currentMainWindowState;
     std::unique_ptr<MapViewState> currentMapViewState;
     std::unique_ptr<RouteNodeState> currentRouteNodeState;
-    QStringListModel currentRouteTitles;
-    QStringListModel currentRouteNodeTitles;
+    Via::Model::CheckableStringListModel currentRouteTitles;
+    Via::Model::CheckableStringListModel currentRouteNodeTitles;
 
     void addFileToRecentlyOpenedProjects(const QString &fileName);
-    void updateStringListModel(QStringListModel &model, const Via::Structures::IndexList<Via::Interfaces::Nameable*> &nameables);
+    void updateStringListModel(Via::Model::CheckableStringListModel &model,
+                               const std::vector<Via::Interfaces::MapViewPlaceable*> &mapViewPlaceables);
 
 public:
 
@@ -55,7 +60,7 @@ public:
     Via::Shapes::Route& getRouteOfCurrentProject(size_t routeIndex);
     Via::Shapes::RouteNode& getRouteNodeofCurrentProject(size_t routeIndex, size_t routeNodeIndex);
     void swapRoutesOfCurrentProject(size_t firstRoute, size_t secondRoute);
-
+    void deleteRoute(size_t routeIndex);
 
 public slots:
 
@@ -64,9 +69,10 @@ public slots:
     void saveCurrentProjectAs(const QString &fileName);
     void loadCurrentProjectFromFile(const QString &fileName);
 
-
 signals:
     void currentProjectChanged();
+    void needToChangeVisibilityOfRoute(int routeIndex, bool visible);
+    void needToChangeVisibilityOfCurrentRouteNode(int routeNodeIndex, bool visible);
 
 };
 

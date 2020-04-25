@@ -33,6 +33,9 @@ Route::Route(const QJsonObject &object, QGraphicsScene *scene, std::unique_ptr<V
     fromJSON(object);
 }
 
+Route::~Route() {
+    eraseAllNodes();
+}
 
 void Route::setShapeKey(const QString &newStyle) {
     setShapeKey(nodeShapeFactory.getShapeKeyFromUIString(newStyle));
@@ -78,7 +81,11 @@ void Route::fromJSON(const QJsonObject &object) {
             auto shapeKey = nodeJSONObject[RouteNodeData::NODE_SHAPE_KEY].toInt();
             newNode->setShape(nodeShapeFactory.generateNodeShape(static_cast<char>(shapeKey), newNode->getCenter(), newNode->getColors()));
         }
+
+        setVisibilityOfNode(nodes.size() - 1, newNode->isCurrentlyVisible());
     }
+
+    setVisible(object[RouteData::ROUTE_VISIBLE_KEY].toBool());
 }
 
 QJsonObject Route::toJSON() {
@@ -91,6 +98,7 @@ QJsonObject Route::toJSON() {
     routeJSON[RouteData::ROUTE_COLOR_KEY] = QJsonArray({currentColor.red(), currentColor.green(), currentColor.blue()});
     routeJSON[RouteData::ROUTE_SHOW_ORDER_KEY] = showOrder;
     routeJSON[RouteData::ROUTE_SHAPE_KEY] = shapeKey;
+    routeJSON[RouteData::ROUTE_VISIBLE_KEY] = visible;
 
     QJsonArray nodesJSON;
     for (const auto &node : nodes) {
@@ -100,6 +108,22 @@ QJsonObject Route::toJSON() {
     routeJSON[RouteData::ROUTE_NODES_KEY] = nodesJSON;
 
     return routeJSON;
+}
+
+void Route::setVisible(bool isVisible) {
+    VisibilityChangeable::setVisible(isVisible);
+
+    std::function<qreal(RouteNode&)> routeNoteVisibilityValue;
+
+    if (isVisible) {
+        routeNoteVisibilityValue = [](auto &node) { return node.isCurrentlyVisible(); };
+    } else {
+        routeNoteVisibilityValue = [](auto &node) { return 0.0; };
+    }
+
+    for (auto &node : nodes) {
+        node->setOpacity(routeNoteVisibilityValue(*node));
+    }
 }
 
 QColor Route::getColors() const {
@@ -124,7 +148,8 @@ void Route::activateColors() {
 }
 
 bool Route::hasTemporaryPreviewNode() {
-    return nodes.back() && nodes.back()->opacity() <= TEMPORARY_NODE_OPACITY;
+    auto lastNode = nodes.back();
+    return lastNode && 0.0 < lastNode->opacity() && lastNode->opacity() <= TEMPORARY_NODE_OPACITY;
 }
 
 void Route::removeTemporaryPreviewNode() {
@@ -139,9 +164,12 @@ void Route::removeTemporaryPreviewNode() {
 void Route::addNode(qreal x, qreal y) {
     removeTemporaryPreviewNode();
 
-    auto previousNode = nodes.back();
+    auto previousNode = getLastVisibleRouteNode();
+    auto newNodeLabel = (previousNode) ? QString::number(previousNode->getNodeLabel()->text().toInt() + 1)
+                                       : QString("1");
+
     nodes.emplace_back(new RouteNode(nodeShapeFactory.generateNodeShape(shapeKey, {x, y}, routeColor),
-                       QString::number(nodes.size() + 1), currentState));
+                       newNodeLabel, currentState));
 
     auto newNode = nodes.back();
     newNode->setElementSize(getElementSize());
@@ -165,7 +193,6 @@ void Route::addTemporaryPreviewNode(qreal x, qreal y) {
 void Route::eraseNode(size_t index) {
     auto currentNodePos = nodes[index];
     auto currentNode = *currentNodePos;
-    currentScene->removeItem(currentNode->getFromConnection());
     currentScene->removeItem(currentNode->getToConnection());
     currentScene->removeItem(currentNode);
 
@@ -186,15 +213,14 @@ void Route::eraseNode(size_t index) {
         connectNodes(previousNode, *currentNode);
     }
 
-    for (; currentNodePos != nodes.end(); ++currentNodePos) {
-        (*currentNodePos)->setNodeLabelText(QString::number(index + 1));
-        ++index;
-    }
+    refreshNodeLabels(index);
 }
 
 void Route::eraseAllNodes() {
-    while (!nodes.empty()) {
-        eraseNode(0);
+    for (auto &currentNode = nodes.back(); !nodes.empty(); currentNode = nodes.back()) {
+        currentScene->removeItem(currentNode);
+        currentScene->removeItem(currentNode->getToConnection());
+        nodes.pop_back();
     }
 }
 
@@ -211,6 +237,43 @@ void Route::setCurrentScene(QGraphicsScene *value)
 void Route::setCurrentState(std::unique_ptr<Via::Control::RouteNodeState> &value)
 {
     currentState.swap(value);
+}
+
+void Route::setVisibilityOfNode(size_t routeNodeIndex, bool isVisible) {
+    auto &currentNode = **nodes[routeNodeIndex];
+    currentNode.setVisible(isVisible);
+
+    auto previousVisibleNode = getPreviousVisibleRouteNode(routeNodeIndex);
+    auto nextVisibleNode = getNextVisibleRouteNode(routeNodeIndex);
+
+    auto nodeIsBetweenBeginningAndEnd = 0 < routeNodeIndex && routeNodeIndex < nodes.size() - 1;
+
+    if (isVisible) {
+        if (nodeIsBetweenBeginningAndEnd) {
+            if (previousVisibleNode) {
+                connectNodes(*previousVisibleNode, currentNode);
+            }
+            if (nextVisibleNode) {
+                connectNodes(currentNode, *nextVisibleNode);
+            }
+        } else if (nextVisibleNode) {
+            connectNodes(currentNode, *nextVisibleNode);
+        } else if (previousVisibleNode) {
+            connectNodes(*previousVisibleNode, currentNode);
+        }
+    } else {
+        currentNode.resetConnections();
+
+        if (nodeIsBetweenBeginningAndEnd && previousVisibleNode && nextVisibleNode) {
+            connectNodes(*previousVisibleNode, *nextVisibleNode);
+        } else if (nextVisibleNode) {
+            nextVisibleNode->resetFromConnection();
+        } else if (previousVisibleNode) {
+            previousVisibleNode->resetToConnection();
+        }
+    }
+
+    refreshNodeLabels();
 }
 
 bool Route::getShowOrder() const
@@ -247,18 +310,39 @@ void Route::connectNodes(RouteNode &from, RouteNode &to) {
 void Route::swapConnections(size_t firstNodeIndex, size_t secondNodeIndex) {
     nodes.splice(nodes[firstNodeIndex], nodes, nodes[secondNodeIndex]);
 
-    auto &firstNode = **nodes[firstNodeIndex];
-    auto &secondNode = **nodes[secondNodeIndex];
+    auto firstNode = *nodes[firstNodeIndex];
+    auto secondNode = *nodes[secondNodeIndex];
 
-    connectNodes(firstNode, secondNode);
+    if (firstNodeIndex > 0 && !firstNode->isCurrentlyVisible()) {
+        firstNodeIndex = getIndexOfPreviousVisibileRouteNode(firstNodeIndex);
+        if (firstNodeIndex != std::numeric_limits<size_t>::max()) {
+            firstNode = *nodes[firstNodeIndex];
+        }
+    }
+
+    if (secondNodeIndex < nodes.size() && !secondNode->isCurrentlyVisible()) {
+        secondNodeIndex = getIndexOfNextVisibileRouteNode(secondNodeIndex);
+        if (secondNodeIndex != std::numeric_limits<size_t>::max()) {
+            secondNode = *nodes[secondNodeIndex];
+        }
+    }
 
     if (firstNodeIndex > 0) {
-        auto &previousNode = **nodes[firstNodeIndex - 1];
-        connectNodes(previousNode, firstNode);
+        firstNodeIndex = getIndexOfPreviousVisibileRouteNode(firstNodeIndex);
+        if (firstNodeIndex != std::numeric_limits<size_t>::max()) {
+            connectNodes(**nodes[firstNodeIndex], *firstNode);
+        }
     }
+
     if (secondNodeIndex < nodes.size() - 1) {
-        auto &nextNode = **nodes[secondNodeIndex + 1];
-        connectNodes(secondNode, nextNode);
+        secondNodeIndex = getIndexOfNextVisibileRouteNode(secondNodeIndex);
+        if (secondNodeIndex != std::numeric_limits<size_t>::max()) {
+            connectNodes(*secondNode, **nodes[secondNodeIndex]);
+        }
+    }
+
+    if (firstNode->isCurrentlyVisible() && secondNode->isCurrentlyVisible()) {
+        connectNodes(*firstNode, *secondNode);
     }
 }
 
@@ -272,33 +356,92 @@ void Route::swapNodeNamesConsideringUserChanges(RouteNode &fromNode, RouteNode &
     }
 }
 
+void Route::refreshNodeLabels(size_t index) {    
+    for (auto labelText = index + 1; index < nodes.size(); ++index) {
+        if ((*nodes[index])->isCurrentlyVisible()) {
+            (*nodes[index])->setNodeLabelText(QString::number(labelText++));
+        }
+    }
+}
+
+RouteNode* Route::getLastVisibleRouteNode() {
+    for (auto reverseIt = nodes.rbegin(); reverseIt != nodes.rend(); ++reverseIt) {
+        if ((*reverseIt)->isCurrentlyVisible()) {
+            return *reverseIt;
+        }
+    }
+
+    return nullptr;
+}
+
+RouteNode* Route::getPreviousVisibleRouteNode(size_t index) {
+    for (auto previousNodeIndex = index - 1; previousNodeIndex != std::numeric_limits<size_t>::max(); --previousNodeIndex) {
+        if ((*nodes[previousNodeIndex])->isCurrentlyVisible()) {
+            return (*nodes[previousNodeIndex]);
+        }
+    }
+
+    return nullptr;
+}
+
+RouteNode* Route::getNextVisibleRouteNode(size_t index) {
+    auto nextNodeIndex = index + 1;
+
+    if (nextNodeIndex == 0 || nextNodeIndex >= nodes.size()) {
+        return nullptr;
+    }
+
+    for (auto it = nodes[nextNodeIndex]; it != nodes.end(); ++it) {
+        if ((*it)->isCurrentlyVisible()) {
+            return *it;
+        }
+    }
+
+    return nullptr;
+}
+
+size_t Route::getIndexOfPreviousVisibileRouteNode(size_t currentRouteNodeIndex) {
+    for (size_t i = currentRouteNodeIndex - 1; i != std::numeric_limits<size_t>::max(); --i) {
+        if ((*nodes[i])->isCurrentlyVisible()) {
+            return i;
+        }
+    }
+
+    return std::numeric_limits<size_t>::max();
+}
+
+size_t Route::getIndexOfNextVisibileRouteNode(size_t currentRouteNodeIndex) {
+    for (size_t i = currentRouteNodeIndex + 1; i < nodes.size(); ++i) {
+        if ((*nodes[i])->isCurrentlyVisible()) {
+            return i;
+        }
+    }
+
+    return std::numeric_limits<size_t>::max();
+}
+
 void Route::swapNodes(size_t firstNodeIndex, size_t secondNodeIndex) {
     auto &fromNode = *nodes[firstNodeIndex];
     auto &withNode = *nodes[secondNodeIndex];
-
-    auto tempNodeLabel = withNode->getNodeLabel()->text();
-    auto tempCenter = withNode->getCenter();
-    //auto tempExtraLabelText = withNode->getExtraText()->text();
 
     auto fromNodeCenter = fromNode->getCenter();
     auto withNodeCenter = withNode->getCenter();
 
     withNode->moveBy(fromNodeCenter.x() - withNodeCenter.x(), fromNodeCenter.y() - withNodeCenter.y());
-    withNode->setNodeLabelText(fromNode->getNodeLabel()->text());
-
-    fromNode->moveBy(tempCenter.x() - fromNodeCenter.x(), tempCenter.y() - fromNodeCenter.y());
-    fromNode->setNodeLabelText(tempNodeLabel);
+    fromNode->moveBy(withNodeCenter.x() - fromNodeCenter.x(), withNodeCenter.y() - fromNodeCenter.y());
 
     withNode->resetConnections();
     fromNode->resetConnections();
 
     if (firstNodeIndex < secondNodeIndex) {
         swapConnections(firstNodeIndex, secondNodeIndex);
-        swapNodeNamesConsideringUserChanges(*withNode, *fromNode, secondNodeIndex);
+        swapNodeNamesConsideringUserChanges(*withNode, *fromNode, secondNodeIndex);        
     } else {
         swapConnections(secondNodeIndex, firstNodeIndex);
         swapNodeNamesConsideringUserChanges(*fromNode, *withNode, firstNodeIndex);
     }
+
+    refreshNodeLabels();
 
 }
 

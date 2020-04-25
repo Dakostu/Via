@@ -43,9 +43,16 @@ QString Project::getFileName() const
     return fileName;
 }
 
-IndexList<Route*>& Project::getRoutes()
+std::vector<Route*> Project::getRoutes()
 {
-    return routes;
+    std::vector<Route*> routePointers(routes.size());
+    auto currentRoute = routes.begin();
+
+    for (size_t i = 0; i < routes.size(); ++i) {
+        routePointers[i] = (currentRoute++)->get();
+    }
+
+    return routePointers;
 }
 
 void Project::setFileName(const QString &value)
@@ -109,10 +116,11 @@ void Project::swapRoutes(size_t i, size_t j) {
     auto &firstRoute = *routes[i];
     auto &secondRoute = *routes[j];
 
-    std::swap(firstRoute, secondRoute);
+    firstRoute.swap(secondRoute);
 
     // swap back
-    firstRoute->swapNamesWith(secondRoute);
+
+    firstRoute->swapNamesWith(secondRoute.get());
 }
 
 bool Project::operator==(const Project &other) const {

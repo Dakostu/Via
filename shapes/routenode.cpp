@@ -93,12 +93,13 @@ void RouteNode::fromJSON(const QJsonObject &object) {
     setStyleDiffersFromRoute(object[RouteNodeData::NODE_DIFFERENT_STYLE_KEY].toBool());
     setNameChangedByUser(object[RouteNodeData::NODE_NAME_CHANGED_KEY].toBool());
     setExtraLabelText(object[RouteNodeData::NODE_EXTRA_LABEL_TEXT_KEY].toString());
-    //invisible = object[RouteNodeData::NODE_INVISIBLE_KEY].toBool();
 
     if (styleDiffersFromRoute) {
         setColors(QColor(object[RouteNodeData::NODE_COLOR_KEY][0].toInt(), object[RouteNodeData::NODE_COLOR_KEY][1].toInt(), object[RouteNodeData::NODE_COLOR_KEY][2].toInt()));
         setElementSize(object[RouteNodeData::NODE_SIZE_KEY].toInt());
     }
+
+    setVisible(object[RouteNodeData::NODE_VISIBLE_KEY].toBool());
 }
 
 QJsonObject RouteNode::toJSON() {
@@ -112,7 +113,7 @@ QJsonObject RouteNode::toJSON() {
     routeNodeJSON[RouteNodeData::NODE_Y_KEY] = std::round(pos.y());
     routeNodeJSON[RouteNodeData::NODE_DIFFERENT_STYLE_KEY] = styleDiffersFromRoute;
     routeNodeJSON[RouteNodeData::NODE_NAME_CHANGED_KEY] = nameChangedByUser;
-    //routeNodeJSON[RouteNodeData::NODE_INVISIBLE_KEY] = false;
+    routeNodeJSON[RouteNodeData::NODE_VISIBLE_KEY] = visible;
 
     if (styleDiffersFromRoute) {
         auto currentColor = getColors();
@@ -149,6 +150,12 @@ char RouteNode::getShapeKey() const {
     return node->getShapeKey();
 }
 
+void RouteNode::setVisible(bool isVisible) {
+    VisibilityChangeable::setVisible(isVisible);
+
+    this->setOpacity(isVisible);
+}
+
 void RouteNode::centerNodeLabelBox() {
     auto center = node->getCenterOfShape();
     auto nodeLabelBox = nodeLabel.boundingRect();
@@ -173,6 +180,9 @@ void RouteNode::setOpacity(qreal opacity) {
     QGraphicsItem::setOpacity(opacity);
     nodeLabel.setOpacity(opacity);
     extraLabel.setOpacity(opacity);
+    if (toConnection) {
+        toConnection->setOpacity(opacity);
+    }
 }
 
 void RouteNode::setNodeLabelOpacity(qreal opacity) {
@@ -246,7 +256,7 @@ RouteConnection* RouteNode::getToConnection() {
 void RouteNode::connect(RouteNode &from) {
     auto color = node->brush().color();
     auto connection = new RouteConnection(from.boundingRect().center() + from.pos(), this->boundingRect().center(), color);
-    connection->setElementSize(elementSize);
+    connection->setElementSize(elementSize);    
     from.toConnection.reset(connection);
     fromConnection = connection;
 }
