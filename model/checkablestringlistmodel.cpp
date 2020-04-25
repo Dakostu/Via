@@ -30,9 +30,9 @@ QVariant CheckableStringListModel::data(const QModelIndex &index, int role) cons
 
     if (role == Qt::CheckStateRole) {
         return checkedItems.contains(index) ? Qt::Checked : Qt::Unchecked;
-    } /*else if (role == Qt::DecorationRole) {
-        return QColor("#ffffb2");
-    }*/
+    } else if (role == Qt::DecorationRole) {
+        return QColor(itemPreviewColors[index]);
+    }
 
     return QStringListModel::data(index, role);
 }
@@ -52,6 +52,10 @@ bool CheckableStringListModel::setDataWithoutSignalEmissions(const QModelIndex &
         }
 
         return true;
+    }
+
+    case (Qt::DecorationRole): {
+        itemPreviewColors[index] = QColor(value.toString());
     }
 
     default: {
