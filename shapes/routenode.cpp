@@ -59,6 +59,10 @@ void RouteNode::setElementSize(int newSize) {
     }
 }
 
+QColor RouteNode::getColors() {
+    return node->getColors();
+}
+
 void RouteNode::setColors(const QColor &color) {
     node->setColors(color);
     extraLabel.setColors(color);

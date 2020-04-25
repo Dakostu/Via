@@ -53,7 +53,7 @@ public:
 
     ~Route();
 
-    virtual QColor getColors() const;
+    QColor getColors() override;
 
     void setColors(const QColor &color) override;
     void activateColors() override;

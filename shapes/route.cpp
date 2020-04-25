@@ -126,7 +126,7 @@ void Route::setVisible(bool isVisible) {
     }
 }
 
-QColor Route::getColors() const {
+QColor Route::getColors() {
     return routeColor;
 }
 

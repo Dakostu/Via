@@ -79,6 +79,7 @@ void MainWindowController::updateStringListModel(CheckableStringListModel &model
 
         model.setDataWithoutSignalEmissions(modelIndex, checkState, Qt::CheckStateRole);
         model.setDataWithoutSignalEmissions(modelIndex, mapViewPlaceables[i]->getName(), Qt::DisplayRole);
+        model.setDataWithoutSignalEmissions(modelIndex, mapViewPlaceables[i]->getColors(), Qt::DecorationRole);
     }
 }
 

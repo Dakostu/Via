@@ -17,6 +17,9 @@ void RouteNodeLabel::setElementSize(int newSize) {
     this->setFont(font);
 }
 
+QColor RouteNodeLabel::getColors() {
+    return brush().color();
+}
 
 void RouteNodeLabel::setColors(const QColor &color) {
     setBrush(color);

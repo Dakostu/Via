@@ -20,6 +20,7 @@ public:
     RouteExtraTextLabel(const QString &text, Via::Shapes::RouteNodeShape *parent);
 
     void setElementSize(int newSize) override;
+    QColor getColors() override;
     void setColors(const QColor &color) override;
     void activateColors() override;
 

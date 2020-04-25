@@ -16,6 +16,7 @@ public:
     RouteNodeLabel(const QString &text);
 
     void setElementSize(int newSize) override;
+    QColor getColors() override;
     void setColors(const QColor &color) override;
     void activateColors() override;
 

@@ -22,6 +22,10 @@ void RouteExtraTextLabel::setElementSize(int newSize) {
     this->setFont(font);
 }
 
+QColor RouteExtraTextLabel::getColors() {
+    return brush().color();
+}
+
 void RouteExtraTextLabel::setColors(const QColor &color) {
     setBrush(color);
 }
