@@ -350,16 +350,6 @@ void Route::swapConnections(size_t firstNodeIndex, size_t secondNodeIndex) {
     }
 }
 
-void Route::swapNodeNamesConsideringUserChanges(RouteNode &fromNode, RouteNode &withNode, size_t index) {
-    if (fromNode.isNameChangedByUser() && !withNode.isNameChangedByUser()) {
-        withNode.setName(QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(index + 1)));
-    } else if (!fromNode.isNameChangedByUser() && withNode.isNameChangedByUser()) {
-        fromNode.setName(QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(index)));
-    } else if (!fromNode.isNameChangedByUser() && !withNode.isNameChangedByUser()) {
-        fromNode.swapNamesWith(&withNode);
-    }
-}
-
 void Route::refreshNodeLabels(size_t index) {    
     for (auto labelText = index + 1; index < nodes.size(); ++index) {
         if ((*nodes[index])->isCurrentlyVisible()) {
@@ -437,12 +427,21 @@ void Route::swapNodes(size_t firstNodeIndex, size_t secondNodeIndex) {
     withNode->resetConnections();
     fromNode->resetConnections();
 
+    QString nodeDefaultNamePlusOne;
+    QString nodeDefaultName;
+
     if (firstNodeIndex < secondNodeIndex) {
+        nodeDefaultNamePlusOne = QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(secondNodeIndex + 1));
+        nodeDefaultName = QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(secondNodeIndex));
+
         swapConnections(firstNodeIndex, secondNodeIndex);
-        swapNodeNamesConsideringUserChanges(*withNode, *fromNode, secondNodeIndex);        
+        withNode->swapNamesConsideringDefaultNamesWith(fromNode, nodeDefaultName, nodeDefaultNamePlusOne);
     } else {
+        nodeDefaultNamePlusOne = QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(firstNodeIndex + 1));
+        nodeDefaultName = QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(firstNodeIndex));
+
         swapConnections(secondNodeIndex, firstNodeIndex);
-        swapNodeNamesConsideringUserChanges(*fromNode, *withNode, firstNodeIndex);
+        fromNode->swapNamesConsideringDefaultNamesWith(withNode, nodeDefaultName, nodeDefaultNamePlusOne);
     }
 
     refreshNodeLabels();
