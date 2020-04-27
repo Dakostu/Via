@@ -17,11 +17,11 @@ MainWindowController::MainWindowController()
       currentMapViewState(new MapViewMoveNodeState),
       currentRouteNodeState(new RouteNodeMoveNodeState)
 {
-    connect(&currentRouteTitles, &CheckableStringListModel::rowCheckChanged, this, [&](auto row, auto visible) {
+    connect(&currentRouteList, &CheckableStringListModel::rowCheckChanged, this, [&](auto row, auto visible) {
         emit needToChangeVisibilityOfRoute(row, visible);
     });
 
-    connect(&currentRouteNodeTitles, &CheckableStringListModel::rowCheckChanged, this, [&](auto row, auto visible) {
+    connect(&currentRouteNodeList, &CheckableStringListModel::rowCheckChanged, this, [&](auto row, auto visible) {
         emit needToChangeVisibilityOfCurrentRouteNode(row, visible);
     });
 }
@@ -96,18 +96,18 @@ QStringListModel& MainWindowController::getCurrentRouteTitles() {
     auto routes = currentProject->getRoutes();
     std::vector<MapViewPlaceable*> mapViewPlaceables(routes.begin(), routes.end());
 
-    updateStringListModel(currentRouteTitles, mapViewPlaceables);
+    updateStringListModel(currentRouteList, mapViewPlaceables);
 
-    return currentRouteTitles;
+    return currentRouteList;
 }
 
 QStringListModel& MainWindowController::getNodeTitlesOfRoute(size_t index) {
     auto routeNodes = (currentProject->getRoutes()[index])->getNodes();
     std::vector<MapViewPlaceable*> mapViewPlaceables(routeNodes.begin(), routeNodes.end());
 
-    updateStringListModel(currentRouteNodeTitles, mapViewPlaceables);
+    updateStringListModel(currentRouteNodeList, mapViewPlaceables);
 
-    return currentRouteNodeTitles;
+    return currentRouteNodeList;
 }
 
 std::unique_ptr<MainWindowState>& MainWindowController::getCurrentMainWindowState() {
@@ -139,13 +139,13 @@ void MainWindowController::deleteRoute(size_t routeIndex) {
 }
 
 void MainWindowController::updateRouteNodeColor(size_t routeNodeIndex, const QColor &newColor) {
-    auto modelIndex = currentRouteNodeTitles.index(routeNodeIndex);
-    currentRouteNodeTitles.setData(modelIndex, newColor, Qt::DecorationRole);
+    auto modelIndex = currentRouteNodeList.index(routeNodeIndex);
+    currentRouteNodeList.setData(modelIndex, newColor, Qt::DecorationRole);
 }
 
 void MainWindowController::updateRouteColor(size_t routeIndex, const QColor &newColor) {
-    auto modelIndex = currentRouteTitles.index(routeIndex);
-    currentRouteTitles.setData(modelIndex, newColor, Qt::DecorationRole);
+    auto modelIndex = currentRouteList.index(routeIndex);
+    currentRouteList.setData(modelIndex, newColor, Qt::DecorationRole);
 }
 
 void MainWindowController::addNewRouteToCurrentProject(Route &newRoute) {
