@@ -165,6 +165,35 @@ public:
         }
     }
 
+    template <typename OnlyNode>
+    void moveElementEvent(int by) {
+
+        size_t selectedIndex;
+        std::function<void(size_t)> moveElements;
+        std::function<void(void)> updateSignal;
+        RouteDataView *dataView;
+
+        if constexpr (OnlyNode::value == true) {
+            updateSignal = [&]() { emit routeNodeListChanged(); };
+            moveElements = [&](size_t firstIndex) {
+                controller.swapRoutesOfCurrentProject(firstIndex, firstIndex + by);
+            };
+            dataView = ui->nodeBoxNodeList;
+            selectedIndex = selectedRouteNodeIndex;
+        } else {
+            updateSignal = [&]() { emit routeListChanged(); };
+            moveElements = [&](size_t firstIndex) {
+                getCurrentRoute()->swapNodes(firstIndex, firstIndex + by);
+            };
+            dataView = ui->routeBoxRouteList;
+            selectedIndex = selectedRouteIndex;
+        }
+
+        moveElements(selectedIndex);
+        updateSignal();
+        dataView->moveSelectionTo(selectedIndex + by);
+    }
+
 
 public slots:
     void addRoute();    
