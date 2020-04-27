@@ -343,7 +343,7 @@ void MainWindow::updateNodeList() {
 }
 
 void MainWindow::routeSelectionEvent() {
-    refreshIndex<RouteIndex>();
+    refreshIndex<RouteAction>();
 
     auto lastRow = static_cast<size_t>(ui->routeBoxRouteList->model()->rowCount() - 1);
     ui->routeBoxButtonDeleteRoute->setEnabled(true);
@@ -364,7 +364,7 @@ void MainWindow::routeSelectionEvent() {
 }
 
 void MainWindow::routeNodeSelectionEvent() {
-    refreshIndex<RouteNodeIndex>();
+    refreshIndex<NodeAction>();
 
     auto lastRow = static_cast<size_t>(ui->nodeBoxNodeList->model()->rowCount() - 1);
     ui->nodeBoxButtonDeleteNode->setEnabled(true);
