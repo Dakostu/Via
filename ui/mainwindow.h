@@ -124,12 +124,16 @@ public:
         if constexpr (OnlyNode::value == true) {
             currentRoute->setColorsOfNode(selectedRouteNodeIndex, newColor);
             ui->nodeColorButton->changeColor(newColor);
-
-            auto &currentNode = (*currentRoute)[selectedRouteNodeIndex];
-            auto isDifferentNow = currentNode.getStyleDiffersFromRoute();
+            controller.updateRouteNodeColor(selectedRouteNodeIndex, newColor);
         } else {
             currentRoute->setColors(newColor);
             ui->routeColorButton->changeColor(newColor);
+            controller.updateRouteColor(selectedRouteIndex, newColor);
+            for (size_t i = 0; i < getCurrentRoute()->getNodeAmount(); ++i) {
+                if (!(*getCurrentRoute())[i].getStyleDiffersFromRoute()) {
+                    controller.updateRouteNodeColor(i, newColor);
+                }
+            }
         }
 
         if (!ui->nodeColorButton->isFlat()) {

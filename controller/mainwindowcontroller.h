@@ -61,6 +61,8 @@ public:
     Via::Shapes::RouteNode& getRouteNodeofCurrentProject(size_t routeIndex, size_t routeNodeIndex);
     void swapRoutesOfCurrentProject(size_t firstRoute, size_t secondRoute);
     void deleteRoute(size_t routeIndex);
+    void updateRouteNodeColor(size_t routeNodeIndex, const QColor &newColor);
+    void updateRouteColor(size_t routeIndex, const QColor &newColor);
 
 public slots:
 

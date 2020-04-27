@@ -9,7 +9,7 @@ namespace Via::Model {
 class CheckableStringListModel : public QStringListModel                
 {
     QSet<QPersistentModelIndex> checkedItems;
-    QMap<QPersistentModelIndex, QColor> itemPreviewColors;
+    QMap<int, QString> itemPreviewColors;
 
     Q_OBJECT
 

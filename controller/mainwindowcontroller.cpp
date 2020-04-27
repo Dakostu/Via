@@ -138,6 +138,16 @@ void MainWindowController::deleteRoute(size_t routeIndex) {
     currentProject->deleteRoute(routeIndex);
 }
 
+void MainWindowController::updateRouteNodeColor(size_t routeNodeIndex, const QColor &newColor) {
+    auto modelIndex = currentRouteNodeTitles.index(routeNodeIndex);
+    currentRouteNodeTitles.setData(modelIndex, newColor, Qt::DecorationRole);
+}
+
+void MainWindowController::updateRouteColor(size_t routeIndex, const QColor &newColor) {
+    auto modelIndex = currentRouteTitles.index(routeIndex);
+    currentRouteTitles.setData(modelIndex, newColor, Qt::DecorationRole);
+}
+
 void MainWindowController::addNewRouteToCurrentProject(Route &newRoute) {
     currentProject->addRoute(newRoute);
 }

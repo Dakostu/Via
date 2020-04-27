@@ -224,6 +224,10 @@ void Route::eraseAllNodes() {
     }
 }
 
+size_t Route::getNodeAmount() {
+    return nodes.size();
+}
+
 Via::Structures::IndexList<RouteNode*>& Route::getNodes()
 {
     return nodes;
