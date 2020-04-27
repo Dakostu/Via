@@ -53,7 +53,7 @@ public:
 
     ~Route();
 
-    virtual QColor getColors() const;
+    QColor getColors() override;
 
     void setColors(const QColor &color) override;
     void activateColors() override;
@@ -68,10 +68,11 @@ public:
 
     void addNode(qreal x, qreal y);
     void addTemporaryPreviewNode(qreal x, qreal y);
-    void removeTemporaryPreviewNode();
-    bool hasTemporaryPreviewNode();
     void eraseNode(size_t index);
     void eraseAllNodes();
+    size_t getNodeAmount();
+    bool hasTemporaryPreviewNode();
+    void removeTemporaryPreviewNode();
     void swapNodes(size_t firstNodeIndex, size_t secondNodeIndex);    
 
     bool getShowOrder() const;

@@ -47,6 +47,7 @@ public:
     RouteNode(RouteNodeShape *newNode, const QString &nodeLabelText, std::unique_ptr<Via::Control::RouteNodeState> &state);
 
     void setElementSize(int newSize) override;
+    QColor getColors() override;
     void setColors(const QColor &color) override;    
     void activateColors() override;
 

@@ -10,7 +10,7 @@ namespace Via::Shapes {
 
 class RouteConnection : public QGraphicsLineItem, public Via::Interfaces::ViewCustomizable
 {
-    QColor elementColor;
+    QColor connectionColor;
     static constexpr qreal SIZE_FACTOR = 0.2;
     static constexpr qreal SIZE_OFFSET = 3.0;
     std::unique_ptr<QLineF> cartesianLine;
@@ -18,6 +18,7 @@ class RouteConnection : public QGraphicsLineItem, public Via::Interfaces::ViewCu
 public:
     RouteConnection(QPointF from, QPointF to, const QColor &color);
 
+    QColor getColors() override;
     void setColors(const QColor &color) override;
     void activateColors() override;
 

@@ -126,7 +126,7 @@ void Route::setVisible(bool isVisible) {
     }
 }
 
-QColor Route::getColors() const {
+QColor Route::getColors() {
     return routeColor;
 }
 
@@ -222,6 +222,10 @@ void Route::eraseAllNodes() {
         currentScene->removeItem(currentNode->getToConnection());
         nodes.pop_back();
     }
+}
+
+size_t Route::getNodeAmount() {
+    return nodes.size();
 }
 
 Via::Structures::IndexList<RouteNode*>& Route::getNodes()

@@ -4,7 +4,7 @@
 using namespace Via::Shapes;
 
 RouteConnection::RouteConnection(QPointF from, QPointF to, const QColor &color)
-    : elementColor(color),
+    : connectionColor(color),
       cartesianLine(new QLineF(from, to))
 {    
     elementSize = sizeMultiplier(SIZE_FACTOR) + SIZE_OFFSET;
@@ -12,14 +12,17 @@ RouteConnection::RouteConnection(QPointF from, QPointF to, const QColor &color)
     this->setLine(*cartesianLine);
 }
 
+QColor RouteConnection::getColors() {
+    return connectionColor;
+}
 
 void RouteConnection::setColors(const QColor &color) {
-    elementColor = color;
+    connectionColor = color;
     activateColors();
 }
 
 void RouteConnection::activateColors() {
-    this->setPen(QPen(elementColor, getElementSize()));
+    this->setPen(QPen(connectionColor, getElementSize()));
 }
 
 void RouteConnection::setElementSize(int newSize) {

@@ -29,8 +29,8 @@ class MainWindowController : public QObject
     std::unique_ptr<MainWindowState> currentMainWindowState;
     std::unique_ptr<MapViewState> currentMapViewState;
     std::unique_ptr<RouteNodeState> currentRouteNodeState;
-    Via::Model::CheckableStringListModel currentRouteTitles;
-    Via::Model::CheckableStringListModel currentRouteNodeTitles;
+    Via::Model::CheckableStringListModel currentRouteList;
+    Via::Model::CheckableStringListModel currentRouteNodeList;
 
     void addFileToRecentlyOpenedProjects(const QString &fileName);
     void updateStringListModel(Via::Model::CheckableStringListModel &model,
@@ -61,6 +61,8 @@ public:
     Via::Shapes::RouteNode& getRouteNodeofCurrentProject(size_t routeIndex, size_t routeNodeIndex);
     void swapRoutesOfCurrentProject(size_t firstRoute, size_t secondRoute);
     void deleteRoute(size_t routeIndex);
+    void updateRouteNodeColor(size_t routeNodeIndex, const QColor &newColor);
+    void updateRouteColor(size_t routeIndex, const QColor &newColor);
 
 public slots:
 

@@ -19,6 +19,7 @@ protected:
 
 public:
     virtual ~ViewCustomizable() = default;
+    virtual QColor getColors() = 0;
     virtual void setColors(const QColor &color) = 0;
     virtual void activateColors() = 0;
 
