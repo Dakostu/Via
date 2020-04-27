@@ -43,9 +43,6 @@ class MainWindow : public QMainWindow
     struct NodeAction : std::integral_constant<bool, true> {};
     struct RouteAction : std::integral_constant<bool, false> {};
 
-    struct RouteIndex : std::integral_constant<bool, true> {};
-    struct RouteNodeIndex : std::integral_constant<bool, false> {};
-
     Q_OBJECT
 
     Via::Control::MainWindowController &controller;
@@ -67,18 +64,18 @@ class MainWindow : public QMainWindow
     void initializeNodeBoxUI();
     void initializeNodeSettingsUI();
 
-    template <typename SelectedIndex>
+    template <typename OnlyNode>
     void refreshIndex() {
         Via::UI::RouteDataView *dataView;
         size_t *index;
 
-        if constexpr (SelectedIndex::value == RouteIndex::value) {
+        if constexpr (OnlyNode::value == true) {
+            dataView = ui->nodeBoxNodeList;
+            index = &selectedRouteNodeIndex;
+        } else {
             getCurrentRoute()->removeTemporaryPreviewNode();
             dataView = ui->routeBoxRouteList;
             index = &selectedRouteIndex;            
-        } else {
-            dataView = ui->nodeBoxNodeList;
-            index = &selectedRouteNodeIndex;
         }
 
         if (dataView->selectionModel() && dataView->selectionModel()->hasSelection()) {
@@ -165,6 +162,35 @@ public:
         }
     }
 
+    template <typename OnlyNode>
+    void moveElementEvent(int by) {
+
+        size_t selectedIndex;
+        std::function<void(size_t)> moveElements;
+        std::function<void(void)> updateSignal;
+        RouteDataView *dataView;
+
+        if constexpr (OnlyNode::value == true) {
+            updateSignal = [&]() { emit routeNodeListChanged(); };
+            moveElements = [&](auto firstIndex) {
+                getCurrentRoute()->swapNodes(firstIndex, firstIndex + by);
+            };
+            dataView = ui->nodeBoxNodeList;
+            selectedIndex = selectedRouteNodeIndex;
+        } else {
+            updateSignal = [&]() { emit routeListChanged(); };
+            moveElements = [&](auto firstIndex) {
+                controller.swapRoutesOfCurrentProject(firstIndex, firstIndex + by);
+            };
+            dataView = ui->routeBoxRouteList;
+            selectedIndex = selectedRouteIndex;
+        }
+
+        moveElements(selectedIndex);
+        updateSignal();
+        dataView->moveSelectionTo(selectedIndex + by);
+    }
+
 
 public slots:
     void addRoute();    
@@ -179,14 +205,12 @@ public slots:
     void routeSelectionEvent();
     void routeNodeSelectionEvent();    
     void routeShowOrderChangeEvent(bool value);
-    void moveRouteEvent(int by);
     void getDataFromCurrentProject();
     void disableSettingsBox();
     void activateAutoAddMode();
     void addRouteNode(qreal x, qreal y);
     void deleteSelectedRouteNode();
     void setNodeSettingsEnabled(bool enabled);
-    void moveNodeEvent(int by);
     void changeNodeExtraLabel(const QString &text);
 
 signals:

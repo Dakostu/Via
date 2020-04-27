@@ -135,8 +135,8 @@ void MainWindow::initializeShapeSelections() {
 void MainWindow::initializeRouteBoxUI() {
     connect(ui->routeBoxButtonAddRoute, &QPushButton::clicked, this, &MainWindow::addRoute);
     connect(ui->routeBoxButtonDeleteRoute, &QPushButton::clicked, this, &MainWindow::deleteSelectedRoute);
-    connect(ui->routeBoxButtonUp, &QPushButton::clicked, this, [&]() { moveRouteEvent(-1); });
-    connect(ui->routeBoxButtonDown, &QPushButton::clicked, this, [&]() { moveRouteEvent(1); });
+    connect(ui->routeBoxButtonUp, &QPushButton::clicked, this, [&]() { moveElementEvent<RouteAction>(-1); });
+    connect(ui->routeBoxButtonDown, &QPushButton::clicked, this, [&]() { moveElementEvent<RouteAction>(1); });
     connect(ui->routeBoxRouteList->itemDelegate(), &QAbstractItemDelegate::commitData, this, [&](QWidget* lineEdit){
         auto lineEditText = (dynamic_cast<QLineEdit*>(lineEdit))->text();
         auto &currentRoute = controller.getRouteOfCurrentProject(selectedRouteIndex);
@@ -151,8 +151,8 @@ void MainWindow::initializeNodeBoxUI() {
         QCursor::setPos(this->pos() + ui->pictureLayout->geometry().center());
     });
     connect(ui->nodeBoxButtonDeleteNode, &QPushButton::clicked, this, &MainWindow::deleteSelectedRouteNode);
-    connect(ui->nodeBoxButtonUp, &QPushButton::clicked, this, [&]() { moveNodeEvent(-1); });
-    connect(ui->nodeBoxButtonDown, &QPushButton::clicked, this, [&]() { moveNodeEvent(1); });
+    connect(ui->nodeBoxButtonUp, &QPushButton::clicked, this, [&]() { moveElementEvent<NodeAction>(-1); });
+    connect(ui->nodeBoxButtonDown, &QPushButton::clicked, this, [&]() { moveElementEvent<NodeAction>(1); });
     connect(ui->nodeBoxNodeList->itemDelegate(), &QAbstractItemDelegate::commitData, this, [&](QWidget* lineEdit){
         auto lineEditText = (dynamic_cast<QLineEdit*>(lineEdit))->text();
         auto &currentRouteNode = controller.getRouteNodeofCurrentProject(selectedRouteIndex, selectedRouteNodeIndex);
@@ -343,7 +343,7 @@ void MainWindow::updateNodeList() {
 }
 
 void MainWindow::routeSelectionEvent() {
-    refreshIndex<RouteIndex>();
+    refreshIndex<RouteAction>();
 
     auto lastRow = static_cast<size_t>(ui->routeBoxRouteList->model()->rowCount() - 1);
     ui->routeBoxButtonDeleteRoute->setEnabled(true);
@@ -364,7 +364,7 @@ void MainWindow::routeSelectionEvent() {
 }
 
 void MainWindow::routeNodeSelectionEvent() {
-    refreshIndex<RouteNodeIndex>();
+    refreshIndex<NodeAction>();
 
     auto lastRow = static_cast<size_t>(ui->nodeBoxNodeList->model()->rowCount() - 1);
     ui->nodeBoxButtonDeleteNode->setEnabled(true);
@@ -383,16 +383,6 @@ void MainWindow::routeNodeSelectionEvent() {
 
 void MainWindow::routeShowOrderChangeEvent(bool value) {
     getCurrentRoute()->setShowOrder(value);
-}
-
-void MainWindow::moveRouteEvent(int by) {
-    auto newRouteIndex = selectedRouteIndex + by;
-
-    controller.swapRoutesOfCurrentProject(selectedRouteIndex, newRouteIndex);
-
-    emit routeListChanged();
-
-    ui->routeBoxRouteList->moveSelectionTo(newRouteIndex);
 }
 
 void MainWindow::disableSettingsBox() {
@@ -455,14 +445,6 @@ void MainWindow::setNodeSettingsEnabled(bool enabled) {
         ui->nodeNameLineEdit->setText("");
         ui->nodeLabelLineEdit->setText("");
     }
-}
-
-void MainWindow::moveNodeEvent(int by) {
-    getCurrentRoute()->swapNodes(selectedRouteNodeIndex, selectedRouteNodeIndex + by);
-
-    emit routeNodeListChanged();
-
-    ui->nodeBoxNodeList->moveSelectionTo(selectedRouteNodeIndex + by);
 }
 
 void MainWindow::changeNodeExtraLabel(const QString &text) {
