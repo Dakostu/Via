@@ -175,15 +175,15 @@ public:
 
         if constexpr (OnlyNode::value == true) {
             updateSignal = [&]() { emit routeNodeListChanged(); };
-            moveElements = [&](size_t firstIndex) {
-                controller.swapRoutesOfCurrentProject(firstIndex, firstIndex + by);
+            moveElements = [&](auto firstIndex) {
+                getCurrentRoute()->swapNodes(firstIndex, firstIndex + by);
             };
             dataView = ui->nodeBoxNodeList;
             selectedIndex = selectedRouteNodeIndex;
         } else {
             updateSignal = [&]() { emit routeListChanged(); };
-            moveElements = [&](size_t firstIndex) {
-                getCurrentRoute()->swapNodes(firstIndex, firstIndex + by);
+            moveElements = [&](auto firstIndex) {
+                controller.swapRoutesOfCurrentProject(firstIndex, firstIndex + by);
             };
             dataView = ui->routeBoxRouteList;
             selectedIndex = selectedRouteIndex;
@@ -208,14 +208,12 @@ public slots:
     void routeSelectionEvent();
     void routeNodeSelectionEvent();    
     void routeShowOrderChangeEvent(bool value);
-    void moveRouteEvent(int by);
     void getDataFromCurrentProject();
     void disableSettingsBox();
     void activateAutoAddMode();
     void addRouteNode(qreal x, qreal y);
     void deleteSelectedRouteNode();
     void setNodeSettingsEnabled(bool enabled);
-    void moveNodeEvent(int by);
     void changeNodeExtraLabel(const QString &text);
 
 signals:
