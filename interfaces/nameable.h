@@ -23,7 +23,10 @@ public:
     virtual void setName(const QString &value);
     virtual void setNameChangedByUser(bool value);
 
-    virtual void swapNamesWith(Nameable* other);
+    virtual void swapNamesWith(Nameable *other);
+    virtual void swapNamesConsideringDefaultNamesWith(Nameable *other,
+                                                      const QString &thisDefaultName,
+                                                      const QString &otherDefaultName);
 
 };
 

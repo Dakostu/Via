@@ -31,3 +31,15 @@ void Nameable::setName(const QString &value)
 void Nameable::swapNamesWith(Nameable *other) {
     std::swap(this->name, other->name);
 }
+
+void Nameable::swapNamesConsideringDefaultNamesWith(Nameable *other,
+                                                  const QString &thisDefaultName,
+                                                  const QString &otherDefaultName) {
+    if (this->isNameChangedByUser() && !other->isNameChangedByUser()) {
+        other->setName(otherDefaultName);
+    } else if (!this->isNameChangedByUser() && other->isNameChangedByUser()) {
+        this->setName(thisDefaultName);
+    } else if (!this->isNameChangedByUser() && !other->isNameChangedByUser()) {
+        this->swapNamesWith(other);
+    }
+}
