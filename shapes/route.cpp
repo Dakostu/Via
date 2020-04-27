@@ -427,19 +427,14 @@ void Route::swapNodes(size_t firstNodeIndex, size_t secondNodeIndex) {
     withNode->resetConnections();
     fromNode->resetConnections();
 
-    QString nodeDefaultNamePlusOne;
-    QString nodeDefaultName;
+    auto index = std::max(firstNodeIndex, secondNodeIndex);
+    auto nodeDefaultNamePlusOne = QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(index + 1));
+    auto nodeDefaultName = QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(index));
 
     if (firstNodeIndex < secondNodeIndex) {
-        nodeDefaultNamePlusOne = QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(secondNodeIndex + 1));
-        nodeDefaultName = QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(secondNodeIndex));
-
         swapConnections(firstNodeIndex, secondNodeIndex);
         withNode->swapNamesConsideringDefaultNamesWith(fromNode, nodeDefaultName, nodeDefaultNamePlusOne);
     } else {
-        nodeDefaultNamePlusOne = QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(firstNodeIndex + 1));
-        nodeDefaultName = QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(firstNodeIndex));
-
         swapConnections(secondNodeIndex, firstNodeIndex);
         fromNode->swapNamesConsideringDefaultNamesWith(withNode, nodeDefaultName, nodeDefaultNamePlusOne);
     }
