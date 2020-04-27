@@ -118,9 +118,18 @@ void Project::swapRoutes(size_t i, size_t j) {
 
     firstRoute.swap(secondRoute);
 
-    // swap back
+    // swap names, after swapping objects
 
-    firstRoute->swapNamesWith(secondRoute.get());
+    auto index = std::max(i,j);
+    auto routeDefaultNamePlusOne = QString(LocalizedUIStrings::getUIString("ROUTE_DEFAULT_NAME").arg(index + 1));
+    auto routeDefaultName = QString(LocalizedUIStrings::getUIString("ROUTE_DEFAULT_NAME").arg(index));
+
+    if (i < j) {
+        firstRoute->swapNamesConsideringDefaultNamesWith(secondRoute.get(), routeDefaultName, routeDefaultNamePlusOne);
+    } else {
+        secondRoute->swapNamesConsideringDefaultNamesWith(firstRoute.get(), routeDefaultName, routeDefaultNamePlusOne);
+    }
+
 }
 
 bool Project::operator==(const Project &other) const {
