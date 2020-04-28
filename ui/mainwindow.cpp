@@ -416,10 +416,11 @@ void MainWindow::addRouteNode(qreal x, qreal y) {
 
     emit routeNodeListChanged();
 
+    auto lastNodeRow = ui->nodeBoxNodeList->model()->rowCount() - 1;
+    ui->nodeBoxNodeList->moveSelectionTo(static_cast<size_t>(lastNodeRow));
+
     auto vBar = ui->nodeBoxNodeList->verticalScrollBar();
     vBar->setValue(vBar->maximum());
-
-    ui->nodeBoxNodeList->moveSelectionTo(static_cast<size_t>(ui->nodeBoxNodeList->model()->rowCount() - 1));
 }
 
 void MainWindow::deleteSelectedRouteNode() {
