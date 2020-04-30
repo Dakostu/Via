@@ -160,8 +160,6 @@ void Route::removeTemporaryPreviewNode() {
         currentScene->removeItem(tempNode->getFromConnection());
         currentScene->removeItem(tempNode);               
         nodes.pop_back();
-
-        qDebug() << currentScene->sceneRect();
     }
 }
 
@@ -254,24 +252,34 @@ void Route::setVisibilityOfNode(size_t routeNodeIndex, bool isVisible) {
 
     auto nodeIsBetweenBeginningAndEnd = 0 < routeNodeIndex && routeNodeIndex < nodes.size() - 1;
 
+    auto refreshNodeOpacityAccordingToRouteVisibility = [&](auto *node) {
+        node->setOpacity(this->isCurrentlyVisible() && node->isCurrentlyVisible());
+    };
+
     if (isVisible) {
         if (nodeIsBetweenBeginningAndEnd) {
-            if (previousVisibleNode) {
+            if (previousVisibleNode) {                
                 connectNodes(*previousVisibleNode, currentNode);
+                refreshNodeOpacityAccordingToRouteVisibility(previousVisibleNode);
             }
             if (nextVisibleNode) {
                 connectNodes(currentNode, *nextVisibleNode);
+                refreshNodeOpacityAccordingToRouteVisibility(nextVisibleNode);
             }
         } else if (nextVisibleNode) {
             connectNodes(currentNode, *nextVisibleNode);
+            refreshNodeOpacityAccordingToRouteVisibility(nextVisibleNode);
         } else if (previousVisibleNode) {
             connectNodes(*previousVisibleNode, currentNode);
+            refreshNodeOpacityAccordingToRouteVisibility(previousVisibleNode);
         }
     } else {
         currentNode.resetConnections();
 
         if (nodeIsBetweenBeginningAndEnd && previousVisibleNode && nextVisibleNode) {
             connectNodes(*previousVisibleNode, *nextVisibleNode);
+            refreshNodeOpacityAccordingToRouteVisibility(previousVisibleNode);
+            refreshNodeOpacityAccordingToRouteVisibility(nextVisibleNode);
         } else if (nextVisibleNode) {
             nextVisibleNode->resetFromConnection();
         } else if (previousVisibleNode) {
@@ -279,6 +287,7 @@ void Route::setVisibilityOfNode(size_t routeNodeIndex, bool isVisible) {
         }
     }
 
+    currentNode.setOpacity(this->isCurrentlyVisible() && currentNode.isCurrentlyVisible());
     refreshNodeLabels();
 }
 
