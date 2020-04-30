@@ -158,8 +158,10 @@ void Route::removeTemporaryPreviewNode() {
     if (hasTemporaryPreviewNode()) {
         auto tempNode = nodes.back();
         currentScene->removeItem(tempNode->getFromConnection());
-        currentScene->removeItem(tempNode);
+        currentScene->removeItem(tempNode);               
         nodes.pop_back();
+
+        qDebug() << currentScene->sceneRect();
     }
 }
 
@@ -216,14 +218,12 @@ void Route::eraseNode(size_t index) {
     }
 
     refreshNodeLabels(index);
+
+    qDebug() << currentScene->sceneRect();
 }
 
 void Route::eraseAllNodes() {
-    for (auto &currentNode = nodes.back(); !nodes.empty(); currentNode = nodes.back()) {
-        currentScene->removeItem(currentNode);
-        currentScene->removeItem(currentNode->getToConnection());
-        nodes.pop_back();
-    }
+    nodes.clear();
 }
 
 size_t Route::getNodeAmount() {
