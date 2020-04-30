@@ -339,7 +339,9 @@ void MainWindow::updateRouteList() {
 void MainWindow::updateNodeList() {
     ui->nodeBoxNodeList->setModel(&controller.getNodeTitlesOfRoute(selectedRouteIndex));
 
-    setNodeSettingsEnabled(ui->nodeBoxNodeList->model()->rowCount() != 0);
+    auto nodeListHasSelection = ui->nodeBoxNodeList->selectionModel() && ui->nodeBoxNodeList->selectionModel()->hasSelection();
+
+    setNodeSettingsEnabled(nodeListHasSelection);
 }
 
 void MainWindow::routeSelectionEvent() {
