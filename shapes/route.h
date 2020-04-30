@@ -38,7 +38,7 @@ protected:
 
     void connectNodes(Via::Shapes::RouteNode &from, Via::Shapes::RouteNode &to);
     void swapConnections(size_t firstNodeIndex, size_t secondNodeIndex);
-    void refreshNodeLabels(size_t index = 0);
+    void refreshNodeInfo();
 
     Via::Shapes::RouteNode* getLastVisibleRouteNode();
     Via::Shapes::RouteNode* getPreviousVisibleRouteNode(size_t index);

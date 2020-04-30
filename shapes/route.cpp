@@ -221,7 +221,7 @@ void Route::eraseNode(size_t index) {
         }
     }
 
-    refreshNodeLabels(index);
+    refreshNodeInfo();
 }
 
 void Route::eraseAllNodes() {
@@ -292,7 +292,7 @@ void Route::setVisibilityOfNode(size_t routeNodeIndex, bool isVisible) {
     }
 
     refreshNodeOpacityAccordingToRouteVisibility(currentNode);
-    refreshNodeLabels();
+    refreshNodeInfo();
 }
 
 bool Route::getShowOrder() const
@@ -365,12 +365,21 @@ void Route::swapConnections(size_t firstNodeIndex, size_t secondNodeIndex) {
     }
 }
 
-void Route::refreshNodeLabels(size_t index) {    
-    for (auto labelText = index + 1; index < nodes.size(); ++index) {
-        if ((*nodes[index])->isCurrentlyVisible()) {
-            (*nodes[index])->setNodeLabelText(QString::number(labelText++));
+void Route::refreshNodeInfo() {
+    size_t nodeLabelIndex = 1;
+    size_t nameIndex = 1;
+    for (auto &node : nodes) {
+
+        if (node->isCurrentlyVisible()) {
+            node->setNodeLabelText(QString::number(nodeLabelIndex++));
         }
+        if (!node->isNameChangedByUser()) {
+            node->setName(QString(LocalizedUIStrings::getUIString("NODE_DEFAULT_NAME").arg(nameIndex)));
+        }
+
+        ++nameIndex;
     }
+
 }
 
 RouteNode* Route::getLastVisibleRouteNode() {
@@ -454,7 +463,7 @@ void Route::swapNodes(size_t firstNodeIndex, size_t secondNodeIndex) {
         fromNode->swapNamesConsideringDefaultNamesWith(withNode, nodeDefaultName, nodeDefaultNamePlusOne);
     }
 
-    refreshNodeLabels();
+    refreshNodeInfo();
 
 }
 
