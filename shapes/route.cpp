@@ -204,20 +204,24 @@ void Route::eraseNode(size_t index) {
         return;
     }
 
-    currentNode = *currentNodePos;
+    auto previousNode = getPreviousVisibleRouteNode(index);
+    auto nextNode = getNextVisibleRouteNode(index - 1);
 
     if (index == 0) {
-        nodes.front()->resetFromConnection();
+        if (nextNode) {
+            nextNode->resetFromConnection();
+        }
     } else if (index == nodes.size()) {
-        nodes.back()->resetToConnection();
+        if (previousNode) {
+            previousNode->resetToConnection();
+        }
     } else if (index > 0 && index < nodes.size()) {
-        auto &previousNode = **nodes[index - 1];
-        connectNodes(previousNode, *currentNode);
+        if (previousNode && nextNode) {
+            connectNodes(*previousNode, *nextNode);
+        }
     }
 
     refreshNodeLabels(index);
-
-    qDebug() << currentScene->sceneRect();
 }
 
 void Route::eraseAllNodes() {
@@ -244,8 +248,8 @@ void Route::setCurrentState(std::unique_ptr<Via::Control::RouteNodeState> &value
 }
 
 void Route::setVisibilityOfNode(size_t routeNodeIndex, bool isVisible) {
-    auto &currentNode = **nodes[routeNodeIndex];
-    currentNode.setVisible(isVisible);
+    auto currentNode = *nodes[routeNodeIndex];
+    currentNode->setVisible(isVisible);
 
     auto previousVisibleNode = getPreviousVisibleRouteNode(routeNodeIndex);
     auto nextVisibleNode = getNextVisibleRouteNode(routeNodeIndex);
@@ -259,22 +263,22 @@ void Route::setVisibilityOfNode(size_t routeNodeIndex, bool isVisible) {
     if (isVisible) {
         if (nodeIsBetweenBeginningAndEnd) {
             if (previousVisibleNode) {                
-                connectNodes(*previousVisibleNode, currentNode);
+                connectNodes(*previousVisibleNode, *currentNode);
                 refreshNodeOpacityAccordingToRouteVisibility(previousVisibleNode);
             }
             if (nextVisibleNode) {
-                connectNodes(currentNode, *nextVisibleNode);
+                connectNodes(*currentNode, *nextVisibleNode);
                 refreshNodeOpacityAccordingToRouteVisibility(nextVisibleNode);
             }
         } else if (nextVisibleNode) {
-            connectNodes(currentNode, *nextVisibleNode);
+            connectNodes(*currentNode, *nextVisibleNode);
             refreshNodeOpacityAccordingToRouteVisibility(nextVisibleNode);
         } else if (previousVisibleNode) {
-            connectNodes(*previousVisibleNode, currentNode);
+            connectNodes(*previousVisibleNode, *currentNode);
             refreshNodeOpacityAccordingToRouteVisibility(previousVisibleNode);
         }
     } else {
-        currentNode.resetConnections();
+        currentNode->resetConnections();
 
         if (nodeIsBetweenBeginningAndEnd && previousVisibleNode && nextVisibleNode) {
             connectNodes(*previousVisibleNode, *nextVisibleNode);
@@ -287,7 +291,7 @@ void Route::setVisibilityOfNode(size_t routeNodeIndex, bool isVisible) {
         }
     }
 
-    currentNode.setOpacity(this->isCurrentlyVisible() && currentNode.isCurrentlyVisible());
+    refreshNodeOpacityAccordingToRouteVisibility(currentNode);
     refreshNodeLabels();
 }
 
