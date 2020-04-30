@@ -1,17 +1,18 @@
 #ifndef ROUTE_H
 #define ROUTE_H
 
+
 #include "../data-structures/indexlist.h"
 #include "../controller/states/routenodestate.h"
 #include "../interfaces/mapviewplaceable.h"
 #include "../interfaces/serializable.h"
 #include "../interfaces/shapekeymodifiable.h"
 #include "../model/routenodedata.h"
+#include "../ui/automaticallyshrinkinggraphicsscene.h"
 #include "routenode.h"
 #include "routeconnection.h"
 #include "routenodeshapefactory.h"
 #include <QLinkedList>
-#include <QGraphicsScene>
 
 namespace Via::Control {
 class UIState;
@@ -30,7 +31,7 @@ protected:
     bool showOrder;
     QColor routeColor;
     RouteNodeShapeFactory nodeShapeFactory;
-    QGraphicsScene *currentScene;
+    Via::UI::AutomaticallyShrinkingGraphicsScene *currentScene;
     std::unique_ptr<Via::Control::RouteNodeState> &currentState;
 
     Via::Structures::IndexList<RouteNode*> nodes;
@@ -46,9 +47,9 @@ protected:
     size_t getIndexOfNextVisibileRouteNode(size_t currentRouteNodeIndex);
 
 public:
-    Route(const QColor &color, const QString &selectedStyle, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);
-    Route(const QColor &color, char selectedStyle, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);
-    Route(const QJsonObject &object, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);
+    Route(const QColor &color, const QString &selectedStyle, Via::UI::AutomaticallyShrinkingGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);
+    Route(const QColor &color, char selectedStyle, Via::UI::AutomaticallyShrinkingGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);
+    Route(const QJsonObject &object, Via::UI::AutomaticallyShrinkingGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state);
 
     ~Route();
 
@@ -81,7 +82,7 @@ public:
     void setElementSize(int newSize) override;
     void setShowOrder(bool value);
     void setColorsOfNode(size_t routeNodeIndex, const QColor &newColor);
-    void setCurrentScene(QGraphicsScene *value);
+    void setCurrentScene(Via::UI::AutomaticallyShrinkingGraphicsScene *value);
     void setCurrentState(std::unique_ptr<Via::Control::RouteNodeState> &value);
     void setShapeKey(const QString &newStyle);
     void setStyleOfNode(size_t routeNodeIndex, char newStyle);

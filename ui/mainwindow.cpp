@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent, MainWindowController &newController)
     : QMainWindow(parent),
       controller(newController),
       ui(new Ui::MainWindow),
-      currentScene(std::make_unique<QGraphicsScene>()),
+      currentScene(std::make_unique<AutomaticallyShrinkingGraphicsScene>()),
       quickButtonGroup(std::make_unique<QButtonGroup>()),
       selectedRouteIndex(0),
       selectedRouteNodeIndex(0)
@@ -117,7 +117,7 @@ void MainWindow::initializeQuickButtons() {
     connect(ui->quickButtonSelect, &QAbstractButton::clicked, this, [&]() {
         getCurrentRoute()->removeTemporaryPreviewNode();
         controller.changeUIStates<MainWindowSelectNodeState, MapViewSelectNodeState, RouteNodeSelectNodeState>();
-    });
+    });        
 }
 
 void MainWindow::initializeShapeSelections() {
@@ -201,7 +201,7 @@ Route* MainWindow::getCurrentRoute() {
 }
 
 void MainWindow::getDataFromCurrentProject() {
-    currentScene.reset(new QGraphicsScene);
+    currentScene.reset(new AutomaticallyShrinkingGraphicsScene);
     auto currentProj = controller.getCurrentProject();
     currentScene->addPixmap(currentProj->getImagePixMap());    
     ui->picture->setScene(currentScene.get());

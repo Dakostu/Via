@@ -30,7 +30,7 @@ void MapView::wheelEvent(QWheelEvent *event) {
     } else {
         auto zoomFactor = std::pow(2.0, verticalWheelMovement / 240.0);
         auto tryingToZoomOutOfLimit = (currentDetailLevel <= DETAIL_LEVEL_MIN && (zoomFactor - 1) < 0);
-        auto tryingToZoomInToLimit = (currentDetailLevel >= DETAIL_LEVEL_MAX && zoomFactor -1 >= 0);
+        auto tryingToZoomInToLimit = (currentDetailLevel >= DETAIL_LEVEL_MAX && (zoomFactor - 1) >= 0);
 
         if (tryingToZoomOutOfLimit || tryingToZoomInToLimit) {
             return;

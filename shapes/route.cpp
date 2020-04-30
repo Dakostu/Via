@@ -10,25 +10,27 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
+#include <QDebug>
+
 using namespace Via::Control;
 using namespace Via::L10n;
 using namespace Via::Model;
 using namespace Via::Shapes;
 using namespace Via::UI;
 
-Route::Route(const QColor &color, char selectedStyle, QGraphicsScene *scene, std::unique_ptr<RouteNodeState> &state)
+Route::Route(const QColor &color, char selectedStyle, AutomaticallyShrinkingGraphicsScene *scene, std::unique_ptr<RouteNodeState> &state)
     : showOrder(true), routeColor(color), currentScene(scene), currentState(state)
 {
     setShapeKey(selectedStyle);
 }
 
-Route::Route(const QColor &color, const QString &selectedStyle, QGraphicsScene *scene, std::unique_ptr<RouteNodeState> &state)
+Route::Route(const QColor &color, const QString &selectedStyle, AutomaticallyShrinkingGraphicsScene *scene, std::unique_ptr<RouteNodeState> &state)
     : Route(color, ' ', scene, state)
 {
     setShapeKey(selectedStyle);
 }
 
-Route::Route(const QJsonObject &object, QGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state)
+Route::Route(const QJsonObject &object, AutomaticallyShrinkingGraphicsScene *scene, std::unique_ptr<Via::Control::RouteNodeState> &state)
     : currentScene(scene), currentState(state) {
     fromJSON(object);
 }
@@ -233,7 +235,7 @@ Via::Structures::IndexList<RouteNode*>& Route::getNodes()
     return nodes;
 }
 
-void Route::setCurrentScene(QGraphicsScene *value)
+void Route::setCurrentScene(AutomaticallyShrinkingGraphicsScene *value)
 {
     currentScene = value;
 }

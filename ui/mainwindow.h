@@ -1,21 +1,19 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-
+#include "automaticallyshrinkinggraphicsscene.h"
 #include "colorgenerator.h"
+
 #include "./ui_mainwindow.h"
 
 #include "../controller/mainwindowcontroller.h"
-
 #include "../model/data.h"
-
 #include "../l10n/localizeduistrings.h"
 
 #include <vector>
 #include <memory>
 #include <QButtonGroup>
 #include <QColorDialog>
-#include <QGraphicsScene>
 #include <QListView>
 #include <QMainWindow>
 #include <QToolButton>
@@ -49,7 +47,7 @@ class MainWindow : public QMainWindow
     Ui::MainWindow *ui;
 
     ColorGenerator colorGenerator;
-    std::unique_ptr<QGraphicsScene> currentScene;
+    std::unique_ptr<AutomaticallyShrinkingGraphicsScene> currentScene;
     std::unique_ptr<QButtonGroup> quickButtonGroup;
 
     std::vector<std::unique_ptr<QAction>> actions;
