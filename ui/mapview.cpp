@@ -41,6 +41,21 @@ void MapView::wheelEvent(QWheelEvent *event) {
     }
 }
 
+bool MapView::mouseTouchesLeftBorder(const QPointF &pos) {
+    return pos.x() < BORDER_PUFFER_POS;
+}
+
+bool MapView::mouseTouchesRightBorder(const QPointF &pos) {
+    return pos.x() > this->viewport()->width() - BORDER_PUFFER_POS;
+}
+
+bool MapView::mouseTouchesTopBorder(const QPointF &pos) {
+    return pos.y() < BORDER_PUFFER_POS;
+}
+
+bool MapView::mouseTouchesBottomBorder(const QPointF &pos) {
+    return pos.y() > this->viewport()->height() - BORDER_PUFFER_POS;
+}
 
 void MapView::mouseMoveEvent(QMouseEvent* event) {
     currentState->get()->mouseMoveEvent(this, event);

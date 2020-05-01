@@ -1,6 +1,8 @@
 #include "mapviewaddnodestate.h"
 #include "../../ui/mapview.h"
 
+#include <QDebug>
+
 using namespace Via::Control;
 using namespace Via::UI;
 
@@ -11,8 +13,25 @@ void MapViewAddNodeState::mouseMoveEvent(MapView *view, QMouseEvent *mouseEvent)
         view->setCursor(Qt::CrossCursor);
     }
 
-    auto coords = view->mapToScene(mouseEvent->pos());
-    view->emit needNewTempPreviewNode(coords.x(), coords.y());
+    auto viewCoords = mouseEvent->pos();
+
+    if (view->mouseTouchesTopBorder(viewCoords)) {
+        qDebug() << "Top";
+    } else if (view->mouseTouchesBottomBorder(viewCoords)) {
+        qDebug() << "Bottom";
+    }
+
+    if (view->mouseTouchesLeftBorder(viewCoords)) {
+        qDebug() << "Left";
+    } else if (view->mouseTouchesRightBorder(viewCoords)) {
+        qDebug() << "Right";
+    }
+
+
+    qDebug() << mouseEvent->pos();
+
+    auto sceneCoords = view->mapToScene(mouseEvent->pos());
+    view->emit needNewTempPreviewNode(sceneCoords.x(), sceneCoords.y());
 }
 
 void MapViewAddNodeState::mousePressEvent(MapView *view, QMouseEvent *mouseEvent)  {

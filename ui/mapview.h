@@ -24,6 +24,7 @@ class MapView : public QGraphicsView
     qreal currentDetailLevel;
     static constexpr qreal DETAIL_LEVEL_MIN = 0.05;
     static constexpr qreal DETAIL_LEVEL_MAX = 17;
+    static constexpr int BORDER_PUFFER_POS = 10;
     std::unique_ptr<Via::Control::MapViewState> *currentState;
 
 public:
@@ -38,6 +39,11 @@ public:
     void mouseReleaseEvent(QMouseEvent* event) override;
 
     bool viewportEvent(QEvent *event) override;
+
+    bool mouseTouchesLeftBorder(const QPointF &pos);
+    bool mouseTouchesRightBorder(const QPointF &pos);
+    bool mouseTouchesTopBorder(const QPointF &pos);
+    bool mouseTouchesBottomBorder(const QPointF &pos);
 
     void triggerParentMousePressEvent(QMouseEvent* event);
     void triggerParentMouseMoveEvent(QMouseEvent* event);
