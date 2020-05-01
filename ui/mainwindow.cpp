@@ -118,6 +118,8 @@ void MainWindow::initializeQuickButtons() {
         getCurrentRoute()->removeTemporaryPreviewNode();
         controller.changeUIStates<MainWindowSelectNodeState, MapViewSelectNodeState, RouteNodeSelectNodeState>();
     });        
+
+    ui->quickButtonSelect->setVisible(false);
 }
 
 void MainWindow::initializeShapeSelections() {
