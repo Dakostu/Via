@@ -2,6 +2,7 @@
 #include "../../ui/mapview.h"
 
 #include <QDebug>
+#include <QScrollBar>
 
 using namespace Via::Control;
 using namespace Via::UI;
@@ -15,20 +16,20 @@ void MapViewAddNodeState::mouseMoveEvent(MapView *view, QMouseEvent *mouseEvent)
 
     auto viewCoords = mouseEvent->pos();
 
+    auto hBar = view->horizontalScrollBar();
+    auto vBar = view->verticalScrollBar();
+
     if (view->mouseTouchesTopBorder(viewCoords)) {
-        qDebug() << "Top";
+        vBar->setValue(vBar->value() - 10);
     } else if (view->mouseTouchesBottomBorder(viewCoords)) {
-        qDebug() << "Bottom";
+        vBar->setValue(vBar->value() + 10);
     }
 
     if (view->mouseTouchesLeftBorder(viewCoords)) {
-        qDebug() << "Left";
+        hBar->setValue(hBar->value() - 10);
     } else if (view->mouseTouchesRightBorder(viewCoords)) {
-        qDebug() << "Right";
+        hBar->setValue(hBar->value() + 10);
     }
-
-
-    qDebug() << mouseEvent->pos();
 
     auto sceneCoords = view->mapToScene(mouseEvent->pos());
     view->emit needNewTempPreviewNode(sceneCoords.x(), sceneCoords.y());
