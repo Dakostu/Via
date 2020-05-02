@@ -24,10 +24,10 @@ class MapView : public QGraphicsView
     qreal currentDetailLevel;
     static constexpr qreal DETAIL_LEVEL_MIN = 0.05;
     static constexpr qreal DETAIL_LEVEL_MAX = 17;
-    static constexpr int BORDER_PUFFER_POS = 10;
     std::unique_ptr<Via::Control::MapViewState> *currentState;
 
 public:
+    static constexpr int BORDER_PUFFER_POS = 10;
 
     MapView(QWidget *parent);
 

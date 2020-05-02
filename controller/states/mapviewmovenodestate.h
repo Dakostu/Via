@@ -7,6 +7,7 @@ namespace Via::Control {
 
 class MapViewMoveNodeState : public MapViewState
 {
+    static constexpr int BORDER_MOVE_PUFFER = 1;
 public:
     MapViewMoveNodeState() = default;
 

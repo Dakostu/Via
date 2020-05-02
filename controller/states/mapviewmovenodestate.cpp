@@ -3,37 +3,55 @@
 #include <QApplication>
 #include <QCursor>
 #include <QDesktopWidget>
+#include <QEvent>
 #include <QScrollBar>
-
+#include <QTimer>
+#include <QDebug>
 using namespace Via::Control;
 using namespace Via::UI;
+
 
 void MapViewMoveNodeState::mouseMoveEvent(MapView *view, QMouseEvent *mouseEvent) {
     view->setDragMode(QGraphicsView::ScrollHandDrag);
     view->triggerParentMouseMoveEvent(mouseEvent);
     if (mouseEvent->buttons().testFlag(Qt::LeftButton)) {
-        const QRect screenRect = QApplication::desktop()->screenGeometry(view);
-        auto eventPos = mouseEvent->globalPos();
-        auto hBar = view->horizontalScrollBar();
-        auto vBar = view->verticalScrollBar();
+        auto eventPos = mouseEvent->pos();
+        auto globalPos = view->mapToGlobal(eventPos);
+        auto viewPort = view->viewport();
 
-        auto reEnterBoundaries = [](auto boundaryValue, auto firstBoundary, auto secondBoundary, QScrollBar *bar) {
-            if (boundaryValue <= firstBoundary + 4 && bar->value() < bar->maximum() - 10) {
-                return (secondBoundary - 5);
-            } else if (boundaryValue >= secondBoundary - 4 && bar->value() > 10) {
-                return (firstBoundary + 5);
-            }
-            return boundaryValue;
+        auto moveCursorTo = [&](int x, int y) {
+            auto r_event = QMouseEvent(QEvent::MouseButtonRelease, globalPos, Qt::LeftButton, Qt::NoButton, Qt::NoModifier);
+            view->triggerParentMouseReleaseEvent(&r_event);
+            QCursor::setPos(x, y);
+            QTimer::singleShot(100, [&]() {
+                //this->mousePressEvent(view, new QMouseEvent(QEvent::MouseButtonPress, view->mapToScene(x,y), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier));
+            } );
+
         };
 
-        eventPos.setX(reEnterBoundaries(eventPos.x(), screenRect.left(), screenRect.right(), hBar));
-        eventPos.setY(reEnterBoundaries(eventPos.y(), screenRect.top(), screenRect.bottom(), vBar));
+        qDebug() << eventPos << globalPos << mouseEvent->localPos();
 
-        if (mouseEvent->globalX() != eventPos.x() || mouseEvent->globalY() != eventPos.y()) {
-            view->setDragMode(QGraphicsView::NoDrag);
-            QCursor::setPos(eventPos);
-            view->setDragMode(QGraphicsView::ScrollHandDrag);
+
+        if (view->mouseTouchesTopBorder(eventPos)) {
+            auto bottomBorderPos = viewPort->mapToGlobal(viewPort->pos()).y() + viewPort->height();
+
+            moveCursorTo(globalPos.x(), bottomBorderPos - view->BORDER_PUFFER_POS - BORDER_MOVE_PUFFER);
+        } else if (view->mouseTouchesBottomBorder(eventPos)) {
+            auto topBorderPos = viewPort->mapToGlobal(viewPort->pos()).y();
+
+            moveCursorTo(globalPos.x(), topBorderPos + view->BORDER_PUFFER_POS + BORDER_MOVE_PUFFER);
         }
+
+        if (view->mouseTouchesLeftBorder(eventPos)) {
+            auto rightBorderPos = viewPort->mapToGlobal(viewPort->pos()).x() + viewPort->width();
+
+            moveCursorTo(rightBorderPos - view->BORDER_PUFFER_POS - BORDER_MOVE_PUFFER, globalPos.y());
+        } else if (view->mouseTouchesRightBorder(eventPos)) {
+            auto leftBorderPos = viewPort->mapToGlobal(viewPort->pos()).x();
+
+            moveCursorTo(leftBorderPos + view->BORDER_PUFFER_POS + BORDER_MOVE_PUFFER, globalPos.y());
+        }
+
     }
 }
 
